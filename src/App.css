@@ -7,12 +7,11 @@
         3.1 Reusables
         3.2 Other
    4.Areas
-        4.1 Header Nav
-        4.2 Header img
-        4.3 Intro Section
-        4.4 USP Section
-        4.5 Feature Section
-        4.6 Testimonial Section
+        4.1 Header
+        4.2 Intro Section
+        4.3 USP Section
+        4.4 Feature Section
+        4.5 Testimonial Section
  */
  /*
    5.Media Queries
@@ -46,6 +45,23 @@ h2 {
 
 /*      ---------- 3.1 Reusables --------------------------------------*/
 
+.outer-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 2px solid white;
+}
+
+.inner-container {
+    flex-basis: 1400px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 20px;
+}
+
+
 button {
     background-color: var(--army);
     color: var(--pale);
@@ -59,20 +75,86 @@ button {
 
 /*      ------------------ 4. Area's ------------------*/
 
-/*      ---------- 4.1 Header nav----------------*/
-
-.header-section {
-    background-color: #e8e0c5;
-    color: #5b594C;
-    text-align: center;
+.outer-container {
+    background-color: var(--army);
 }
 
-/*      ---------- 4.2 Header img ----------------*/
+.inner-container {
+    background-color: var(--pale);
+}
 
-/*      ---------- 4.3 Intro Section -------------------*/
+/*      ---------- 4.1 Header ----------------*/
+
+/*.header-section {*/
+/*    background-color: var(--army);*/
+/*    !*color: #5b594C;*!*/
+/*    !*text-align: center;*!*/
+/*}*/
+
+.header-navigation {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-navigation h2 {
+    flex-basis: 160px;
+    padding: 10px;
+    margin-left: 70px;
+    background-color: var(--army);
+    text-align: center;
+    border-radius: 50%;
+}
+
+.header-navigation ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-basis: 630px;
+    list-style: none;
+    padding: 10px 0;
+    margin: 0 10px;
+}
+
+.header-content-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background-color: var(--dark);
+}
+
+.header-content-image {
+    flex-basis: 600px;
+    /*border: 2px dotted orange;*/
+}
+
+.header-content-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 800px;
+    /*border: 2px solid white;*/
+}
+
+.header-content-dummy {
+    flex-basis: 800px;
+}
+
+
+
+
+
+
+
+/*      ---------- 4.2 Intro Section -------------------*/
 
 /*      ---------- 4.3 USP Section -------------------*/
 
-/*      ---------- 4.3 Feature Section -------------------*/
+/*      ---------- 4.4 Feature Section -------------------*/
 
-/*      ---------- 4.3 testimonial Section -------------------*/
+/*      ---------- 4.5 testimonial Section -------------------*/
