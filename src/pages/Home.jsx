@@ -5,17 +5,17 @@ function Home() {
 
     return (
         <>
-            <header>
-                <a href=""><img src="" alt="logo-blaze-of-glory"/></a>
+            <header className="header-section">
+                <h2>Blaze of Glory</h2>
+                <a href=""><img src="" alt="logo-blaze-of-glory"/>Blaze of Glory</a>
                 <nav>
                     <ul>
-                        <li><a href="">home</a></li>
-                        <li><a href="">stallen</a></li>
-                        <li><a href="">abonnementen</a></li>
-                        <li><a href="">registreren</a></li>
-                        <li><a href="">inloggen</a></li>
+                        <li><button type="button">home</button></li>
+                        <li><button type="button">stallen</button></li>
+                        <li><button type="button">abonnementen</button></li>
+                        <li><button type="button">registreren</button></li>
+                        <li><button type="button">inloggen</button></li>
                     </ul>
-                    <button type="button">Inloggen</button>
                 </nav>
                 <section>
                     <div>
@@ -46,7 +46,7 @@ function Home() {
                         <span><img src="" alt=""/></span>
                     </div>
                 </section>
-                {/*sellingpoints-section*/}
+                {/*usp-section*/}
                 <section>
                     <h2>Waarom Blaze of Glory?</h2>
                     <div>
