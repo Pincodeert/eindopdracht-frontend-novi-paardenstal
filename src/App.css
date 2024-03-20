@@ -49,12 +49,10 @@ h2 {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    border: 2px solid white;
 }
 
 .inner-container {
     flex-basis: 1400px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -102,8 +100,8 @@ button {
 .header-navigation h2 {
     flex-basis: 160px;
     padding: 10px;
-    margin-left: 70px;
-    background-color: var(--army);
+    margin-left: 60px;
+    background-color: var(--dark);
     text-align: center;
     border-radius: 50%;
 }
@@ -133,10 +131,7 @@ button {
 }
 
 .header-content-logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
     flex-basis: 800px;
     /*border: 2px solid white;*/
 }
@@ -145,15 +140,80 @@ button {
     flex-basis: 800px;
 }
 
-
-
-
-
-
-
 /*      ---------- 4.2 Intro Section -------------------*/
 
+.intro-text-wrapper {
+    max-width: 800px;
+    text-align: center;
+}
+
+.intro-section h2 {
+    padding: 50px 0;
+}
+
+.intro-image-wrapper {
+    padding: 40px 0;
+    max-width: 1300px;
+    margin: 30px 0;
+    /*border: 2px solid hotpink;*/
+}
+
+.intro-image {
+    width: 300px;
+    padding: 0 10px;
+}
+
+.intro-section img {
+    max-width: 350px;
+
+}
+
 /*      ---------- 4.3 USP Section -------------------*/
+
+.usp-section h2 {
+    padding: 20px 10px;
+    margin-top: 40px;
+    /*border: 2px solid deeppink;*/
+}
+
+.usp-article-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    row-gap: 20px;
+    padding: 50px 10px;
+    margin: 20px 0 50px 0;
+    max-width: 900px;
+    /*border: 2px solid black;*/
+}
+
+.usp-article img {
+    max-width: 50px;
+    width: 50px;
+    padding: 20px 0;
+    /*margin: 16px 0;*/
+}
+
+.usp-article {
+    text-align: center;
+    flex-basis: 100px;
+    /*border: 2px solid crimson;*/
+}
+
+.usp-button img {
+    max-width: 90px;
+}
+
+.usp-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 40px 0;
+    /*border: 2px solid darkgreen;*/
+}
+
 
 /*      ---------- 4.4 Feature Section -------------------*/
 

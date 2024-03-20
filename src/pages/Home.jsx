@@ -1,4 +1,10 @@
 import horse from '../assets/Paard-bewerkt-header.jpg'
+import almeria1 from '../assets/Almeria-1.JPG';
+import almeria2 from '../assets/Almeria-2.JPG';
+import almeria3 from '../assets/Almeria-3.JPG';
+import almeria4 from '../assets/Almeria-4.JPG';
+import almeria5 from '../assets/Almeria-5.JPG';
+import nico from '../assets/Nico-wijs.jpg'
 
 function Home() {
 
@@ -45,7 +51,7 @@ function Home() {
                 {/*intro-section*/}
                 <section className="outer-container intro-section">
                     <div className="inner-container">
-                        {/*<div>  hier een div omheen ook al blijft onder elkaar ongeacht schermgrootte?*/}
+                        <div className="intro-text-wrapper">
                         <h2>Welkom bij pensionstal Blaze of Glory!</h2>
                         <p>Pensiostal Blaze of Glory is een 5-steren pensionstal waar niet alleen u, maar ook uw paard
                             een
@@ -55,11 +61,17 @@ function Home() {
                             consequuntur deserunt doloremque doloribus eligendi eos error esse laborum maxime natus non
                             omnis pariatur possimus, quis ratione soluta ullam ut voluptates voluptatibus.
                         </p>
-                        {/*</div>*/}
-                        <div>
-                            <span><img src="/" alt="foto-1"/></span>
-                            <span><img src="/" alt="foto-2"/></span>
-                            <span><img src="/" alt="foto-3"/></span>
+                        </div>
+                        <div className="intro-image-wrapper">
+                            <span className="intro-image">
+                                <img src={almeria1} alt="foto-by-Nico-Houweling"/>
+                            </span>
+                            <span className="intro-image">
+                                <img src={almeria2} alt="foto-by-Nico-Houweling"/>
+                            </span>
+                            <span className="intro-image">
+                                <img src={almeria5} alt="foto-by-Nico-Houweling"/>
+                            </span>
                         </div>
                     </div>
                 </section>
@@ -67,15 +79,32 @@ function Home() {
                 <section className="outer-container usp-section">
                     <div className="inner-container">
                         <h2>Waarom Blaze of Glory?</h2>
-                        <div>
-                            <article><img src="/" alt="ster"/><p></p></article>
-                            <article><img src="/" alt="ster"/><p></p></article>
-                            <article><img src="/" alt="ster"/><p></p></article>
-                            <article><img src="/" alt="ster"/><p></p></article>
-                            <article><img src="/" alt="ster"/><p></p></article>
+                        <div className="usp-article-wrapper">
+                            <article className="usp-article">
+                                <img src={nico} alt="ster"/>
+                                <p>Comfortabele Binnen en Buiten Stallen</p>
+                            </article>
+                            <article className="usp-article">
+                                <img src={nico} alt="ster"/>
+                                <p>Keuze uit Half of Vol Pension</p>
+                            </article>
+                            <article className="usp-article">
+                                <img src={nico} alt="ster"/>
+                                <p>Glorieuze Buitenweide in een country-setting</p>
+                            </article>
+                            <article className="usp-article">
+                                <img src={nico} alt="ster"/>
+                                <p>Sterren-behandeling ook voor uw paarde(en)</p>
+                            </article>
+                            <article className="usp-article">
+                                <img src={nico} alt="ster"/>
+                                <p>Eenvoudige online aanmelding en afmelding</p>
+                            </article>
                         </div>
-                        <img src="" alt=""/>
-                        <button type="button">Abonneer hier</button>
+                        <div className="usp-button">
+                        <img src={nico} alt="foto-by-Leonie-Pin"/>
+                        <button type="button">Abonneer</button>
+                        </div>
                     </div>
                 </section>
                 {/*features-section*/}
