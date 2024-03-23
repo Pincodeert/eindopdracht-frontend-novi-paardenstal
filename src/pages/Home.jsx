@@ -7,6 +7,8 @@ import almeria5 from '../assets/Almeria-5.JPG';
 import nico from '../assets/Nico-wijs.jpg';
 import star from '../assets/ster-image.jpg';
 import stable from '../assets/anna-kaminova-cCsbIhfjfTY-unsplash.jpg';
+import quoteup from '../assets/quotes-up.jpg';
+import quotedown from '../assets/quotes-down.jpg';
 
 function Home() {
 
@@ -183,14 +185,38 @@ function Home() {
                 {/*testimonial-section*/}
                 <section className="outer-container testimonial-section">
                     <div className="inner-container">
-                        <h2>Testimonials</h2>
-                        <div>
-                            <article></article>
-                            <article></article>
-                            <article></article>
+                        <div className="title-wrapper">
+                            <img className="star-image" src={star} alt="ster-icoon"/>
+                            <h2>Testimonials</h2>
+                            <img className="star-image" src={star} alt="ster-iccon"/>
                         </div>
-                        <img src="" alt=""/>
-                        <button type="button">Abonneer hier</button>
+                        <div className="testimonial-article-wrapper">
+                            <article className="testimonial-article">
+                                <div className="quote-wrapper">
+                                    <img src={quoteup} alt="quote-icon"/>
+                                    <p>
+                                        This place is really a Paradise City for horses. The grass is green
+                                        and the horses are pretty.
+                                    </p>
+                                    <img src={quotedown} alt="quote-icon"/>
+                                </div>
+                                <p>-- Axl Rose --</p>
+                            </article>
+                            <article className="testimonial-article">
+                                <div className="quote-wrapper">
+                                    <img src={quoteup} alt="quote-icon"/>
+                                    <p>I was drowned, washed up. But its allright now. It's great to be here with
+                                        Jumping
+                                        Jack and get some satisfaction. </p>
+                                    <img src={quotedown} alt="quote-icon"/>
+                                </div>
+                                <p>-- Mick Jagger --</p>
+                            </article>
+                        </div>
+                        <div className="usp-button">
+                            <img src={nico} alt="foto-by-Leonie-Pin"/>
+                            <button type="button">Abonneer</button>
+                        </div>
                     </div>
                 </section>
             </main>
@@ -199,7 +225,7 @@ function Home() {
                     <section>
                         <img src="" alt=""/>
                         <div>
-                            <article></article>
+                        <article></article>
                             <article></article>
                             <article></article>
                         </div>
