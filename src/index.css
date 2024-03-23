@@ -39,14 +39,20 @@
 :root {
   --pale: #e8e0c5;
   --army: #5b594c;
+  --faded-army: #918f7e;
   --orange: #f88a08;
   --dark: #1c1c1e;
+
 }
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+img {
+  width: 100%;
 }
 
 /*      ------------------ 2. Typography ------------------------------*/
