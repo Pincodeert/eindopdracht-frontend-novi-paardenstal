@@ -1,0 +1,381 @@
+@import url('https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap');
+
+/* Table of Contents
+   1.Global Styles
+   2.Typography
+   3.Layout
+        3.1 Reusables
+        3.2 Other
+   4.Areas
+        4.1 Header
+        4.2 Intro Section
+        4.3 USP Section
+        4.4 Feature Section
+        4.5 Testimonial Section
+        4.6 Footer
+ */
+/*
+  5.Media Queries
+ //////////////////////////// */
+
+/*     ------------------ 1. Global Styles ----------------------------*/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/*      ------------------ 2. Typography ------------------------------*/
+body {
+
+}
+
+h1 {
+    font-family: "Jim Nightshade", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+h2 {
+    font-family: "Playbill", Source Code Pro;
+    font-weight: 400;
+}
+
+/*      ------------------ 3. Layout -------------------------------------*/
+
+/*      ---------- 3.1 Reusables --------------------------------------*/
+
+.outer-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.inner-container {
+    flex-basis: 1400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 20px;
+}
+
+
+button {
+    background-color: var(--army);
+    color: var(--pale);
+    font-weight: bold;
+    border-radius: 6px;
+    border: none;
+    padding: 7px 15px;
+}
+
+/*      ---------- 3.2 Others -------------------------------*/
+
+/*      ------------------ 4. Area's ------------------*/
+
+.outer-container {
+    background-color: var(--army);
+}
+
+.inner-container {
+    background-color: var(--pale);
+}
+
+/*      ---------- 4.1 Header ----------------*/
+
+.header-navigation {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-navigation h2 {
+    flex-basis: 160px;
+    padding: 10px;
+    margin-left: 60px;
+    background-color: var(--dark);
+    text-align: center;
+    border-radius: 50%;
+}
+
+.header-navigation ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-basis: 630px;
+    list-style: none;
+    padding: 10px 0;
+    margin: 0 10px;
+}
+
+.header-content-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background-color: var(--dark);
+}
+
+.header-content-image {
+    flex-basis: 1200px;
+}
+
+.header-content-logo {
+    text-align: center;
+    flex-basis: 800px;
+}
+
+.header-content-dummy {
+    flex-basis: 800px;
+}
+
+/*      ---------- 4.2 Intro Section -------------------*/
+
+.intro-text-wrapper {
+    max-width: 800px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.intro-section h2 {
+    padding: 50px 0;
+}
+
+.star-image {
+    width: 70px;
+    padding: 50px 10px 10px 10px;
+}
+
+
+.intro-image-wrapper {
+    padding: 30px 0;
+    max-width: 1300px;
+    margin: 30px 0;
+}
+
+.intro-image {
+    width: 300px;
+    padding: 0 10px;
+}
+
+.intro-section img {
+    max-width: 350px;
+
+}
+
+/*      ---------- 4.3 USP Section -------------------*/
+
+.usp-section h2 {
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.usp-article-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    row-gap: 20px;
+    padding: 40px 10px;
+    margin: 20px 0 40px 0;
+    max-width: 900px;
+}
+
+.usp-article img {
+    max-width: 50px;
+    width: 50px;
+    padding: 20px 0;
+    /*margin: 16px 0;*/
+}
+
+.usp-article {
+    text-align: center;
+    flex-basis: 100px;
+}
+
+.usp-button img {
+    max-width: 90px;
+}
+
+.usp-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 40px 0 60px 0;
+}
+
+
+/*      ---------- 4.4 Feature Section -------------------*/
+
+.title-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 30px 0;
+    width: 350px;
+}
+
+.title-wrapper img {
+    padding: 0;
+}
+
+.feature-article-wrapper {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1000px;
+}
+
+.feature-article {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    row-gap: 3px;
+    width: 100%;
+    margin: 30px 0;
+}
+
+.reversed-direction {
+    flex-direction: row-reverse;
+}
+
+.feature-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: var(--army);
+    color: var(--pale);
+    flex-basis: 500px;
+    height: 100%;
+    padding: 30px;
+}
+
+.feature-text-item img {
+    width: 30px;
+    margin-right: 20px;
+}
+
+.feature-text h3 {
+    padding: 10px;
+}
+
+
+.feature-text-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+}
+
+.feature-text h3 + .feature-text-item {
+    margin-top: 20px;
+}
+
+.feature-image {
+    /*background-color:hsl(54 8% 53%);*/
+    background-color: var(--faded-army);
+    flex-basis: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/*      ---------- 4.5 testimonial Section -------------------*/
+
+.testimonial-article-wrapper {
+    width: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 30px 0 50px 0;
+}
+
+.testimonial-article {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.quote-wrapper {
+    padding: 10px;
+    font-style: italic;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: flex-end;
+    width: 100%
+}
+
+.testimonial-article img {
+    width: 20px;
+    height: 22px;
+}
+
+.testimonial-article p {
+    padding: 10px;
+    text-align: center;
+}
+
+/*      ---------- 4.4 Footer -------------------*/
+
+.footer-info-section {
+    background-color: var(--army);
+    color: var(--pale);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-info-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 20px 0;
+    width: 900px;
+}
+
+.footer-info {
+    font-size: 18px;
+    flex-basis: 300px;
+    border-right: 2px solid var(--pale);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.info-text-wrapper {
+    width: 200px;
+}
+
+.footer-info-title {
+    font-size: 19px;
+}
+
+.footer-info p {
+    padding: 3px 10px;
+}
+
+.footer-info-title + p {
+    margin-top: 15px;
+}
+
+.footer-close-section {
+    padding: 25px 0;
+    font-size: 16px;
+}
