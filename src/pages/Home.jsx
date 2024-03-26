@@ -2,12 +2,11 @@ import './Home.css';
 import horse from '../assets/Paard-bewerkt-header.jpg'
 import almeria1 from '../assets/Almeria-1.JPG';
 import almeria2 from '../assets/Almeria-2.JPG';
-import almeria3 from '../assets/Almeria-3.JPG';
-import almeria4 from '../assets/Almeria-4.JPG';
 import almeria5 from '../assets/Almeria-5.JPG';
 import nico from '../assets/Nico-wijs.jpg';
 import star from '../assets/ster-image.jpg';
 import stable from '../assets/anna-kaminova-cCsbIhfjfTY-unsplash.jpg';
+import straw from '../assets/ben-shbeeb-HyTvVA8Ye8I-unsplash.jpg';
 import quoteup from '../assets/quotes-up.jpg';
 import quotedown from '../assets/quotes-down.jpg';
 
@@ -43,11 +42,9 @@ function Home() {
                         <span className="header-content-image">
                             <img src={horse} alt="Original image by Taylor Brandon"/>
                         </span>
-                        <div className="header-content-logo">
+                        <div className="header-content-title">
                             <h1>Blaze of Glory</h1>
                             <h2>Pensionstallen</h2>
-                        </div>
-                        <div className="header-content-dummy">
                         </div>
                     </div>
                 </div>
@@ -119,7 +116,7 @@ function Home() {
                 </section>
                 {/*features-section*/}
                 <section className="outer-container feature-section">
-                    <div className="inner-container">
+                    <div className="inner-container test">
                         <div className="title-wrapper">
                             <img className="star-image" src={star} alt="ster-icoon"/>
                             <h2>Welke voorzieningen?</h2>
@@ -175,7 +172,7 @@ function Home() {
                                 </div>
                                 <div className="feature-image">
                                     <span>
-                                    <img src={stable} alt="Image by Anna Kaminova-Unsplashed"/>
+                                    <img src={straw} alt="Image by Ben shbeen-Unsplashed"/>
                                     </span>
                                     <button>naar de stallen</button>
                                 </div>
@@ -222,7 +219,7 @@ function Home() {
                 </section>
             </main>
             <footer >
-                <div className="outer-container footer-section">
+                <div className="outer-container">
                 <section className="inner-container footer-info-section">
                         <div className="title-wrapper">
                             <img className="star-image" src={star} alt="ster-icoon"/>
@@ -251,7 +248,7 @@ function Home() {
                                 <p>klachtprocedure</p>
                                 </div>
                             </article>
-                            <article className="footer-info">
+                            <article className="footer-info-borderless">
                                 <div className="info-text-wrapper">
                                 <p className="footer-info-title">contact</p>
                                 <p>Landweg 2A</p>
@@ -269,7 +266,7 @@ function Home() {
                         </div>
                     </section>
                 </div>
-                <div className="outer-container footer-section">
+                <div className="outer-container">
                 <section className="inner-container footer-close-section">
                         <p>
                             Copyright pensionstal Blaze of Glory | mede mogelijk gemaakt door Sportcentrum Nieuw-Vennep

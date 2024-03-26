@@ -114,24 +114,23 @@ button {
 .header-content-wrapper {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
     background-color: var(--dark);
 }
 
 .header-content-image {
-    flex-basis: 1200px;
+    flex-basis: 700px;
 }
 
-.header-content-logo {
+.header-content-title {
     text-align: center;
-    flex-basis: 800px;
+    flex-basis: 400px;
+    position: relative;
+    right: 193px;
 }
 
-.header-content-dummy {
-    flex-basis: 800px;
-}
 
 /*      ---------- 4.2 Intro Section -------------------*/
 
@@ -228,10 +227,12 @@ button {
 
 .feature-article-wrapper {
     margin: 40px 0;
+    padding: 30px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 1000px;
+    max-width: 1400px;
+    background-color: var(--faded-army);
 }
 
 .feature-article {
@@ -243,6 +244,7 @@ button {
     row-gap: 3px;
     width: 100%;
     margin: 30px 0;
+    background-color: var(--faded-army);
 }
 
 .reversed-direction {
@@ -256,8 +258,8 @@ button {
     justify-content: flex-start;
     background-color: var(--army);
     color: var(--pale);
-    flex-basis: 500px;
-    height: 100%;
+    flex-basis: 431px;
+    /*height: 380px;*/
     padding: 30px;
 }
 
@@ -287,11 +289,12 @@ button {
 .feature-image {
     /*background-color:hsl(54 8% 53%);*/
     background-color: var(--faded-army);
-    flex-basis: 500px;
+    flex-basis: 431px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    border: 8px solid var(--pale);
 }
 
 /*      ---------- 4.5 testimonial Section -------------------*/
@@ -357,6 +360,10 @@ button {
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+.footer-info-borderless {
+    border: none;
 }
 
 .info-text-wrapper {
