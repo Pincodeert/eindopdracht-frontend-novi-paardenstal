@@ -54,20 +54,20 @@ function Home() {
                 <section className="outer-container intro-section">
                     <div className="inner-container">
                         <div className="intro-text-wrapper">
-                        <h2>Welkom bij pensionstal Blaze of Glory!</h2>
-                        <p>Pensiostal Blaze of Glory is een 5-steren pensionstal waar niet alleen u, maar ook uw paard
-                            een
-                            ster is. Lorem ipsum dolor sit amet, consectetur adipisicing. Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. At consectetur corporis deleniti dolor, est necessitatibus
-                            officiis pariatur sapiente sint temporibus. A alias animi commodi consectetur, consequatur
-                            consequuntur deserunt doloremque doloribus eligendi eos error esse laborum maxime natus non
-                            omnis pariatur possimus, quis ratione soluta ullam ut voluptates voluptatibus.
-                        </p>
-                            <div>
-                                <img className="star-image" src={star} alt="ster"/>
-                                <img className="star-image" src={star} alt="ster"/>
-                                <img className="star-image" src={star} alt="ster"/>
-                            </div>
+                            <h2>Welkom bij pensionstal Blaze of Glory!</h2>
+                            <p>Pensiostal Blaze of Glory is een 5-steren pensionstal waar niet alleen u, maar ook uw paard
+                                een
+                                ster is. Lorem ipsum dolor sit amet, consectetur adipisicing. Lorem ipsum dolor sit amet,
+                                consectetur adipisicing elit. At consectetur corporis deleniti dolor, est necessitatibus
+                                officiis pariatur sapiente sint temporibus. A alias animi commodi consectetur, consequatur
+                                consequuntur deserunt doloremque doloribus eligendi eos error esse laborum maxime natus non
+                                omnis pariatur possimus, quis ratione soluta ullam ut voluptates voluptatibus.
+                            </p>
+                                <div>
+                                    <img className="star-image" src={star} alt="ster"/>
+                                    <img className="star-image" src={star} alt="ster"/>
+                                    <img className="star-image" src={star} alt="ster"/>
+                                </div>
                         </div>
                         <div className="intro-image-wrapper">
                             <span className="intro-image">
@@ -219,7 +219,7 @@ function Home() {
                 </section>
             </main>
             <footer >
-                <div className="outer-container">
+                <div className="outer-container footer-info-outer">
                 <section className="inner-container footer-info-section">
                         <div className="title-wrapper">
                             <img className="star-image" src={star} alt="ster-icoon"/>
@@ -248,7 +248,7 @@ function Home() {
                                 <p>klachtprocedure</p>
                                 </div>
                             </article>
-                            <article className="footer-info-borderless">
+                            <article className="footer-info borderless">
                                 <div className="info-text-wrapper">
                                 <p className="footer-info-title">contact</p>
                                 <p>Landweg 2A</p>
@@ -266,7 +266,7 @@ function Home() {
                         </div>
                     </section>
                 </div>
-                <div className="outer-container">
+                <div className="outer-container closing-outer">
                 <section className="inner-container footer-close-section">
                         <p>
                             Copyright pensionstal Blaze of Glory | mede mogelijk gemaakt door Sportcentrum Nieuw-Vennep
