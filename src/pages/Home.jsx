@@ -14,6 +14,7 @@ import button from "../components/Button.jsx";
 import NavBar from "../components/NavBar.jsx";
 import Footer from "../components/Footer.jsx";
 import Usp from "../components/Usp.jsx";
+import HeaderContent from "../components/HeaderContent.jsx";
 
 function Home() {
 
@@ -27,15 +28,7 @@ function Home() {
                     <NavBar
                         classname="header-navigation"
                     />
-                    <div className="header-content-wrapper">
-                        <span className="header-content-image">
-                            <img src={horse} alt="Original image by Taylor Brandon"/>
-                        </span>
-                        <div className="header-content-title">
-                            <h1>Blaze of Glory</h1>
-                            <h2>Pensionstallen</h2>
-                        </div>
-                    </div>
+                   <HeaderContent/>
                 </div>
             </header>
             <main>
