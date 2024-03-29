@@ -16,6 +16,7 @@ import Footer from "../components/Footer/Footer.jsx";
 import Usp from "../components/Usp/Usp.jsx";
 import HeaderContent from "../components/HeaderContent/HeaderContent.jsx";
 import Testimonial from "../components/Testimonial/Testimonial.jsx";
+import Feature from "../components/Feature/Feature.jsx";
 
 function Home() {
 
@@ -105,60 +106,40 @@ function Home() {
                             <img className="star-image" src={star} alt="ster-iccon"/>
                         </div>
                         <div className="feature-article-wrapper">
-                            <article className="feature-article" >
-                                <div className="feature-text">
-                                    <h3>Onze stallen</h3>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test-plaatje"/>
-                                        <p>binnenstal klein (3x4) en groot (4x4)</p>
-                                    </div>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test-plaatje"/>
-                                        <p>Lorem ipsum dolor sit amet.</p>
-                                    </div>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test"/>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test"/>
-                                        <p>Lorem ipsum dolor sit amet.</p>
-                                    </div>
-                                </div>
-                                <div className="feature-image">
-                                    <span>
-                                    <img src={stable} alt="Image by Anna Kaminova-Unsplashed"/>
-                                    </span>
-                                    <button>naar de stallen</button>
-                                </div>
-                            </article>
-                            <article className="feature-article reversed-direction">
-                                <div className="feature-text">
-                                    <h3>Onze stallen</h3>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test-plaatje"/>
-                                        <p>binnenstal klein (3x4) en groot (4x4)</p>
-                                    </div>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test-plaatje"/>
-                                        <p>Lorem ipsum dolor sit amet.</p>
-                                    </div>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test"/>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test"/>
-                                        <p>Lorem ipsum dolor sit amet.</p>
-                                    </div>
-                                </div>
-                                <div className="feature-image">
-                                    <span>
-                                    <img src={straw} alt="Image by Ben shbeen-Unsplashed"/>
-                                    </span>
-                                    <button>naar de stallen</button>
-                                </div>
-                            </article>
+                            <Feature
+                                title="Onze stallen"
+                                item1="binnenstal klein en groot"
+                                item2="lorem ipsum"
+                                item3="marcus servus est"
+                                item4="in vino veritas est"
+                                image={stable}
+                                info="Image by Anna Kaminova-Unsplashed"
+                                buttontext="naar de stallen"
+                                classname="feature-article"
+                            />
+                            <Feature
+                                title="Onze abonnementen en tarieven"
+                                item1="functio laesa"
+                                item2="scientia vincere tenebras"
+                                item3="ubi pus ibi evacua"
+                                item4="tumor dolor calor rubor"
+                                image={straw}
+                                info="Image by Ben shbeen-Unsplashed"
+                                buttontext="naar de abonnementen en tarieven"
+                                classname="feature-article reversed-direction"
+                            />
+
+                            <Feature
+                                title="Onze Extra's"
+                                item1="ad fundum"
+                                item2="ora et labora"
+                                item3="decompensatio cordis"
+                                item4="contusio cerebri"
+                                image={stable}
+                                info="Image by Anna Kaminova-Unsplashed"
+                                buttontext="naar onze extra's"
+                                classname="feature-article"
+                            />
                         </div>
                     </div>
                 </section>
