@@ -10,9 +10,9 @@
         4.1 Header
         4.2 Intro Section
         4.3 USP Section
-        4.4 Feature Section
-        4.5 Testimonial Section
-        4.6 Footer
+        4.4 feature Section
+        4.5 testimonial Section
+        4.6 footer
     5.Media Queries
  */
 /*
@@ -151,7 +151,7 @@ h2 {
 }
 
 
-/*      ---------- 4.4 Feature Section -------------------*/
+/*      ---------- 4.4 feature Section -------------------*/
 
 .title-wrapper {
     display: flex;
@@ -188,7 +188,7 @@ h2 {
     margin: 30px 0 50px 0;
 }
 
-/*      ---------- 4.4 Footer -------------------*/
+/*      ---------- 4.4 footer -------------------*/
 
 
 
