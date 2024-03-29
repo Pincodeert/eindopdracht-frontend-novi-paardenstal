@@ -1,4 +1,4 @@
-import horse from "../assets/Paard-bewerkt-header.jpg";
+import horse from "../../assets/Paard-bewerkt-header.jpg";
 import './HeaderContent.css';
 
 function HeaderContent() {

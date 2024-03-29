@@ -9,12 +9,13 @@ import stable from '../assets/anna-kaminova-cCsbIhfjfTY-unsplash.jpg';
 import straw from '../assets/ben-shbeeb-HyTvVA8Ye8I-unsplash.jpg';
 import quoteup from '../assets/quotes-up.jpg';
 import quotedown from '../assets/quotes-down.jpg';
-import Button from "../components/Button.jsx";
-import button from "../components/Button.jsx";
-import NavBar from "../components/NavBar.jsx";
-import Footer from "../components/Footer.jsx";
-import Usp from "../components/Usp.jsx";
-import HeaderContent from "../components/HeaderContent.jsx";
+import Button from "../components/Button/Button.jsx";
+import button from "../components/Button/Button.jsx";
+import NavBar from "../components/NavBar/NavBar.jsx";
+import Footer from "../components/Footer/Footer.jsx";
+import Usp from "../components/Usp/Usp.jsx";
+import HeaderContent from "../components/HeaderContent/HeaderContent.jsx";
+import Testimonial from "../components/Testimonial/Testimonial.jsx";
 
 function Home() {
 
@@ -170,27 +171,21 @@ function Home() {
                             <img className="star-image" src={star} alt="ster-iccon"/>
                         </div>
                         <div className="testimonial-article-wrapper">
-                            <article className="testimonial-article">
-                                <div className="quote-wrapper">
-                                    <img src={quoteup} alt="quote-icon"/>
-                                    <p>
-                                        This place is really a Paradise City for horses. The grass is green
-                                        and the horses are pretty.
-                                    </p>
-                                    <img src={quotedown} alt="quote-icon"/>
-                                </div>
-                                <p>-- Axl Rose --</p>
-                            </article>
-                            <article className="testimonial-article">
-                                <div className="quote-wrapper">
-                                    <img src={quoteup} alt="quote-icon"/>
-                                    <p>I was drowned, washed up. But its allright now. It's great to be here with
+                            <Testimonial
+                                text="This place is really a Paradise City for horses. The grass is green
+                                        and the horses are pretty."
+                                author="Axl Rose"
+                            />
+                            <Testimonial
+                                text="I was drowned, washed up. But its allright now. It's great to be here with
                                         Jumping
-                                        Jack and get some satisfaction. </p>
-                                    <img src={quotedown} alt="quote-icon"/>
-                                </div>
-                                <p>-- Mick Jagger --</p>
-                            </article>
+                                        Jack and get some satisfaction."
+                                author="Mick Jagger"
+                            />
+                            <Testimonial
+                                text="Whenever my head gets weary, I'm going down to Blaze of Glory."
+                                author="Jon Bon Jovi"
+                            />
                         </div>
                         <div className="usp-button">
                             <img src={nico} alt="foto-by-Leonie-Pin"/>

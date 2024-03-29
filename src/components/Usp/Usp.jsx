@@ -1,4 +1,4 @@
-import star from "../assets/ster-image.jpg";
+import star from "../../assets/ster-image.jpg";
 import './Usp.css';
 
 function Usp(props) {
