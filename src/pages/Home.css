@@ -62,14 +62,19 @@ h2 {
 }
 
 
-button {
-    background-color: var(--army);
-    color: var(--pale);
-    font-weight: bold;
-    border-radius: 6px;
-    border: none;
-    padding: 7px 15px;
-}
+/*button {*/
+/*    background-color: var(--army);*/
+/*    color: var(--pale);*/
+/*    font-weight: bold;*/
+/*    border-radius: 6px;*/
+/*    border: none;*/
+/*    padding: 7px 15px;*/
+/*}*/
+
+/*.high-lighted {*/
+/*    background-color: var(--orange);*/
+/*    padding: 10px 15px;*/
+/*}*/
 
 /*      ---------- 3.2 Others -------------------------------*/
 

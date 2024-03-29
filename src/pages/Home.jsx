@@ -9,10 +9,14 @@ import stable from '../assets/anna-kaminova-cCsbIhfjfTY-unsplash.jpg';
 import straw from '../assets/ben-shbeeb-HyTvVA8Ye8I-unsplash.jpg';
 import quoteup from '../assets/quotes-up.jpg';
 import quotedown from '../assets/quotes-down.jpg';
+import Button from "../components/Button.jsx";
+import button from "../components/Button.jsx";
 
 function Home() {
 
-
+// function logClick() {
+//     console.log("YEZZZ!")
+// }
     return (
         <>
             <header className="outer-container header-section">
@@ -22,20 +26,50 @@ function Home() {
                         {/*<a href=""><img src="" alt="logo-blaze-of-glory"/>Blaze of Glory</a>*/}
                         <ul>
                             <li>
-                                <button type="button">home</button>
+                                <Button
+                                    type="button"
+                                    text="home"
+                                />
                             </li>
                             <li>
-                                <button type="button">stallen</button>
+                                <Button
+                                    type="button"
+                                    text="stallen"
+                                />
                             </li>
                             <li>
-                                <button type="button">abonnementen</button>
+                                <Button
+                                    type="button"
+                                    text="abonnementen"
+                                />
                             </li>
                             <li>
-                                <button type="button">registreren</button>
+                                <Button
+                                    type="button"
+                                    text="registreren"
+                                />
                             </li>
                             <li>
-                                <button type="button">inloggen</button>
+                                <Button
+                                    type="button"
+                                    text="inloggen"
+                                />
                             </li>
+                            {/*<li>*/}
+                            {/*    <button type="button">home</button>*/}
+                            {/*</li>*/}
+                            {/*<li>*/}
+                            {/*    <button type="button">stallen</button>*/}
+                            {/*</li>*/}
+                            {/*<li>*/}
+                            {/*    <button type="button">abonnementen</button>*/}
+                            {/*</li>*/}
+                            {/*<li>*/}
+                            {/*    <button type="button">registreren</button>*/}
+                            {/*</li>*/}
+                            {/*<li>*/}
+                            {/*    <button type="button">inloggen</button>*/}
+                            {/*</li>*/}
                         </ul>
                     </nav>
                     <div className="header-content-wrapper">
@@ -110,7 +144,12 @@ function Home() {
                         </div>
                         <div className="usp-button">
                         <img src={nico} alt="foto-by-Leonie-Pin"/>
-                        <button type="button">Abonneer</button>
+                            <Button
+                            type={button}
+                            text="Abonneer"
+                            classname="high-lighted"
+                            />
+                        {/*<button type="button">Abonneer</button>*/}
                         </div>
                     </div>
                 </section>
@@ -213,7 +252,12 @@ function Home() {
                         </div>
                         <div className="usp-button">
                             <img src={nico} alt="foto-by-Leonie-Pin"/>
-                            <button type="button">Abonneer</button>
+                            <Button
+                                type={button}
+                                text="Abonneer"
+                                classname="high-lighted"
+                            />
+                            {/*<button type="button">Abonneer</button>*/}
                         </div>
                     </div>
                 </section>
