@@ -11,6 +11,7 @@ import quoteup from '../assets/quotes-up.jpg';
 import quotedown from '../assets/quotes-down.jpg';
 import Button from "../components/Button.jsx";
 import button from "../components/Button.jsx";
+import NavBar from "../components/NavBar.jsx";
 
 function Home() {
 
@@ -21,57 +22,45 @@ function Home() {
         <>
             <header className="outer-container header-section">
                 <div className="inner-container">
-                    <nav className="header-navigation">
-                        <h2>Blaze of Glory</h2>
-                        {/*<a href=""><img src="" alt="logo-blaze-of-glory"/>Blaze of Glory</a>*/}
-                        <ul>
-                            <li>
-                                <Button
-                                    type="button"
-                                    text="home"
-                                />
-                            </li>
-                            <li>
-                                <Button
-                                    type="button"
-                                    text="stallen"
-                                />
-                            </li>
-                            <li>
-                                <Button
-                                    type="button"
-                                    text="abonnementen"
-                                />
-                            </li>
-                            <li>
-                                <Button
-                                    type="button"
-                                    text="registreren"
-                                />
-                            </li>
-                            <li>
-                                <Button
-                                    type="button"
-                                    text="inloggen"
-                                />
-                            </li>
-                            {/*<li>*/}
-                            {/*    <button type="button">home</button>*/}
-                            {/*</li>*/}
-                            {/*<li>*/}
-                            {/*    <button type="button">stallen</button>*/}
-                            {/*</li>*/}
-                            {/*<li>*/}
-                            {/*    <button type="button">abonnementen</button>*/}
-                            {/*</li>*/}
-                            {/*<li>*/}
-                            {/*    <button type="button">registreren</button>*/}
-                            {/*</li>*/}
-                            {/*<li>*/}
-                            {/*    <button type="button">inloggen</button>*/}
-                            {/*</li>*/}
-                        </ul>
-                    </nav>
+                    <NavBar
+                    classname="header-navigation"
+                    />
+                    {/*<nav className="header-navigation ">*/}
+                    {/*    <h2>Blaze of Glory</h2>*/}
+                    {/*    /!*<a href=""><img src="" alt="logo-blaze-of-glory"/>Blaze of Glory</a>*!/*/}
+                    {/*    <ul>*/}
+                    {/*        <li>*/}
+                    {/*            <Button*/}
+                    {/*                type="button"*/}
+                    {/*                text="home"*/}
+                    {/*            />*/}
+                    {/*        </li>*/}
+                    {/*        <li>*/}
+                    {/*            <Button*/}
+                    {/*                type="button"*/}
+                    {/*                text="stallen"*/}
+                    {/*            />*/}
+                    {/*        </li>*/}
+                    {/*        <li>*/}
+                    {/*            <Button*/}
+                    {/*                type="button"*/}
+                    {/*                text="abonnementen"*/}
+                    {/*            />*/}
+                    {/*        </li>*/}
+                    {/*        <li>*/}
+                    {/*            <Button*/}
+                    {/*                type="button"*/}
+                    {/*                text="registreren"*/}
+                    {/*            />*/}
+                    {/*        </li>*/}
+                    {/*        <li>*/}
+                    {/*            <Button*/}
+                    {/*                type="button"*/}
+                    {/*                text="inloggen"*/}
+                    {/*            />*/}
+                    {/*        </li>*/}
+                    {/*    </ul>*/}
+                    {/*</nav>*/}
                     <div className="header-content-wrapper">
                         <span className="header-content-image">
                             <img src={horse} alt="Original image by Taylor Brandon"/>
@@ -149,7 +138,6 @@ function Home() {
                             text="Abonneer"
                             classname="high-lighted"
                             />
-                        {/*<button type="button">Abonneer</button>*/}
                         </div>
                     </div>
                 </section>
@@ -257,7 +245,6 @@ function Home() {
                                 text="Abonneer"
                                 classname="high-lighted"
                             />
-                            {/*<button type="button">Abonneer</button>*/}
                         </div>
                     </div>
                 </section>
