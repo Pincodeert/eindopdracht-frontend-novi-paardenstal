@@ -13,6 +13,7 @@ import Button from "../components/Button.jsx";
 import button from "../components/Button.jsx";
 import NavBar from "../components/NavBar.jsx";
 import Footer from "../components/Footer.jsx";
+import Usp from "../components/Usp.jsx";
 
 function Home() {
 
@@ -75,26 +76,21 @@ function Home() {
                     <div className="inner-container">
                         <h2>Waarom Blaze of Glory?</h2>
                         <div className="usp-article-wrapper">
-                            <article className="usp-article">
-                                <img src={star} alt="ster"/>
-                                <p>Comfortabele Binnen en Buiten Stallen</p>
-                            </article>
-                            <article className="usp-article">
-                                <img src={star} alt="ster"/>
-                                <p>Keuze uit Half of Vol Pension</p>
-                            </article>
-                            <article className="usp-article">
-                                <img src={star} alt="ster"/>
-                                <p>Glorieuze Buitenweide in een country-setting</p>
-                            </article>
-                            <article className="usp-article">
-                                <img src={star} alt="ster"/>
-                                <p>Sterren-behandeling ook voor uw paarde(en)</p>
-                            </article>
-                            <article className="usp-article">
-                                <img src={star} alt="ster"/>
-                                <p>Eenvoudige online aanmelding en afmelding</p>
-                            </article>
+                            <Usp
+                                text="Comfortabele Binnen en Buiten Stallen"
+                            />
+                            <Usp
+                                text="Keuze uit Half of Vol Pension"
+                            />
+                            <Usp
+                                text="Glorieuze Buitenweide in een country-setting"
+                            />
+                            <Usp
+                                text="Sterren-behandeling ook voor uw paarde(en)"
+                            />
+                            <Usp
+                                text="Eenvoudige online aanmelding en afmelding"
+                            />
                         </div>
                         <div className="usp-button">
                         <img src={nico} alt="foto-by-Leonie-Pin"/>

@@ -1,0 +1,12 @@
+.usp-article img {
+    max-width: 50px;
+    width: 50px;
+    padding: 20px 0;
+    /*margin: 16px 0;*/
+}
+
+.usp-article {
+    text-align: center;
+    flex-basis: 100px;
+    padding: 0 20px;
+}

@@ -184,19 +184,6 @@ h2 {
     max-width: 900px;
 }
 
-.usp-article img {
-    max-width: 50px;
-    width: 50px;
-    padding: 20px 0;
-    /*margin: 16px 0;*/
-}
-
-.usp-article {
-    text-align: center;
-    flex-basis: 100px;
-    padding: 0 20px;
-}
-
 .usp-button img {
     max-width: 90px;
 }
@@ -336,55 +323,7 @@ h2 {
 
 /*      ---------- 4.4 Footer -------------------*/
 
-/*.footer-info-section {*/
-/*    background-color: var(--army);*/
-/*    color: var(--pale);*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*}*/
 
-/*.footer-info-wrapper {*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    justify-content: space-evenly;*/
-/*    margin: 20px 0;*/
-/*    width: 900px;*/
-/*}*/
-
-/*.footer-info {*/
-/*    font-size: 18px;*/
-/*    flex-basis: 300px;*/
-/*    border-right: 2px solid var(--pale);*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    justify-content: center;*/
-/*}*/
-
-/*.borderless {*/
-/*    border: none;*/
-/*}*/
-
-/*.info-text-wrapper {*/
-/*    width: 200px;*/
-/*}*/
-
-/*.footer-info-title {*/
-/*    font-size: 19px;*/
-/*}*/
-
-/*.footer-info p {*/
-/*    padding: 3px 10px;*/
-/*}*/
-
-/*.footer-info-title + p {*/
-/*    margin-top: 15px;*/
-/*}*/
-
-/*.footer-close-section {*/
-/*    padding: 25px 0;*/
-/*    font-size: 16px;*/
-/*}*/
 
 /*      ------------------ 5. Media Queries ------------------------------*/
 
