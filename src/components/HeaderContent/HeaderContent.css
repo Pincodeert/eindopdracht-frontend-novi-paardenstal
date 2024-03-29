@@ -1,0 +1,19 @@
+.header-content-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    background-color: var(--dark);
+}
+
+.header-content-image {
+    flex-basis: 700px;
+}
+
+.header-content-title {
+    text-align: center;
+    flex-basis: 400px;
+    position: relative;
+    right: 193px;
+}

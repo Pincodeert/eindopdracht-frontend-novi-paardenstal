@@ -9,44 +9,28 @@ import stable from '../assets/anna-kaminova-cCsbIhfjfTY-unsplash.jpg';
 import straw from '../assets/ben-shbeeb-HyTvVA8Ye8I-unsplash.jpg';
 import quoteup from '../assets/quotes-up.jpg';
 import quotedown from '../assets/quotes-down.jpg';
+import Button from "../components/Button/Button.jsx";
+import button from "../components/Button/Button.jsx";
+import NavBar from "../components/NavBar/NavBar.jsx";
+import Footer from "../components/Footer/Footer.jsx";
+import Usp from "../components/Usp/Usp.jsx";
+import HeaderContent from "../components/HeaderContent/HeaderContent.jsx";
+import Testimonial from "../components/Testimonial/Testimonial.jsx";
+import Feature from "../components/Feature/Feature.jsx";
 
 function Home() {
 
-
+// function logClick() {
+//     console.log("YEZZZ!")
+// }
     return (
         <>
             <header className="outer-container header-section">
                 <div className="inner-container">
-                    <nav className="header-navigation">
-                        <h2>Blaze of Glory</h2>
-                        {/*<a href=""><img src="" alt="logo-blaze-of-glory"/>Blaze of Glory</a>*/}
-                        <ul>
-                            <li>
-                                <button type="button">home</button>
-                            </li>
-                            <li>
-                                <button type="button">stallen</button>
-                            </li>
-                            <li>
-                                <button type="button">abonnementen</button>
-                            </li>
-                            <li>
-                                <button type="button">registreren</button>
-                            </li>
-                            <li>
-                                <button type="button">inloggen</button>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div className="header-content-wrapper">
-                        <span className="header-content-image">
-                            <img src={horse} alt="Original image by Taylor Brandon"/>
-                        </span>
-                        <div className="header-content-title">
-                            <h1>Blaze of Glory</h1>
-                            <h2>Pensionstallen</h2>
-                        </div>
-                    </div>
+                    <NavBar
+                        classname="header-navigation"
+                    />
+                   <HeaderContent/>
                 </div>
             </header>
             <main>
@@ -87,30 +71,29 @@ function Home() {
                     <div className="inner-container">
                         <h2>Waarom Blaze of Glory?</h2>
                         <div className="usp-article-wrapper">
-                            <article className="usp-article">
-                                <img src={star} alt="ster"/>
-                                <p>Comfortabele Binnen en Buiten Stallen</p>
-                            </article>
-                            <article className="usp-article">
-                                <img src={star} alt="ster"/>
-                                <p>Keuze uit Half of Vol Pension</p>
-                            </article>
-                            <article className="usp-article">
-                                <img src={star} alt="ster"/>
-                                <p>Glorieuze Buitenweide in een country-setting</p>
-                            </article>
-                            <article className="usp-article">
-                                <img src={star} alt="ster"/>
-                                <p>Sterren-behandeling ook voor uw paarde(en)</p>
-                            </article>
-                            <article className="usp-article">
-                                <img src={star} alt="ster"/>
-                                <p>Eenvoudige online aanmelding en afmelding</p>
-                            </article>
+                            <Usp
+                                text="Comfortabele Binnen en Buiten Stallen"
+                            />
+                            <Usp
+                                text="Keuze uit Half of Vol Pension"
+                            />
+                            <Usp
+                                text="Glorieuze Buitenweide in een country-setting"
+                            />
+                            <Usp
+                                text="Sterren-behandeling ook voor uw paarde(en)"
+                            />
+                            <Usp
+                                text="Eenvoudige online aanmelding en afmelding"
+                            />
                         </div>
                         <div className="usp-button">
                         <img src={nico} alt="foto-by-Leonie-Pin"/>
-                        <button type="button">Abonneer</button>
+                            <Button
+                            type={button}
+                            text="Abonneer"
+                            classname="high-lighted"
+                            />
                         </div>
                     </div>
                 </section>
@@ -123,60 +106,40 @@ function Home() {
                             <img className="star-image" src={star} alt="ster-iccon"/>
                         </div>
                         <div className="feature-article-wrapper">
-                            <article className="feature-article" >
-                                <div className="feature-text">
-                                    <h3>Onze stallen</h3>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test-plaatje"/>
-                                        <p>binnenstal klein (3x4) en groot (4x4)</p>
-                                    </div>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test-plaatje"/>
-                                        <p>Lorem ipsum dolor sit amet.</p>
-                                    </div>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test"/>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test"/>
-                                        <p>Lorem ipsum dolor sit amet.</p>
-                                    </div>
-                                </div>
-                                <div className="feature-image">
-                                    <span>
-                                    <img src={stable} alt="Image by Anna Kaminova-Unsplashed"/>
-                                    </span>
-                                    <button>naar de stallen</button>
-                                </div>
-                            </article>
-                            <article className="feature-article reversed-direction">
-                                <div className="feature-text">
-                                    <h3>Onze stallen</h3>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test-plaatje"/>
-                                        <p>binnenstal klein (3x4) en groot (4x4)</p>
-                                    </div>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test-plaatje"/>
-                                        <p>Lorem ipsum dolor sit amet.</p>
-                                    </div>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test"/>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                    <div className="feature-text-item">
-                                        <img src={star} alt="test"/>
-                                        <p>Lorem ipsum dolor sit amet.</p>
-                                    </div>
-                                </div>
-                                <div className="feature-image">
-                                    <span>
-                                    <img src={straw} alt="Image by Ben shbeen-Unsplashed"/>
-                                    </span>
-                                    <button>naar de stallen</button>
-                                </div>
-                            </article>
+                            <Feature
+                                title="Onze stallen"
+                                item1="binnenstal klein en groot"
+                                item2="lorem ipsum"
+                                item3="marcus servus est"
+                                item4="in vino veritas est"
+                                image={stable}
+                                info="Image by Anna Kaminova-Unsplashed"
+                                buttontext="naar de stallen"
+                                classname="feature-article"
+                            />
+                            <Feature
+                                title="Onze abonnementen en tarieven"
+                                item1="functio laesa"
+                                item2="scientia vincere tenebras"
+                                item3="ubi pus ibi evacua"
+                                item4="tumor dolor calor rubor"
+                                image={straw}
+                                info="Image by Ben shbeen-Unsplashed"
+                                buttontext="naar de abonnementen en tarieven"
+                                classname="feature-article reversed-direction"
+                            />
+
+                            <Feature
+                                title="Onze Extra's"
+                                item1="ad fundum"
+                                item2="ora et labora"
+                                item3="decompensatio cordis"
+                                item4="contusio cerebri"
+                                image={stable}
+                                info="Image by Anna Kaminova-Unsplashed"
+                                buttontext="naar onze extra's"
+                                classname="feature-article"
+                            />
                         </div>
                     </div>
                 </section>
@@ -189,91 +152,34 @@ function Home() {
                             <img className="star-image" src={star} alt="ster-iccon"/>
                         </div>
                         <div className="testimonial-article-wrapper">
-                            <article className="testimonial-article">
-                                <div className="quote-wrapper">
-                                    <img src={quoteup} alt="quote-icon"/>
-                                    <p>
-                                        This place is really a Paradise City for horses. The grass is green
-                                        and the horses are pretty.
-                                    </p>
-                                    <img src={quotedown} alt="quote-icon"/>
-                                </div>
-                                <p>-- Axl Rose --</p>
-                            </article>
-                            <article className="testimonial-article">
-                                <div className="quote-wrapper">
-                                    <img src={quoteup} alt="quote-icon"/>
-                                    <p>I was drowned, washed up. But its allright now. It's great to be here with
+                            <Testimonial
+                                text="This place is really a Paradise City for horses. The grass is green
+                                        and the horses are pretty."
+                                author="Axl Rose"
+                            />
+                            <Testimonial
+                                text="I was drowned, washed up. But its allright now. It's great to be here with
                                         Jumping
-                                        Jack and get some satisfaction. </p>
-                                    <img src={quotedown} alt="quote-icon"/>
-                                </div>
-                                <p>-- Mick Jagger --</p>
-                            </article>
+                                        Jack and get some satisfaction."
+                                author="Mick Jagger"
+                            />
+                            <Testimonial
+                                text="Whenever my head gets weary, I'm going down to Blaze of Glory."
+                                author="Jon Bon Jovi"
+                            />
                         </div>
                         <div className="usp-button">
                             <img src={nico} alt="foto-by-Leonie-Pin"/>
-                            <button type="button">Abonneer</button>
+                            <Button
+                                type={button}
+                                text="Abonneer"
+                                classname="high-lighted"
+                            />
                         </div>
                     </div>
                 </section>
             </main>
-            <footer >
-                <div className="outer-container footer-info-outer">
-                <section className="inner-container footer-info-section">
-                        <div className="title-wrapper">
-                            <img className="star-image" src={star} alt="ster-icoon"/>
-                            <img className="star-image" src={star} alt="ster-icoon"/>
-                            <img className="star-image" src={star} alt="ster-iccon"/>
-                        </div>
-                        <div className="footer-info-wrapper">
-                            <article className="footer-info">
-                                <div className="info-text-wrapper">
-                                <p className="footer-info-title">Openingstijden</p>
-                                <p>ma: 9.00u - 21.00u</p>
-                                <p>di: 8.00 - 22.00u</p>
-                                <p>wo: 8.00 - 22.00u</p>
-                                <p>do: 8.00 - 23.00u</p>
-                                <p>vr: 8.00 - 2.00u</p>
-                                <p>za: 9.00 - 2.00u</p>
-                                <p>zo: 9.00 - 23.00u</p>
-                                </div>
-                            </article>
-                            <article className="footer-info">
-                                <div className="info-text-wrapper">
-                                <p className="footer-info-title">Algemeen</p>
-                                <p>algemene voorwaarden</p>
-                                <p>privacy verklaring</p>
-                                <p>disclaimer</p>
-                                <p>klachtprocedure</p>
-                                </div>
-                            </article>
-                            <article className="footer-info borderless">
-                                <div className="info-text-wrapper">
-                                <p className="footer-info-title">contact</p>
-                                <p>Landweg 2A</p>
-                                <p>1234 AB</p>
-                                <p className="footer-info-title">Parkstad</p>
-                                <p>tel 012 234 56 78</p>
-                                <p>info@blazeofglory.com</p>
-                                </div>
-                            </article>
-                        </div>
-                        <div>
-                            <img src="" alt=""/>
-                            <img src="" alt=""/>
-                            <img src="" alt=""/>
-                        </div>
-                    </section>
-                </div>
-                <div className="outer-container closing-outer">
-                <section className="inner-container footer-close-section">
-                        <p>
-                            Copyright pensionstal Blaze of Glory | mede mogelijk gemaakt door Sportcentrum Nieuw-Vennep
-                        </p>
-                </section>
-                </div>
-            </footer>
+            <Footer/>
         </>
     )
 }
