@@ -8,6 +8,7 @@ import Usp from "../../components/usp/Usp.jsx";
 import nico from "../../assets/Nico-wijs.jpg";
 import Button from "../../components/button/Button.jsx";
 import button from "../../components/button/Button.jsx";
+import SubscriptionTile from "../../components/subscriptionTile/SubscriptionTile.jsx";
 // import {ReactComponent as Strawicon} from '../../assets/Strawicon.svg';
 // import {ReactComponent as Hay} from "../../assets/Hay.svg";
 
@@ -45,87 +46,111 @@ function Subscriptions() {
                     <div className="inner-container">
                         <h2>Binnen Stal Abonnementen</h2>
                         <div className="subscription-article-wrapper">
-                            <article className="subscription-article">
-                                <h2>Lucky Luke Abonnement</h2>
-                                {/*<Strawicon/>*/}
-                                {/*<Hay/>*/}
-                                <img src={star} alt="ster"/>
-                                <div className="subscription-text-wrapper">
-                                    <p>kleine binnenstal</p>
-                                    <p>half pension</p>
-                                    <p>inclusief verzorging</p>
-                                    <p>maandelijks opzegbaar</p>
-                                </div>
-                                <p>€345,-</p>
-                                <p>laatste stallen</p>
-                                <Button
-                                    type="button"
-                                    text="Neem dit abonnement"
-                                />
-                            </article>
-                            <article className="subscription-article">
-                                <h2>Lucky Luke Abonnement</h2>
-                                {/*<Strawicon/>*/}
-                                {/*<Hay/>*/}
-                                <img src={star} alt="ster"/>
-                                <div className="subscription-text-wrapper">
-                                    <p>kleine binnenstal</p>
-                                    <p>half pension</p>
-                                    <p>inclusief verzorging</p>
-                                    <p>maandelijks opzegbaar</p>
-                                </div>
-                                <p>€345,-</p>
-                                <p>laatste stallen</p>
-                                <Button
-                                    type="button"
-                                    text="Neem dit abonnement"
-                                />
-                            </article>
-                            <article className="subscription-article">
-                                <h2>Lucky Luke Abonnement</h2>
-                                {/*<Strawicon/>*/}
-                                {/*<Hay/>*/}
-                                <img src={star} alt="ster"/>
-                                <div className="subscription-text-wrapper">
-                                    <p>kleine binnenstal</p>
-                                    <p>half pension</p>
-                                    <p>inclusief verzorging</p>
-                                    <p>maandelijks opzegbaar</p>
-                                </div>
-                                <p>€345,-</p>
-                                <p>laatste stallen</p>
-                                <Button
-                                    type="button"
-                                    text="Neem dit abonnement"
-                                />
-                            </article>
-                            <article className="subscription-article">
-                                <h2>Lucky Luke Abonnement</h2>
-                                {/*<Strawicon/>*/}
-                                {/*<Hay/>*/}
-                                <img src={star} alt="ster"/>
-                                <div className="subscription-text-wrapper">
-                                    <p>kleine binnenstal</p>
-                                    <p>half pension</p>
-                                    <p>inclusief verzorging</p>
-                                    <p>maandelijks opzegbaar</p>
-                                </div>
-                                <p>€345,-</p>
-                                <p>laatste stallen</p>
-                                <Button
-                                    type="button"
-                                    text="Neem dit abonnement"
-                                />
-                            </article>
-                        </div>
-                        <div className="usp-button">
-                            <img src={nico} alt="foto-by-Leonie-Pin"/>
-                            <Button
-                                type={button}
-                                text="Abonneer"
-                                classname="high-lighted"
+                            <SubscriptionTile
+                                title="Rataplan Abonnement"
+                                image={star}
+                                imageinfo="star"
+                                textline1="grote binnen stal"
+                                textline2="volpension"
+                                textline3="inclusief extra's"
+                                textline4="vele extra's"
+                                price="345"
+                                remark="niet meer beschikbaar"
+                                classname="visible"
+                            />
+                            <SubscriptionTile
+                                title="Lucky Luke Abonnement"
+                                image={star}
+                                imageinfo="star"
+                                textline1="kleine binnen stal"
+                                textline2="halfpension"
+                                textline3="inclusief verzorging"
+                                textline4="maandelijks opzegbaar"
+                                price="385"
+                                remark="niet meer beschikbaar"
+                                classname="default"
+                            />
+                            <SubscriptionTile
+                                title="Lucky Luke Abonnement"
+                                image={star}
+                                imageinfo="star"
+                                textline1="kleine binnen stal"
+                                textline2="halfpension"
+                                textline3="inclusief verzorging"
+                                textline4="maandelijks opzegbaar"
+                                price="385"
+                                remark="niet meer beschikbaar"
+                                classname="visible"
+                            />
+                            <SubscriptionTile
+                                title="Lucky Luke Abonnement"
+                                image={star}
+                                imageinfo="star"
+                                textline1="kleine binnen stal"
+                                textline2="halfpension"
+                                textline3="inclusief verzorging"
+                                textline4="maandelijks opzegbaar"
+                                price="385"
+                                remark="niet meer beschikbaar"
+                                classname="default"
                             />
                         </div>
+                    </div>
+                </section>
+                <section className="outer-container subscription-section">
+                    <div className="inner-container">
+                        <h2>Binnen Stal Abonnementen</h2>
+                        <div className="subscription-article-wrapper">
+                            <SubscriptionTile
+                                title="Rataplan Abonnement"
+                                image={star}
+                                imageinfo="star"
+                                textline1="grote binnen stal"
+                                textline2="volpension"
+                                textline3="inclusief extra's"
+                                textline4="vele extra's"
+                                price="345"
+                                remark="niet meer beschikbaar"
+                                classname="visible"
+                            />
+                            <SubscriptionTile
+                                title="Lucky Luke Abonnement"
+                                image={star}
+                                imageinfo="star"
+                                textline1="kleine binnen stal"
+                                textline2="halfpension"
+                                textline3="inclusief verzorging"
+                                textline4="maandelijks opzegbaar"
+                                price="385"
+                                remark="niet meer beschikbaar"
+                                classname="default"
+                            />
+                            <SubscriptionTile
+                                title="Lucky Luke Abonnement"
+                                image={star}
+                                imageinfo="star"
+                                textline1="kleine binnen stal"
+                                textline2="halfpension"
+                                textline3="inclusief verzorging"
+                                textline4="maandelijks opzegbaar"
+                                price="385"
+                                remark="niet meer beschikbaar"
+                                classname="visible"
+                            />
+                            <SubscriptionTile
+                                title="Lucky Luke Abonnement"
+                                image={star}
+                                imageinfo="star"
+                                textline1="kleine binnen stal"
+                                textline2="halfpension"
+                                textline3="inclusief verzorging"
+                                textline4="maandelijks opzegbaar"
+                                price="385"
+                                remark="niet meer beschikbaar"
+                                classname="default"
+                            />
+                        </div>
+
                     </div>
                 </section>
             </main>
