@@ -1,0 +1,51 @@
+/*.subscription-icon {*/
+/*    width: 15px;*/
+/*    height: 15px;*/
+/*}*/
+
+.subscription-article img {
+    width: 25px;
+    margin: 10px;
+    /*border: 2px dotted white;*/
+}
+
+.subscription-article h2 {
+    font-size: 1.5em;
+    padding: 10px 0;
+    /*border: 2px dotted white;*/
+}
+
+.subscription-article p {
+    font-size: 1.0em;
+    padding: 10px 0;
+    /*border: 2px dotted white;*/
+}
+
+.subscription-article Button {
+    margin: 10px 0;
+}
+
+.subscription-article-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 1200px;
+    padding: 50px 0;
+    /*border: 2px dotted black*/
+}
+
+
+.subscription-article {
+    /*border: 2px solid plum;*/
+    flex-basis: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+}
+
+.subscription-text-wrapper {
+    margin: 10px 0;
+}

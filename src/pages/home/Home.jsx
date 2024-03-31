@@ -1,5 +1,4 @@
 import './Home.css';
-import horse from '../../assets/Paard-bewerkt-header.jpg'
 import almeria1 from '../../assets/Almeria-1.JPG';
 import almeria2 from '../../assets/Almeria-2.JPG';
 import almeria5 from '../../assets/Almeria-5.JPG';
@@ -7,8 +6,6 @@ import nico from '../../assets/Nico-wijs.jpg';
 import star from '../../assets/ster-image.jpg';
 import stable from '../../assets/anna-kaminova-cCsbIhfjfTY-unsplash.jpg';
 import straw from '../../assets/ben-shbeeb-HyTvVA8Ye8I-unsplash.jpg';
-import quoteup from '../../assets/quotes-up.jpg';
-import quotedown from '../../assets/quotes-down.jpg';
 import Button from "../../components/button/Button.jsx";
 import button from "../../components/button/Button.jsx";
 import NavBar from "../../components/navBar/NavBar.jsx";
