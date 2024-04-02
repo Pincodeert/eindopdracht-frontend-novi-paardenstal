@@ -8,9 +8,18 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    width: 1200px;
-    padding: 50px 0;
+    width: 1300px;
+    padding: 60px 0;
+    flex-wrap: wrap;
+    row-gap: 30px;
     /*border: 2px dotted black*/
 }
 
+.subscription-section  h2{
+    padding: 40px;
+    /*margin: 70px*/
+}
 
+.intro-text-wrapper div {
+    margin-bottom: 40px;
+}
