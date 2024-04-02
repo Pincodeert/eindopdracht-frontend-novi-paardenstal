@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap');
+
+/* Table of Contents
+   1.Global Styles
+   2.Typography
+   3.Layout
+        3.1 Reusables
+        3.2 Other
+   4.Areas
+        4.1 Header
+        4.2 Intro Section
+        4.3 USP Section
+        4.4 feature Section
+        4.5 testimonial Section
+        4.6 footer
+    5.Media Queries
+ */
+/*
+  5.Media Queries
+ //////////////////////////// */
+
+/*     ------------------ 1. Global Styles ----------------------------*/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/*      ------------------ 2. Typography ------------------------------*/
+body {
+
+}
+
+h1 {
+    font-family: "Jim Nightshade", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+h2 {
+    font-family: "Playbill", Source Code Pro;
+    font-weight: 400;
+}
+
+/*      ------------------ 3. Layout -------------------------------------*/
+
+/*      ---------- 3.1 Reusables --------------------------------------*/
+
+.outer-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: var(--army);
+}
+
+.inner-container {
+    flex-basis: 1400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 20px;
+    background-color: var(--pale);
+}
+
+
+/*      ---------- 3.2 Others -------------------------------*/
+
+/*      ------------------ 4. Area's ------------------*/
+
+.footer-info-section {
+    background-color: var(--army);
+}
+/*     ------------------  Feature Section  ---------------- */
+
+.title-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 100px 0 5px 0;
+    width: 350px;
+}
+
+.title-wrapper img {
+    padding: 0;
+}
+
+.feature-article-wrapper {
+    margin: 40px 0;
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1400px;
+    background-color: var(--faded-army);
+}
+
+.colored {
+    background-color: var(--faded-army);
+}
+
+.pale {
+    background-color: var(--pale);
+}
+

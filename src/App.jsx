@@ -1,11 +1,15 @@
 import './App.css'
-import Home from './pages/Home.jsx';
+import Home from './pages/home/Home.jsx';
+import Stalls from "./pages/stalls/Stalls.jsx";
+import Subscriptions from "./pages/subscriptions/Subscriptions.jsx";
 
 function App() {
 
 
   return (
-    <Home />
+    <Home />,
+    <Stalls />,
+    <Subscriptions />
   )
 }
 

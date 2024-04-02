@@ -1,7 +1,7 @@
 import star from "../../assets/ster-image.jpg";
 import stable from "../../assets/anna-kaminova-cCsbIhfjfTY-unsplash.jpg";
-import button from "../Button/Button.jsx";
-import Button from "../Button/Button.jsx";
+import button from "../button/Button.jsx";
+import Button from "../button/Button.jsx";
 import './Feature.css';
 
 function Feature(props) {

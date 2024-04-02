@@ -1,4 +1,4 @@
-import Button from "../Button/Button.jsx";
+import Button from "../button/Button.jsx";
 import './NavBar.css'
 
 function NavBar(props) {

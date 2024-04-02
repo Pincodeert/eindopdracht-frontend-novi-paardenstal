@@ -1,0 +1,49 @@
+.subscription-article img {
+    width: 25px;
+    margin: 10px;
+    /*border: 2px dotted white;*/
+}
+
+.subscription-article h2 {
+    font-size: 1.5em;
+    padding: 10px 0;
+    /*border: 2px dotted white;*/
+}
+
+.subscription-article p {
+    padding: 10px 0;
+    /*border: 2px dotted white;*/
+}
+
+.subscription-article Button {
+    margin: 10px 0;
+}
+
+.subscription-article {
+    border: 2px solid var(--orange);
+    border-radius: 10px;
+    flex-basis: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+}
+
+.subscription-text-wrapper {
+    margin: 10px 0;
+}
+
+.default {
+    color: var(--pale);
+}
+
+.visible {
+    color: var(--orange);
+    font-weight: bold;
+}
+
+.price {
+    font-weight: bold;
+    font-size: 1.5em;
+}
