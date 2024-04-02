@@ -31,7 +31,7 @@
     flex-basis: 500px;
     display: flex;
     flex-direction: column;
-    height: 307px;
+    height: 385px;
     margin-top: 30px;
 }
 
@@ -41,26 +41,9 @@
 
 .info-container {
     align-items: center;
-    justify-content: center;
-}
-
-.info-container p {
-    font-family: Playbill;
-    font-size: 1.1em;
-    padding: 10px 0;
-}
-
-.info-container button {
-    margin-top: 20px;
-    padding: 15px 30px;
-}
-
-.title {
-    color: var(--dark);
-}
-
-.info-line {
-    color: var(--pale);
+    justify-content: flex-end;
+    flex-basis: 350px;
+    padding: 0;
 }
 
 form {
@@ -81,7 +64,7 @@ input {
 .form-button-wrapper {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
 }
 
@@ -96,9 +79,7 @@ h2 {
     padding: 7px 0;
 }
 
-a {
-    color: var(--pale);
-    text-decoration: none;
-    font-size: 0.9em;
-    padding: 10px;
+.info-container img {
+    width: 88%;
+    padding: 20px 10px 25px 10px;
 }

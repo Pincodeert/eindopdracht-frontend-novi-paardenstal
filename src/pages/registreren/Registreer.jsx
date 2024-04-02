@@ -1,11 +1,12 @@
 import NavBar from "../../components/navBar/NavBar.jsx";
 import Button from "../../components/button/Button.jsx";
-import './Login.css'
+import nico from "../../assets/Nico-wijs.jpg";
+import './Registreer.css'
 
-function Login() {
+function Registreer() {
     return (
         <>
-            <header >
+            <header>
                 <section className="outer-container nav-section">
                     <div className="inner-container">
                         <NavBar
@@ -25,7 +26,7 @@ function Login() {
             <main className="outer-container ">
                 <section className="inner-container content-section">
                     <div className="form-container">
-                        <h2>Inloggen: </h2>
+                        <h2>Registreer hier: </h2>
                         <form action="/">
                             <label htmlFor="username-text-field">
                                 <input type="text" id="username-text-field" name="username"
@@ -35,24 +36,21 @@ function Login() {
                                 <input type="text" id="password-text-field" name="password"
                                        placeholder="wachtwoord"/>
                             </label>
+                            <label htmlFor="email-field">
+                                <input type="email" id="email-field" name="email"
+                                       placeholder="e-mail"/>
+                            </label>
                             <div className="form-button-wrapper">
-                                <a href="/">wachtwoord vergeten?</a>
                                 <Button
                                     type="submit"
-                                    text="Log in"
+                                    text="Registreer"
                                     classname="high-lighted"
                                 />
                             </div>
                         </form>
                     </div>
                     <div className="info-container">
-                        <p className="title">Nog geen member?</p>
-                        <p className="info-line">Maak dan nu een gratis account aan en word lid!</p>
-                        <Button
-                            type="button"
-                            text="Registreer"
-                            classname="high-lighted"
-                        />
+                        <img src={nico} alt="nico"/>
                     </div>
                 </section>
             </main>
@@ -60,4 +58,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Registreer;
