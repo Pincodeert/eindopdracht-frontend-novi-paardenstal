@@ -1,7 +1,7 @@
-import NavBar from "../../components/navBar/NavBar.jsx";
 import "./Profiel.css"
 import Button from "../../components/button/Button.jsx";
-import axl from "../../constants/testdata.js";
+import axl, {averell, enrollment1, stallYoung3, sweethorse} from "../../constants/testdata.js";
+
 
 
 
@@ -11,9 +11,11 @@ function Profiel() {
             <header>
                 <section className="outer-container">
                     <div className="inner-container inverted-header">
-                        <NavBar
-                            classname="header-navigation"
-                        />
+                        <nav className="header-navigation">
+                            <h2>Blaze of Glory</h2>
+                            <div className="profile-icon">AR</div>
+                        </nav>
+
                     </div>
                 </section>
             </header>
@@ -38,7 +40,7 @@ function Profiel() {
                             <h3>Welkom {axl.firstName} {axl.lastName}</h3>
                             <p>klantnummer: {axl.customerProfileId} </p>
                         </div>
-                        <div className="content-wrapper persona">
+                        <article className="content-wrapper persona">
                             <div className="content-title">
                                 <h4>Uw gegevens</h4>
                                 <Button
@@ -70,16 +72,152 @@ function Profiel() {
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div className="content-wrapper">
-                            <h4>Uw paarden</h4>
-                        </div>
-                        <div className="content-wrapper">
-                            <h4>Uw abonnementen</h4>
-                        </div>
+                        </article>
+                        <article className="content-wrapper horses">
+                            <div className="content-title">
+                                <h4>Uw paarden</h4>
+                            </div>
+                            <div className="horse-wrapper">
+                                <div className="head-line">
+                                    <p className="horsename">{sweethorse.name}</p>
+                                    <Button
+                                        type="button"
+                                        text="wijzig"
+                                    />
+                                </div>
+                                <table className="table">
+                                    <thead>
+                                    <tr className="table-head">
+                                        <th>paardnummer</th>
+                                        <th>type voeding</th>
+                                        <th>type boedembedekking</th>
+                                        <th>naam dierenarts</th>
+                                        <th>woonplaats dierenarts</th>
+                                        <th>telefoonnummer dierenarts</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr className="table-body">
+                                        <td>{sweethorse.horseNumber}</td>
+                                        <td>{sweethorse.typeOfFeed}</td>
+                                        <td>{sweethorse.typeOfBedding}</td>
+                                        <td>{sweethorse.nameOfVet}</td>
+                                        <td>{sweethorse.residenceOfVet}</td>
+                                        <td>{sweethorse.telephoneOfVet}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <table className="table">
+                                    <thead>
+                                    <tr className="table-head">
+                                        <th>Abonnement</th>
+                                        <th>Stal</th>
+                                        <th>Paardenpaspoort</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr className="table-body">
+                                        <td>{averell.name}</td>
+                                        <td>{stallYoung3.name}</td>
+                                        <td>{<Button type="button" text="bekijk"/>}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="horse-wrapper">
+                                <div className="head-line">
+                                    <p className="horsename">{sweethorse.name}</p>
+                                    <Button
+                                        type="button"
+                                        text="wijzig"
+                                    />
+                                </div>
+                                <table className="table">
+                                    <thead>
+                                    <tr className="table-head">
+                                        <th>paardnummer</th>
+                                        <th>type voeding</th>
+                                        <th>type boedembedekking</th>
+                                        <th>naam dierenarts</th>
+                                        <th>woonplaats dierenarts</th>
+                                        <th>telefoonnummer dierenarts</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr className="table-body">
+                                        <td>{sweethorse.horseNumber}</td>
+                                        <td>{sweethorse.typeOfFeed}</td>
+                                        <td>{sweethorse.typeOfBedding}</td>
+                                        <td>{sweethorse.nameOfVet}</td>
+                                        <td>{sweethorse.residenceOfVet}</td>
+                                        <td>{sweethorse.telephoneOfVet}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <table className="table">
+                                    <thead>
+                                    <tr className="table-head">
+                                        <th>Abonnement</th>
+                                        <th>Stal</th>
+                                        <th>Paardenpaspoort</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr className="table-body">
+                                        <td>{averell.name}</td>
+                                        <td>{stallYoung3.name}</td>
+                                        <td>{<Button type="button" text="bekijk"/>}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </article>
+                        <article className="content-wrapper subscriptions">
+                            <div className="content-title">
+                                <h4>Uw abonnementen</h4>
+                                <Button
+                                    type="button"
+                                    text="bereken totale prijs"
+                                />
+                            </div>
+                            <div className="subscriptiom-wrapper">
+                                <div className="head-line">
+                                    <p className="horsename">Abonnementnummer: {enrollment1.enrollmentId}</p>
+                                    <Button
+                                        type="button"
+                                        text="wijzig"
+                                    />
+                                </div>
+                                <table className="table">
+                                    <thead>
+                                    <tr className="table-head">
+                                        <th>abonnement type</th>
+                                        <th>paard</th>
+                                        <th>stalnaam</th>
+                                        <th>type stal</th>
+                                        <th>type verzorging</th>
+                                        <th>start-datum</th>
+                                        <th>annulering aangevraagd</th>
+                                        <th>prijs</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr className="table-body">
+                                        <td>{averell.name}</td>
+                                        <td>{sweethorse.name}</td>
+                                        <td>{stallYoung3.name}</td>
+                                        <td>{averell.typeOfStall}</td>
+                                        <td>{averell.typeOfCare}</td>
+                                        <td>{enrollment1.startDate}</td>
+                                        <td>{enrollment1.cancellationRequested}</td>
+                                        <td>{averell.price}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </article>
                     </div>
                 </div>
-
             </main>
         </>
     );

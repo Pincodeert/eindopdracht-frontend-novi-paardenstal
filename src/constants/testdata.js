@@ -1,5 +1,5 @@
 
-
+// voorbeeld klant
 const axl = {
     customerProfileId: "7",
     firstName: "Axl",
@@ -14,6 +14,7 @@ const axl = {
     username: ""
 }
 
+// voorbeeld paard
 export const sweethorse = {
     horseId: "11",
     name: "Sweet Horse o' Mine",
@@ -27,6 +28,7 @@ export const sweethorse = {
     customerProfileId: "7"
 }
 
+//voorbeeld stal
 export const stallYoung3 = {
     stallId: "12",
     name: "Young Guns III",
@@ -36,6 +38,7 @@ export const stallYoung3 = {
     horseId: "11"
 }
 
+//voorbeeld abonnemtent type
 export const averell = {
     subscriptionId: "6",
     name: "Averell Dalton abonnement",
@@ -44,7 +47,9 @@ export const averell = {
     typeOfStall: "kleine buitenstal"
 }
 
+// voorbeeld abonnement/inschrijving
 export const enrollment1 = {
+    enrollmentId: "1",
     startDate: "12-05-2023",
     expiredate: "12-05-2024",
     duration: "11",
