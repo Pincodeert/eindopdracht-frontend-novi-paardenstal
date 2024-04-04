@@ -1,0 +1,85 @@
+.inverted-header {
+    background-color: var(--army);
+}
+
+.outer-profile-container {
+    background-color: var(--pale);
+    height: 100vh;
+}
+
+.inner-profile-container {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border: 2px solid white;
+}
+
+.side-nav {
+    border-right: 4px solid var(--army);
+    flex-basis: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 0;
+}
+
+.side-nav Button {
+    margin: 10px 0;
+}
+
+.profile-content-container {
+    flex-basis: 1200px;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    /*border: 2px solid plum;*/
+}
+.intro-content-wrapper {
+    /*border: 2px dashed red;*/
+    padding: 20px;
+}
+
+.content-wrapper {
+    border: 2px solid var(--orange);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px 0;
+}
+
+.content-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    /*border: 2px solid darkgreen;*/
+}
+
+.content-title h4 {
+    background-color: var(--army);
+    color: var(--pale);
+    padding: 8px 15px;
+}
+
+th {
+    /*border: 2px solid grey;*/
+    text-align: start;
+}
+
+td {
+    /*border: 2px solid plum;*/
+}
+
+.table {
+    display: flex;
+    flex-direction: row;
+}
+
+.table-head, .table-body{
+    display: flex;
+    flex-direction: column;
+}
+
+.table-head {
+    margin-right: 30px;
+}

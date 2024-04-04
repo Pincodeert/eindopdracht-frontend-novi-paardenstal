@@ -4,6 +4,7 @@ import Stalls from "./pages/stalls/Stalls.jsx";
 import Subscriptions from "./pages/subscriptions/Subscriptions.jsx";
 import Login from "./pages/login/Login.jsx";
 import Registreer from "./pages/registreren/Registreer.jsx";
+import Profiel from "./pages/profiel/Profiel.jsx";
 
 function App() {
 
@@ -13,7 +14,8 @@ function App() {
     <Stalls />,
     <Subscriptions />,
     <Login />,
-    <Registreer />
+    <Registreer />,
+    <Profiel />
   )
 }
 
