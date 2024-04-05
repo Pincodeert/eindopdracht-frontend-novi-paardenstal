@@ -1,9 +1,9 @@
 import NavBar from "../../components/navBar/NavBar.jsx";
 import Button from "../../components/button/Button.jsx";
 import nico from "../../assets/Nico-wijs.jpg";
-import './Registreer.css'
+import './Register.css'
 
-function Registreer() {
+function Register() {
     return (
         <>
             <header>
@@ -26,7 +26,7 @@ function Registreer() {
             <main className="outer-container ">
                 <section className="inner-container content-section">
                     <div className="form-container">
-                        <h2>Registreer hier: </h2>
+                        <h2>Register hier: </h2>
                         <form action="/">
                             <label htmlFor="username-text-field">
                                 <input type="text" id="username-text-field" name="username"
@@ -43,7 +43,7 @@ function Registreer() {
                             <div className="form-button-wrapper">
                                 <Button
                                     type="submit"
-                                    text="Registreer"
+                                    text="Register"
                                     classname="high-lighted"
                                 />
                             </div>
@@ -58,4 +58,4 @@ function Registreer() {
     );
 }
 
-export default Registreer;
+export default Register;

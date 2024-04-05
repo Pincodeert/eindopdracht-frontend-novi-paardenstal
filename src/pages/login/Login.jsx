@@ -50,7 +50,7 @@ function Login() {
                         <p className="info-line">Maak dan nu een gratis account aan en word lid!</p>
                         <Button
                             type="button"
-                            text="Registreer"
+                            text="Register"
                             classname="high-lighted"
                         />
                     </div>
