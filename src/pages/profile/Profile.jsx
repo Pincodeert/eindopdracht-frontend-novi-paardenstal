@@ -1,11 +1,11 @@
-import "./Profiel.css"
+import "./Profile.css"
 import Button from "../../components/button/Button.jsx";
 import axl, {averell, enrollment1, stallYoung3, sweethorse} from "../../constants/testdata.js";
 
 
 
 
-function Profiel() {
+function Profile() {
     return (
         <>
             <header>
@@ -223,4 +223,4 @@ function Profiel() {
     );
 }
 
-export default Profiel;
+export default Profile;
