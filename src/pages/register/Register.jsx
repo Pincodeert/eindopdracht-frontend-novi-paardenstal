@@ -44,6 +44,7 @@ function Register() {
                                 <Button
                                     type="submit"
                                     text="Register"
+                                    note="hier wordt aanmaak nieuwe account getriggerd"
                                     classname="high-lighted"
                                 />
                             </div>

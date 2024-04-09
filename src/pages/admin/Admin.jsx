@@ -22,14 +22,17 @@ function Admin() {
                         <Button
                             type="button"
                             text="Uw gegevens"
+                            note="hier komt een link"
                         />
                         <Button
                             type="button"
                             text="Uw paarden"
+                            note="hier komt een link"
                         />
                         <Button
                             type="button"
                             text="Uw abonnementen"
+                            note="hier komt een link"
                         />
                     </nav>
                     <div className="profile-content-container">

@@ -11,30 +11,35 @@ function NavBar(props) {
                     <Button
                         type="button"
                         text="home"
+                        note="hier komt een link"
                     />
                 </li>
                 <li>
                     <Button
                         type="button"
                         text="stallen"
+                        note="hier komt een link"
                     />
                 </li>
                 <li>
                     <Button
                         type="button"
                         text="abonnementen"
+                        note="hier komt een link"
                     />
                 </li>
                 <li>
                     <Button
                         type="button"
                         text="registreren"
+                        note="hier komt een link"
                     />
                 </li>
                 <li>
                     <Button
                         type="button"
                         text="inloggen"
+                        note="hier komt een link"
                     />
                 </li>
             </ul>

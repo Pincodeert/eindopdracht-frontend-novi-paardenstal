@@ -33,6 +33,7 @@ function Feature(props) {
                 <Button
                     type="button"
                     text={props.buttontext}
+                    note={props.event}
                 />
             </div>
         </article>

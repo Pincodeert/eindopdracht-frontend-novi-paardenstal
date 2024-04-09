@@ -19,6 +19,8 @@ function SubscriptionTile(props) {
             <Button
                 type="button"
                 text="Neem dit abonnement"
+                // note={props.event}
+                note="hier wordt een inschrijfformulier getoond"
             />
         </article>
     );

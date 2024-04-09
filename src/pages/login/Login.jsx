@@ -40,6 +40,7 @@ function Login() {
                                 <Button
                                     type="submit"
                                     text="Log in"
+                                    note="hier wordt de authenticatie getriggerd"
                                     classname="high-lighted"
                                 />
                             </div>
@@ -51,6 +52,7 @@ function Login() {
                         <Button
                             type="button"
                             text="Register"
+                            note="hier komt een link"
                             classname="high-lighted"
                         />
                     </div>

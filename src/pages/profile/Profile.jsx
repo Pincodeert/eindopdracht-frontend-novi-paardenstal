@@ -29,14 +29,17 @@ function Profile() {
                         <Button
                             type="button"
                             text="Uw gegevens"
+                            note="hier komt een link"
                         />
                         <Button
                             type="button"
                             text="Uw paarden"
+                            note="hier komt een link"
                         />
                         <Button
                             type="button"
                             text="Uw abonnementen"
+                            note="hier komt een link"
                         />
                     </nav>
                     <div className="profile-content-container">
@@ -125,7 +128,7 @@ function Profile() {
                                     <tr className="table-body">
                                         <td>{averell.name}</td>
                                         <td>{stallYoung3.name}</td>
-                                        <td>{<Button type="button" text="bekijk"/>}</td>
+                                        <td>{<Button type="button" text="bekijk" note="hier komt toon file"/>}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -173,7 +176,7 @@ function Profile() {
                                     <tr className="table-body">
                                         <td>{averell.name}</td>
                                         <td>{stallYoung3.name}</td>
-                                        <td>{<Button type="button" text="bekijk"/>}</td>
+                                        <td>{<Button type="button" text="bekijk" note="hier komt toon file"/>}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -185,6 +188,7 @@ function Profile() {
                                 <Button
                                     type="button"
                                     text="bereken totale prijs"
+                                    note="hier wordt een helperfunctie getriggerd"
                                 />
                             </div>
                             <div className="subscriptiom-wrapper">
