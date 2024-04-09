@@ -1,11 +1,15 @@
 import "./Profile.css"
 import Button from "../../components/button/Button.jsx";
 import axl, {averell, enrollment1, stallYoung3, sweethorse} from "../../constants/testdata.js";
+import initialsName from "../../helpers/helpers.js";
 
 
 
 
 function Profile() {
+
+
+
     return (
         <>
             <header>
@@ -13,7 +17,7 @@ function Profile() {
                     <div className="inner-container inverted-header">
                         <nav className="header-navigation">
                             <h2>Blaze of Glory</h2>
-                            <div className="profile-icon">AR</div>
+                            <div className="profile-icon">{initialsName(axl.firstName, axl.lastName)}</div>
                         </nav>
 
                     </div>
@@ -46,6 +50,7 @@ function Profile() {
                                 <Button
                                     type="button"
                                     text="wijzig"
+                                    note="hier moet een formulier verschijnen"
                                 />
                             </div>
                             <table className="table">
@@ -83,6 +88,7 @@ function Profile() {
                                     <Button
                                         type="button"
                                         text="wijzig"
+                                        note="hier moet een paard-formulier verschijnen"
                                     />
                                 </div>
                                 <table className="table">
@@ -130,6 +136,7 @@ function Profile() {
                                     <Button
                                         type="button"
                                         text="wijzig"
+                                        note="hier moet een paard-formulier verschijnen"
                                     />
                                 </div>
                                 <table className="table">
@@ -186,6 +193,7 @@ function Profile() {
                                     <Button
                                         type="button"
                                         text="wijzig"
+                                        note="er is een annuleringsverzoek doorgestuurd"
                                     />
                                 </div>
                                 <table className="table">
