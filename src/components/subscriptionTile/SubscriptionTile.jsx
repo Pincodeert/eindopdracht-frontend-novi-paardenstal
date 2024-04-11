@@ -1,6 +1,7 @@
 import star from "../../assets/ster-image.jpg";
 import Button from "../button/Button.jsx";
 import './SubscriptionTile.css';
+import {formatPrice} from "../../helpers/helpers.js";
 
 function SubscriptionTile(props) {
     return (
@@ -14,7 +15,7 @@ function SubscriptionTile(props) {
                 <p>{props.textline4}</p>
 
             </div>
-            <p className="price">€{props.price},-</p>
+            <p className="price">{formatPrice(props.price)}</p>
             <p className={props.classname}>{props.remark}!</p>
             <Button
                 type="button"
