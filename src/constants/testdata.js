@@ -117,12 +117,74 @@ export const averell = {
 };
 
 export const jolly = {
-    subscriptionId: "1",
+    subscriptionId: "2",
     name: "Jolly Jumper abonnement",
-    price: "433,95",
-    typeOfCare: "halfpension",
-    typeOfStall: "grote binnenstal"
+    price: "515,95",
+    typeOfCare: "volpension",
+    typeOfStall: "kleine binnenstal"
 }
+
+export const indoorSubscriptions = [
+    {
+        subscriptionId: "1",
+        name: "Lucky Luke abonnement",
+        price: "490,95",
+        typeOfCare: "halfpension",
+        typeOfStall: "kleine binnenstal"
+    },
+    {
+        subscriptionId: "2",
+        name: "Jolly Jumper abonnement",
+        price: "515,95",
+        typeOfCare: "volpension",
+        typeOfStall: "kleine binnenstal"
+    },
+    {
+        subscriptionId: "3",
+        name: "Joe Dalton abonnement",
+        price: "505,95",
+        typeOfCare: "halfpension",
+        typeOfStall: "grote binnenstal"
+    },
+    {
+        subscriptionId: "4",
+        name: "Jack Dalton abonnement",
+        price: "530,95",
+        typeOfCare: "volpension",
+        typeOfStall: "grote binnenstal"
+    }
+];
+
+export const outdoorSubscriptions = [
+    {
+        subscriptionId: "5",
+        name: "William Dalton abonnement",
+        price: "454,95",
+        typeOfCare: "halfpension",
+        typeOfStall: "kleine buitenstal"
+    },
+    {
+        subscriptionId: "6",
+        name: "Averell Dalton abonnement",
+        price: "479,95",
+        typeOfCare: "volpension",
+        typeOfStall: "kleine buitenstal"
+    },
+    {
+        subscriptionId: "7",
+        name: "Ma Dalton abonnement",
+        price: "499,95",
+        typeOfCare: "halfpension",
+        typeOfStall: "grote buitenstal"
+    },
+    {
+        subscriptionId: "8",
+        name: "Rataplan abonnement",
+        price: "489,95",
+        typeOfCare: "volpension",
+        typeOfStall: "grote buitenstal"
+    }
+];
 
 // voorbeeld abonnement/inschrijving
 export const enrollment1 = {

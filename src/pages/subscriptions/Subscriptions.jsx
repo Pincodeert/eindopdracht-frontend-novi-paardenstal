@@ -5,6 +5,7 @@ import HeaderContent from "../../components/headerContent/HeaderContent.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import star from "../../assets/ster-image.jpg";
 import SubscriptionTile from "../../components/subscriptionTile/SubscriptionTile.jsx";
+import {indoorSubscriptions, outdoorSubscriptions} from "../../constants/testdata.js";
 // import {ReactComponent as Strawicon} from '../../assets/Strawicon.svg';
 // import {ReactComponent as Hay} from "../../assets/Hay.svg";
 
@@ -42,111 +43,46 @@ function Subscriptions() {
                     <div className="inner-container">
                         <h2>Binnen Stal Abonnementen</h2>
                         <div className="subscription-article-wrapper">
-                            <SubscriptionTile
-                                title="Rataplan Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="grote binnen stal"
-                                textline2="volpension"
-                                textline3="inclusief extra's"
-                                textline4="vele extra's"
-                                price="345"
-                                remark="niet meer beschikbaar"
-                                classname="visible"
-                            />
-                            <SubscriptionTile
-                                title="Lucky Luke Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="kleine binnen stal"
-                                textline2="halfpension"
-                                textline3="inclusief verzorging"
-                                textline4="maandelijks opzegbaar"
-                                price="385"
-                                remark="niet meer beschikbaar"
-                                classname="default"
-                            />
-                            <SubscriptionTile
-                                title="Lucky Luke Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="kleine binnen stal"
-                                textline2="halfpension"
-                                textline3="inclusief verzorging"
-                                textline4="maandelijks opzegbaar"
-                                price="385"
-                                remark="niet meer beschikbaar"
-                                classname="visible"
-                            />
-                            <SubscriptionTile
-                                title="Lucky Luke Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="kleine binnen stal"
-                                textline2="halfpension"
-                                textline3="inclusief verzorging"
-                                textline4="maandelijks opzegbaar"
-                                price="385"
-                                remark="niet meer beschikbaar"
-                                classname="default"
-                            />
+                            {indoorSubscriptions.map((indoorSubscription) => {
+                                return <SubscriptionTile
+                                            title={indoorSubscription.name}
+                                            image={star}
+                                            imageinfo="star"
+                                            textline1={indoorSubscription.typeOfStall}
+                                            textline2={indoorSubscription.typeOfCare}
+                                            textline3="inclusief extra's"
+                                            textline4="vele extra's"
+                                            price={indoorSubscription.price}
+                                            remark="niet meer beschikbaar"
+                                            classname="visible"
+                                            key={indoorSubscription.subscriptionId}
+                                        />
+                                })
+                            }
                         </div>
                     </div>
                 </section>
                 <section className="outer-container subscription-section">
                     <div className="inner-container">
-                        <h2>Binnen Stal Abonnementen</h2>
+                        <h2>Buiten Stal Abonnementen</h2>
                         <div className="subscription-article-wrapper">
-                            <SubscriptionTile
-                                title="Rataplan Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="grote binnen stal"
-                                textline2="volpension"
-                                textline3="inclusief extra's"
-                                textline4="vele extra's"
-                                price="345"
-                                remark="niet meer beschikbaar"
-                                classname="visible"
-                            />
-                            <SubscriptionTile
-                                title="Lucky Luke Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="kleine binnen stal"
-                                textline2="halfpension"
-                                textline3="inclusief verzorging"
-                                textline4="maandelijks opzegbaar"
-                                price="385"
-                                remark="niet meer beschikbaar"
-                                classname="default"
-                            />
-                            <SubscriptionTile
-                                title="Lucky Luke Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="kleine binnen stal"
-                                textline2="halfpension"
-                                textline3="inclusief verzorging"
-                                textline4="maandelijks opzegbaar"
-                                price="385"
-                                remark="niet meer beschikbaar"
-                                classname="visible"
-                            />
-                            <SubscriptionTile
-                                title="Lucky Luke Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="kleine binnen stal"
-                                textline2="halfpension"
-                                textline3="inclusief verzorging"
-                                textline4="maandelijks opzegbaar"
-                                price="385"
-                                remark="niet meer beschikbaar"
-                                classname="default"
-                            />
+                            {outdoorSubscriptions.map((outdoorSubscription) => {
+                                return <SubscriptionTile
+                                            title={outdoorSubscription.name}
+                                            image={star}
+                                            imageinfo="star"
+                                            textline1={outdoorSubscription.typeOfStall}
+                                            textline2={outdoorSubscription.typeOfCare}
+                                            textline3="inclusief extra's"
+                                            textline4="vele extra's"
+                                            price={outdoorSubscription.price}
+                                            remark="niet meer beschikbaar"
+                                            classname="default"
+                                            key={outdoorSubscription.subscriptionId}
+                                        />
+                                })
+                            }
                         </div>
-
                     </div>
                 </section>
             </main>
