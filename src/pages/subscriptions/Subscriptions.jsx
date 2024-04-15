@@ -6,10 +6,31 @@ import Footer from "../../components/footer/Footer.jsx";
 import star from "../../assets/ster-image.jpg";
 import SubscriptionTile from "../../components/subscriptionTile/SubscriptionTile.jsx";
 import {indoorSubscriptions, outdoorSubscriptions} from "../../constants/testdata.js";
+// import {s} from "vite/dist/node/types.d-FdqQ54oU.js";
 // import {ReactComponent as Strawicon} from '../../assets/Strawicon.svg';
 // import {ReactComponent as Hay} from "../../assets/Hay.svg";
 
 function Subscriptions() {
+
+    function createSubcriptionsSubCatalog(subcriptions) {
+        const subscriptionsSubCatalog = subcriptions.map((subscription) => {
+            return <SubscriptionTile
+                title={subscription.name}
+                image={star}
+                imageinfo="star"
+                textline1={subscription.typeOfStall}
+                textline2={subscription.typeOfCare}
+                textline3="inclusief extra's"
+                textline4="vele extra's"
+                price={subscription.price}
+                remark="niet meer beschikbaar"
+                classname="visible"
+                key={subscription.subscriptionId}
+            />
+        });
+        return subscriptionsSubCatalog;
+    }
+
     return (
         <>
             <header className="outer-container header-section">
@@ -43,22 +64,7 @@ function Subscriptions() {
                     <div className="inner-container">
                         <h2>Binnen Stal Abonnementen</h2>
                         <div className="subscription-article-wrapper">
-                            {indoorSubscriptions.map((indoorSubscription) => {
-                                return <SubscriptionTile
-                                            title={indoorSubscription.name}
-                                            image={star}
-                                            imageinfo="star"
-                                            textline1={indoorSubscription.typeOfStall}
-                                            textline2={indoorSubscription.typeOfCare}
-                                            textline3="inclusief extra's"
-                                            textline4="vele extra's"
-                                            price={indoorSubscription.price}
-                                            remark="niet meer beschikbaar"
-                                            classname="visible"
-                                            key={indoorSubscription.subscriptionId}
-                                        />
-                                })
-                            }
+                            {createSubcriptionsSubCatalog(indoorSubscriptions)}
                         </div>
                     </div>
                 </section>
@@ -66,22 +72,7 @@ function Subscriptions() {
                     <div className="inner-container">
                         <h2>Buiten Stal Abonnementen</h2>
                         <div className="subscription-article-wrapper">
-                            {outdoorSubscriptions.map((outdoorSubscription) => {
-                                return <SubscriptionTile
-                                            title={outdoorSubscription.name}
-                                            image={star}
-                                            imageinfo="star"
-                                            textline1={outdoorSubscription.typeOfStall}
-                                            textline2={outdoorSubscription.typeOfCare}
-                                            textline3="inclusief extra's"
-                                            textline4="vele extra's"
-                                            price={outdoorSubscription.price}
-                                            remark="niet meer beschikbaar"
-                                            classname="default"
-                                            key={outdoorSubscription.subscriptionId}
-                                        />
-                                })
-                            }
+                            {createSubcriptionsSubCatalog(outdoorSubscriptions)}
                         </div>
                     </div>
                 </section>
