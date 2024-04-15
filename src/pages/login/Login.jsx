@@ -1,6 +1,7 @@
 import NavBar from "../../components/navBar/NavBar.jsx";
 import Button from "../../components/button/Button.jsx";
 import './Login.css'
+import Input from "../../components/input/Input.jsx";
 
 function Login() {
     return (
@@ -27,14 +28,20 @@ function Login() {
                     <div className="form-container">
                         <h2>Inloggen: </h2>
                         <form action="/">
-                            <label htmlFor="username-text-field">
-                                <input type="text" id="username-text-field" name="username"
-                                       placeholder="gebruikersnaam"/>
-                            </label>
-                            <label htmlFor="password-text-field">
-                                <input type="text" id="password-text-field" name="password"
-                                       placeholder="wachtwoord"/>
-                            </label>
+                            <Input
+                                labelFor="username-text-field"
+                                inputType="text"
+                                inputId="username-text-field"
+                                inputName="username"
+                                placeholder="gebruikersnaam"
+                            />
+                            <Input
+                                labelFor="password-text-field"
+                                inputType="text"
+                                inputId="password-text-field"
+                                inputName="password"
+                                placeholder="wachtwoord"
+                            />
                             <div className="form-button-wrapper">
                                 <a href="/">wachtwoord vergeten?</a>
                                 <Button

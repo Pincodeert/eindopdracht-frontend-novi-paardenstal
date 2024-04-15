@@ -124,6 +124,33 @@ export const jolly = {
     typeOfStall: "kleine binnenstal"
 }
 
+export const stalls = [
+    {
+        stallId: "1",
+        name: "El camino",
+        type: "grote binnenstal",
+        size: "3 x 4",
+        isOccupied: "ja",
+        horseId: "2"
+    },
+    {
+        stallId: "2",
+        name: "The Bad",
+        type: "grote binnenstal",
+        size: "3 x 4",
+        isOccupied: "nee",
+        horseId: null
+    },
+    {
+        stallId: "12",
+        name: "Young Guns III",
+        type: "kleine buitenstal",
+        size: "3 x 3",
+        isOccupied: "ja",
+        horseId: "11"
+    }
+]
+
 export const indoorSubscriptions = [
     {
         subscriptionId: "1",
