@@ -57,6 +57,7 @@ function Stalls() {
                                 image={stable}
                                 info="Image by Anna Kaminova-Unsplashed"
                                 buttontext="vol"
+                                // event="hier komt een link"
                                 classname="feature-article"
                             />
                             <Feature
@@ -68,6 +69,7 @@ function Stalls() {
                                 image={straw}
                                 info="Image by Ben shbeen-Unsplashed"
                                 buttontext="laatste stallen!!"
+                                // event="hier komt een link"
                                 classname="feature-article reversed-direction"
                             />
                         </div>
@@ -90,6 +92,7 @@ function Stalls() {
                                 image={stable}
                                 info="Image by Anna Kaminova-Unsplashed"
                                 buttontext="vol"
+                                // event="hier komt een link"
                                 classname="feature-article"
                             />
                             <Feature
@@ -101,6 +104,7 @@ function Stalls() {
                                 image={straw}
                                 info="Image by Ben shbeen-Unsplashed"
                                 buttontext="laatste stallen!!"
+                                // event="hier komt een link"
                                 classname="feature-article reversed-direction"
                             />
                         </div>

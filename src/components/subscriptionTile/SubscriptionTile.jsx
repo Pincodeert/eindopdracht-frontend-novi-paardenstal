@@ -1,10 +1,11 @@
 import star from "../../assets/ster-image.jpg";
 import Button from "../button/Button.jsx";
 import './SubscriptionTile.css';
+import {formatPrice} from "../../helpers/helpers.js";
 
 function SubscriptionTile(props) {
     return (
-        <article className="subscription-article">
+        <article className="subscription-article" key={props.key}>
             <h2>{props.title}</h2>
             <img src={props.image} alt={props.imageinfo}/>
             <div className="subscription-text-wrapper">
@@ -14,11 +15,13 @@ function SubscriptionTile(props) {
                 <p>{props.textline4}</p>
 
             </div>
-            <p className="price">€{props.price},-</p>
+            <p className="price">{formatPrice(props.price)}</p>
             <p className={props.classname}>{props.remark}!</p>
             <Button
                 type="button"
                 text="Neem dit abonnement"
+                // note={props.event}
+                note="hier wordt een inschrijfformulier getoond"
             />
         </article>
     );

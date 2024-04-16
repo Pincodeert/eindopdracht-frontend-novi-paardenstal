@@ -1,11 +1,15 @@
 import "./Profile.css"
 import Button from "../../components/button/Button.jsx";
-import axl, {averell, enrollment1, stallYoung3, sweethorse} from "../../constants/testdata.js";
+import axl, {enrollments, horses} from "../../constants/testdata.js";
+import initialsName from "../../helpers/helpers.js";
 
 
 
 
 function Profile() {
+
+
+
     return (
         <>
             <header>
@@ -13,7 +17,7 @@ function Profile() {
                     <div className="inner-container inverted-header">
                         <nav className="header-navigation">
                             <h2>Blaze of Glory</h2>
-                            <div className="profile-icon">AR</div>
+                            <div className="profile-icon">{initialsName(axl.firstName, axl.lastName)}</div>
                         </nav>
 
                     </div>
@@ -25,14 +29,17 @@ function Profile() {
                         <Button
                             type="button"
                             text="Uw gegevens"
+                            note="hier komt een link"
                         />
                         <Button
                             type="button"
                             text="Uw paarden"
+                            note="hier komt een link"
                         />
                         <Button
                             type="button"
                             text="Uw abonnementen"
+                            note="hier komt een link"
                         />
                     </nav>
                     <div className="profile-content-container">
@@ -46,6 +53,7 @@ function Profile() {
                                 <Button
                                     type="button"
                                     text="wijzig"
+                                    note="hier moet een formulier verschijnen"
                                 />
                             </div>
                             <table className="table">
@@ -77,100 +85,56 @@ function Profile() {
                             <div className="content-title">
                                 <h4>Uw paarden</h4>
                             </div>
-                            <div className="horse-wrapper">
-                                <div className="head-line">
-                                    <p className="horsename">{sweethorse.name}</p>
-                                    <Button
-                                        type="button"
-                                        text="wijzig"
-                                    />
+                            {horses.map((horse) => {
+                                return <div key={horse.horseId} className="horse-wrapper">
+                                    <div className="head-line">
+                                        <p className="horsename">{horse.name}</p>
+                                        <Button
+                                            type="button"
+                                            text="wijzig"
+                                            note="hier moet een paard-formulier verschijnen"
+                                        />
+                                    </div>
+                                    <table className="table">
+                                        <thead>
+                                        <tr className="table-head">
+                                            <th>paardnummer</th>
+                                            <th>type voeding</th>
+                                            <th>type boedembedekking</th>
+                                            <th>naam dierenarts</th>
+                                            <th>woonplaats dierenarts</th>
+                                            <th>telefoonnummer dierenarts</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr className="table-body">
+                                            <td>{horse.horseNumber}</td>
+                                            <td>{horse.typeOfFeed}</td>
+                                            <td>{horse.typeOfBedding}</td>
+                                            <td>{horse.nameOfVet}</td>
+                                            <td>{horse.residenceOfVet}</td>
+                                            <td>{horse.telephoneOfVet}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table className="table">
+                                        <thead>
+                                        <tr className="table-head">
+                                            <th>Abonnement</th>
+                                            <th>Stal</th>
+                                            <th>Paardenpaspoort</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr className="table-body">
+                                            <td>{horse.preferredSubscription.name}</td>
+                                            <td>{horse.stall.name}</td>
+                                            <td>{<Button type="button" text="bekijk" note="hier komt toon file"/>}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <table className="table">
-                                    <thead>
-                                    <tr className="table-head">
-                                        <th>paardnummer</th>
-                                        <th>type voeding</th>
-                                        <th>type boedembedekking</th>
-                                        <th>naam dierenarts</th>
-                                        <th>woonplaats dierenarts</th>
-                                        <th>telefoonnummer dierenarts</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr className="table-body">
-                                        <td>{sweethorse.horseNumber}</td>
-                                        <td>{sweethorse.typeOfFeed}</td>
-                                        <td>{sweethorse.typeOfBedding}</td>
-                                        <td>{sweethorse.nameOfVet}</td>
-                                        <td>{sweethorse.residenceOfVet}</td>
-                                        <td>{sweethorse.telephoneOfVet}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <table className="table">
-                                    <thead>
-                                    <tr className="table-head">
-                                        <th>Abonnement</th>
-                                        <th>Stal</th>
-                                        <th>Paardenpaspoort</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr className="table-body">
-                                        <td>{averell.name}</td>
-                                        <td>{stallYoung3.name}</td>
-                                        <td>{<Button type="button" text="bekijk"/>}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="horse-wrapper">
-                                <div className="head-line">
-                                    <p className="horsename">{sweethorse.name}</p>
-                                    <Button
-                                        type="button"
-                                        text="wijzig"
-                                    />
-                                </div>
-                                <table className="table">
-                                    <thead>
-                                    <tr className="table-head">
-                                        <th>paardnummer</th>
-                                        <th>type voeding</th>
-                                        <th>type boedembedekking</th>
-                                        <th>naam dierenarts</th>
-                                        <th>woonplaats dierenarts</th>
-                                        <th>telefoonnummer dierenarts</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr className="table-body">
-                                        <td>{sweethorse.horseNumber}</td>
-                                        <td>{sweethorse.typeOfFeed}</td>
-                                        <td>{sweethorse.typeOfBedding}</td>
-                                        <td>{sweethorse.nameOfVet}</td>
-                                        <td>{sweethorse.residenceOfVet}</td>
-                                        <td>{sweethorse.telephoneOfVet}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <table className="table">
-                                    <thead>
-                                    <tr className="table-head">
-                                        <th>Abonnement</th>
-                                        <th>Stal</th>
-                                        <th>Paardenpaspoort</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr className="table-body">
-                                        <td>{averell.name}</td>
-                                        <td>{stallYoung3.name}</td>
-                                        <td>{<Button type="button" text="bekijk"/>}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            })}
                         </article>
                         <article className="content-wrapper subscriptions">
                             <div className="content-title">
@@ -178,14 +142,17 @@ function Profile() {
                                 <Button
                                     type="button"
                                     text="bereken totale prijs"
+                                    note="hier wordt een helperfunctie getriggerd"
                                 />
                             </div>
-                            <div className="subscriptiom-wrapper">
+                            {enrollments.map((enrollment) => {
+                                return <div key={enrollment.enrollmentId} className="subscriptiom-wrapper">
                                 <div className="head-line">
-                                    <p className="horsename">Abonnementnummer: {enrollment1.enrollmentId}</p>
+                                    <p className="horsename">Abonnementnummer: {enrollment.enrollmentId}</p>
                                     <Button
                                         type="button"
                                         text="wijzig"
+                                        note="er is een annuleringsverzoek doorgestuurd"
                                     />
                                 </div>
                                 <table className="table">
@@ -203,18 +170,22 @@ function Profile() {
                                     </thead>
                                     <tbody>
                                     <tr className="table-body">
-                                        <td>{averell.name}</td>
-                                        <td>{sweethorse.name}</td>
-                                        <td>{stallYoung3.name}</td>
-                                        <td>{averell.typeOfStall}</td>
-                                        <td>{averell.typeOfCare}</td>
-                                        <td>{enrollment1.startDate}</td>
-                                        <td>{enrollment1.cancellationRequested}</td>
-                                        <td>{averell.price}</td>
+                                        <td>{enrollment.subscription.name}</td>
+                                        <td>{enrollment.horse.name}</td>
+                                        <td>{enrollment.stall.name}</td>
+                                        <td>{enrollment.stall.typeOfStall}</td>
+                                        <td>{enrollment.subscription.typeOfCare}</td>
+                                        <td>{enrollment.startDate}</td>
+                                        <td>{enrollment.cancellationRequested}</td>
+                                        <td>{enrollment.subscription.price}</td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
+                            })}
+                        </article>
+                        <article>
+                            
                         </article>
                     </div>
                 </div>

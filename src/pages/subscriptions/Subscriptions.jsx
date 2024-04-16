@@ -5,10 +5,32 @@ import HeaderContent from "../../components/headerContent/HeaderContent.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import star from "../../assets/ster-image.jpg";
 import SubscriptionTile from "../../components/subscriptionTile/SubscriptionTile.jsx";
+import {indoorSubscriptions, outdoorSubscriptions} from "../../constants/testdata.js";
+// import {s} from "vite/dist/node/types.d-FdqQ54oU.js";
 // import {ReactComponent as Strawicon} from '../../assets/Strawicon.svg';
 // import {ReactComponent as Hay} from "../../assets/Hay.svg";
 
 function Subscriptions() {
+
+    function createSubcriptionsSubCatalog(subcriptions) {
+        const subscriptionsSubCatalog = subcriptions.map((subscription) => {
+            return <SubscriptionTile
+                title={subscription.name}
+                image={star}
+                imageinfo="star"
+                textline1={subscription.typeOfStall}
+                textline2={subscription.typeOfCare}
+                textline3="inclusief extra's"
+                textline4="vele extra's"
+                price={subscription.price}
+                remark="niet meer beschikbaar"
+                classname="visible"
+                key={subscription.subscriptionId}
+            />
+        });
+        return subscriptionsSubCatalog;
+    }
+
     return (
         <>
             <header className="outer-container header-section">
@@ -42,111 +64,16 @@ function Subscriptions() {
                     <div className="inner-container">
                         <h2>Binnen Stal Abonnementen</h2>
                         <div className="subscription-article-wrapper">
-                            <SubscriptionTile
-                                title="Rataplan Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="grote binnen stal"
-                                textline2="volpension"
-                                textline3="inclusief extra's"
-                                textline4="vele extra's"
-                                price="345"
-                                remark="niet meer beschikbaar"
-                                classname="visible"
-                            />
-                            <SubscriptionTile
-                                title="Lucky Luke Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="kleine binnen stal"
-                                textline2="halfpension"
-                                textline3="inclusief verzorging"
-                                textline4="maandelijks opzegbaar"
-                                price="385"
-                                remark="niet meer beschikbaar"
-                                classname="default"
-                            />
-                            <SubscriptionTile
-                                title="Lucky Luke Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="kleine binnen stal"
-                                textline2="halfpension"
-                                textline3="inclusief verzorging"
-                                textline4="maandelijks opzegbaar"
-                                price="385"
-                                remark="niet meer beschikbaar"
-                                classname="visible"
-                            />
-                            <SubscriptionTile
-                                title="Lucky Luke Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="kleine binnen stal"
-                                textline2="halfpension"
-                                textline3="inclusief verzorging"
-                                textline4="maandelijks opzegbaar"
-                                price="385"
-                                remark="niet meer beschikbaar"
-                                classname="default"
-                            />
+                            {createSubcriptionsSubCatalog(indoorSubscriptions)}
                         </div>
                     </div>
                 </section>
                 <section className="outer-container subscription-section">
                     <div className="inner-container">
-                        <h2>Binnen Stal Abonnementen</h2>
+                        <h2>Buiten Stal Abonnementen</h2>
                         <div className="subscription-article-wrapper">
-                            <SubscriptionTile
-                                title="Rataplan Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="grote binnen stal"
-                                textline2="volpension"
-                                textline3="inclusief extra's"
-                                textline4="vele extra's"
-                                price="345"
-                                remark="niet meer beschikbaar"
-                                classname="visible"
-                            />
-                            <SubscriptionTile
-                                title="Lucky Luke Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="kleine binnen stal"
-                                textline2="halfpension"
-                                textline3="inclusief verzorging"
-                                textline4="maandelijks opzegbaar"
-                                price="385"
-                                remark="niet meer beschikbaar"
-                                classname="default"
-                            />
-                            <SubscriptionTile
-                                title="Lucky Luke Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="kleine binnen stal"
-                                textline2="halfpension"
-                                textline3="inclusief verzorging"
-                                textline4="maandelijks opzegbaar"
-                                price="385"
-                                remark="niet meer beschikbaar"
-                                classname="visible"
-                            />
-                            <SubscriptionTile
-                                title="Lucky Luke Abonnement"
-                                image={star}
-                                imageinfo="star"
-                                textline1="kleine binnen stal"
-                                textline2="halfpension"
-                                textline3="inclusief verzorging"
-                                textline4="maandelijks opzegbaar"
-                                price="385"
-                                remark="niet meer beschikbaar"
-                                classname="default"
-                            />
+                            {createSubcriptionsSubCatalog(outdoorSubscriptions)}
                         </div>
-
                     </div>
                 </section>
             </main>

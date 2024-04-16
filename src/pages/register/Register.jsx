@@ -2,6 +2,7 @@ import NavBar from "../../components/navBar/NavBar.jsx";
 import Button from "../../components/button/Button.jsx";
 import nico from "../../assets/Nico-wijs.jpg";
 import './Register.css'
+import Input from "../../components/input/Input.jsx";
 
 function Register() {
     return (
@@ -28,22 +29,32 @@ function Register() {
                     <div className="form-container">
                         <h2>Register hier: </h2>
                         <form action="/">
-                            <label htmlFor="username-text-field">
-                                <input type="text" id="username-text-field" name="username"
-                                       placeholder="gebruikersnaam"/>
-                            </label>
-                            <label htmlFor="password-text-field">
-                                <input type="text" id="password-text-field" name="password"
-                                       placeholder="wachtwoord"/>
-                            </label>
-                            <label htmlFor="email-field">
-                                <input type="email" id="email-field" name="email"
-                                       placeholder="e-mail"/>
-                            </label>
+                            <Input
+                                labelFor="username-text-field"
+                                inputType="text"
+                                inputId="username-text-field"
+                                inputName="username"
+                                placeholder="gebruikersnaam"
+                            />
+                            <Input
+                                labelFor="password-text-field"
+                                inputType="password"
+                                inputId="password-text-field"
+                                inputName="password"
+                                placeholder="wachtwoord"
+                            />
+                            <Input
+                                labelFor="email-field"
+                                inputType="email"
+                                inputId="email-field"
+                                inputName="email"
+                                placeholder="e-mail"
+                            />
                             <div className="form-button-wrapper">
                                 <Button
                                     type="submit"
-                                    text="Register"
+                                    text="Registeer"
+                                    note="hier wordt aanmaak nieuwe account getriggerd"
                                     classname="high-lighted"
                                 />
                             </div>

@@ -1,0 +1,48 @@
+.intro-line {
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.step-wrapper {
+    /*border: 2px solid var(--orange);*/
+    border-radius: 8px;
+    padding: 20px;
+    margin: 30px 0;
+    background-color: hsl(54 8% 63%);
+}
+
+a {
+    /*color: var(--army);*/
+}
+
+.step-wrapper p {
+    padding: 10px 0;
+}
+
+h4  {
+    margin-bottom: 20px;
+}
+
+.horizontal {
+    display: inline-block;
+}
+
+select, option {
+    background-color: var(--pale);
+    padding: 10px;
+}
+
+.label-input-combi {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    /*border: 2px solid plum;*/
+}
+
+.checkbox {
+    width: 30px;
+}

@@ -90,6 +90,7 @@ function Home() {
                             <Button
                             type={button}
                             text="Abonneer"
+                            note="hier komt een link"
                             classname="high-lighted"
                             />
                         </div>
@@ -113,6 +114,7 @@ function Home() {
                                 image={stable}
                                 info="Image by Anna Kaminova-Unsplashed"
                                 buttontext="naar de stallen"
+                                event="hier komt een link"
                                 classname="feature-article"
                             />
                             <Feature
@@ -124,6 +126,7 @@ function Home() {
                                 image={straw}
                                 info="Image by Ben shbeen-Unsplashed"
                                 buttontext="naar de abonnementen en tarieven"
+                                event="hier komt een link"
                                 classname="feature-article reversed-direction"
                             />
 
@@ -136,6 +139,7 @@ function Home() {
                                 image={stable}
                                 info="Image by Anna Kaminova-Unsplashed"
                                 buttontext="naar onze extra's"
+                                event="hier komt een link"
                                 classname="feature-article"
                             />
                         </div>
@@ -171,6 +175,7 @@ function Home() {
                             <Button
                                 type={button}
                                 text="Abonneer"
+                                note="hier komt een link"
                                 classname="high-lighted"
                             />
                         </div>
