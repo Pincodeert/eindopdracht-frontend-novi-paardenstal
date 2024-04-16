@@ -13,4 +13,8 @@ export function formatPrice(price) {
     return "€" + price + ",-";
 }
 
+export function generateSubscriptionDetails(subscription) {
+    return `${subscription.typeOfStall} - ${subscription.typeOfCare} - ${formatPrice(subscription.price)} - maandelijks opzegbaar`;
+}
+
 export default initialsName;

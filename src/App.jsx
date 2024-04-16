@@ -6,6 +6,7 @@ import Login from "./pages/login/Login.jsx";
 import Register from "./pages/register/Register.jsx";
 import Profile from "./pages/profile/Profile.jsx";
 import Admin from "./pages/admin/Admin.jsx";
+import Subscribe from "./pages/subscribe/Subscribe.jsx";
 
 function App() {
 
@@ -15,9 +16,10 @@ function App() {
     <Stalls />,
     <Subscriptions />,
     <Login />,
-    <Register />
-    // <Profile />,
-    // <Admin />
+    <Register />,
+    <Profile />,
+    <Admin />,
+    <Subscribe />
   )
 }
 

@@ -37,7 +37,7 @@ function Login() {
                             />
                             <Input
                                 labelFor="password-text-field"
-                                inputType="text"
+                                inputType="password"
                                 inputId="password-text-field"
                                 inputName="password"
                                 placeholder="wachtwoord"
