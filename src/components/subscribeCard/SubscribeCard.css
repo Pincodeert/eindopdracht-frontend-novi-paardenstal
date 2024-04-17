@@ -1,0 +1,23 @@
+.subscribe-card {
+    /*border: 2px solid var(--orange);*/
+    border-radius: 8px;
+    padding: 20px;
+    margin: 30px 0;
+    background-color: hsl(54 8% 63%);
+}
+
+.italic {
+    font-style: italic;
+}
+
+/*deze stijlregels toegevoegd, omdat component anders de stijlregels toepast die gedefinieerd zijn in de Profile.css voor:
+article h4 {
+    background-color: var(--army);
+    color: var(--pale);
+    padding: 8px 15px;
+}*/
+ .subscribe-card h4  {
+    margin-bottom: 20px;
+    background-color: hsl(54 8% 63%);
+    color: var(--army);
+}

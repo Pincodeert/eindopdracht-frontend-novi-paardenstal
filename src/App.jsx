@@ -18,8 +18,9 @@ function App() {
     <Login />,
     <Register />,
     <Profile />,
-    <Admin />,
     <Subscribe />
+    // <Admin />
+
   )
 }
 

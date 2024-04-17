@@ -7,7 +7,8 @@ import star from "../../assets/ster-image.jpg";
 import SubscriptionTile from "../../components/subscriptionTile/SubscriptionTile.jsx";
 import {indoorSubscriptions, outdoorSubscriptions} from "../../constants/testdata.js";
 // import {s} from "vite/dist/node/types.d-FdqQ54oU.js";
-// import {ReactComponent as Strawicon} from '../../assets/Strawicon.svg';
+// import {ReactComponent as StrawIcon} from '../../assets/strawIcon.svg';
+// import { ReactComponent as Hay } from '../../assets/Hay.svg';
 // import {ReactComponent as Hay} from "../../assets/Hay.svg";
 
 function Subscriptions() {
@@ -52,6 +53,8 @@ function Subscriptions() {
                                 dolor sit amet, consectetur adipisicing elit. At consectetur corporis deleniti dolor,
                                 est necessitatibus officiis pariatur sapiente sint temporibus.
                             </p>
+                            {/*<StrawIcon className="straw-icon" />*/}
+                            {/*<Hay />*/}
                             <div>
                                 <img className="star-image" src={star} alt="ster"/>
                                 <img className="star-image" src={star} alt="ster"/>
