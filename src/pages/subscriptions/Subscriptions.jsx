@@ -18,6 +18,7 @@ function Subscriptions() {
             return <SubscriptionTile
                 title={subscription.name}
                 image={star}
+                // image={subscription.subscriptionId}
                 imageinfo="star"
                 textline1={subscription.typeOfStall}
                 textline2={subscription.typeOfCare}
@@ -25,7 +26,8 @@ function Subscriptions() {
                 textline4="vele extra's"
                 price={subscription.price}
                 remark="niet meer beschikbaar"
-                classname="visible"
+                // classname="visible"
+                isSoldOut={false}
                 key={subscription.subscriptionId}
             />
         });

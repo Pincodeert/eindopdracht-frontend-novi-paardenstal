@@ -9,6 +9,7 @@ function Button(props) {
             type={props.type}
             className={props.classname}
             onClick={() =>logClick(props.note)}
+            disabled={props.disabled}
         >
             {props.text}
         </button>

@@ -109,6 +109,11 @@ h2 {
 .intro-image {
     flex-basis: 400px;
     padding: 0 10px;
+    /*box-shadow: 4px 4px 10px var(--army);*/
+}
+
+.intro-image img {
+    box-shadow: 4px 4px 10px var(--army);
 }
 
 /*.intro-section img {*/
