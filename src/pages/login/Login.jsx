@@ -1,9 +1,16 @@
 import NavBar from "../../components/navBar/NavBar.jsx";
 import Button from "../../components/button/Button.jsx";
 import './Login.css'
-import Input from "../../components/input/Input.jsx";
+import TextInput from "../../components/textInput/TextInput.jsx";
+import {useState} from "react";
 
 function Login() {
+
+    const [usernameValue, setUsernameValue] = useState("");
+    const [passwordValue, setPasswordValue] = useState("");
+
+    console.log(usernameValue, passwordValue);
+
     return (
         <>
             <header >
@@ -28,20 +35,24 @@ function Login() {
                     <div className="form-container">
                         <h2>Inloggen: </h2>
                         <form action="/">
-                            <Input
+                            <TextInput
                                 labelFor="username-text-field"
-                                inputType="text"
                                 inputId="username-text-field"
                                 inputName="username"
+                                textValue={usernameValue}
+                                setTextValue={setUsernameValue}
                                 placeholder="gebruikersnaam"
                             />
-                            <Input
-                                labelFor="password-text-field"
-                                inputType="password"
-                                inputId="password-text-field"
-                                inputName="password"
-                                placeholder="wachtwoord"
-                            />
+                            <label htmlFor="password-field">
+                                <input
+                                    type="password"
+                                    placeholder="wachtwoord"
+                                    id="password-field"
+                                    name="password"
+                                    value={passwordValue}
+                                    onChange={(e) => setPasswordValue(e.target.value)}
+                                />
+                            </label>
                             <div className="form-button-wrapper">
                                 <a href="/">wachtwoord vergeten?</a>
                                 <Button

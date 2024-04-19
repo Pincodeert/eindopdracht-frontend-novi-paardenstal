@@ -33,7 +33,6 @@
     flex-direction: column;
     height: 307px;
     margin-top: 30px;
-    border:2px solid plum;
 }
 
 .form-container {
@@ -69,7 +68,7 @@ form {
     flex-direction: column;
 }
 
-/*input {*/
+/*textInput {*/
 /*    width: 100%;*/
 /*    padding: 20px 10px;*/
 /*    margin: 7px 0;*/

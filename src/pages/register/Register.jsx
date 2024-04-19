@@ -2,9 +2,17 @@ import NavBar from "../../components/navBar/NavBar.jsx";
 import Button from "../../components/button/Button.jsx";
 import nico from "../../assets/Nico-wijs.jpg";
 import './Register.css'
-import Input from "../../components/input/Input.jsx";
+import TextInput from "../../components/textInput/TextInput.jsx";
+import React, {useState} from "react";
 
 function Register() {
+
+    const [usernameValue, setUsernameValue] = useState("");
+    const [passwordValue, setPasswordValue] = useState("");
+    const [emailValue, setEmailValue] = useState("");
+
+    console.log(usernameValue, passwordValue, emailValue);
+
     return (
         <>
             <header>
@@ -29,27 +37,34 @@ function Register() {
                     <div className="form-container">
                         <h2>Register hier: </h2>
                         <form action="/">
-                            <Input
+                            <TextInput
                                 labelFor="username-text-field"
-                                inputType="text"
                                 inputId="username-text-field"
                                 inputName="username"
                                 placeholder="gebruikersnaam"
+                                textValue={usernameValue}
+                                setTextValue={setUsernameValue}
                             />
-                            <Input
-                                labelFor="password-text-field"
-                                inputType="password"
-                                inputId="password-text-field"
-                                inputName="password"
-                                placeholder="wachtwoord"
-                            />
-                            <Input
-                                labelFor="email-field"
-                                inputType="email"
-                                inputId="email-field"
-                                inputName="email"
-                                placeholder="e-mail"
-                            />
+                            <label htmlFor="password-field">
+                                <input
+                                    type="password"
+                                    placeholder="wachtwoord"
+                                    id="password-field"
+                                    name="password"
+                                    value={passwordValue}
+                                    onChange={(e) => setPasswordValue(e.target.value)}
+                                />
+                            </label>
+                            <label htmlFor="email-field">
+                                <input
+                                    type="email"
+                                    id="email-field"
+                                    name="email"
+                                    placeholder="e-mail"
+                                    value={emailValue}
+                                    onChange={(e) => setEmailValue(e.target.value)}
+                                />
+                            </label>
                             <div className="form-button-wrapper">
                                 <Button
                                     type="submit"
@@ -60,7 +75,7 @@ function Register() {
                             </div>
                         </form>
                     </div>
-                    <div className="info-container">
+                    <div className="register-info-container">
                         <img src={nico} alt="nico"/>
                     </div>
                 </section>
