@@ -3,6 +3,7 @@ import stable from "../../assets/anna-kaminova-cCsbIhfjfTY-unsplash.jpg";
 import button from "../button/Button.jsx";
 import Button from "../button/Button.jsx";
 import './Feature.css';
+import {Link, NavLink} from "react-router-dom";
 
 function Feature(props) {
     return (
@@ -30,11 +31,12 @@ function Feature(props) {
                                     <span>
                                     <img src={props.image} alt={props.info}/>
                                     </span>
-                <Button
-                    type="button"
-                    text={props.buttontext}
-                    note={props.event}
-                />
+                {/*<Button*/}
+                {/*    type="button"*/}
+                {/*    text={props.buttontext}*/}
+                {/*    note={props.event}*/}
+                {/*/>*/}
+                <Link to="/stallen">{props.linkText}</Link>
             </div>
         </article>
     );

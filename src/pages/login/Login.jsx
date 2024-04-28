@@ -3,13 +3,21 @@ import Button from "../../components/button/Button.jsx";
 import './Login.css'
 import TextInput from "../../components/textInput/TextInput.jsx";
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 function Login() {
+    const navigate = useNavigate();
 
     const [usernameValue, setUsernameValue] = useState("");
     const [passwordValue, setPasswordValue] = useState("");
 
     console.log(usernameValue, passwordValue);
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log("je bent nu ingelogd");
+        navigate("/profiel/:klantId")
+    }
 
     return (
         <>
@@ -34,7 +42,7 @@ function Login() {
                 <section className="inner-container content-section">
                     <div className="form-container">
                         <h2>Inloggen: </h2>
-                        <form action="/">
+                        <form onSubmit={handleSubmit}>
                             <TextInput
                                 labelFor="username-text-field"
                                 inputId="username-text-field"
@@ -54,11 +62,10 @@ function Login() {
                                 />
                             </label>
                             <div className="form-button-wrapper">
-                                <a href="/">wachtwoord vergeten?</a>
+                                <a href="https://www.seniorweb.nl/tip/sterk-wachtwoord-maken-onthouden" target="_blank">wachtwoord vergeten?</a>
                                 <Button
                                     type="submit"
                                     text="Log in"
-                                    note="hier wordt de authenticatie getriggerd"
                                     classname="high-lighted"
                                 />
                             </div>
@@ -69,8 +76,8 @@ function Login() {
                         <p className="info-line">Maak dan nu een gratis account aan en word lid!</p>
                         <Button
                             type="button"
-                            text="Register"
-                            note="hier komt een link"
+                            text="Registreer"
+                            handleClick={() => navigate("/registreer")}
                             classname="high-lighted"
                         />
                     </div>

@@ -1,6 +1,7 @@
 import './Admin.css';
 import Button from "../../components/button/Button.jsx";
 import axl from "../../constants/testdata.js";
+import {Link} from "react-router-dom";
 
 function Admin() {
     return (
@@ -9,7 +10,8 @@ function Admin() {
                 <section className="outer-container">
                     <div className="inner-container inverted-header">
                         <nav className="header-navigation">
-                            <h2>Blaze of Glory</h2>
+                            {/*<h2>Blaze of Glory</h2>*/}
+                            <Link to="/"><h2>Blaze of Glory</h2></Link>
                             <h3>Here to make your day</h3>
                             <div className="profile-icon">CE</div>
                         </nav>
@@ -19,20 +21,43 @@ function Admin() {
             <main className="outer-container outer-profile-container">
                 <div className="inner-container inner-profile-container">
                     <nav className="side-nav">
+                        <h2>Menu</h2>
+                        <h3>Stallen</h3>
+                        <Link><h3>Stallen</h3></Link>
                         <Button
                             type="button"
-                            text="Uw gegevens"
+                            text="alle stallen"
                             note="hier komt een link"
                         />
                         <Button
                             type="button"
-                            text="Uw paarden"
+                            text="zoek stal"
                             note="hier komt een link"
                         />
                         <Button
                             type="button"
-                            text="Uw abonnementen"
+                            text="voeg stal toe"
                             note="hier komt een link"
+                        />
+                        <Link><h3>Abonnementsoorten</h3></Link>
+                        <Link><h3>Klanten</h3></Link>
+                        <Link><h3>Paarden</h3></Link>
+                        <Link><h3>Inschrijvingen</h3></Link>
+                        <Button
+                            type="button"
+                            text="toon nieuwe aanvragen"
+                        />
+                        <Button
+                            type="button"
+                            text="toon annuleringsverzoeken"
+                        />
+                        <Button
+                            type="button"
+                            text="maak nieuwe inschrijving aan"
+                        />
+                        <Button
+                            type="button"
+                            text="toon cijfers"
                         />
                     </nav>
                     <div className="profile-content-container">

@@ -1,5 +1,5 @@
 import "./TextInput.css"
-function TextInput({labelFor, labelText, inputId, inputName, textValue, setTextValue, placeholder}) {
+function TextInput({labelFor, labelText, inputId, inputName, textValue, changeHandler, placeholder}) {
     return (
         <label htmlFor={labelFor}>
             {labelText}
@@ -7,7 +7,7 @@ function TextInput({labelFor, labelText, inputId, inputName, textValue, setTextV
                 id={inputId}
                 name={inputName}
                 value={textValue}
-                onChange={(e) => setTextValue(e.target.value)}
+                onChange={changeHandler}
                 placeholder={placeholder}
             />
         </label>

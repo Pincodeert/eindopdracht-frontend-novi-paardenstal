@@ -14,9 +14,11 @@ import Usp from "../../components/usp/Usp.jsx";
 import HeaderContent from "../../components/headerContent/HeaderContent.jsx";
 import Testimonial from "../../components/testimonial/Testimonial.jsx";
 import Feature from "../../components/feature/Feature.jsx";
+import {useNavigate} from "react-router-dom";
 
 function Home() {
 
+    const navigate = useNavigate();
 // function logClick() {
 //     console.log("YEZZZ!")
 // }
@@ -90,7 +92,7 @@ function Home() {
                             <Button
                             type={button}
                             text="Abonneer"
-                            note="hier komt een link"
+                            handleClick={() => navigate("/abonnementen")}
                             classname="high-lighted"
                             />
                         </div>
@@ -113,7 +115,7 @@ function Home() {
                                 item4="in vino veritas est"
                                 image={stable}
                                 info="Image by Anna Kaminova-Unsplashed"
-                                buttontext="naar de stallen"
+                                linkText="naar onze stallen"
                                 event="hier komt een link"
                                 classname="feature-article"
                             />
@@ -125,7 +127,7 @@ function Home() {
                                 item4="tumor dolor calor rubor"
                                 image={straw}
                                 info="Image by Ben shbeen-Unsplashed"
-                                buttontext="naar de abonnementen en tarieven"
+                                linkText="naar onze abonnementen en tarieven"
                                 event="hier komt een link"
                                 classname="feature-article reversed-direction"
                             />
@@ -138,7 +140,7 @@ function Home() {
                                 item4="contusio cerebri"
                                 image={stable}
                                 info="Image by Anna Kaminova-Unsplashed"
-                                buttontext="naar onze extra's"
+                                linkText="naar onze extra's"
                                 event="hier komt een link"
                                 classname="feature-article"
                             />
@@ -175,7 +177,7 @@ function Home() {
                             <Button
                                 type={button}
                                 text="Abonneer"
-                                note="hier komt een link"
+                                handleClick={() => navigate("/abonnementen")}
                                 classname="high-lighted"
                             />
                         </div>

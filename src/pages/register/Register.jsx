@@ -4,14 +4,22 @@ import nico from "../../assets/Nico-wijs.jpg";
 import './Register.css'
 import TextInput from "../../components/textInput/TextInput.jsx";
 import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 function Register() {
+const navigate = useNavigate();
 
     const [usernameValue, setUsernameValue] = useState("");
     const [passwordValue, setPasswordValue] = useState("");
     const [emailValue, setEmailValue] = useState("");
 
     console.log(usernameValue, passwordValue, emailValue);
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log("ha verstuurd")
+        navigate("/inschrijven/:userId")
+    }
 
     return (
         <>
@@ -36,7 +44,7 @@ function Register() {
                 <section className="inner-container content-section">
                     <div className="form-container">
                         <h2>Register hier: </h2>
-                        <form action="/">
+                        <form onSubmit={handleSubmit}>
                             <TextInput
                                 labelFor="username-text-field"
                                 inputId="username-text-field"
@@ -69,7 +77,6 @@ function Register() {
                                 <Button
                                     type="submit"
                                     text="Registeer"
-                                    note="hier wordt aanmaak nieuwe account getriggerd"
                                     classname="high-lighted"
                                 />
                             </div>

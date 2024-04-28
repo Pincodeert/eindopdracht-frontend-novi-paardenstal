@@ -2,12 +2,12 @@ import "./Profile.css"
 import Button from "../../components/button/Button.jsx";
 import axl, {enrollments, horses} from "../../constants/testdata.js";
 import initialsName from "../../helpers/helpers.js";
-
-
-
+import {Link, useNavigate} from "react-router-dom";
+import calculateCustomersPrice from "../../helpers/calculateCustomersPrice.js";
 
 function Profile() {
 
+    const navigate = useNavigate();
 
 
     return (
@@ -16,7 +16,8 @@ function Profile() {
                 <section className="outer-container">
                     <div className="inner-container inverted-header">
                         <nav className="header-navigation">
-                            <h2>Blaze of Glory</h2>
+                            {/*<h2>Blaze of Glory</h2>*/}
+                            <Link to="/"><h2>Blaze of Glory</h2></Link>
                             <div className="profile-icon">{initialsName(axl.firstName, axl.lastName)}</div>
                         </nav>
 
@@ -26,20 +27,19 @@ function Profile() {
             <main className="outer-container outer-profile-container">
                 <div className="inner-container inner-profile-container">
                     <nav className="side-nav">
+                        <h2>Menu</h2>
+                        <Link to="#yourpersonalia">Uw gegevens</Link>
+                        <Link to="#yourhorses">Uw paarden</Link>
+                        <Link to="#yoursubscriptions">Uw abonnementen</Link>
                         <Button
                             type="button"
-                            text="Uw gegevens"
-                            note="hier komt een link"
+                            text="Vraag nieuw abonnement aan"
+                            handleClick={() => navigate("/abonnementen")}
                         />
                         <Button
                             type="button"
-                            text="Uw paarden"
-                            note="hier komt een link"
-                        />
-                        <Button
-                            type="button"
-                            text="Uw abonnementen"
-                            note="hier komt een link"
+                            text="bereken uw totale abonnemenstkosten"
+                            handleClick={calculateCustomersPrice}
                         />
                     </nav>
                     <div className="profile-content-container">
@@ -47,7 +47,7 @@ function Profile() {
                             <h3>Welkom {axl.firstName} {axl.lastName}</h3>
                             <p>klantnummer: {axl.customerProfileId} </p>
                         </div>
-                        <article className="content-wrapper persona">
+                        <article id="yourpersonalia" className="content-wrapper persona">
                             <div className="content-title">
                                 <h4>Uw gegevens</h4>
                                 <Button
@@ -58,30 +58,30 @@ function Profile() {
                             </div>
                             <table className="table">
                                 <thead>
-                                    <tr className="table-head">
-                                        <th>adres:</th>
-                                        <th>huisnummer:</th>
-                                        <th>postcode</th>
-                                        <th>plaats</th>
-                                        <th>telefoonnumer</th>
-                                        <th>e-mail</th>
-                                        <th>IBAN</th>
-                                    </tr>
+                                <tr className="table-head">
+                                    <th>adres:</th>
+                                    <th>huisnummer:</th>
+                                    <th>postcode</th>
+                                    <th>plaats</th>
+                                    <th>telefoonnumer</th>
+                                    <th>e-mail</th>
+                                    <th>IBAN</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="table-body">
-                                        <td>{axl.street}</td>
-                                        <td>{axl.houseNumber}</td>
-                                        <td>{axl.postalCode}</td>
-                                        <td>{axl.residence}</td>
-                                        <td>{axl.telephoneNumber}</td>
-                                        <td>{axl.emailAddress}</td>
-                                        <td>{axl.bankAccountNumber}</td>
-                                    </tr>
+                                <tr className="table-body">
+                                    <td>{axl.street}</td>
+                                    <td>{axl.houseNumber}</td>
+                                    <td>{axl.postalCode}</td>
+                                    <td>{axl.residence}</td>
+                                    <td>{axl.telephoneNumber}</td>
+                                    <td>{axl.emailAddress}</td>
+                                    <td>{axl.bankAccountNumber}</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </article>
-                        <article className="content-wrapper horses">
+                        <article id="yourhorses" className="content-wrapper horses">
                             <div className="content-title">
                                 <h4>Uw paarden</h4>
                             </div>
@@ -136,7 +136,7 @@ function Profile() {
                                 </div>
                             })}
                         </article>
-                        <article className="content-wrapper subscriptions">
+                        <article id="yoursubscriptions" className="content-wrapper subscriptions">
                             <div className="content-title">
                                 <h4>Uw abonnementen</h4>
                                 <Button
@@ -147,45 +147,45 @@ function Profile() {
                             </div>
                             {enrollments.map((enrollment) => {
                                 return <div key={enrollment.enrollmentId} className="subscriptiom-wrapper">
-                                <div className="head-line">
-                                    <p className="horsename">Abonnementnummer: {enrollment.enrollmentId}</p>
-                                    <Button
-                                        type="button"
-                                        text="wijzig"
-                                        note="er is een annuleringsverzoek doorgestuurd"
-                                    />
+                                    <div className="head-line">
+                                        <p className="horsename">Abonnementnummer: {enrollment.enrollmentId}</p>
+                                        <Button
+                                            type="button"
+                                            text="wijzig"
+                                            note="er is een annuleringsverzoek doorgestuurd"
+                                        />
+                                    </div>
+                                    <table className="table">
+                                        <thead>
+                                        <tr className="table-head">
+                                            <th>abonnement type</th>
+                                            <th>paard</th>
+                                            <th>stalnaam</th>
+                                            <th>type stal</th>
+                                            <th>type verzorging</th>
+                                            <th>start-datum</th>
+                                            <th>annulering aangevraagd</th>
+                                            <th>prijs</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr className="table-body">
+                                            <td>{enrollment.subscription.name}</td>
+                                            <td>{enrollment.horse.name}</td>
+                                            <td>{enrollment.stall.name}</td>
+                                            <td>{enrollment.stall.typeOfStall}</td>
+                                            <td>{enrollment.subscription.typeOfCare}</td>
+                                            <td>{enrollment.startDate}</td>
+                                            <td>{enrollment.cancellationRequested}</td>
+                                            <td>{enrollment.subscription.price}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <table className="table">
-                                    <thead>
-                                    <tr className="table-head">
-                                        <th>abonnement type</th>
-                                        <th>paard</th>
-                                        <th>stalnaam</th>
-                                        <th>type stal</th>
-                                        <th>type verzorging</th>
-                                        <th>start-datum</th>
-                                        <th>annulering aangevraagd</th>
-                                        <th>prijs</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr className="table-body">
-                                        <td>{enrollment.subscription.name}</td>
-                                        <td>{enrollment.horse.name}</td>
-                                        <td>{enrollment.stall.name}</td>
-                                        <td>{enrollment.stall.typeOfStall}</td>
-                                        <td>{enrollment.subscription.typeOfCare}</td>
-                                        <td>{enrollment.startDate}</td>
-                                        <td>{enrollment.cancellationRequested}</td>
-                                        <td>{enrollment.subscription.price}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
                             })}
                         </article>
                         <article>
-                            
+
                         </article>
                     </div>
                 </div>

@@ -8,33 +8,36 @@ import Button from "../../components/button/Button.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import SubscribeCard from "../../components/subscribeCard/SubscribeCard.jsx";
 import React, {useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 
 function Subscribe() {
+    const navigate = useNavigate();
 
-    const [firstNameValue, setFirstNameValue] = useState("");
-    const [lastNameValue, setLastNameValue] = useState("");
-    const [streetValue, setStreetValue] = useState("");
-    const [houseNumberValue, setHouseNumberValue] = useState("");
-    const [zipcodeValue, setZipcodeValue] = useState("");
-    const [residenceValue, setResidenceValue] = useState("");
-    const [emailValue, setEmailValue] = useState("");
-    const [telephoneValue, setTelephoneValue] = useState("");
-    const [bankAccountValue, setbankAccountValue] = useState("");
-    const [horseNameValue, setHorseNameValue] = useState("");
-    const [horseNumberValue, setHorseNumberValue] = useState("");
-    // const [typeOfFeedValue, setTypeOfFeedValue] = useState("");
-    // const [typeOfBeddingValue, SetTypeOfBeddingValue] = useState("");
-    const [vetNameValue, setVetNameValue] = useState("");
-    const [vetResidenceValue, setVetResidenceValue] = useState("");
-    const [vetTelephoneValue, setVetTelephoneValue] = useState("");
     const [termsAndConditionsValue, toggleTermsAndConditionsValue] = useState(false);
     // const [imageValue, setImageValue] = useState("");
 
     const [customerFormState, setCustomerFormState] = useState({
-        // firstname: "",
+        firstname: "",
+        lastname: "",
+        street: "",
+        houseNumber: "",
+        zipcode: "",
+        residence: "",
         email: "",
         telephone: "",
+        bankAccount: "",
     });
+
+    const [horseFormState, setHorseFormState] = useState({
+        horseName: "",
+        horseNumber: "",
+        typeOfFeed: "hay",
+        typeOfbedding: "straw",
+        vet: "",
+        residenceOfVet: "",
+        telephoneOfVet: "",
+    });
+
 
     function handleCustomerChange(e) {
         const changedFieldName = e.target.name;
@@ -45,12 +48,6 @@ function Subscribe() {
         })
         console.log(customerFormState);
     }
-
-    const [horseFormState, setHorseFormState] = useState({
-        typeOfFeed: "hay",
-        typeOfbedding: "straw",
-        telephoneOfVet: "",
-    });
 
     function handleHorseChange(e) {
         const changedFieldName = e.target.name;
@@ -79,13 +76,12 @@ function Subscribe() {
 
     function handleSubmitCustomer(e) {
         e.preventDefault();
-        console.log(firstNameValue, lastNameValue, streetValue, houseNumberValue, zipcodeValue, residenceValue, emailValue,
-            telephoneValue, customerFormState ,bankAccountValue);
+        console.log(customerFormState);
     }
 
     function handleSubmitHorse(e) {
         e.preventDefault();
-        console.log(horseNameValue, horseNumberValue, vetNameValue, vetResidenceValue, vetTelephoneValue, horseFormState);
+        console.log(horseFormState, averell.name);
     }
 
     function handleSubmitPassport(e) {
@@ -96,6 +92,7 @@ function Subscribe() {
     function handleSubmitTerms(e) {
         e.preventDefault();
         console.log("akkoord?: " + termsFormState.termsAndConditions);
+        navigate("/profiel/:klantId");
     }
 
     return (
@@ -122,9 +119,9 @@ function Subscribe() {
                                 subscribeCardTitle="Stap 1 - Maak een account aan of login"
                             >
                                 <p>Om een abonnement te kunnen af sluiten, heeft u eerst een account nodig:</p>
-                                <a href="/">maak hier een account aan</a>
+                                <Link to="/registreer">maak hier een account aan</Link>
                                 <p>Heeft u al een account?</p>
-                                <a href="/">log dan eerst hier in</a>
+                                <Link to="/login">log dan eerst hier in</Link>
                             </SubscribeCard>
 
                             <SubscribeCard
@@ -136,50 +133,48 @@ function Subscribe() {
                                         labelText="Voornaam:"
                                         inputId="firstname-text-field"
                                         inputName="firstname"
-                                        textValue={firstNameValue}
-                                        setTextValue={setFirstNameValue}
-                                        // textValue={customerFormState.firstname}
-                                        // setTextValue={handleChange}
+                                        textValue={customerFormState.firstname}
+                                        changeHandler={handleCustomerChange}
                                     />
                                     <TextInput
                                         labelFor="lastname-text-field"
                                         labelText="Achternaam:"
                                         inputId="lastname-text-field"
-                                        inputName="lasstname"
-                                        textValue={lastNameValue}
-                                        setTextValue={setLastNameValue}
+                                        inputName="lastname"
+                                        textValue={customerFormState.lastname}
+                                        changeHandler={handleCustomerChange}
                                     />
                                     <TextInput
                                         labelFor="street-text-field"
                                         labelText="Straat:"
                                         inputId="street-text-field"
                                         inputName="street"
-                                        textValue={streetValue}
-                                        setTextValue={setStreetValue}
+                                        textValue={customerFormState.street}
+                                        changeHandler={handleCustomerChange}
                                     />
                                     <TextInput
                                         labelFor="houseNumber-text-field"
                                         labelText="Huisnummer:"
                                         inputId="houseNumbername-text-field"
                                         inputName="houseNumber"
-                                        textValue={houseNumberValue}
-                                        setTextValue={setHouseNumberValue}
+                                        textValue={customerFormState.houseNumber}
+                                        changeHandler={handleCustomerChange}
                                     />
                                     <TextInput
                                         labelFor="zipcode-text-field"
                                         labelText="Postcode:"
                                         inputId="zipcode-text-field"
                                         inputName="zipcode"
-                                        textValue={zipcodeValue}
-                                        setTextValue={setZipcodeValue}
+                                        textValue={customerFormState.zipcode}
+                                        changeHandler={handleCustomerChange}
                                     />
                                     <TextInput
                                         labelFor="residence-text-field"
                                         labelText="Woonplaats"
                                         inputId="residence-text-field"
                                         inputName="residence"
-                                        textValue={residenceValue}
-                                        setTextValue={setResidenceValue}
+                                        textValue={customerFormState.residence}
+                                        changeHandler={handleCustomerChange}
                                     />
                                     <label htmlFor="email-field">
                                         E-mail:
@@ -187,8 +182,6 @@ function Subscribe() {
                                             type="email"
                                             id="email-field"
                                             name="email"
-                                            // value={emailValue}
-                                            // onChange={(e) => setEmailValue(e.target.value)}
                                             value={customerFormState.email}
                                             onChange={handleCustomerChange}
                                         />
@@ -201,8 +194,6 @@ function Subscribe() {
                                             name="telephone"
                                             pattern="[0-9]{10}"
                                             placeholder="0123456789"
-                                            // value={telephoneValue}
-                                            // onChange={(e) => setTelephoneValue(e.target.value)}
                                             value={customerFormState.telephone}
                                             onChange={handleCustomerChange}
                                         />
@@ -212,8 +203,8 @@ function Subscribe() {
                                         labelText="IBAN:"
                                         inputId="bankAccount-text-field"
                                         inputName="bankAccount"
-                                        textValue={bankAccountValue}
-                                        setTextValue={setbankAccountValue}
+                                        textValue={customerFormState.bankAccount}
+                                        changeHandler={handleCustomerChange}
                                     />
                                     <Button
                                         type="submit"
@@ -231,16 +222,16 @@ function Subscribe() {
                                         labelText="Naam:"
                                         inputId="horsename-text-field"
                                         inputName="horsename"
-                                        textValue={horseNameValue}
-                                        setTextValue={setHorseNameValue}
+                                        textValue={horseFormState.horseName}
+                                        changeHandler={handleHorseChange}
                                     />
                                     <TextInput
                                         labelFor="horseNumber-text-field"
                                         labelText="Paardnummer:"
                                         inputId="horseNumber-text-field"
                                         inputName="horseNumber"
-                                        textValue={horseNumberValue}
-                                        setTextValue={setHorseNumberValue}
+                                        textValue={horseFormState.horseNumber}
+                                        changeHandler={handleHorseChange}
                                     />
                                     <label htmlFor="typeOfFeed-field">
                                         Voeding:</label>
@@ -271,16 +262,16 @@ function Subscribe() {
                                         labelText="Dierenarts:"
                                         inputId="vet-text-field"
                                         inputName="vet"
-                                        textValue={vetNameValue}
-                                        setTextValue={setVetNameValue}
+                                        textValue={horseFormState.vet}
+                                        changeHandler={handleHorseChange}
                                     />
                                     <TextInput
                                         labelFor="residenceOfVet-text-field"
                                         labelText="Woonplaats dierenarts:"
                                         inputId="residenceOfVet-text-field"
                                         inputName="residenceOfVet"
-                                        textValue={vetResidenceValue}
-                                        setTextValue={setVetResidenceValue}
+                                        textValue={horseFormState.residenceOfVet}
+                                        changeHandler={handleHorseChange}
                                     />
                                     <label htmlFor="telephoneOfVet-field">
                                         Telnr dierenarts:
@@ -290,8 +281,6 @@ function Subscribe() {
                                             name="telephoneOfVet"
                                             pattern="[0-9]{10}"
                                             placeholder="0123456789"
-                                            // value={vetTelephoneValue}
-                                            // onChange={(e) => setVetTelephoneValue(e.target.value)}
                                             value={horseFormState.telephoneOfVet}
                                             onChange={handleHorseChange}
                                         />

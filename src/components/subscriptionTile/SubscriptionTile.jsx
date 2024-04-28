@@ -2,8 +2,11 @@ import star from "../../assets/ster-image.jpg";
 import Button from "../button/Button.jsx";
 import './SubscriptionTile.css';
 import {formatPrice} from "../../helpers/helpers.js";
+import {useNavigate} from "react-router-dom";
 
 function SubscriptionTile(props) {
+    const navigate = useNavigate();
+
     let inventoryClass = "default";
     if(props.isSoldOut) {
         inventoryClass = "visible"
@@ -28,7 +31,7 @@ function SubscriptionTile(props) {
                 type="button"
                 text="Neem dit abonnement"
                 // note={props.event}
-                note="hier wordt een inschrijfformulier getoond"
+                handleClick={() => navigate("/inschrijven/:abonnementId")}
                 disabled={props.isSoldOut}
             />
         </article>
