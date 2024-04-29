@@ -9,8 +9,6 @@ button {
 }
 
 button:hover {
-    /*border-left: 4px solid var(--faded-army);*/
-    /*border-top: 4px solid var(--faded-army);*/
     background-color: var(--faded-army);
     color: var(--dark);
     font-weight: bold;

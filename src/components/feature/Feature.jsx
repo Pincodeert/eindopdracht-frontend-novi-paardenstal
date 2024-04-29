@@ -36,7 +36,7 @@ function Feature(props) {
                 {/*    text={props.buttontext}*/}
                 {/*    note={props.event}*/}
                 {/*/>*/}
-                <Link to="/stallen">{props.linkText}</Link>
+                <Link to={props.linkPath}>{props.linkText}</Link>
             </div>
         </article>
     );

@@ -16,37 +16,47 @@ function NavBar(props) {
                 <li>
                     <Button
                         type="button"
-                        text="home"
+                        disabled={false}
                         handleClick={() => navigate("/")}
-                    />
+                    >
+                        home
+                    </Button>
                 </li>
                 <li>
                     <Button
                         type="button"
-                        text="stallen"
+                        disabled={false}
                         handleClick={() => navigate("/stallen")}
-                    />
+                    >
+                        stallen
+                    </Button>
                 </li>
                 <li>
                     <Button
                         type="button"
-                        text="abonnementen"
+                        disabled={false}
                         handleClick={() => navigate("/abonnementen")}
-                    />
+                    >
+                        abonnementen
+                    </Button>
                 </li>
                 <li>
                     <Button
                         type="button"
-                        text="registreren"
+                        disabled={false}
                         handleClick={() => navigate("/registreer")}
-                    />
+                    >
+                        registreren
+                    </Button>
                 </li>
                 <li>
                     <Button
                         type="button"
-                        text="inloggen"
+                        disabled={false}
                         handleClick={() => navigate("/login")}
-                    />
+                    >
+                        inloggen
+                    </Button>
                 </li>
             </ul>
         </nav>

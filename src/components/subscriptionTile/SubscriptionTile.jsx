@@ -8,7 +8,7 @@ function SubscriptionTile(props) {
     const navigate = useNavigate();
 
     let inventoryClass = "default";
-    if(props.isSoldOut) {
+    if (props.isSoldOut) {
         inventoryClass = "visible"
     }
 
@@ -29,11 +29,13 @@ function SubscriptionTile(props) {
             {/*<p className={props.isSoldOut ? "visible" : "default"}>Niet meer beschikbaar!</p>*/}
             <Button
                 type="button"
-                text="Neem dit abonnement"
+                disabled={false}
                 // note={props.event}
                 handleClick={() => navigate("/inschrijven/:abonnementId")}
                 disabled={props.isSoldOut}
-            />
+            >
+                Neem dit abonnement
+            </Button>
         </article>
     );
 }

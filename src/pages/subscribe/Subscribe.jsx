@@ -13,9 +13,6 @@ import {Link, useNavigate} from "react-router-dom";
 function Subscribe() {
     const navigate = useNavigate();
 
-    const [termsAndConditionsValue, toggleTermsAndConditionsValue] = useState(false);
-    // const [imageValue, setImageValue] = useState("");
-
     const [customerFormState, setCustomerFormState] = useState({
         firstname: "",
         lastname: "",
@@ -38,6 +35,11 @@ function Subscribe() {
         telephoneOfVet: "",
     });
 
+    // const [termsAndConditionsValue, toggleTermsAndConditionsValue] = useState(false);
+    // const [imageValue, setImageValue] = useState("");
+    const [termsFormState, toggleTermsFormState] = useState({
+        termsAndConditions: false,
+    });
 
     function handleCustomerChange(e) {
         const changedFieldName = e.target.name;
@@ -46,7 +48,6 @@ function Subscribe() {
             ...customerFormState,
             [changedFieldName]: e.target.value,
         })
-        console.log(customerFormState);
     }
 
     function handleHorseChange(e) {
@@ -59,15 +60,13 @@ function Subscribe() {
         console.log(horseFormState);
     }
 
-    const [termsFormState, setTermsFormState] = useState({
-        termsAndConditions: false,
-    });
+
 
     function handleTermsChange(e) {
         const changedFieldName = e.target.name;
         const newValue = e.target.type === "checkbox" ? e.target.checked : e.target.value;
 
-        setTermsFormState({
+        toggleTermsFormState({
             ...termsFormState,
             [changedFieldName]: newValue,
         });
@@ -208,8 +207,10 @@ function Subscribe() {
                                     />
                                     <Button
                                         type="submit"
-                                        text="Sla op"
-                                    />
+                                        disabled={false}
+                                    >
+                                        Sla op
+                                    </Button>
                                 </form>
                             </SubscribeCard>
 
@@ -221,7 +222,7 @@ function Subscribe() {
                                         labelFor="horsename-text-field"
                                         labelText="Naam:"
                                         inputId="horsename-text-field"
-                                        inputName="horsename"
+                                        inputName="horseName"
                                         textValue={horseFormState.horseName}
                                         changeHandler={handleHorseChange}
                                     />
@@ -235,27 +236,27 @@ function Subscribe() {
                                     />
                                     <label htmlFor="typeOfFeed-field">
                                         Voeding:</label>
-                                        <select
-                                            name="typeOfFeed"
-                                            id="typeOfFeed-field"
-                                            value={horseFormState.typeOfFeed}
-                                            onChange={handleHorseChange}
-                                        >
-                                            <option value="hay">hooi</option>
-                                            <option value="oats">haver</option>
-                                        </select>
+                                    <select
+                                        name="typeOfFeed"
+                                        id="typeOfFeed-field"
+                                        value={horseFormState.typeOfFeed}
+                                        onChange={handleHorseChange}
+                                    >
+                                        <option value="hay">hooi</option>
+                                        <option value="oats">haver</option>
+                                    </select>
 
                                     <label htmlFor="typeOfBedding-field">
                                         Bodembedekking:</label>
-                                        <select
-                                            name="typeOfbedding"
-                                            id="typeOfBedding-field"
-                                            value={horseFormState.typeOfbedding}
-                                            onChange={handleHorseChange}
-                                        >
-                                            <option value="straw">stro</option>
-                                            <option value="shavings">houtvezel</option>
-                                        </select>
+                                    <select
+                                        name="typeOfbedding"
+                                        id="typeOfBedding-field"
+                                        value={horseFormState.typeOfbedding}
+                                        onChange={handleHorseChange}
+                                    >
+                                        <option value="straw">stro</option>
+                                        <option value="shavings">houtvezel</option>
+                                    </select>
 
                                     <TextInput
                                         labelFor="vet-text-field"
@@ -296,8 +297,10 @@ function Subscribe() {
                                     </label>
                                     <Button
                                         type="submit"
-                                        text="Sla op"
-                                    />
+                                        disabled={false}
+                                    >
+                                        Sla op
+                                    </Button>
                                 </form>
                             </SubscribeCard>
 
@@ -317,8 +320,10 @@ function Subscribe() {
 
                                     <Button
                                         type="submit"
-                                        text="Sla op"
-                                    />
+                                        disabled={false}
+                                    >
+                                        Sla op
+                                    </Button>
                                 </form>
                             </SubscribeCard>
 
@@ -345,11 +350,12 @@ function Subscribe() {
                                     {/*<input type="submit"/>*/}
                                     <Button
                                         type="submit"
-                                        text="Sla op"
-                                    />
+                                        disabled={false}
+                                    >
+                                        Sla op
+                                    </Button>
                                 </form>
                             </SubscribeCard>
-
                         </div>
                     </div>
                 </section>

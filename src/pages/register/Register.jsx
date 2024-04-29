@@ -7,17 +7,26 @@ import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 function Register() {
-const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    const [usernameValue, setUsernameValue] = useState("");
-    const [passwordValue, setPasswordValue] = useState("");
-    const [emailValue, setEmailValue] = useState("");
+    const [formState, setFormState] = useState({
+        username: "",
+        password: "",
+        email: "",
+    });
 
-    console.log(usernameValue, passwordValue, emailValue);
+    function handleChange(e) {
+        const changedFieldName = e.target.name;
+
+        setFormState({
+            ...formState,
+            [changedFieldName]: e.target.value,
+        })
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log("ha verstuurd")
+        console.log(formState)
         navigate("/inschrijven/:userId")
     }
 
@@ -50,8 +59,8 @@ const navigate = useNavigate();
                                 inputId="username-text-field"
                                 inputName="username"
                                 placeholder="gebruikersnaam"
-                                textValue={usernameValue}
-                                setTextValue={setUsernameValue}
+                                textValue={formState.username}
+                                changeHandler={handleChange}
                             />
                             <label htmlFor="password-field">
                                 <input
@@ -59,8 +68,8 @@ const navigate = useNavigate();
                                     placeholder="wachtwoord"
                                     id="password-field"
                                     name="password"
-                                    value={passwordValue}
-                                    onChange={(e) => setPasswordValue(e.target.value)}
+                                    value={formState.password}
+                                    onChange={handleChange}
                                 />
                             </label>
                             <label htmlFor="email-field">
@@ -69,16 +78,18 @@ const navigate = useNavigate();
                                     id="email-field"
                                     name="email"
                                     placeholder="e-mail"
-                                    value={emailValue}
-                                    onChange={(e) => setEmailValue(e.target.value)}
+                                    value={formState.email}
+                                    onChange={handleChange}
                                 />
                             </label>
                             <div className="form-button-wrapper">
                                 <Button
                                     type="submit"
-                                    text="Registeer"
+                                    disabled={false}
                                     classname="high-lighted"
-                                />
+                                >
+                                    Registeer
+                                </Button>
                             </div>
                         </form>
                     </div>

@@ -1,4 +1,5 @@
 import "./SubscribeCard.css";
+
 function SubscribeCard({subscribeCardTitle, children}) {
     return (
         <article className="subscribe-card">

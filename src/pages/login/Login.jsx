@@ -8,20 +8,29 @@ import {useNavigate} from "react-router-dom";
 function Login() {
     const navigate = useNavigate();
 
-    const [usernameValue, setUsernameValue] = useState("");
-    const [passwordValue, setPasswordValue] = useState("");
+    const [loginFormState, setLoginFormState] = useState({
+        username: "",
+        password: "",
+    });
 
-    console.log(usernameValue, passwordValue);
+    function handleChange(e) {
+        const changedFieldName = e.target.name;
+
+        setLoginFormState({
+            ...loginFormState,
+            [changedFieldName]: e.target.value,
+        })
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log("je bent nu ingelogd");
+        console.log(loginFormState);
         navigate("/profiel/:klantId")
     }
 
     return (
         <>
-            <header >
+            <header>
                 <section className="outer-container nav-section">
                     <div className="inner-container">
                         <NavBar
@@ -47,8 +56,8 @@ function Login() {
                                 labelFor="username-text-field"
                                 inputId="username-text-field"
                                 inputName="username"
-                                textValue={usernameValue}
-                                setTextValue={setUsernameValue}
+                                textValue={loginFormState.username}
+                                changeHandler={handleChange}
                                 placeholder="gebruikersnaam"
                             />
                             <label htmlFor="password-field">
@@ -57,17 +66,20 @@ function Login() {
                                     placeholder="wachtwoord"
                                     id="password-field"
                                     name="password"
-                                    value={passwordValue}
-                                    onChange={(e) => setPasswordValue(e.target.value)}
+                                    value={loginFormState.password}
+                                    onChange={handleChange}
                                 />
                             </label>
                             <div className="form-button-wrapper">
-                                <a href="https://www.seniorweb.nl/tip/sterk-wachtwoord-maken-onthouden" target="_blank">wachtwoord vergeten?</a>
+                                <a href="https://www.seniorweb.nl/tip/sterk-wachtwoord-maken-onthouden" target="_blank">wachtwoord
+                                    vergeten?</a>
                                 <Button
                                     type="submit"
-                                    text="Log in"
+                                    disabled={false}
                                     classname="high-lighted"
-                                />
+                                >
+                                    Log in
+                                </Button>
                             </div>
                         </form>
                     </div>
@@ -76,10 +88,12 @@ function Login() {
                         <p className="info-line">Maak dan nu een gratis account aan en word lid!</p>
                         <Button
                             type="button"
-                            text="Registreer"
+                            diasbled={false}
                             handleClick={() => navigate("/registreer")}
                             classname="high-lighted"
-                        />
+                        >
+                            Registreer
+                        </Button>
                     </div>
                 </section>
             </main>

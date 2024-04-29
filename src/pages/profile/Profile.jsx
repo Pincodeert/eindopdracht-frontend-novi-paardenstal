@@ -33,14 +33,18 @@ function Profile() {
                         <Link to="#yoursubscriptions">Uw abonnementen</Link>
                         <Button
                             type="button"
-                            text="Vraag nieuw abonnement aan"
+                            disabled={false}
                             handleClick={() => navigate("/abonnementen")}
-                        />
+                        >
+                            Vraag nieuw abonnement aan
+                        </Button>
                         <Button
                             type="button"
-                            text="bereken uw totale abonnemenstkosten"
+                            disabled={false}
                             handleClick={calculateCustomersPrice}
-                        />
+                        >
+                            bereken uw totale abonnementskosten
+                        </Button>
                     </nav>
                     <div className="profile-content-container">
                         <div className="intro-content-wrapper">
@@ -52,9 +56,11 @@ function Profile() {
                                 <h4>Uw gegevens</h4>
                                 <Button
                                     type="button"
-                                    text="wijzig"
+                                    disabled={false}
                                     note="hier moet een formulier verschijnen"
-                                />
+                                >
+                                    wijzig
+                                </Button>
                             </div>
                             <table className="table">
                                 <thead>
@@ -91,9 +97,11 @@ function Profile() {
                                         <p className="horsename">{horse.name}</p>
                                         <Button
                                             type="button"
-                                            text="wijzig"
+                                            disabled={false}
                                             note="hier moet een paard-formulier verschijnen"
-                                        />
+                                        >
+                                            wijzig
+                                        </Button>
                                     </div>
                                     <table className="table">
                                         <thead>
@@ -129,7 +137,8 @@ function Profile() {
                                         <tr className="table-body">
                                             <td>{horse.preferredSubscription.name}</td>
                                             <td>{horse.stall.name}</td>
-                                            <td>{<Button type="button" text="bekijk" note="hier komt toon file"/>}</td>
+                                            <td>{<Button type="button" disabled={false} note="hier komt toon file">
+                                                bekijk </Button>}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -141,9 +150,11 @@ function Profile() {
                                 <h4>Uw abonnementen</h4>
                                 <Button
                                     type="button"
-                                    text="bereken totale prijs"
+                                    disabled={false}
                                     note="hier wordt een helperfunctie getriggerd"
-                                />
+                                >
+                                    bereken totale prijs
+                                </Button>
                             </div>
                             {enrollments.map((enrollment) => {
                                 return <div key={enrollment.enrollmentId} className="subscriptiom-wrapper">
@@ -151,9 +162,11 @@ function Profile() {
                                         <p className="horsename">Abonnementnummer: {enrollment.enrollmentId}</p>
                                         <Button
                                             type="button"
-                                            text="wijzig"
+                                            disabled={false}
                                             note="er is een annuleringsverzoek doorgestuurd"
-                                        />
+                                        >
+                                            wijzig
+                                        </Button>
                                     </div>
                                     <table className="table">
                                         <thead>
