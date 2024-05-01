@@ -1,6 +1,7 @@
 import './Footer.css'
 import star from "../../assets/ster-image.jpg";
 import FooterArticle from "../footerArticle/FooterArticle.jsx";
+
 function Footer() {
     return (
         <footer>

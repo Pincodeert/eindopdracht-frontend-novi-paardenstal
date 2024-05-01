@@ -2,8 +2,15 @@ import star from "../../assets/ster-image.jpg";
 import Button from "../button/Button.jsx";
 import './SubscriptionTile.css';
 import {formatPrice} from "../../helpers/helpers.js";
+import {useNavigate} from "react-router-dom";
 
 function SubscriptionTile(props) {
+
+    let inventoryClass = "default";
+    if (props.isSoldOut) {
+        inventoryClass = "visible"
+    }
+
     return (
         <article className="subscription-article" key={props.key}>
             <h2>{props.title}</h2>
@@ -16,13 +23,17 @@ function SubscriptionTile(props) {
 
             </div>
             <p className="price">{formatPrice(props.price)}</p>
-            <p className={props.classname}>{props.remark}!</p>
+            {/*<p className={props.classname}>{props.remark}!</p>*/}
+            <p className={inventoryClass}>Niet meer beschikbaar</p>
+            {/*<p className={props.isSoldOut ? "visible" : "default"}>Niet meer beschikbaar!</p>*/}
             <Button
                 type="button"
-                text="Neem dit abonnement"
-                // note={props.event}
-                note="hier wordt een inschrijfformulier getoond"
-            />
+                handleClick={props.handleSubscriptionClick}
+                disabled={props.isSoldOut}
+            >
+                {props.isSoldOut ? <p className={inventoryClass}>Niet meer beschikbaar !</p> :
+                    <p>Neem dit abonnement</p>}
+            </Button>
         </article>
     );
 }

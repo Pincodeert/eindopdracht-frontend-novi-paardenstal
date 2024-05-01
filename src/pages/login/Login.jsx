@@ -1,12 +1,36 @@
 import NavBar from "../../components/navBar/NavBar.jsx";
 import Button from "../../components/button/Button.jsx";
 import './Login.css'
-import Input from "../../components/input/Input.jsx";
+import TextInput from "../../components/textInput/TextInput.jsx";
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 function Login() {
+    const navigate = useNavigate();
+
+    const [loginFormState, setLoginFormState] = useState({
+        username: "",
+        password: "",
+    });
+
+    function handleChange(e) {
+        const changedFieldName = e.target.name;
+
+        setLoginFormState({
+            ...loginFormState,
+            [changedFieldName]: e.target.value,
+        })
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log(loginFormState);
+        navigate("/profiel/:klantId")
+    }
+
     return (
         <>
-            <header >
+            <header>
                 <section className="outer-container nav-section">
                     <div className="inner-container">
                         <NavBar
@@ -27,29 +51,35 @@ function Login() {
                 <section className="inner-container content-section">
                     <div className="form-container">
                         <h2>Inloggen: </h2>
-                        <form action="/">
-                            <Input
+                        <form onSubmit={handleSubmit}>
+                            <TextInput
                                 labelFor="username-text-field"
-                                inputType="text"
                                 inputId="username-text-field"
                                 inputName="username"
+                                textValue={loginFormState.username}
+                                changeHandler={handleChange}
                                 placeholder="gebruikersnaam"
                             />
-                            <Input
-                                labelFor="password-text-field"
-                                inputType="password"
-                                inputId="password-text-field"
-                                inputName="password"
-                                placeholder="wachtwoord"
-                            />
+                            <label htmlFor="password-field">
+                                <input
+                                    type="password"
+                                    placeholder="wachtwoord"
+                                    id="password-field"
+                                    name="password"
+                                    value={loginFormState.password}
+                                    onChange={handleChange}
+                                />
+                            </label>
                             <div className="form-button-wrapper">
-                                <a href="/">wachtwoord vergeten?</a>
+                                <a href="https://www.seniorweb.nl/tip/sterk-wachtwoord-maken-onthouden" target="_blank">wachtwoord
+                                    vergeten?</a>
                                 <Button
                                     type="submit"
-                                    text="Log in"
-                                    note="hier wordt de authenticatie getriggerd"
+                                    disabled={false}
                                     classname="high-lighted"
-                                />
+                                >
+                                    Log in
+                                </Button>
                             </div>
                         </form>
                     </div>
@@ -58,10 +88,12 @@ function Login() {
                         <p className="info-line">Maak dan nu een gratis account aan en word lid!</p>
                         <Button
                             type="button"
-                            text="Register"
-                            note="hier komt een link"
+                            diasbled={false}
+                            handleClick={() => navigate("/registreer")}
                             classname="high-lighted"
-                        />
+                        >
+                            Registreer
+                        </Button>
                     </div>
                 </section>
             </main>

@@ -1,4 +1,5 @@
 import './FooterArticle.css';
+
 function FooterArticle(props) {
     return (
         <article className={props.classname}>

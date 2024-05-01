@@ -94,10 +94,13 @@ button, input {
     font-size: inherit;
 }
 
-a {
-
+a:link {
+    color: var(--dark);
 }
 
+a:visited {
+    color: var(--orange);
+}
 /*a {*/
 /*  font-weight: 500;*/
 /*  color: #646cff;*/

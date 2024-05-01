@@ -1,17 +1,17 @@
 import './Button.css'
-function Button(props) {
-    function logClick(note) {
-        console.log(note)
-    }
 
-    return(
+function Button(props) {
+
+    return (
         <button
             type={props.type}
             className={props.classname}
-            onClick={() =>logClick(props.note)}
+            onClick={props.handleClick}
+            disabled={props.disabled}
         >
-            {props.text}
+            {props.children}
         </button>
     );
 }
+
 export default Button;

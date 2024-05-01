@@ -3,11 +3,97 @@ import HeaderContent from "../../components/headerContent/HeaderContent.jsx";
 import {averell} from "../../constants/testdata.js";
 import "./Subscribe.css"
 import {generateSubscriptionDetails} from "../../helpers/helpers.js";
-import Input from "../../components/input/Input.jsx";
+import TextInput from "../../components/textInput/TextInput.jsx";
 import Button from "../../components/button/Button.jsx";
 import Footer from "../../components/footer/Footer.jsx";
+import SubscribeCard from "../../components/subscribeCard/SubscribeCard.jsx";
+import React, {useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 
 function Subscribe() {
+    const navigate = useNavigate();
+
+    const [customerFormState, setCustomerFormState] = useState({
+        firstname: "",
+        lastname: "",
+        street: "",
+        houseNumber: "",
+        zipcode: "",
+        residence: "",
+        email: "",
+        telephone: "",
+        bankAccount: "",
+    });
+
+    const [horseFormState, setHorseFormState] = useState({
+        horseName: "",
+        horseNumber: "",
+        typeOfFeed: "hay",
+        typeOfbedding: "straw",
+        vet: "",
+        residenceOfVet: "",
+        telephoneOfVet: "",
+    });
+
+    // const [termsAndConditionsValue, toggleTermsAndConditionsValue] = useState(false);
+    // const [imageValue, setImageValue] = useState("");
+    const [termsFormState, toggleTermsFormState] = useState({
+        termsAndConditions: false,
+    });
+
+    function handleCustomerChange(e) {
+        const changedFieldName = e.target.name;
+
+        setCustomerFormState({
+            ...customerFormState,
+            [changedFieldName]: e.target.value,
+        })
+    }
+
+    function handleHorseChange(e) {
+        const changedFieldName = e.target.name;
+
+        setHorseFormState({
+            ...horseFormState,
+            [changedFieldName]: e.target.value,
+        })
+        console.log(horseFormState);
+    }
+
+
+
+    function handleTermsChange(e) {
+        const changedFieldName = e.target.name;
+        const newValue = e.target.type === "checkbox" ? e.target.checked : e.target.value;
+
+        toggleTermsFormState({
+            ...termsFormState,
+            [changedFieldName]: newValue,
+        });
+    }
+
+
+    function handleSubmitCustomer(e) {
+        e.preventDefault();
+        console.log(customerFormState);
+    }
+
+    function handleSubmitHorse(e) {
+        e.preventDefault();
+        console.log(horseFormState, averell.name);
+    }
+
+    function handleSubmitPassport(e) {
+        e.preventDefault();
+        console.log("het bestand is geupload ");
+    }
+
+    function handleSubmitTerms(e) {
+        e.preventDefault();
+        console.log("akkoord?: " + termsFormState.termsAndConditions);
+        navigate("/profiel/:klantId");
+    }
+
     return (
         <>
             <header className="outer-container header-section">
@@ -28,192 +114,248 @@ function Subscribe() {
                 <section className="outer-container intro-section">
                     <div className="inner-container">
                         <div className="profile-content-container">
-                            <div className="step-wrapper">
-                                <h4 className="italic">Stap 1 - Maak een account aan of login</h4>
+                            <SubscribeCard
+                                subscribeCardTitle="Stap 1 - Maak een account aan of login"
+                            >
                                 <p>Om een abonnement te kunnen af sluiten, heeft u eerst een account nodig:</p>
-                                <a href="/">maak hier een account aan</a>
+                                <Link to="/registreer">maak hier een account aan</Link>
                                 <p>Heeft u al een account?</p>
-                                <a href="/">log dan eerst hier in</a>
-                            </div>
-                            <div className="step-wrapper">
-                                <h4 className="italic">Stap 2 - Vul uw persoonsgegevens in</h4>
-                                <form action="/">
-                                    <Input
+                                <Link to="/login">log dan eerst hier in</Link>
+                            </SubscribeCard>
+
+                            <SubscribeCard
+                                subscribeCardTitle="Stap 2 - Vul uw persoonsgegevens in"
+                            >
+                                <form onSubmit={handleSubmitCustomer}>
+                                    <TextInput
                                         labelFor="firstname-text-field"
-                                        inputType="text"
+                                        labelText="Voornaam:"
                                         inputId="firstname-text-field"
                                         inputName="firstname"
-                                        labelText="Voornaam:"
+                                        textValue={customerFormState.firstname}
+                                        changeHandler={handleCustomerChange}
                                     />
-                                    <Input
+                                    <TextInput
                                         labelFor="lastname-text-field"
-                                        inputType="text"
-                                        inputId="lastname-text-field"
-                                        inputName="lasstname"
                                         labelText="Achternaam:"
+                                        inputId="lastname-text-field"
+                                        inputName="lastname"
+                                        textValue={customerFormState.lastname}
+                                        changeHandler={handleCustomerChange}
                                     />
-                                    <Input
+                                    <TextInput
                                         labelFor="street-text-field"
-                                        inputType="text"
+                                        labelText="Straat:"
                                         inputId="street-text-field"
                                         inputName="street"
-                                        labelText="Straat:"
+                                        textValue={customerFormState.street}
+                                        changeHandler={handleCustomerChange}
                                     />
-                                    <Input
+                                    <TextInput
                                         labelFor="houseNumber-text-field"
-                                        inputType="text"
+                                        labelText="Huisnummer:"
                                         inputId="houseNumbername-text-field"
                                         inputName="houseNumber"
-                                        labelText="Huisnummer:"
+                                        textValue={customerFormState.houseNumber}
+                                        changeHandler={handleCustomerChange}
                                     />
-                                    <Input
+                                    <TextInput
                                         labelFor="zipcode-text-field"
-                                        inputType="text"
+                                        labelText="Postcode:"
                                         inputId="zipcode-text-field"
                                         inputName="zipcode"
-                                        labelText="Postcode:"
+                                        textValue={customerFormState.zipcode}
+                                        changeHandler={handleCustomerChange}
                                     />
-                                    <Input
+                                    <TextInput
                                         labelFor="residence-text-field"
-                                        inputType="text"
+                                        labelText="Woonplaats"
                                         inputId="residence-text-field"
                                         inputName="residence"
-                                        labelText="Woonplaats"
+                                        textValue={customerFormState.residence}
+                                        changeHandler={handleCustomerChange}
                                     />
-                                    <Input
-                                        labelFor="email-text-field"
-                                        inputType="email"
-                                        inputId="email-text-field"
-                                        inputName="email"
-                                        labelText="E-mail:"
-                                    />
-                                    <Input
-                                        labelFor="user-telephone-field"
-                                        inputType="tel"
-                                        inputId="user-telephone-field"
-                                        inputName="telephoneNumber"
-                                        pattern="[0-9]{10}"
-                                        placeholder="0123456789"
-                                        labelText="Telefoonnummer:"
-                                    />
-                                    <Input
+                                    <label htmlFor="email-field">
+                                        E-mail:
+                                        <input
+                                            type="email"
+                                            id="email-field"
+                                            name="email"
+                                            value={customerFormState.email}
+                                            onChange={handleCustomerChange}
+                                        />
+                                    </label>
+                                    <label htmlFor="telephone-field">
+                                        Telefoonnummer:
+                                        <input
+                                            type="tel"
+                                            id="telephone-field"
+                                            name="telephone"
+                                            pattern="[0-9]{10}"
+                                            placeholder="0123456789"
+                                            value={customerFormState.telephone}
+                                            onChange={handleCustomerChange}
+                                        />
+                                    </label>
+                                    <TextInput
                                         labelFor="bankAccount-text-field"
-                                        inputType="text"
+                                        labelText="IBAN:"
                                         inputId="bankAccount-text-field"
                                         inputName="bankAccount"
-                                        labelText="IBAN:"
+                                        textValue={customerFormState.bankAccount}
+                                        changeHandler={handleCustomerChange}
                                     />
                                     <Button
                                         type="submit"
-                                        text="Sla op"
-                                        note="hier komt een eventlistener"/>
+                                        disabled={false}
+                                    >
+                                        Sla op
+                                    </Button>
                                 </form>
-                            </div>
-                            <div className="step-wrapper">
-                                <h4 className="italic">Stap 3 - Vul de gegevens van uw paard in</h4>
-                                <form action="/">
-                                    <div className="horizontal">
-                                        <label htmlFor="horsename-text-field">Naam:</label>
-                                        <input type="text" id="horsename-text-field" name="horsename"/>
-                                    </div>
-                                    <Input
+                            </SubscribeCard>
+
+                            <SubscribeCard
+                                subscribeCardTitle="Stap 3 - Vul de gegevens van uw paard in"
+                            >
+                                <form onSubmit={handleSubmitHorse}>
+                                    <TextInput
                                         labelFor="horsename-text-field"
-                                        inputType="text"
-                                        inputId="horsename-text-field"
-                                        inputName="horsename"
                                         labelText="Naam:"
+                                        inputId="horsename-text-field"
+                                        inputName="horseName"
+                                        textValue={horseFormState.horseName}
+                                        changeHandler={handleHorseChange}
                                     />
-                                    <Input
+                                    <TextInput
                                         labelFor="horseNumber-text-field"
-                                        inputType="text"
+                                        labelText="Paardnummer:"
                                         inputId="horseNumber-text-field"
                                         inputName="horseNumber"
-                                        labelText="Paardnummer:"
+                                        textValue={horseFormState.horseNumber}
+                                        changeHandler={handleHorseChange}
                                     />
-                                    <label htmlFor="typeOfFeed-field">Voeding:</label>
-                                    <select name="typeOfFeed" id="typeOfFeed-field">
+                                    <label htmlFor="typeOfFeed-field">
+                                        Voeding:</label>
+                                    <select
+                                        name="typeOfFeed"
+                                        id="typeOfFeed-field"
+                                        value={horseFormState.typeOfFeed}
+                                        onChange={handleHorseChange}
+                                    >
                                         <option value="hay">hooi</option>
                                         <option value="oats">haver</option>
                                     </select>
-                                    <label htmlFor="typeOfBedding-field">Voeding:</label>
-                                    <select name="typeOfbedding" id="typeOfBedding-field">
+
+                                    <label htmlFor="typeOfBedding-field">
+                                        Bodembedekking:</label>
+                                    <select
+                                        name="typeOfbedding"
+                                        id="typeOfBedding-field"
+                                        value={horseFormState.typeOfbedding}
+                                        onChange={handleHorseChange}
+                                    >
                                         <option value="straw">stro</option>
                                         <option value="shavings">houtvezel</option>
                                     </select>
-                                    <Input
+
+                                    <TextInput
                                         labelFor="vet-text-field"
-                                        inputType="text"
+                                        labelText="Dierenarts:"
                                         inputId="vet-text-field"
                                         inputName="vet"
-                                        labelText="Dierenarts:"
+                                        textValue={horseFormState.vet}
+                                        changeHandler={handleHorseChange}
                                     />
-                                    <Input
+                                    <TextInput
                                         labelFor="residenceOfVet-text-field"
-                                        inputType="text"
+                                        labelText="Woonplaats dierenarts:"
                                         inputId="residenceOfVet-text-field"
                                         inputName="residenceOfVet"
-                                        labelText="Woonplaats dierenarts:"
+                                        textValue={horseFormState.residenceOfVet}
+                                        changeHandler={handleHorseChange}
                                     />
-                                    <Input
-                                        labelFor="telephoneofVet-text-field"
-                                        inputType="tel"
-                                        inputId="telephoneofVet-text-field"
-                                        inputName="telephoneofVet"
-                                        pattern="[0-9]{10}"
-                                        placeholder="0123456789"
-                                        labelText="Telnr dierenarts:"
-                                    />
-                                    <Input
-                                        labelFor="subscription-hidden-field"
-                                        inputType="hidden"
-                                        inputId="subscription-hidden-field"
-                                        inputName="preferredSubscription"
-                                        labelText={averell.name}
-                                    />
+                                    <label htmlFor="telephoneOfVet-field">
+                                        Telnr dierenarts:
+                                        <input
+                                            type="tel"
+                                            id="telephoneOfVet-field"
+                                            name="telephoneOfVet"
+                                            pattern="[0-9]{10}"
+                                            placeholder="0123456789"
+                                            value={horseFormState.telephoneOfVet}
+                                            onChange={handleHorseChange}
+                                        />
+                                    </label>
+                                    <label htmlFor="subscription-hidden-field">
+                                        {averell.name}
+                                        <input
+                                            type="hidden"
+                                            id="subscription-hidden-field"
+                                            name="preferredSubscription"
+                                            value={averell.name}
+                                        />
+                                    </label>
                                     <Button
                                         type="submit"
-                                        text="Sla op"
-                                        note="hier komt een eventlistener"/>
+                                        disabled={false}
+                                    >
+                                        Sla op
+                                    </Button>
                                 </form>
-                            </div>
-                            <div className="step-wrapper">
-                                <h4 className="italic">Stap 4 - Voeg een kopie van het paardenpaspport van uw paard
-                                    toe</h4>
-                                <form action="/">
-                                    <Input
-                                        labelFor="file-upload-field"
-                                        inputType="file"
-                                        inputId="file-upload-field"
-                                        inputName="file"
-                                        labelText="Upload hier het paardenpaspoort:"
-                                    />
+                            </SubscribeCard>
+
+                            <SubscribeCard
+                                subscribeCardTitle="Stap 4 - Voeg een kopie van het paardenpaspport van uw paard toe"
+                            >
+                                <form onSubmit={handleSubmitPassport}>
+                                    <label htmlFor="file-upload-field">
+                                        Upload hier uw paardenpaspoort:
+                                        <input
+                                            type="file"
+                                            id="file-upload-field"
+                                            name="file"
+                                        />
+                                    </label>
                                     <input type="submit"/>
 
                                     <Button
                                         type="submit"
-                                        text="Sla op"
-                                        note="hier komt een eventlistener"/>
+                                        disabled={false}
+                                    >
+                                        Sla op
+                                    </Button>
                                 </form>
-                            </div>
-                            <div className="step-wrapper">
-                                <h4 className="italic">Stap 5 - Ga akkoord en bevestig aanvraag</h4>
-                                <form action="/">
+                            </SubscribeCard>
+
+                            <SubscribeCard
+                                subscribeCardTitle="Stap 5 - Ga akkoord en bevestig aanvraag"
+                            >
+                                <form onSubmit={handleSubmitTerms}>
                                     <div className="label-input-combi">
 
-                                        <input className="checkbox" type="checkbox" id="terms-and-condtions-field" name="terms-and-condtions"
-                                               value="agree"/>
-                                        <label htmlFor="terms-and-condtions-field">
-                                        Ik ga akkoord met de voorwaarden
+                                        <input
+                                            className="checkbox"
+                                            type="checkbox"
+                                            id="terms-and-conditions-field"
+                                            name="termsAndConditions"
+                                            // checked={termsAndConditionsValue}
+                                            // onChange={() => toggleTermsAndConditionsValue(!termsAndConditionsValue)}
+                                            checked={termsFormState.termsAndConditions}
+                                            onChange={handleTermsChange}
+                                        />
+                                        <label htmlFor="terms-and-conditions-field">
+                                            Ik ga akkoord met de voorwaarden
                                         </label>
                                     </div>
-                                    <input type="submit"/>
-
+                                    {/*<input type="submit"/>*/}
                                     <Button
                                         type="submit"
-                                        text="Sla op"
-                                        note="hier komt een eventlistener"/>
+                                        disabled={false}
+                                    >
+                                        Sla op
+                                    </Button>
                                 </form>
-                            </div>
+                            </SubscribeCard>
                         </div>
                     </div>
                 </section>

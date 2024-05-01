@@ -2,9 +2,34 @@ import NavBar from "../../components/navBar/NavBar.jsx";
 import Button from "../../components/button/Button.jsx";
 import nico from "../../assets/Nico-wijs.jpg";
 import './Register.css'
-import Input from "../../components/input/Input.jsx";
+import TextInput from "../../components/textInput/TextInput.jsx";
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 function Register() {
+    const navigate = useNavigate();
+
+    const [formState, setFormState] = useState({
+        username: "",
+        password: "",
+        email: "",
+    });
+
+    function handleChange(e) {
+        const changedFieldName = e.target.name;
+
+        setFormState({
+            ...formState,
+            [changedFieldName]: e.target.value,
+        })
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log(formState)
+        navigate("/inschrijven/:userId")
+    }
+
     return (
         <>
             <header>
@@ -28,39 +53,47 @@ function Register() {
                 <section className="inner-container content-section">
                     <div className="form-container">
                         <h2>Register hier: </h2>
-                        <form action="/">
-                            <Input
+                        <form onSubmit={handleSubmit}>
+                            <TextInput
                                 labelFor="username-text-field"
-                                inputType="text"
                                 inputId="username-text-field"
                                 inputName="username"
                                 placeholder="gebruikersnaam"
+                                textValue={formState.username}
+                                changeHandler={handleChange}
                             />
-                            <Input
-                                labelFor="password-text-field"
-                                inputType="password"
-                                inputId="password-text-field"
-                                inputName="password"
-                                placeholder="wachtwoord"
-                            />
-                            <Input
-                                labelFor="email-field"
-                                inputType="email"
-                                inputId="email-field"
-                                inputName="email"
-                                placeholder="e-mail"
-                            />
+                            <label htmlFor="password-field">
+                                <input
+                                    type="password"
+                                    placeholder="wachtwoord"
+                                    id="password-field"
+                                    name="password"
+                                    value={formState.password}
+                                    onChange={handleChange}
+                                />
+                            </label>
+                            <label htmlFor="email-field">
+                                <input
+                                    type="email"
+                                    id="email-field"
+                                    name="email"
+                                    placeholder="e-mail"
+                                    value={formState.email}
+                                    onChange={handleChange}
+                                />
+                            </label>
                             <div className="form-button-wrapper">
                                 <Button
                                     type="submit"
-                                    text="Registeer"
-                                    note="hier wordt aanmaak nieuwe account getriggerd"
+                                    disabled={false}
                                     classname="high-lighted"
-                                />
+                                >
+                                    Registeer
+                                </Button>
                             </div>
                         </form>
                     </div>
-                    <div className="info-container">
+                    <div className="register-info-container">
                         <img src={nico} alt="nico"/>
                     </div>
                 </section>

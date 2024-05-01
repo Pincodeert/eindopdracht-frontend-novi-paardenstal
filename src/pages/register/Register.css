@@ -27,7 +27,7 @@
     flex-wrap: wrap;
 }
 
-.form-container, .info-container {
+.form-container, .register-info-container {
     flex-basis: 500px;
     display: flex;
     flex-direction: column;
@@ -39,7 +39,7 @@
     padding: 10px;
 }
 
-.info-container {
+.register-info-container {
     align-items: center;
     justify-content: flex-end;
     flex-basis: 350px;
@@ -79,7 +79,7 @@ h2 {
     padding: 7px 0;
 }
 
-.info-container img {
+.register-info-container img {
     width: 88%;
     padding: 20px 10px 25px 10px;
 }

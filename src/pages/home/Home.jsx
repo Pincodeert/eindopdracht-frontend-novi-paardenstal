@@ -14,9 +14,11 @@ import Usp from "../../components/usp/Usp.jsx";
 import HeaderContent from "../../components/headerContent/HeaderContent.jsx";
 import Testimonial from "../../components/testimonial/Testimonial.jsx";
 import Feature from "../../components/feature/Feature.jsx";
+import {useNavigate} from "react-router-dom";
 
 function Home() {
 
+    const navigate = useNavigate();
 // function logClick() {
 //     console.log("YEZZZ!")
 // }
@@ -27,7 +29,7 @@ function Home() {
                     <NavBar
                         classname="header-navigation"
                     />
-                   <HeaderContent/>
+                    <HeaderContent/>
                     {/*<a href="./Stalls.jsx">Naar stallen</a>*/}
                 </div>
             </header>
@@ -37,19 +39,23 @@ function Home() {
                     <div className="inner-container">
                         <div className="intro-text-wrapper">
                             <h2>Welkom bij pensionstal Blaze of Glory!</h2>
-                            <p>Pensiostal Blaze of Glory is een 5-steren pensionstal waar niet alleen u, maar ook uw paard
+                            <p>Pensiostal Blaze of Glory is een 5-steren pensionstal waar niet alleen u, maar ook uw
+                                paard
                                 een
-                                ster is. Lorem ipsum dolor sit amet, consectetur adipisicing. Lorem ipsum dolor sit amet,
+                                ster is. Lorem ipsum dolor sit amet, consectetur adipisicing. Lorem ipsum dolor sit
+                                amet,
                                 consectetur adipisicing elit. At consectetur corporis deleniti dolor, est necessitatibus
-                                officiis pariatur sapiente sint temporibus. A alias animi commodi consectetur, consequatur
-                                consequuntur deserunt doloremque doloribus eligendi eos error esse laborum maxime natus non
+                                officiis pariatur sapiente sint temporibus. A alias animi commodi consectetur,
+                                consequatur
+                                consequuntur deserunt doloremque doloribus eligendi eos error esse laborum maxime natus
+                                non
                                 omnis pariatur possimus, quis ratione soluta ullam ut voluptates voluptatibus.
                             </p>
-                                <div>
-                                    <img className="star-image" src={star} alt="ster"/>
-                                    <img className="star-image" src={star} alt="ster"/>
-                                    <img className="star-image" src={star} alt="ster"/>
-                                </div>
+                            <div>
+                                <img className="star-image" src={star} alt="ster"/>
+                                <img className="star-image" src={star} alt="ster"/>
+                                <img className="star-image" src={star} alt="ster"/>
+                            </div>
                         </div>
                         <div className="intro-image-wrapper">
                             <span className="intro-image">
@@ -86,13 +92,15 @@ function Home() {
                             />
                         </div>
                         <div className="usp-button">
-                        <img src={nico} alt="foto-by-Leonie-Pin"/>
+                            <img src={nico} alt="foto-by-Leonie-Pin"/>
                             <Button
-                            type={button}
-                            text="Abonneer"
-                            note="hier komt een link"
-                            classname="high-lighted"
-                            />
+                                type="button"
+                                disabled={false}
+                                handleClick={() => navigate("/abonnementen")}
+                                classname="high-lighted"
+                            >
+                                Abonneer
+                            </Button>
                         </div>
                     </div>
                 </section>
@@ -113,8 +121,8 @@ function Home() {
                                 item4="in vino veritas est"
                                 image={stable}
                                 info="Image by Anna Kaminova-Unsplashed"
-                                buttontext="naar de stallen"
-                                event="hier komt een link"
+                                linkText="naar onze stallen"
+                                linkPath="/stallen"
                                 classname="feature-article"
                             />
                             <Feature
@@ -125,8 +133,8 @@ function Home() {
                                 item4="tumor dolor calor rubor"
                                 image={straw}
                                 info="Image by Ben shbeen-Unsplashed"
-                                buttontext="naar de abonnementen en tarieven"
-                                event="hier komt een link"
+                                linkText="naar onze abonnementen en tarieven"
+                                linkPath="/abonnementen"
                                 classname="feature-article reversed-direction"
                             />
 
@@ -138,8 +146,8 @@ function Home() {
                                 item4="contusio cerebri"
                                 image={stable}
                                 info="Image by Anna Kaminova-Unsplashed"
-                                buttontext="naar onze extra's"
-                                event="hier komt een link"
+                                linkText="naar onze extra's"
+
                                 classname="feature-article"
                             />
                         </div>
@@ -173,11 +181,13 @@ function Home() {
                         <div className="usp-button">
                             <img src={nico} alt="foto-by-Leonie-Pin"/>
                             <Button
-                                type={button}
-                                text="Abonneer"
-                                note="hier komt een link"
+                                type="button"
+                                disabled={false}
+                                handleClick={() => navigate("/abonnementen")}
                                 classname="high-lighted"
-                            />
+                            >
+                                Abonneer
+                            </Button>
                         </div>
                     </div>
                 </section>

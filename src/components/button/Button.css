@@ -5,9 +5,30 @@ button {
     border-radius: 6px;
     border: none;
     padding: 7px 15px;
+
+}
+
+button:hover {
+    background-color: var(--faded-army);
+    color: var(--dark);
+    font-weight: bold;
+    box-shadow: 4px 4px 10px var(--army);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    background-color: var(--pale);
+    border: 2px solid var(--faded-army);
+    color: var(--faded-army);
+    box-shadow: none;
 }
 
 .high-lighted {
     background-color: var(--orange);
     padding: 10px 15px;
+}
+
+.high-lighted:hover {
+    background-color: var(--orange);
+    color: var(--army);
 }

@@ -25,3 +25,17 @@
     margin: 0 10px;
 }
 
+.nav-default {
+    /*background-color: var(--army);*/
+    color: var(--army);
+    font-weight: bold;
+    /*border-radius: 6px;*/
+    border-bottom: 2px solid transparent;
+    /*padding: 7px 15px;*/
+}
+
+.nav-active {
+    color: var(--faded-army);
+    font-weight: bold;
+    border-bottom: 2px solid var(--faded-army);
+}

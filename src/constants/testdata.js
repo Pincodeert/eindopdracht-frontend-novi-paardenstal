@@ -337,4 +337,130 @@ export const enrollments = [
     }
 ]
 
+export const abonnementen = [
+    {
+        "id": 1,
+        "name": "Lucky Luke abonnement",
+        "price": 490.95,
+        "typeOfCare": "halfpension",
+        "typeOfStall": "kleine binnenstal",
+        "enrollments": []
+    },
+    {
+        "id": 2,
+        "name": "Jolly Jumper abonnement",
+        "price": 515.95,
+        "typeOfCare": "volpension",
+        "typeOfStall": "kleine binnenstal",
+        "enrollments": []
+    },
+    {
+        "id": 3,
+        "name": "Joe Dalton abonnement",
+        "price": 505.95,
+        "typeOfCare": "halfpension",
+        "typeOfStall": "grote binnenstal",
+        "enrollments": []
+    },
+    {
+        "id": 4,
+        "name": "Jack Dalton abonnement",
+        "price": 530.95,
+        "typeOfCare": "volpension",
+        "typeOfStall": "grote binnenstal",
+        "enrollments": []
+    },
+    {
+        "id": 5,
+        "name": "William Dalton abonnement",
+        "price": 454.95,
+        "typeOfCare": "halfpension",
+        "typeOfStall": "kleine buitenstal",
+        "enrollments": []
+    },
+    {
+        "id": 6,
+        "name": "Averell Dalton abonnement",
+        "price": 479.95,
+        "typeOfCare": "volpension",
+        "typeOfStall": "kleine buitenstal",
+        "enrollments": []
+    },
+    {
+        "id": 7,
+        "name": "Ma Dalton abonnement",
+        "price": 499.95,
+        "typeOfCare": "halfpension",
+        "typeOfStall": "grote buitenstal",
+        "enrollments": []
+    },
+    {
+        "id": 8,
+        "name": "Rataplan abonnement",
+        "price": 489.95,
+        "typeOfCare": "volpension",
+        "typeOfStall": "grote buitenstal",
+        "enrollments": []
+    }
+]
+
+export const beschikbareStallen = [
+    {
+        "id": 3,
+        "name": "The Ugly",
+        "size": "3 x 3.5",
+        "type": "kleine binnenstal",
+        "horse": null,
+        "occupied": false
+    },
+    {
+        "id": 4,
+        "name": "The Bold",
+        "size": "3 x 3.5",
+        "type": "kleine binnenstal",
+        "horse": null,
+        "occupied": false
+    },
+    {
+        "id": 5,
+        "name": "The Beautiful",
+        "size": "3 x 3.5",
+        "type": "kleine binnenstal",
+        "horse": null,
+        "occupied": false
+    },
+    {
+        "id": 8,
+        "name": "Heartbreak Ridge",
+        "size": "3 x 4",
+        "type": "grote binnenstal",
+        "horse": null,
+        "occupied": false
+    },
+    {
+        "id": 9,
+        "name": "Los Pollos",
+        "size": "3 x 4",
+        "type": "grote binnenstal",
+        "horse": null,
+        "occupied": false
+    },
+    {
+        "id": 13,
+        "name": "The Quick",
+        "size": "3 x 3",
+        "type": "kleine buitenstal",
+        "horse": null,
+        "occupied": false
+    },
+    {
+        "id": 14,
+        "name": "The Dead",
+        "size": "3 x 3",
+        "type": "kleine buitenstal",
+        "horse": null,
+        "occupied": false
+    }
+]
+
 export default axl;

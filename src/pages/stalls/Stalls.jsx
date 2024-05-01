@@ -18,7 +18,7 @@ function Stalls() {
                     <NavBar
                         classname="header-navigation"
                     />
-                    <HeaderContent />
+                    <HeaderContent/>
                 </div>
             </header>
             <main>
