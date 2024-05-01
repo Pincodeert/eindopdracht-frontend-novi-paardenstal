@@ -5,7 +5,6 @@ import {formatPrice} from "../../helpers/helpers.js";
 import {useNavigate} from "react-router-dom";
 
 function SubscriptionTile(props) {
-    const navigate = useNavigate();
 
     let inventoryClass = "default";
     if (props.isSoldOut) {
@@ -29,12 +28,11 @@ function SubscriptionTile(props) {
             {/*<p className={props.isSoldOut ? "visible" : "default"}>Niet meer beschikbaar!</p>*/}
             <Button
                 type="button"
-                disabled={false}
-                // note={props.event}
-                handleClick={() => navigate("/inschrijven/:abonnementId")}
+                handleClick={props.handleSubscriptionClick}
                 disabled={props.isSoldOut}
             >
-                Neem dit abonnement
+                {props.isSoldOut ? <p className={inventoryClass}>Niet meer beschikbaar !</p> :
+                    <p>Neem dit abonnement</p>}
             </Button>
         </article>
     );
