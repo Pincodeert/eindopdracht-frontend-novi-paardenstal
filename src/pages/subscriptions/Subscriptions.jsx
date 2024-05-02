@@ -20,18 +20,21 @@ function Subscriptions() {
 
     const [subscriptions, setSubscriptions] = useState([]);
     const [availableStalls, setAvailableStalls] = useState([]);
-
+    const [error, setError] = useState("");
     const [subscription, setSubscription] = useState({});
 
     ////// ALLE ABONNEMENTEN OPHALEN UIT DE BACKEND /////
     async function fetchSubscriptions() {
+        setError("");
+
         try {
-            const response = await axios.get("/subscriptions");
+            const response = await axios.get("http://localhost:8080/subscriptions");
             console.log(response.data);
-            setAvailableStalls(response.data);
+            setSubscriptions(response.data);
         } catch(error) {
             console.error(error);
             console.log(error.response.status);
+            setError("Het ophalen van de abonnementen is mislukt. Probeer het opnieuw");
         }
     }
 
@@ -47,25 +50,29 @@ function Subscriptions() {
     });
     console.log(buitenAbonnementen);
 
+
     ////// ALLE BESCHIKBARE STALLEN OPHALEN UIT DE BACKEND /////
 
-    // {isOccupied} = false
     async function fetchAvailableStalls() {
+        setError("");
+
         try {
-            const response = await axios.get("/stalls/isOccupied/{isOccupied}");
+            const response = await axios.get("http://localhost:8080/stalls/isOccupied/false");
             console.log(response.data);
-            setSubscriptions(response.data);
+            setAvailableStalls(response.data);
         } catch (error) {
             console.error(error);
             console.log(error.response.status);
+            setError("Het ophalen van de beschikbare stallen is mislukt. Probeer het opnieuw");
         }
     }
 
+
     // OPGEHAALDE BESCHIKBARE STALLEN FILTEREN OP TYPE (4x)
-    const beschikbareKleineBinnenStallen = beschikbareStallen.filter((stal) => {
-        return stal.type === "kleine binnenstal";
-    });
-    console.log(beschikbareKleineBinnenStallen);
+    // const beschikbareKleineBinnenStallen = beschikbareStallen.filter((stal) => {
+    //     return stal.type === "kleine binnenstal";
+    // });
+    // console.log(beschikbareKleineBinnenStallen);
 
     // const beschikbareGroteBinnenstallen = beschikbareStallen.filter((stal) => {
     //     return stal.type === "grote binnenstal";
@@ -91,12 +98,12 @@ function Subscriptions() {
     }
 
 
-    function handleSubscriptionClick(abonnementId) {
+    function handleSubscriptionClick(subscriptionId) {
         // e.preventDefault();
-        const abonnement = abonnementen[abonnementId - 1];
+        const abonnement = abonnementen[subscriptionId - 1];
         setSubscription(abonnement);
         console.log(abonnement);
-        navigate(`/inschrijven/${abonnementId}`);
+        navigate(`/inschrijven/${subscriptionId}`);
 
     }
     console.log(subscription);
@@ -135,6 +142,9 @@ function Subscriptions() {
                 <section className="outer-container subscription-section">
                     <div className="inner-container">
                         <h2>Binnen Stal Abonnementen</h2>
+                        <button type="button" onClick={fetchAvailableStalls}>zijn er error's?</button>
+                        {error && <p className="error">{error}</p>}
+                        {console.log(availableStalls)}
                         {binnenAbonnementen.length > 0 && <div className="subscription-article-wrapper">
                             {binnenAbonnementen.map((binnenAbonnement) => {
                                 return <SubscriptionTile
@@ -151,7 +161,8 @@ function Subscriptions() {
                                     remark="niet meer beschikbaar"
                                     // classname="visible"
                                     isSoldOut={getBeschikbareStallenByType(binnenAbonnement.typeOfStall).length === 0}
-                                    key={binnenAbonnement.subscriptionId}
+                                    key={binnenAbonnement.id}
+                                    componentKey={binnenAbonnement.id}
                                     handleSubscriptionClick={() => handleSubscriptionClick(binnenAbonnement.id)}
                                 />
                             })}
@@ -161,6 +172,9 @@ function Subscriptions() {
                 <section className="outer-container subscription-section">
                     <div className="inner-container">
                         <h2>Buiten Stal Abonnementen</h2>
+                        <button type="button" onClick={fetchSubscriptions}>zijn er error's?</button>
+                        {error && <p className="error">{error}</p>}
+                        {console.log(subscriptions)}
                         {buitenAbonnementen.length > 0 && <div className="subscription-article-wrapper">
                              {buitenAbonnementen.map((buitenAbonnement) => {
                                 return <SubscriptionTile
@@ -177,6 +191,7 @@ function Subscriptions() {
                                     // classname="visible"
                                     isSoldOut={getBeschikbareStallenByType(buitenAbonnement.typeOfStall).length === 0}
                                     key={buitenAbonnement.id}
+                                    componentKey={buitenAbonnement.id}
                                     handleSubscriptionClick={() => handleSubscriptionClick(buitenAbonnement.id)}
                                 />
                             })}

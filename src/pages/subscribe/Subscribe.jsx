@@ -8,10 +8,15 @@ import Button from "../../components/button/Button.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import SubscribeCard from "../../components/subscribeCard/SubscribeCard.jsx";
 import React, {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import axios from "axios";
 
 function Subscribe() {
     const navigate = useNavigate();
+    const {subscriptionId} = useParams();
+
+    const [susbscription, setSubscription] = useState({});
+    const [error, setError] = useState("");
 
     const [customerFormState, setCustomerFormState] = useState({
         firstname: "",
@@ -40,6 +45,20 @@ function Subscribe() {
     const [termsFormState, toggleTermsFormState] = useState({
         termsAndConditions: false,
     });
+
+    //// alle abonnement-typen ophalen ////
+    async function fetchSubscription(subscriptionId) {
+        setError("");
+
+        try {
+            const response = await axios.get(`http://localhost:8080/subscriptions/${subscriptionId}`);
+            console.log(response.data);
+            setSubscription(response.data);
+        } catch(error) {
+            console.error(error);
+            setError("het ophalen van de abonnement is niet gelukt");
+        }
+    }
 
     function handleCustomerChange(e) {
         const changedFieldName = e.target.name;
@@ -80,7 +99,7 @@ function Subscribe() {
 
     function handleSubmitHorse(e) {
         e.preventDefault();
-        console.log(horseFormState, averell.name);
+        console.log(horseFormState, susbscription.name);
     }
 
     function handleSubmitPassport(e) {
@@ -107,8 +126,9 @@ function Subscribe() {
             <main>
                 <section className="outer-container intro-section">
                     <div className="inner-container">
-                        <p className="intro-line">Fijn dat u het {averell.name} wilt aflsuiten </p>
-                        <p className="italic">{generateSubscriptionDetails(averell)}</p>
+                        <p className="intro-line">Fijn dat u het {susbscription.name} wilt aflsuiten </p>
+                        <p className="italic">{generateSubscriptionDetails(susbscription)}</p>
+                        <button type="button" onClick={() => fetchSubscription(subscriptionId)}>haal het abonnement op</button>
                     </div>
                 </section>
                 <section className="outer-container intro-section">
@@ -134,6 +154,7 @@ function Subscribe() {
                                         inputName="firstname"
                                         textValue={customerFormState.firstname}
                                         changeHandler={handleCustomerChange}
+                                        required={true}
                                     />
                                     <TextInput
                                         labelFor="lastname-text-field"
@@ -142,6 +163,7 @@ function Subscribe() {
                                         inputName="lastname"
                                         textValue={customerFormState.lastname}
                                         changeHandler={handleCustomerChange}
+                                        required={true}
                                     />
                                     <TextInput
                                         labelFor="street-text-field"
@@ -150,6 +172,7 @@ function Subscribe() {
                                         inputName="street"
                                         textValue={customerFormState.street}
                                         changeHandler={handleCustomerChange}
+                                        required={true}
                                     />
                                     <TextInput
                                         labelFor="houseNumber-text-field"
@@ -158,6 +181,7 @@ function Subscribe() {
                                         inputName="houseNumber"
                                         textValue={customerFormState.houseNumber}
                                         changeHandler={handleCustomerChange}
+                                        required={true}
                                     />
                                     <TextInput
                                         labelFor="zipcode-text-field"
@@ -166,6 +190,7 @@ function Subscribe() {
                                         inputName="zipcode"
                                         textValue={customerFormState.zipcode}
                                         changeHandler={handleCustomerChange}
+                                        required={true}
                                     />
                                     <TextInput
                                         labelFor="residence-text-field"
@@ -174,6 +199,7 @@ function Subscribe() {
                                         inputName="residence"
                                         textValue={customerFormState.residence}
                                         changeHandler={handleCustomerChange}
+                                        required={true}
                                     />
                                     <label htmlFor="email-field">
                                         E-mail:
@@ -183,6 +209,7 @@ function Subscribe() {
                                             name="email"
                                             value={customerFormState.email}
                                             onChange={handleCustomerChange}
+                                            required={true}
                                         />
                                     </label>
                                     <label htmlFor="telephone-field">
@@ -195,6 +222,7 @@ function Subscribe() {
                                             placeholder="0123456789"
                                             value={customerFormState.telephone}
                                             onChange={handleCustomerChange}
+                                            required={true}
                                         />
                                     </label>
                                     <TextInput
@@ -204,6 +232,7 @@ function Subscribe() {
                                         inputName="bankAccount"
                                         textValue={customerFormState.bankAccount}
                                         changeHandler={handleCustomerChange}
+                                        required={true}
                                     />
                                     <Button
                                         type="submit"
@@ -225,6 +254,7 @@ function Subscribe() {
                                         inputName="horseName"
                                         textValue={horseFormState.horseName}
                                         changeHandler={handleHorseChange}
+                                        required={true}
                                     />
                                     <TextInput
                                         labelFor="horseNumber-text-field"
@@ -233,6 +263,7 @@ function Subscribe() {
                                         inputName="horseNumber"
                                         textValue={horseFormState.horseNumber}
                                         changeHandler={handleHorseChange}
+                                        required={true}
                                     />
                                     <label htmlFor="typeOfFeed-field">
                                         Voeding:</label>
@@ -265,6 +296,7 @@ function Subscribe() {
                                         inputName="vet"
                                         textValue={horseFormState.vet}
                                         changeHandler={handleHorseChange}
+                                        required={true}
                                     />
                                     <TextInput
                                         labelFor="residenceOfVet-text-field"
@@ -273,6 +305,7 @@ function Subscribe() {
                                         inputName="residenceOfVet"
                                         textValue={horseFormState.residenceOfVet}
                                         changeHandler={handleHorseChange}
+                                        required={true}
                                     />
                                     <label htmlFor="telephoneOfVet-field">
                                         Telnr dierenarts:
@@ -284,6 +317,7 @@ function Subscribe() {
                                             placeholder="0123456789"
                                             value={horseFormState.telephoneOfVet}
                                             onChange={handleHorseChange}
+                                            required={true}
                                         />
                                     </label>
                                     <label htmlFor="subscription-hidden-field">
@@ -342,6 +376,7 @@ function Subscribe() {
                                             // onChange={() => toggleTermsAndConditionsValue(!termsAndConditionsValue)}
                                             checked={termsFormState.termsAndConditions}
                                             onChange={handleTermsChange}
+                                            required={true}
                                         />
                                         <label htmlFor="terms-and-conditions-field">
                                             Ik ga akkoord met de voorwaarden

@@ -1,14 +1,84 @@
 import "./Profile.css"
 import Button from "../../components/button/Button.jsx";
-import axl, {enrollments, horses} from "../../constants/testdata.js";
-import initialsName from "../../helpers/helpers.js";
-import {Link, useNavigate} from "react-router-dom";
+// import axl, {enrollments} from "../../constants/testdata.js";
+import initialsName, {formatPrice} from "../../helpers/helpers.js";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import calculateCustomersPrice from "../../helpers/calculateCustomersPrice.js";
+import axios from "axios";
+import {useState} from "react";
+// import {i} from "vite/dist/node/types.d-FdqQ54oU.js";
 
 function Profile() {
 
     const navigate = useNavigate();
+    const{customerProfileId} = useParams();
+        console.log(customerProfileId);
+    const [error, setError] = useState("");
+    const [profile, setProfile] = useState({});
+    const [horses, setHorses] = useState([]);
+    // const [enrollmentList, setEnrollmentList] = useState([]);
+    const [enrollmentList, setEnrollementList] = useState([]);
+    const [stall, setStall] = useState({});
 
+
+
+
+    //// klantprofiel ophalen uit de backend by Id ////
+    async function fetchCustomerProfile(customerProfileId){
+        setError("");
+
+        try {
+            const response = await axios.get(`http://localhost:8080/customerprofiles/${customerProfileId}`);
+            const customer = response.data;
+            console.log(customer);
+            setProfile(customer);
+            setHorses([
+                customer.horses,
+            ]);
+            setEnrollementList([
+                customer.enrollments,
+            ]);
+
+        } catch(error) {
+            console.error(error);
+            setError("Uw klantgegevens kunnen niet worden opgehaald")
+        }
+    }
+
+    //// inschrijvingen van klant ophalen (uit backend) //////
+    async function fetchEnrollementsByCustomer(customerProfileId){
+        try {
+            const response = await axios.get(`http://localhost:8080/customerprofiles/${customerProfileId}/enrollments`);
+            const enrollments = response.data;
+            console.log(enrollments);
+            setEnrollementList(enrollments);
+        } catch(error) {
+            console.error(error);
+            setError("uw abonnementgegevens kunnen niet worden opgehaald")
+        }
+    }
+
+    //// stallen ophalen uit de backend (omdat daar de koppeling met het paard zit/////
+
+    async function fetchStall(horseId){
+        setError("");
+
+        try {
+            const response = await axios.get("http://localhost:8080/stalls");
+            const stalls = response.data;
+            console.log(stalls);
+            const stall = stalls.find((stall) => {
+                return stall.id === horseId;
+            });
+            setStall(stall);
+        } catch(error) {
+            console.error(error);
+            setError("de stalgegevens kunnen niet worden opgehaald")
+        }
+    }
+
+    console.log(horses);
+    console.log(enrollmentList);
 
     return (
         <>
@@ -18,7 +88,7 @@ function Profile() {
                         <nav className="header-navigation">
                             {/*<h2>Blaze of Glory</h2>*/}
                             <Link to="/"><h2>Blaze of Glory</h2></Link>
-                            <div className="profile-icon">{initialsName(axl.firstName, axl.lastName)}</div>
+                            <div className="profile-icon">{Object.keys(profile).length > 0 && initialsName(profile.firstName, profile.lastName)}</div>
                         </nav>
 
                     </div>
@@ -48,8 +118,14 @@ function Profile() {
                     </nav>
                     <div className="profile-content-container">
                         <div className="intro-content-wrapper">
-                            <h3>Welkom {axl.firstName} {axl.lastName}</h3>
-                            <p>klantnummer: {axl.customerProfileId} </p>
+                            <h3>Welkom {profile.firstName} {profile.lastName}</h3>
+                            <p>klantnummer: 20240{profile.id} </p>
+                            <button type="button" onClick={() => fetchCustomerProfile(customerProfileId)}>haal klantgegegevens op</button>
+                                {error && <p className="error">{error}</p>}
+                            <button type="button" onClick={() => fetchEnrollementsByCustomer(customerProfileId)}>haal abonnement gegevens op</button>
+                                {error && <p className="error">{error}</p>}
+                            <button type="button" onClick={() => fetchStall(horseId)}>haal stallen op</button>
+                            {error && <p className="error">{error}</p>}
                         </div>
                         <article id="yourpersonalia" className="content-wrapper persona">
                             <div className="content-title">
@@ -76,13 +152,13 @@ function Profile() {
                                 </thead>
                                 <tbody>
                                 <tr className="table-body">
-                                    <td>{axl.street}</td>
-                                    <td>{axl.houseNumber}</td>
-                                    <td>{axl.postalCode}</td>
-                                    <td>{axl.residence}</td>
-                                    <td>{axl.telephoneNumber}</td>
-                                    <td>{axl.emailAddress}</td>
-                                    <td>{axl.bankAccountNumber}</td>
+                                    <td>{profile.street}</td>
+                                    <td>{profile.houseNumber}</td>
+                                    <td>{profile.postalCode}</td>
+                                    <td>{profile.residence}</td>
+                                    <td>{profile.telephoneNumber}</td>
+                                    <td>{profile.emailAddress}</td>
+                                    <td>{profile.bankAccountNumber}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -90,9 +166,10 @@ function Profile() {
                         <article id="yourhorses" className="content-wrapper horses">
                             <div className="content-title">
                                 <h4>Uw paarden</h4>
+                                {/*<button type="button" onClick={() => getHorses(profile.id)}></button>*/}
                             </div>
-                            {horses.map((horse) => {
-                                return <div key={horse.horseId} className="horse-wrapper">
+                            {horses.length === 0 ? <p>U heeft nog geen paarden toegevoegd</p> : horses[0].map((horse) => {
+                                return <div key={horse.id} className="horse-wrapper">
                                     <div className="head-line">
                                         <p className="horsename">{horse.name}</p>
                                         <Button
@@ -135,8 +212,8 @@ function Profile() {
                                         </thead>
                                         <tbody>
                                         <tr className="table-body">
-                                            <td>{horse.preferredSubscription.name}</td>
-                                            <td>{horse.stall.name}</td>
+                                            <td>{horse.preferredSubscription}</td>
+                                            <td>{horse.stall}</td>
                                             <td>{<Button type="button" disabled={false} note="hier komt toon file">
                                                 bekijk </Button>}</td>
                                         </tr>
@@ -156,10 +233,10 @@ function Profile() {
                                     bereken totale prijs
                                 </Button>
                             </div>
-                            {enrollments.map((enrollment) => {
-                                return <div key={enrollment.enrollmentId} className="subscriptiom-wrapper">
+                            {enrollmentList.length === 0 ? <p>U heeft nog geen abonnementen</p> : enrollmentList.map((enrollment) => {
+                                return <div key={enrollment.id} className="subscriptiom-wrapper">
                                     <div className="head-line">
-                                        <p className="horsename">Abonnementnummer: {enrollment.enrollmentId}</p>
+                                        <p className="horsename">Abonnementnummer: {enrollment.id}</p>
                                         <Button
                                             type="button"
                                             disabled={false}
@@ -185,12 +262,12 @@ function Profile() {
                                         <tr className="table-body">
                                             <td>{enrollment.subscription.name}</td>
                                             <td>{enrollment.horse.name}</td>
-                                            <td>{enrollment.stall.name}</td>
-                                            <td>{enrollment.stall.typeOfStall}</td>
+                                            {/*{Object.keys(stall).length > 0 && <td>{fetchStall(inschrijving.horse.id)} </td>}*/}
+                                            {/*<td>{inschrijving.stall.typeOfStall}</td>*/}
                                             <td>{enrollment.subscription.typeOfCare}</td>
                                             <td>{enrollment.startDate}</td>
-                                            <td>{enrollment.cancellationRequested}</td>
-                                            <td>{enrollment.subscription.price}</td>
+                                            {enrollment.cancellationRequested ? <td>ja</td> : <td>nee</td>}
+                                            <td>{formatPrice(enrollment.subscription.price)}</td>
                                         </tr>
                                         </tbody>
                                     </table>

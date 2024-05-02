@@ -1,5 +1,5 @@
 import './App.css'
-import {Routes, Route} from "react-router-dom";
+import {Routes, Route, useNavigate, Navigate} from "react-router-dom";
 import Home from './pages/home/Home.jsx';
 import Stalls from "./pages/stalls/Stalls.jsx";
 import Subscriptions from "./pages/subscriptions/Subscriptions.jsx";
@@ -11,7 +11,7 @@ import Subscribe from "./pages/subscribe/Subscribe.jsx";
 import NotFound from "./pages/notFound/NotFound.jsx";
 
 function App() {
-
+    const auth = true;
 
     return (
         <Routes>
@@ -20,9 +20,9 @@ function App() {
             <Route path="/abonnementen" element={<Subscriptions/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/registreer" element={<Register/>}/>
-            <Route path="/profiel/:klantId" element={<Profile/>}/>
-            <Route path="/inschrijven/:abonnementId" element={<Subscribe/>}/>
-            <Route path="/admin" element={<Admin/>}/>
+            <Route path="/profiel/:customerProfileId" element={auth ? <Profile/> : <Navigate to="/"/> }/>
+            <Route path="/inschrijven/:subscriptionId" element={<Subscribe/>}/>
+            <Route path="/admin/:userId" element={auth ? <Admin/> : <Navigate to="/"/>}/>
             <Route path="*" element={<NotFound/>}/>
         </Routes>
     )

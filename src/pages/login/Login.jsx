@@ -4,6 +4,7 @@ import './Login.css'
 import TextInput from "../../components/textInput/TextInput.jsx";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {abonnementen} from "../../constants/testdata.js";
 
 function Login() {
     const navigate = useNavigate();
@@ -25,8 +26,15 @@ function Login() {
     function handleSubmit(e) {
         e.preventDefault();
         console.log(loginFormState);
-        navigate("/profiel/:klantId")
+        navigate("/profiel/:customerProfileId")
     }
+
+    // function handleSubmit(userId) {
+    //     // e.preventDefault();
+    //     //hier code die inloggegevens checkt en token genereert
+    //     navigate(`/profiel/${userId}`);
+    //
+    // }
 
     return (
         <>

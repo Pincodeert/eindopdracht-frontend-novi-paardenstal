@@ -12,7 +12,7 @@ function SubscriptionTile(props) {
     }
 
     return (
-        <article className="subscription-article" key={props.key}>
+        <article className="subscription-article" key={props.componentKey}>
             <h2>{props.title}</h2>
             <img src={props.image} alt={props.imageinfo}/>
             <div className="subscription-text-wrapper">
