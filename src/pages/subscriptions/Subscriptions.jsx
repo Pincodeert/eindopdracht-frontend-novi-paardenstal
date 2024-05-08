@@ -1,13 +1,10 @@
 import './Subscriptions.css';
-
 import NavBar from "../../components/navBar/NavBar.jsx";
 import HeaderContent from "../../components/headerContent/HeaderContent.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import star from "../../assets/ster-image.jpg";
 import SubscriptionTile from "../../components/subscriptionTile/SubscriptionTile.jsx";
-import {beschikbareStallen, indoorSubscriptions, outdoorSubscriptions} from "../../constants/testdata.js";
-import {abonnementen} from "../../constants/testdata.js";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 // import {s} from "vite/dist/node/types.d-FdqQ54oU.js";
@@ -21,92 +18,83 @@ function Subscriptions() {
     const [subscriptions, setSubscriptions] = useState([]);
     const [availableStalls, setAvailableStalls] = useState([]);
     const [error, setError] = useState("");
-    const [subscription, setSubscription] = useState({});
+    // const [subscription, setSubscription] = useState({});
 
     ////// ALLE ABONNEMENTEN OPHALEN UIT DE BACKEND /////
-    async function fetchSubscriptions() {
-        setError("");
+    useEffect(() => {
+        async function fetchSubscriptions() {
+            setError("");
 
-        try {
-            const response = await axios.get("http://localhost:8080/subscriptions");
-            console.log(response.data);
-            setSubscriptions(response.data);
-        } catch(error) {
-            console.error(error);
-            console.log(error.response.status);
-            setError("Het ophalen van de abonnementen is mislukt. Probeer het opnieuw");
+            try {
+                const response = await axios.get("http://localhost:8080/subscriptions");
+                console.log(response.data);
+                setSubscriptions(response.data);
+            } catch(error) {
+                console.error(error);
+                console.log(error.response.status);
+                setError("Het ophalen van de abonnementen is mislukt. Probeer het opnieuw");
+            }
         }
-    }
+        void fetchSubscriptions();
+    }, []);
+
+
+
+    console.log(subscriptions);
+
 
     // OPGEHAALDE ABONNEMENTEN FILTEREN OP BINNEN - EN BUITEN STALLEN (2x)
 
-    const binnenAbonnementen = abonnementen.filter((abonnement) => {
-        return abonnement.typeOfStall === "kleine binnenstal" || abonnement.typeOfStall === "grote binnenstal";
+    const indoorSubscriptions = subscriptions.filter((subscription) => {
+        return subscription.typeOfStall === "kleine binnenstal" || subscription.typeOfStall === "grote binnenstal";
     });
-    console.log(binnenAbonnementen);
+    console.log(indoorSubscriptions);
 
-    const buitenAbonnementen = abonnementen.filter((abonnement) => {
-        return abonnement.typeOfStall === "kleine buitenstal" || abonnement.typeOfStall === "grote buitenstal";
+    const outdoorSubscriptions = subscriptions.filter((subscription) => {
+        return subscription.typeOfStall === "kleine buitenstal" || subscription.typeOfStall === "grote buitenstal";
     });
-    console.log(buitenAbonnementen);
+    console.log(outdoorSubscriptions);
 
 
     ////// ALLE BESCHIKBARE STALLEN OPHALEN UIT DE BACKEND /////
+    useEffect(() => {
+        async function fetchAvailableStalls() {
+            setError("");
 
-    async function fetchAvailableStalls() {
-        setError("");
-
-        try {
-            const response = await axios.get("http://localhost:8080/stalls/isOccupied/false");
-            console.log(response.data);
-            setAvailableStalls(response.data);
-        } catch (error) {
-            console.error(error);
-            console.log(error.response.status);
-            setError("Het ophalen van de beschikbare stallen is mislukt. Probeer het opnieuw");
+            try {
+                const response = await axios.get("http://localhost:8080/stalls/isOccupied/false");
+                console.log(response.data);
+                setAvailableStalls(response.data);
+            } catch (error) {
+                console.error(error);
+                console.log(error.response.status);
+                setError("Het ophalen van de beschikbare stallen is mislukt. Probeer het opnieuw");
+            }
         }
-    }
+        void fetchAvailableStalls();
+    }, []);
 
 
-    // OPGEHAALDE BESCHIKBARE STALLEN FILTEREN OP TYPE (4x)
-    // const beschikbareKleineBinnenStallen = beschikbareStallen.filter((stal) => {
-    //     return stal.type === "kleine binnenstal";
-    // });
-    // console.log(beschikbareKleineBinnenStallen);
+    console.log(availableStalls);
 
-    // const beschikbareGroteBinnenstallen = beschikbareStallen.filter((stal) => {
-    //     return stal.type === "grote binnenstal";
-    // });
-    // console.log(beschikbareGroteBinnenstallen);
-    //
-    // const beschikbareKleineBuitenStallen = beschikbareStallen.filter((stal) => {
-    //     return stal.type === "kleine buitenstal";
-    // });
-    // console.log(beschikbareKleineBuitenStallen);
-    //
-    // const beschikbareGroteBuitenStallen = beschikbareStallen.filter((stal) => {
-    //     return stal.type === "grote buitenstal";
-    // });
-    // console.log(beschikbareGroteBuitenStallen);
 
     // en nu een functie ervan maken die per map-ronde toegepast kan worden op de hele aray:
-    function getBeschikbareStallenByType (typeOfStall) {
-        const beschikbareStallenByType = beschikbareStallen.filter((stal) => {
-            return stal.type === typeOfStall;
+    function getAvailableStallsByType (typeOfStall) {
+        const availableStallsByType = availableStalls.filter((stall) => {
+            return stall.type === typeOfStall;
         });
-        return beschikbareStallenByType;
+        return availableStallsByType;
     }
 
 
     function handleSubscriptionClick(subscriptionId) {
         // e.preventDefault();
-        const abonnement = abonnementen[subscriptionId - 1];
-        setSubscription(abonnement);
-        console.log(abonnement);
+        // const subscription = subscriptions[subscriptionId - 1];
+        // setSubscription(subscription);
+        // console.log(subscription);
         navigate(`/inschrijven/${subscriptionId}`);
 
     }
-    console.log(subscription);
 
     return (
         <>
@@ -142,28 +130,27 @@ function Subscriptions() {
                 <section className="outer-container subscription-section">
                     <div className="inner-container">
                         <h2>Binnen Stal Abonnementen</h2>
-                        <button type="button" onClick={fetchAvailableStalls}>zijn er error's?</button>
                         {error && <p className="error">{error}</p>}
                         {console.log(availableStalls)}
-                        {binnenAbonnementen.length > 0 && <div className="subscription-article-wrapper">
-                            {binnenAbonnementen.map((binnenAbonnement) => {
+                        {indoorSubscriptions.length > 0 && <div className="subscription-article-wrapper">
+                            {indoorSubscriptions.map((indoorSubscription) => {
                                 return <SubscriptionTile
-                                    title={binnenAbonnement.name}
+                                    title={indoorSubscription.name}
                                     image={star}
                                     // image={subscription.subscriptionId}
                                     imageinfo="star"
-                                    textline1={binnenAbonnement.typeOfStall}
-                                    textline2={binnenAbonnement.typeOfCare}
+                                    textline1={indoorSubscription.typeOfStall}
+                                    textline2={indoorSubscription.typeOfCare}
                                     textline3="inclusief extra's"
                                     // textline4="vele extra's"
-                                    textline4={binnenAbonnement.id}
-                                    price={binnenAbonnement.price}
+                                    textline4={indoorSubscription.id}
+                                    price={indoorSubscription.price}
                                     remark="niet meer beschikbaar"
                                     // classname="visible"
-                                    isSoldOut={getBeschikbareStallenByType(binnenAbonnement.typeOfStall).length === 0}
-                                    key={binnenAbonnement.id}
-                                    componentKey={binnenAbonnement.id}
-                                    handleSubscriptionClick={() => handleSubscriptionClick(binnenAbonnement.id)}
+                                    isSoldOut={getAvailableStallsByType(indoorSubscription.typeOfStall).length === 0}
+                                    key={indoorSubscription.id}
+                                    componentKey={indoorSubscription.id}
+                                    handleSubscriptionClick={() => handleSubscriptionClick(indoorSubscription.id)}
                                 />
                             })}
                             </div>}
@@ -172,27 +159,26 @@ function Subscriptions() {
                 <section className="outer-container subscription-section">
                     <div className="inner-container">
                         <h2>Buiten Stal Abonnementen</h2>
-                        <button type="button" onClick={fetchSubscriptions}>zijn er error's?</button>
                         {error && <p className="error">{error}</p>}
                         {console.log(subscriptions)}
-                        {buitenAbonnementen.length > 0 && <div className="subscription-article-wrapper">
-                             {buitenAbonnementen.map((buitenAbonnement) => {
+                        {outdoorSubscriptions.length > 0 && <div className="subscription-article-wrapper">
+                             {outdoorSubscriptions.map((outdoorSubscription) => {
                                 return <SubscriptionTile
-                                    title={buitenAbonnement.name}
+                                    title={outdoorSubscription.name}
                                     image={star}
                                     // image={subscription.subscriptionId}
                                     imageinfo="star"
-                                    textline1={buitenAbonnement.typeOfStall}
-                                    textline2={buitenAbonnement.typeOfCare}
+                                    textline1={outdoorSubscription.typeOfStall}
+                                    textline2={outdoorSubscription.typeOfCare}
                                     textline3="inclusief extra's"
                                     textline4="vele extra's"
-                                    price={buitenAbonnement.price}
+                                    price={outdoorSubscription.price}
                                     remark="niet meer beschikbaar"
                                     // classname="visible"
-                                    isSoldOut={getBeschikbareStallenByType(buitenAbonnement.typeOfStall).length === 0}
-                                    key={buitenAbonnement.id}
-                                    componentKey={buitenAbonnement.id}
-                                    handleSubscriptionClick={() => handleSubscriptionClick(buitenAbonnement.id)}
+                                    isSoldOut={getAvailableStallsByType(outdoorSubscription.typeOfStall).length === 0}
+                                    key={outdoorSubscription.id}
+                                    componentKey={outdoorSubscription.id}
+                                    handleSubscriptionClick={() => handleSubscriptionClick(outdoorSubscription.id)}
                                 />
                             })}
                         </div>}

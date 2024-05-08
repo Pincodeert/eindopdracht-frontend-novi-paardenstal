@@ -7,59 +7,46 @@ import TextInput from "../../components/textInput/TextInput.jsx";
 import Button from "../../components/button/Button.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import SubscribeCard from "../../components/subscribeCard/SubscribeCard.jsx";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 
 function Subscribe() {
-    const navigate = useNavigate();
-    const {subscriptionId} = useParams();
-
-    const [susbscription, setSubscription] = useState({});
+    const [subscription, setSubscription] = useState({});
     const [error, setError] = useState("");
-
     const [customerFormState, setCustomerFormState] = useState({
-        firstname: "",
-        lastname: "",
+        firstName: "",
+        lastName: "",
         street: "",
         houseNumber: "",
-        zipcode: "",
+        postalCode: "",
         residence: "",
-        email: "",
-        telephone: "",
-        bankAccount: "",
+        emailAddress: "",
+        telephoneNumber: "",
+        bankAccountNumber: "",
     });
-
     const [horseFormState, setHorseFormState] = useState({
-        horseName: "",
+        name: "",
         horseNumber: "",
         typeOfFeed: "hay",
-        typeOfbedding: "straw",
-        vet: "",
+        typeOfBedding: "straw",
+        nameOfVet: "",
         residenceOfVet: "",
         telephoneOfVet: "",
     });
-
-    // const [termsAndConditionsValue, toggleTermsAndConditionsValue] = useState(false);
-    // const [imageValue, setImageValue] = useState("");
+    const [file, setFile] = useState();
     const [termsFormState, toggleTermsFormState] = useState({
         termsAndConditions: false,
     });
+    const [submitCustomerSuccessId, setSubmitCustomerSuccessId] = useState(null);
+    const [submitHorseSuccessId, setSubmitHorseSuccessId] = useState(null);
 
-    //// alle abonnement-typen ophalen ////
-    async function fetchSubscription(subscriptionId) {
-        setError("");
 
-        try {
-            const response = await axios.get(`http://localhost:8080/subscriptions/${subscriptionId}`);
-            console.log(response.data);
-            setSubscription(response.data);
-        } catch(error) {
-            console.error(error);
-            setError("het ophalen van de abonnement is niet gelukt");
-        }
-    }
+    const navigate = useNavigate();
+    const {subscriptionId} = useParams();
 
+
+/////////// Handle Change /////////////////////
     function handleCustomerChange(e) {
         const changedFieldName = e.target.name;
 
@@ -79,7 +66,9 @@ function Subscribe() {
         console.log(horseFormState);
     }
 
-
+    function handlePassportChange(e) {
+        setFile(e.target.files[0]);
+    }
 
     function handleTermsChange(e) {
         const changedFieldName = e.target.name;
@@ -91,20 +80,129 @@ function Subscribe() {
         });
     }
 
+/////////////////////////////
 
+    //// alle abonnement-typen ophalen ////
+    useEffect(() => {
+        async function fetchSubscription(subscriptionId) {
+            setError("");
+
+            try {
+                const response = await axios.get(`http://localhost:8080/subscriptions/${subscriptionId}`);
+                console.log(response.data);
+                setSubscription(response.data);
+            } catch (error) {
+                console.error(error);
+                setError("het ophalen van de abonnement is niet gelukt");
+            }
+        }
+
+        void fetchSubscription(subscriptionId);
+    }, []);
+
+///////// Handle Submit ////////////
     function handleSubmitCustomer(e) {
         e.preventDefault();
-        console.log(customerFormState);
+
+        async function addNewCustomer() {
+            setError("");
+            try {
+                console.log("dit gaan we zo posten naar de backend: ", customerFormState);
+                const response = await axios.post("http://localhost:8080/customerprofiles", {
+                    ...customerFormState
+                });
+                console.log(response);
+                console.log(response.status);
+                console.log("de klant is succesvol toegevoegd. de nieuwe id is: ", response.data);
+                setSubmitCustomerSuccessId(response.data);
+
+            } catch (error) {
+                console.error(error);
+                setError(error);
+            }
+
+        }
+
+        addNewCustomer();
+        console.log(customerFormState); //hier nog een userId (voor de inputDTO) aan toevoegen?
+        console.log("de nieuwe klantId = ", submitCustomerSuccessId);
+        //put request assignUserToCustomerProfile: axios.put("/customerprofiles/{customerId}/user")
     }
 
+    // koppelt user aan klant
+    async function assignUserToCustomer(submitCustomerSuccessId) {
+        setError("");
+        try {
+            const response = await axios.put(`http://localhost:8080/customerprofiles/${submitCustomerSuccessId}/user`, {
+                "username": "tina"
+            });
+            console.log(response)
+        } catch (error) {
+            console.error(error);
+            setError(error);
+        }
+    }
+
+    //maakt een nieuw paard aan
     function handleSubmitHorse(e) {
         e.preventDefault();
-        console.log(horseFormState, susbscription.name);
+
+        async function addNewHorse() {
+            setError("");
+            try {
+                const response = await axios.post("http://localhost:8080/horses", {
+                    ...horseFormState,
+                    preferredSubscription: subscription.name,
+                });
+                console.log(response);
+                console.log(response.status);
+                console.log("het paard is succesvol toegevoegd. de nieuwe id is: ", response.data);
+                setSubmitHorseSuccessId(response.data);
+            } catch (error) {
+                console.error(error);
+                setError(error);
+            }
+        }
+
+        console.log(submitHorseSuccessId);
+        addNewHorse();
+        //put request assignCustomerProfileToHorse axios.put("/horses/{horseId}/customerprofile")
     }
 
-    function handleSubmitPassport(e) {
+    //paard koppelen aan klant:
+    async function assignHorseToCustomer() {
+        setError("");
+        try {
+            const response = await axios.put(`http://localhost:8080/horses/${submitHorseSuccessId}/customerprofile`, {
+                "id": {submitCustomerSuccessId}
+            });
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+            setError(error);
+        }
+    }
+
+    async function handleSubmitPassport(e) {
         e.preventDefault();
-        console.log("het bestand is geupload ");
+        setError("");
+        const formData = new FormData();
+        formData.append("file", file);
+        // formData.append("passportName", passport.name);
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        }
+        try {
+            const response = await axios.post(`http://localhost:8080/horses/4/passport`, formData, config);
+            console.log("het bestand is geupload ");
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+            setError(error);
+        }
+
     }
 
     function handleSubmitTerms(e) {
@@ -126,9 +224,9 @@ function Subscribe() {
             <main>
                 <section className="outer-container intro-section">
                     <div className="inner-container">
-                        <p className="intro-line">Fijn dat u het {susbscription.name} wilt aflsuiten </p>
-                        <p className="italic">{generateSubscriptionDetails(susbscription)}</p>
-                        <button type="button" onClick={() => fetchSubscription(subscriptionId)}>haal het abonnement op</button>
+                        {Object.keys(subscription).length > 0 &&
+                            <p className="intro-line">Fijn dat u het {subscription.name} wilt aflsuiten </p>}
+                        <p className="italic">{generateSubscriptionDetails(subscription)}</p>
                     </div>
                 </section>
                 <section className="outer-container intro-section">
@@ -148,20 +246,20 @@ function Subscribe() {
                             >
                                 <form onSubmit={handleSubmitCustomer}>
                                     <TextInput
-                                        labelFor="firstname-text-field"
+                                        labelFor="firstName-text-field"
                                         labelText="Voornaam:"
-                                        inputId="firstname-text-field"
-                                        inputName="firstname"
-                                        textValue={customerFormState.firstname}
+                                        inputId="firstName-text-field"
+                                        inputName="firstName"
+                                        textValue={customerFormState.firstName}
                                         changeHandler={handleCustomerChange}
                                         required={true}
                                     />
                                     <TextInput
-                                        labelFor="lastname-text-field"
+                                        labelFor="lastName-text-field"
                                         labelText="Achternaam:"
-                                        inputId="lastname-text-field"
-                                        inputName="lastname"
-                                        textValue={customerFormState.lastname}
+                                        inputId="lastName-text-field"
+                                        inputName="lastName"
+                                        textValue={customerFormState.lastName}
                                         changeHandler={handleCustomerChange}
                                         required={true}
                                     />
@@ -184,11 +282,11 @@ function Subscribe() {
                                         required={true}
                                     />
                                     <TextInput
-                                        labelFor="zipcode-text-field"
+                                        labelFor="postalCode-text-field"
                                         labelText="Postcode:"
-                                        inputId="zipcode-text-field"
-                                        inputName="zipcode"
-                                        textValue={customerFormState.zipcode}
+                                        inputId="postalCode-text-field"
+                                        inputName="postalCode"
+                                        textValue={customerFormState.postalCode}
                                         changeHandler={handleCustomerChange}
                                         required={true}
                                     />
@@ -206,8 +304,8 @@ function Subscribe() {
                                         <input
                                             type="email"
                                             id="email-field"
-                                            name="email"
-                                            value={customerFormState.email}
+                                            name="emailAddress"
+                                            value={customerFormState.emailAddress}
                                             onChange={handleCustomerChange}
                                             required={true}
                                         />
@@ -217,10 +315,10 @@ function Subscribe() {
                                         <input
                                             type="tel"
                                             id="telephone-field"
-                                            name="telephone"
+                                            name="telephoneNumber"
                                             pattern="[0-9]{10}"
                                             placeholder="0123456789"
-                                            value={customerFormState.telephone}
+                                            value={customerFormState.telephoneNumber}
                                             onChange={handleCustomerChange}
                                             required={true}
                                         />
@@ -229,8 +327,8 @@ function Subscribe() {
                                         labelFor="bankAccount-text-field"
                                         labelText="IBAN:"
                                         inputId="bankAccount-text-field"
-                                        inputName="bankAccount"
-                                        textValue={customerFormState.bankAccount}
+                                        inputName="bankAccountNumber"
+                                        textValue={customerFormState.bankAccountNumber}
                                         changeHandler={handleCustomerChange}
                                         required={true}
                                     />
@@ -241,6 +339,13 @@ function Subscribe() {
                                         Sla op
                                     </Button>
                                 </form>
+                                <Button
+                                    type="button"
+                                    disabled={false}
+                                    handleClick={assignUserToCustomer}
+                                >
+                                    Volgende stap
+                                </Button>
                             </SubscribeCard>
 
                             <SubscribeCard
@@ -251,8 +356,8 @@ function Subscribe() {
                                         labelFor="horsename-text-field"
                                         labelText="Naam:"
                                         inputId="horsename-text-field"
-                                        inputName="horseName"
-                                        textValue={horseFormState.horseName}
+                                        inputName="name"
+                                        textValue={horseFormState.name}
                                         changeHandler={handleHorseChange}
                                         required={true}
                                     />
@@ -280,9 +385,9 @@ function Subscribe() {
                                     <label htmlFor="typeOfBedding-field">
                                         Bodembedekking:</label>
                                     <select
-                                        name="typeOfbedding"
+                                        name="typeOfBedding"
                                         id="typeOfBedding-field"
-                                        value={horseFormState.typeOfbedding}
+                                        value={horseFormState.typeOfBedding}
                                         onChange={handleHorseChange}
                                     >
                                         <option value="straw">stro</option>
@@ -293,8 +398,8 @@ function Subscribe() {
                                         labelFor="vet-text-field"
                                         labelText="Dierenarts:"
                                         inputId="vet-text-field"
-                                        inputName="vet"
-                                        textValue={horseFormState.vet}
+                                        inputName="nameOfVet"
+                                        textValue={horseFormState.nameOfVet}
                                         changeHandler={handleHorseChange}
                                         required={true}
                                     />
@@ -320,15 +425,16 @@ function Subscribe() {
                                             required={true}
                                         />
                                     </label>
-                                    <label htmlFor="subscription-hidden-field">
-                                        {averell.name}
-                                        <input
-                                            type="hidden"
-                                            id="subscription-hidden-field"
-                                            name="preferredSubscription"
-                                            value={averell.name}
-                                        />
-                                    </label>
+                                    {Object.keys(subscription).length > 0 &&
+                                        <label htmlFor="subscription-hidden-field">
+                                            {subscription.name}
+                                            <input
+                                                type="hidden"
+                                                id="subscription-hidden-field"
+                                                name="preferredSubscription"
+                                                value={subscription.name}
+                                            />
+                                        </label>}
                                     <Button
                                         type="submit"
                                         disabled={false}
@@ -336,6 +442,13 @@ function Subscribe() {
                                         Sla op
                                     </Button>
                                 </form>
+                                <Button
+                                    type="button"
+                                    disabled={false}
+                                    handleClick={assignHorseToCustomer}
+                                >
+                                    Volgende stap
+                                </Button>
                             </SubscribeCard>
 
                             <SubscribeCard
@@ -348,6 +461,8 @@ function Subscribe() {
                                             type="file"
                                             id="file-upload-field"
                                             name="file"
+                                            // value={}
+                                            onChange={handlePassportChange}
                                         />
                                     </label>
                                     <input type="submit"/>

@@ -24,10 +24,10 @@ function Register() {
         })
     }
 
-    function handleSubmit(e) {
+     function handleSubmit(e) {
         e.preventDefault();
         console.log(formState)
-        navigate("/inschrijven/:userId")
+        navigate("/abonnementen")
     }
 
     return (
