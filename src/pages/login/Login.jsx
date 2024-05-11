@@ -5,6 +5,7 @@ import TextInput from "../../components/textInput/TextInput.jsx";
 import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext.jsx";
+import axios from "axios";
 
 
 function Login() {
@@ -27,12 +28,23 @@ function Login() {
         })
     }
 
-    function handleSubmit(e) {
-        setError("");
+     async function handleSubmit(e) {
         e.preventDefault();
-        console.log(loginFormState);
+        setError("");
+        // console.log(loginFormState);
+        try {
+            const response = await axios.post("http://localhost:8080/authenticate", {
+                ...loginFormState
+            });
+            console.log(response.data.jwt);
+
+            signIn(response.data.jwt);
+        } catch(error) {
+            console.error(error);
+            setError(error);
+        }
         // console.log(data);
-        signIn();
+
         // navigate("/profiel/:customerProfileId")
     }
 
@@ -65,6 +77,7 @@ function Login() {
             <main className="outer-container ">
                 <section className="inner-container content-section">
                     <div className="form-container">
+                        {/*{error && <p className="error">Inloggen niet gelukt. Probeer het opnieuw!</p>}*/}
                         <h2>Inloggen: </h2>
                         <form onSubmit={handleSubmit}>
                             <TextInput
@@ -96,6 +109,7 @@ function Login() {
                                     Log in
                                 </Button>
                             </div>
+                            {error && <p className="error">Inloggen niet gelukt. Probeer het opnieuw!</p>}
                         </form>
                     </div>
                     <div className="info-container">

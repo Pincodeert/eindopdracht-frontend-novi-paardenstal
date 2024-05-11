@@ -5,7 +5,8 @@ import initialsName, {formatPrice} from "../../helpers/helpers.js";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import calculateCustomersPrice from "../../helpers/calculateCustomersPrice.js";
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import {AuthContext} from "../../context/AuthContext.jsx";
 // import {i} from "vite/dist/node/types.d-FdqQ54oU.js";
 
 function Profile() {
@@ -19,7 +20,8 @@ function Profile() {
     const navigate = useNavigate();
     const{customerProfileId} = useParams();
         console.log(customerProfileId);
-
+    const {isAuth, signOut} = useContext(AuthContext);
+    console.log(isAuth);
 
     //// klantprofiel ophalen uit de backend by Id ////
     useEffect(() => {
@@ -114,9 +116,15 @@ function Profile() {
                 <section className="outer-container">
                     <div className="inner-container inverted-header">
                         <nav className="header-navigation">
-                            {/*<h2>Blaze of Glory</h2>*/}
                             <Link to="/"><h2>Blaze of Glory</h2></Link>
-                            <div className="profile-icon">{Object.keys(profile).length > 0 && initialsName(profile.firstName, profile.lastName)}</div>
+                            {isAuth && <Button
+                                type="button"
+                                handleClick={signOut}
+                            >
+                                uitloggen
+                            </Button>}
+                            <div className="profile-icon">{Object.keys(profile).length > 0 ? initialsName(profile.firstName, profile.lastName) :
+                                <span>???</span>}</div>
                         </nav>
 
                     </div>

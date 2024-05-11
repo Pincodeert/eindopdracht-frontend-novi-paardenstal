@@ -9,9 +9,11 @@ import Profile from "./pages/profile/Profile.jsx";
 import Admin from "./pages/admin/Admin.jsx";
 import Subscribe from "./pages/subscribe/Subscribe.jsx";
 import NotFound from "./pages/notFound/NotFound.jsx";
+import {useContext} from "react";
+import {AuthContext} from "./context/AuthContext.jsx";
 
 function App() {
-    const auth = true;
+    const {isAuth} = useContext(AuthContext);
 
     return (
         <Routes>
@@ -20,9 +22,9 @@ function App() {
             <Route path="/abonnementen" element={<Subscriptions/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/registreer" element={<Register/>}/>
-            <Route path="/profiel/:customerProfileId" element={auth ? <Profile/> : <Navigate to="/"/>}/>
+            <Route path="/profiel/:customerProfileId" element={isAuth ? <Profile/> : <Navigate to="/"/>}/>
             <Route path="/inschrijven/:subscriptionId" element={<Subscribe/>}/>
-            <Route path="/admin/:userId" element={auth ? <Admin/> : <Navigate to="/"/>}/>
+            <Route path="/admin/:userId" element={isAuth ? <Admin/> : <Navigate to="/"/>}/>
             <Route path="*" element={<NotFound/>}/>
         </Routes>
     )

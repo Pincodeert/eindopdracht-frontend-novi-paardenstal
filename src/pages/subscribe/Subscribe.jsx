@@ -7,9 +7,10 @@ import TextInput from "../../components/textInput/TextInput.jsx";
 import Button from "../../components/button/Button.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import SubscribeCard from "../../components/subscribeCard/SubscribeCard.jsx";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
+import {AuthContext} from "../../context/AuthContext.jsx";
 
 function Subscribe() {
     const [subscription, setSubscription] = useState({});
@@ -45,6 +46,7 @@ function Subscribe() {
     const navigate = useNavigate();
     const {subscriptionId} = useParams();
 
+    const {user} = useContext(AuthContext);
 
 /////////// Handle Change /////////////////////
     function handleCustomerChange(e) {
@@ -103,7 +105,7 @@ function Subscribe() {
 ///////// Handle Submit ////////////
     function handleSubmitCustomer(e) {
         e.preventDefault();
-
+        setError("");
         async function addNewCustomer() {
             setError("");
             try {
@@ -134,7 +136,7 @@ function Subscribe() {
         setError("");
         try {
             const response = await axios.put(`http://localhost:8080/customerprofiles/${submitCustomerSuccessId}/user`, {
-                "username": "tina"
+                username: user.username,
             });
             console.log(response)
         } catch (error) {
