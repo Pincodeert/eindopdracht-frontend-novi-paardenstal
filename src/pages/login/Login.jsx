@@ -48,13 +48,6 @@ function Login() {
         // navigate("/profiel/:customerProfileId")
     }
 
-    // function handleSubmit(userId) {
-    //     // e.preventDefault();
-    //     //hier code die inloggegevens checkt en token genereert
-    //     navigate(`/profiel/${userId}`);
-    //
-    // }
-
     return (
         <>
             <header>

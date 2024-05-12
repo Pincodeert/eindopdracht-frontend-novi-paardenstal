@@ -255,52 +255,59 @@ function Subscribe() {
                                         textValue={customerFormState.firstName}
                                         changeHandler={handleCustomerChange}
                                         required={true}
-                                    />
+                                    >
+                                        Voornaam:
+                                    </TextInput>
                                     <TextInput
                                         labelFor="lastName-text-field"
-                                        labelText="Achternaam:"
                                         inputId="lastName-text-field"
                                         inputName="lastName"
                                         textValue={customerFormState.lastName}
                                         changeHandler={handleCustomerChange}
                                         required={true}
-                                    />
+                                    >
+                                        Achternaam:
+                                    </TextInput>
                                     <TextInput
                                         labelFor="street-text-field"
-                                        labelText="Straat:"
                                         inputId="street-text-field"
                                         inputName="street"
                                         textValue={customerFormState.street}
                                         changeHandler={handleCustomerChange}
                                         required={true}
-                                    />
+                                    >
+                                        Straat:
+                                    </TextInput>
                                     <TextInput
                                         labelFor="houseNumber-text-field"
-                                        labelText="Huisnummer:"
                                         inputId="houseNumbername-text-field"
                                         inputName="houseNumber"
                                         textValue={customerFormState.houseNumber}
                                         changeHandler={handleCustomerChange}
                                         required={true}
-                                    />
+                                    >
+                                        Huisnummer:
+                                    </TextInput>
                                     <TextInput
                                         labelFor="postalCode-text-field"
-                                        labelText="Postcode:"
                                         inputId="postalCode-text-field"
                                         inputName="postalCode"
                                         textValue={customerFormState.postalCode}
                                         changeHandler={handleCustomerChange}
                                         required={true}
-                                    />
+                                    >
+                                        Postcode:
+                                    </TextInput>
                                     <TextInput
                                         labelFor="residence-text-field"
-                                        labelText="Woonplaats"
                                         inputId="residence-text-field"
                                         inputName="residence"
                                         textValue={customerFormState.residence}
                                         changeHandler={handleCustomerChange}
                                         required={true}
-                                    />
+                                    >
+                                        Woonplaats:
+                                    </TextInput>
                                     <label htmlFor="email-field">
                                         E-mail:
                                         <input
@@ -327,13 +334,14 @@ function Subscribe() {
                                     </label>
                                     <TextInput
                                         labelFor="bankAccount-text-field"
-                                        labelText="IBAN:"
                                         inputId="bankAccount-text-field"
                                         inputName="bankAccountNumber"
                                         textValue={customerFormState.bankAccountNumber}
                                         changeHandler={handleCustomerChange}
                                         required={true}
-                                    />
+                                    >
+                                        IBAN:
+                                    </TextInput>
                                     <Button
                                         type="submit"
                                         disabled={false}
@@ -356,22 +364,24 @@ function Subscribe() {
                                 <form onSubmit={handleSubmitHorse}>
                                     <TextInput
                                         labelFor="horsename-text-field"
-                                        labelText="Naam:"
                                         inputId="horsename-text-field"
                                         inputName="name"
                                         textValue={horseFormState.name}
                                         changeHandler={handleHorseChange}
                                         required={true}
-                                    />
+                                    >
+                                        Naam:
+                                    </TextInput>
                                     <TextInput
                                         labelFor="horseNumber-text-field"
-                                        labelText="Paardnummer:"
                                         inputId="horseNumber-text-field"
                                         inputName="horseNumber"
                                         textValue={horseFormState.horseNumber}
                                         changeHandler={handleHorseChange}
                                         required={true}
-                                    />
+                                    >
+                                        Paardnummer:
+                                    </TextInput>
                                     <label htmlFor="typeOfFeed-field">
                                         Voeding:</label>
                                     <select
@@ -398,22 +408,24 @@ function Subscribe() {
 
                                     <TextInput
                                         labelFor="vet-text-field"
-                                        labelText="Dierenarts:"
                                         inputId="vet-text-field"
                                         inputName="nameOfVet"
                                         textValue={horseFormState.nameOfVet}
                                         changeHandler={handleHorseChange}
                                         required={true}
-                                    />
+                                    >
+                                        Dierenarts:
+                                    </TextInput>
                                     <TextInput
                                         labelFor="residenceOfVet-text-field"
-                                        labelText="Woonplaats dierenarts:"
                                         inputId="residenceOfVet-text-field"
                                         inputName="residenceOfVet"
                                         textValue={horseFormState.residenceOfVet}
                                         changeHandler={handleHorseChange}
                                         required={true}
-                                    />
+                                    >
+                                        Woonplaats dierenarts:
+                                    </TextInput>
                                     <label htmlFor="telephoneOfVet-field">
                                         Telnr dierenarts:
                                         <input

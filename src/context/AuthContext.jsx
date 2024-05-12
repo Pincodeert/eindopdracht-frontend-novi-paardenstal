@@ -9,23 +9,23 @@ function AuthContextProvider({children}) {
     const [auth, setAuth] = useState({
         isAuth: false,
         user: null,
-        status: "pending",
+        // status: "pending",
     });
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token && isTokenValid(token)){
-            void signIn(token);
-        } else {
-            setAuth({
-                isAuth: false,
-                user: null,
-                status: "done",
-            });
-        }
-    }, []);
+    // useEffect(() => {
+    //     const token = localStorage.getItem('token');
+    //     if (token && isTokenValid(token)){
+    //         void signIn(token);
+    //     } else {
+    //         setAuth({
+    //             isAuth: false,
+    //             user: null,
+    //             status: "done",
+    //         });
+    //     }
+    // }, []);
 
     async function signIn(token) {
         localStorage.setItem('token', token);
@@ -48,7 +48,7 @@ function AuthContextProvider({children}) {
                     customerProfile: response.data.customerProfile,  // elders te gebruiken in if/else? als CP===null.
                     // dan op inschrijfpagina gelijk door naar stap 3 , voer paard op.
                 },
-                status: "done",
+                // status: "done",
             });
             navigate(`/profiel/${response.data.username}`)
             // navigate(`/abonnementen`) // Als inlogstap volgt op keuze abonnement: de subscriptionId van
@@ -69,11 +69,12 @@ function AuthContextProvider({children}) {
     }
 
     function signOut() {
+        localStorage.clear();
         console.log("de gebruiker is uitgelogd");
         setAuth({
             isAuth: false,
             user: null,
-            status: "done",
+            // status: "done",
         });
         navigate("/");
     }
@@ -87,7 +88,8 @@ function AuthContextProvider({children}) {
 
     return (
         <AuthContext.Provider value={contextData}>
-            {auth.status === "done" ? children : <p>Loading...</p>}
+            {/*{auth.status === "done" ? children : <p>Loading...</p>}*/}
+            {children}
         </AuthContext.Provider>
     )
 }

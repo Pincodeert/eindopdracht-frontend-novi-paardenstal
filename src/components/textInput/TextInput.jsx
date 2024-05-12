@@ -1,9 +1,9 @@
 import "./TextInput.css"
 
-function TextInput({labelFor, labelText, inputId, inputName, textValue, changeHandler, placeholder, required}) {
+function TextInput({labelFor, children, inputId, inputName, textValue, changeHandler, placeholder, required}) {
     return (
         <label htmlFor={labelFor}>
-            {labelText}
+            {children}
             <input
                 id={inputId}
                 name={inputName}
