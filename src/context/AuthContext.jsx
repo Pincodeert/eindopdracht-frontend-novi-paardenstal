@@ -7,7 +7,7 @@ import isTokenValid from "../helpers/isTokenValid.js";
 export const AuthContext = createContext({});
 function AuthContextProvider({children}) {
     const [auth, setAuth] = useState({
-        isAuth: false,
+        isAuth: true,
         user: null,
         // status: "pending",
     });
