@@ -2,16 +2,22 @@ import NavBar from "../../components/navBar/NavBar.jsx";
 import Button from "../../components/button/Button.jsx";
 import './Login.css'
 import TextInput from "../../components/textInput/TextInput.jsx";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {AuthContext} from "../../context/AuthContext.jsx";
+import axios from "axios";
+
 
 function Login() {
-    const navigate = useNavigate();
-
     const [loginFormState, setLoginFormState] = useState({
         username: "",
         password: "",
     });
+    const [error, setError] = useState("");
+
+    const navigate = useNavigate();
+
+    const {signIn} = useContext(AuthContext);
 
     function handleChange(e) {
         const changedFieldName = e.target.name;
@@ -22,10 +28,24 @@ function Login() {
         })
     }
 
-    function handleSubmit(e) {
+     async function handleSubmit(e) {
         e.preventDefault();
-        console.log(loginFormState);
-        navigate("/profiel/:klantId")
+        setError("");
+        // console.log(loginFormState);
+        try {
+            const response = await axios.post("http://localhost:8080/authenticate", {
+                ...loginFormState
+            });
+            console.log(response.data.jwt);
+
+            signIn(response.data.jwt);
+        } catch(error) {
+            console.error(error);
+            setError(error);
+        }
+        // console.log(data);
+
+        // navigate("/profiel/:customerProfileId")
     }
 
     return (
@@ -50,6 +70,7 @@ function Login() {
             <main className="outer-container ">
                 <section className="inner-container content-section">
                     <div className="form-container">
+                        {/*{error && <p className="error">Inloggen niet gelukt. Probeer het opnieuw!</p>}*/}
                         <h2>Inloggen: </h2>
                         <form onSubmit={handleSubmit}>
                             <TextInput
@@ -81,6 +102,7 @@ function Login() {
                                     Log in
                                 </Button>
                             </div>
+                            {error && <p className="error">Inloggen niet gelukt. Probeer het opnieuw!</p>}
                         </form>
                     </div>
                     <div className="info-container">

@@ -5,15 +5,18 @@ import './Register.css'
 import TextInput from "../../components/textInput/TextInput.jsx";
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 function Register() {
-    const navigate = useNavigate();
-
     const [formState, setFormState] = useState({
         username: "",
         password: "",
         email: "",
     });
+    const [error, setError] = useState("");
+    const [registerSubmitSuccessId, setRegisterSubmitSuccessId] = useState(false);
+
+    const navigate = useNavigate();
 
     function handleChange(e) {
         const changedFieldName = e.target.name;
@@ -24,11 +27,26 @@ function Register() {
         })
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-        console.log(formState)
-        navigate("/inschrijven/:userId")
+        setError("");
+        setRegisterSubmitSuccessId(false);
+        // console.log(formState)
+        try {
+            const response = await axios.post("http://localhost:8080/users", {
+                ...formState
+            });
+            console.log(response);
+            // setRegisterSubmitSuccessId(response.data);
+            setRegisterSubmitSuccessId(true);
+        } catch (error) {
+            console.error(error);
+            setError(error);
+        }
+        navigate("/login");
     }
+
+    console.log(registerSubmitSuccessId);
 
     return (
         <>
@@ -51,8 +69,9 @@ function Register() {
             </header>
             <main className="outer-container ">
                 <section className="inner-container content-section">
+                    {error && <p className="error">De account kon niet worden aangemaakt. Probeer het opnieuw</p>}
                     <div className="form-container">
-                        <h2>Register hier: </h2>
+                        <h2>Registreer hier: </h2>
                         <form onSubmit={handleSubmit}>
                             <TextInput
                                 labelFor="username-text-field"

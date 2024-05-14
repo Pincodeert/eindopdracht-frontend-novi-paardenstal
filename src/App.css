@@ -101,6 +101,11 @@ a:link {
 a:visited {
     color: var(--orange);
 }
+
+.error {
+    margin: 40px 0;
+    color: red;
+}
 /*a {*/
 /*  font-weight: 500;*/
 /*  color: #646cff;*/

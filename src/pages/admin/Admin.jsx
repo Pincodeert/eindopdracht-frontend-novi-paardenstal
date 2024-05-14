@@ -65,10 +65,10 @@ function Admin() {
                             <h3>Welkom {axl.firstName} {axl.lastName}</h3>
                             {/*<p>klantnummer: {axl.customerProfileId} </p>*/}
                         </div>
-                    </div>
+
                     <article className="content-wrapper persona">
                         <div className="content-title">
-                            <h4>Uw gegevens</h4>
+                            <h4>Klanten</h4>
                             <Button
                                 type="button"
                                 text="wijzig"
@@ -99,6 +99,7 @@ function Admin() {
                             </tbody>
                         </table>
                     </article>
+                    </div>
                 </div>
             </main>
         </>
