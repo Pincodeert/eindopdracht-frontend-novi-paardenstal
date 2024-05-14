@@ -109,3 +109,57 @@ th, td {
     margin: 20px 0;
 }
 
+.profile-form {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin: 18px 0;
+}
+
+.profile-form input {
+    padding: 3px;
+    border: 2px solid var(--orange);
+    border-radius: 5px;
+    margin: 2px 0;
+    font-size: 18px;
+    width: 250px;
+}
+
+.profile-form button {
+    width: 45%;
+}
+
+.table-body input {
+    padding: 3px;
+    border: 2px solid var(--orange);
+    border-radius: 5px;
+    margin: 0;
+    font-size: 18px;
+    width: 300px;
+}
+
+.table-form-container {
+    display: flex;
+    flex-direction: row;
+    /*border: 2px solid plum;*/
+    align-items: start;
+    /*padding: 20px 0;*/
+}
+
+#yourpersonalia input{
+    border: 2px solid var(--orange);
+    border-radius: 5px;
+}
+
+.horse-info-container {
+    display: flex;
+    flex-direction: row;
+    border: 2px solid plum;
+
+}
+
+.horse-info-container select {
+    border: 2px solid var(--orange);
+    border-radius: 5px;
+    padding: 2px 5px;
+}
