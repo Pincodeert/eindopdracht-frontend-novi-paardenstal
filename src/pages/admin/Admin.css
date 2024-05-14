@@ -1,3 +1,73 @@
 h3 {
     /*color: var(--pale);*/
 }
+
+.overwiew-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.radio-form {
+    width: 10%;
+    padding-top: 70px;
+    border-top: 2px solid var(--orange);
+    border-left: 2px solid var(--orange);
+    border-bottom: 2px solid var(--orange);
+}
+
+.radio-form input {
+    margin: 29px 0;
+}
+
+/*.admin-table {*/
+/*    border: 2px solid plum;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: flex-start;*/
+/*    width: 856px;*/
+/*}*/
+
+/*.admin-table-head th {*/
+/*    padding: 10px 20px;*/
+/*    border: 2px dotted black;*/
+/*    width: 200px;*/
+/*}*/
+
+/*.admin-table-body td {*/
+/*    padding: 10px 20px;*/
+/*    border: 2px dotted black;*/
+/*    width: 200px;*/
+/*}*/
+
+.admin-table {
+    border-collapse: collapse;
+    border: 2px solid var(--orange);
+    border-radius: 5px;
+    width: 90%;
+    /*margin-bottom: 2em;*/
+    margin-bottom: 80px;
+    /*display: flex;*/
+
+}
+
+.admin-table td, .users th {
+    border: 2px solid var(--orange);
+    padding: 0.8em;
+}
+
+.admin-table tr {
+    border: 2px solid var(--orange);
+    border-radius: 5px;
+}
+
+.admin-table tr:hover {
+    background-color: var(--orange);
+}
+
+.admin-table th {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    text-align: left;
+    /*background-color: var(--faded-army);*/
+
+}

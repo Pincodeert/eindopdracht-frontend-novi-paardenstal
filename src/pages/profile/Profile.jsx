@@ -677,7 +677,6 @@ console.log("dit zijn de paarden: ")
                                 })}
                         </article>
                         <article>
-
                         </article>
                     </div>
                 </div>
