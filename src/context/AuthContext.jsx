@@ -1,33 +1,34 @@
-import {createContext, useEffect, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
 import isTokenValid from "../helpers/isTokenValid.js";
+import {SubscriptionContext} from "./SubscriptionContext.jsx";
 
 export const AuthContext = createContext({});
 function AuthContextProvider({children}) {
     const [auth, setAuth] = useState({
-        isAuth: true,
+        isAuth: false,
         user: null,
-        // status: "pending",
+        status: "pending",
     });
 
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     const token = localStorage.getItem('token');
-    //     if (token && isTokenValid(token)){
-    //         void signIn(token);
-    //     } else {
-    //         setAuth({
-    //             isAuth: false,
-    //             user: null,
-    //             status: "done",
-    //         });
-    //     }
-    // }, []);
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token && isTokenValid(token)){
+            void signIn(token);
+        } else {
+            setAuth({
+                isAuth: false,
+                user: null,
+                status: "done",
+            });
+        }
+    }, []);
 
-    async function signIn(token) {
+    async function signIn(token, subscriptionId) {
         localStorage.setItem('token', token);
         const decodedToken = jwtDecode(token);
         console.log("de decodedToken is: ", decodedToken);
@@ -45,15 +46,16 @@ function AuthContextProvider({children}) {
                     username: response.data.username,
                     email: response.data.email,
                     authorities: response.data.authorities,
-                    customerProfile: response.data.customerProfile,  // elders te gebruiken in if/else? als CP===null.
-                    // dan op inschrijfpagina gelijk door naar stap 3 , voer paard op.
+                    customerProfile: response.data.customerProfile,
                 },
-                // status: "done",
+                status: "done",
             });
-            navigate(`/profiel/${response.data.username}`)
-            // navigate(`/abonnementen`) // Als inlogstap volgt op keuze abonnement: de subscriptionId van
-            // inschrijven/:subscriptionId opslaan in de context en hier in de authcontext checken of er een
-            // subscriptionId is. Zo ja =>> navigate(`/inschrijven/subscriptionId`) Zo nee =>> navigate(`/profiel/username`)
+            if(subscriptionId) {
+                navigate(`/inschrijven/${subscriptionId}`);
+            } else {
+                navigate(`/profiel/${response.data.customerProfile}`)
+            }
+
 
             // hier nog een if-else statement plaatsen?
             // if(ROLE===admin) {
@@ -74,9 +76,18 @@ function AuthContextProvider({children}) {
         setAuth({
             isAuth: false,
             user: null,
-            // status: "done",
+            status: "done",
         });
         navigate("/");
+    }
+
+    function completeUserInfo(customerProfileId) {
+        setAuth({
+            ...auth,
+            user: {
+                customerProfile: customerProfileId,
+            }
+        })
     }
 
     const contextData = {
@@ -84,12 +95,12 @@ function AuthContextProvider({children}) {
         user: auth.user,
         signIn,
         signOut,
+        completeUserInfo,
     }
 
     return (
         <AuthContext.Provider value={contextData}>
-            {/*{auth.status === "done" ? children : <p>Loading...</p>}*/}
-            {children}
+            {auth.status === "done" ? children : <p>Loading...</p>}
         </AuthContext.Provider>
     )
 }

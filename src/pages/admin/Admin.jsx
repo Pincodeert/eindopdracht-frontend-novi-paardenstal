@@ -1,6 +1,5 @@
 import './Admin.css';
 import Button from "../../components/button/Button.jsx";
-import axl from "../../constants/testdata.js";
 import {Link} from "react-router-dom";
 import React, {useState} from "react";
 import axios from "axios";

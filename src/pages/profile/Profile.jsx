@@ -48,10 +48,11 @@ function Profile() {
         typeOfFeed: "hay",
         typeOfBedding: "straw",
         nameOfVet: "",
-        residenceOfvet: "",
+        residenceOfVet: "",
         telephoneOfVet: "",
     });
 
+    const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const{customerProfileId} = useParams();
     console.log(customerProfileId);
@@ -64,7 +65,12 @@ function Profile() {
             setError("");
 
             try {
-                const response = await axios.get(`http://localhost:8080/customerprofiles/${customerProfileId}`);
+                const response = await axios.get(`http://localhost:8080/customerprofiles/${customerProfileId}`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
                 const customer = response.data;
                 console.log(customer);
                 setProfile(customer);
@@ -84,30 +90,42 @@ function Profile() {
     }, []);
 console.log("dit zijn de paarden: ")
 
-    // //paarden ophalen uit backend
-    // async function fetchHorsesByCustomer(id){
-    //     try {
-    //         const response = await axios.get("http://localhost:8080/horses/customerprofile", {
-    //             "id": {id},
-    //         }, {});
-    //         const paarden = response.data;
-    //         console.log(paarden);
-    //         // setEnrollmentList(enrollments);
-    //     } catch(error) {
-    //         console.error(error);
-    //         setError("uw paardgegevens kunnen niet worden opgehaald")
-    //     }
-    // }
+    //paarden ophalen uit backend
+    async function fetchHorsesByCustomer(){
+        try {
+            const response = await axios.get("http://localhost:8080/horses/customerprofile/5",
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+            );
+            console.log(response)
+            const paarden = response.data;
+            console.log(paarden);
+            // setEnrollmentList(enrollments);
+        } catch(error) {
+            console.error(error);
+            setError("uw paardgegevens kunnen niet worden opgehaald")
+        }
+    }
 
 
 
 
     //// inschrijvingen van klant ophalen (uit backend) //////
     useEffect(() => {
+        void fetchHorsesByCustomer();
         async function fetchEnrollementsByCustomer(customerProfileId){
             setError("");
             try {
-                const response = await axios.get(`http://localhost:8080/customerprofiles/${customerProfileId}/enrollments`);
+                const response = await axios.get(`http://localhost:8080/customerprofiles/${customerProfileId}/enrollments`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
                 const enrollments = response.data;
                 // console.log(enrollments);
                 setEnrollmentList(enrollments);
@@ -121,32 +139,32 @@ console.log("dit zijn de paarden: ")
 
 
     //// stallen ophalen uit de backend (omdat daar de koppeling met het paard zit/////
-    useEffect(() => {
-        horseList.map((horse) => {
-            void fetchStall(horse)
-        });
-
-    }, []);
-    async function fetchStall(horse){
-        setError("");
-
-        try {
-            const response = await axios.get("http://localhost:8080/stalls");
-            const stalls = response.data;
-            console.log("stallen", stalls);
-            const foundStall = stalls.find((stall) => {
-                return stall.horse.id === horse.id;
-            });
-            setStall(foundStall);
-            // setHorse.stall: stall.id,
-            for (let i = 0; i < horseList.length; i++) {
-                horseList[i].stall = foundStall.id;
-            }
-        } catch(error) {
-            console.error(error);
-            setError("de stalgegevens kunnen niet worden opgehaald")
-        }
-    }
+    // useEffect(() => {
+    //     horseList.map((horse) => {
+    //         void fetchStall(horse)
+    //     });
+    //
+    // }, []);
+    // async function fetchStall(horse){
+    //     setError("");
+    //
+    //     try {
+    //         const response = await axios.get("http://localhost:8080/stalls");
+    //         const stalls = response.data;
+    //         console.log("stallen", stalls);
+    //         const foundStall = stalls.find((stall) => {
+    //             return stall.horse.id === horse.id;
+    //         });
+    //         setStall(foundStall);
+    //         // setHorse.stall: stall.id,
+    //         for (let i = 0; i < horseList.length; i++) {
+    //             horseList[i].stall = foundStall.id;
+    //         }
+    //     } catch(error) {
+    //         console.error(error);
+    //         setError("de stalgegevens kunnen niet worden opgehaald")
+    //     }
+    // }
 
     console.log("dit zou dan een lijst met aangevulde paardinfo zijn: ", horseList);
     console.log("dit is de lijst met paarden", horseList);
@@ -191,6 +209,11 @@ console.log("dit zijn de paarden: ")
         try {
             const response = await axios.patch(`http://localhost:8080/customerprofiles/${customerProfileId}`, {
                 ...customerFormState
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
             });
             console.log("updaten van de klantgegevens is gelukt")
             console.log(response);
@@ -206,6 +229,11 @@ console.log("dit zijn de paarden: ")
         try {
             const response = await axios.patch(`http://localhost:8080/horses/${selectedHorseId}`, {
                 ...horseFormState,
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
             });
             console.log(`het updaten van paard id ${selectedHorseId} is gelukt!`);
             console.log(response);
@@ -237,8 +265,8 @@ console.log("dit zijn de paarden: ")
 
     function handleHorseForm(e) {
         e.preventDefault();
-        void updateHorse();
         selectHorse(selectedHorseId);
+        void updateHorse();
         console.log("uw paard gegevens zijn gewijzigd");
         toggleEnabledHorseChange(false);
     }
@@ -516,7 +544,7 @@ console.log("dit zijn de paarden: ")
                                             <tr className="table-head">
                                                 <th>paardnummer</th>
                                                 <th>type voeding</th>
-                                                <th>type boedembedekking</th>
+                                                <th>type bodembedekking</th>
                                                 <th>naam dierenarts</th>
                                                 <th>woonplaats dierenarts</th>
                                                 <th>telefoonnummer dierenarts</th>
@@ -621,7 +649,7 @@ console.log("dit zijn de paarden: ")
                                     </div>
                                 })}
                         </article>
-                        <article id="yoursubscriptions" className="content-wrapper subscriptions">
+                        <article className="content-wrapper subscriptions">
                             <div className="content-title">
                                 <h4>Uw abonnementen</h4>
                                 <Button

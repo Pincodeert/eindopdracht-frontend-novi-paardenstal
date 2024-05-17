@@ -6,6 +6,7 @@ import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext.jsx";
 import axios from "axios";
+import {SubscriptionContext} from "../../context/SubscriptionContext.jsx";
 
 
 function Login() {
@@ -18,6 +19,8 @@ function Login() {
     const navigate = useNavigate();
 
     const {signIn} = useContext(AuthContext);
+    const {subscriptionId} = useContext(SubscriptionContext);
+    console.log("hier de Loginpagina speaking: dit is de doorgegeven", subscriptionId);
 
     function handleChange(e) {
         const changedFieldName = e.target.name;
@@ -36,16 +39,12 @@ function Login() {
             const response = await axios.post("http://localhost:8080/authenticate", {
                 ...loginFormState
             });
-            console.log(response.data.jwt);
-
-            signIn(response.data.jwt);
+            console.log(response, response.data.jwt);
+            signIn(response.data.jwt, subscriptionId);
         } catch(error) {
             console.error(error);
             setError(error);
         }
-        // console.log(data);
-
-        // navigate("/profiel/:customerProfileId")
     }
 
     return (

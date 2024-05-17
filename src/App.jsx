@@ -24,7 +24,8 @@ function App() {
             <Route path="/registreer" element={<Register/>}/>
             <Route path="/profiel/:customerProfileId" element={isAuth ? <Profile/> : <Navigate to="/"/>}/>
             <Route path="/inschrijven/:subscriptionId" element={<Subscribe/>}/>
-            <Route path="/admin/:userId" element={isAuth ? <Admin/> : <Navigate to="/"/>}/>
+            {/*<Route path="/admin/:userId" element={isAuth ? <Admin/> : <Navigate to="/"/>}/>*/}
+            <Route path="/admin" element={<Admin/>}/>
             <Route path="*" element={<NotFound/>}/>
         </Routes>
     )

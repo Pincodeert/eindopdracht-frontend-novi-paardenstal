@@ -10,6 +10,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {AuthContext} from "../../context/AuthContext.jsx";
+import {SubscriptionContext} from "../../context/SubscriptionContext.jsx";
 
 function Subscribe() {
     const [subscription, setSubscription] = useState({});
@@ -39,14 +40,17 @@ function Subscribe() {
         termsAndConditions: false,
     });
     const [newlyCustomerId, setNewlyCustomerId] = useState(null);
-    const [assignUserSuccess, toggleAssignUserSuccess] = useState(false);
+    // const [assignUserSuccess, toggleAssignUserSuccess] = useState(false);
     const [newlyHorseId, setNewlyHorseId] = useState(null);
-    const [step, setStep] = useState("step1");
+    const [step, setStep] = useState("");
 
     const navigate = useNavigate();
     const {subscriptionId} = useParams();
 
-    const {user} = useContext(AuthContext);
+    const {user, completeUserInfo} = useContext(AuthContext);
+    const {resetSubscription} = useContext(SubscriptionContext);
+
+    const token = localStorage.getItem('token');
 
 /////////// Handle Change /////////////////////
     function handleCustomerChange(e) {
@@ -102,6 +106,19 @@ function Subscribe() {
         void fetchSubscription(subscriptionId);
     }, []);
 
+    ///
+    useEffect(() => {
+        function determineStep () {
+            if(user.customerProfile) {
+                setStep("step2")
+            } else {
+                setStep("step1")
+            }
+        }
+        console.log("dit is de cpId van de ingelogde user" ,user.customerProfile, user);
+        determineStep();
+    }, []);
+
 ///////// Handle Submit ////////////
     async function handleSubmitCustomer(e) {
         e.preventDefault();
@@ -131,10 +148,13 @@ function Subscribe() {
         console.log("deze klantId gaan we nu koppelen: ", newlyCustomerId);
         try {
             const response = await axios.put(`http://localhost:8080/customerprofiles/${newlyCustomerId}/user`, {
-                username: "freshprince",
+                username: user.username,
             });
-            toggleAssignUserSuccess(true); // hebben we dit eigenlijk wel nodig?
+            // toggleAssignUserSuccess(true); // hebben we dit eigenlijk wel nodig?
             console.log("koppelen is gelukt: ", response) // de data in de response=null omdat backendfunctie hierin niet voorziet
+
+            //// hier moet de newlyCustomerId als customerProfileId worden opgeslagen in de context.
+            completeUserInfo(newlyCustomerId);
             setStep("step2");
         } catch (error) {
             console.error(error);
@@ -151,6 +171,11 @@ function Subscribe() {
             const response = await axios.post("http://localhost:8080/horses", {
                 ...horseFormState,
                 preferredSubscription: subscription.name,
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
             });
             console.log(response);
             console.log(response.status);
@@ -169,7 +194,12 @@ function Subscribe() {
         setError("");
         try {
             const response = await axios.put(`http://localhost:8080/horses/${newlyHorseId}/customerprofile`, {
-                "id": newlyCustomerId,
+                "id": user.customerProfile,
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
             });
             console.log(response);
             console.log("het is je gewoon gelukt!!!")
@@ -189,6 +219,7 @@ function Subscribe() {
         const config = {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`,
             },
         }
         try {
@@ -206,7 +237,9 @@ function Subscribe() {
         e.preventDefault();
         void assignHorseToCustomer();
         console.log("akkoord?: " + termsFormState.termsAndConditions);
-        navigate(`/profiel/${newlyCustomerId}`);
+        resetSubscription();
+        // navigate(`/profiel/${newlyCustomerId}`);
+        navigate(`/profiel/${user.customerProfile}`)
     }
 
     return (
