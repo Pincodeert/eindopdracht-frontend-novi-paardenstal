@@ -55,6 +55,8 @@ function Profile() {
         // passport: null,
     );
     const [selectedPassport, setSelectedPassport] = useState(null);
+    const [cancellationSuccess, toggleCancellationSuccess] = useState(false);
+    const [selectedEnrollmentId, setSelectedEnrollmentId] = useState(0);
 
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
@@ -277,9 +279,22 @@ function Profile() {
         toggleEnabledHorseChange(false);
     }
 
-    function handleEnrollementForm(e) {
-        e.preventDefault();
-        console.log("uw annulering wordt binnen 3 werkdagen verwerkt");
+    function handleCancellationRequest(id) {
+        // e.preventDefault();
+        console.log("uw annulering wordt binnen 3 werkdagen verwerkt van abonnementNr", id);
+        async function makeCancellationRequest(){
+            setError("");
+            try {
+                const response = await axios.patch(`http://localhost:8080/enrollments/${id}`);
+                console.log(response);
+                setSelectedEnrollmentId(id);
+                toggleCancellationSuccess(true);
+            } catch(error) {
+                console.error(error);
+                setError(error)
+            }
+        }
+        void makeCancellationRequest();
     }
 
 
@@ -592,12 +607,15 @@ function Profile() {
                                             <p className="horsename">Abonnementnummer: {enrollment.id}</p>
                                             <Button
                                                 type="button"
-                                                disabled={false}
-                                                handleClick={handleEnrollementForm}
+                                                disabled={enrollment.cancellationRequested}
+                                                handleClick={() => handleCancellationRequest(enrollment.id)}
                                             >
-                                                wijzig
+                                                {enrollment.cancellationRequested ? <p>annulering aangevraagd</p> : <p>annuleer</p>}
                                             </Button>
                                         </div>
+                                        {cancellationSuccess && selectedEnrollmentId === enrollment.id &&
+                                            <p className="success-message">Uw verzoek tot annulering van abonnementnr
+                                             {enrollment.id} is ontvangen en wordt binnen 3 werkdagen verwerkt</p>}
                                         <table className="table">
                                             <thead>
                                             <tr className="table-head">

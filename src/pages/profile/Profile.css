@@ -163,3 +163,7 @@ th, td {
     border-radius: 5px;
     padding: 2px 5px;
 }
+
+.success-message {
+    color: var(--orange);
+}
