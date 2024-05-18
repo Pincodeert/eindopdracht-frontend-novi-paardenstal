@@ -43,16 +43,18 @@ function Profile() {
         telephoneOfVet: "",
     });
     const [selectedHorseId, setSelectedHorseId] = useState(0);
-    const [horse, setHorse] = useState({
-        id: 0,
-        name: "",
-        horseNumber: "",
-        typeOfFeed: "hay",
-        typeOfBedding: "straw",
-        nameOfVet: "",
-        residenceOfVet: "",
-        telephoneOfVet: "",
-    });
+    const [horse, setHorse] = useState(null
+        // id: 0,
+        // name: "",
+        // horseNumber: "",
+        // typeOfFeed: "hay",
+        // typeOfBedding: "straw",
+        // nameOfVet: "",
+        // residenceOfVet: "",
+        // telephoneOfVet: "",
+        // passport: null,
+    );
+    const [selectedPassport, setSelectedPassport] = useState(null);
 
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
@@ -153,7 +155,11 @@ function Profile() {
         });
         console.log(horses);
         console.log(selectedHorse);
-        setHorse(selectedHorse);
+        setHorse({
+            ...horse,
+            selectedHorse
+        });
+        return selectedHorse;
     }
 
 //////// handle change //////////////////
@@ -228,6 +234,27 @@ function Profile() {
     function showHorseForm(id) {
         setSelectedHorseId(id)
         toggleEnabledHorseChange(true);
+    }
+
+    function showPassport(id) {
+        console.log("de horseId die we gaan gebruiken is", id);
+        const selectedHorse = selectHorse(id);
+        // console.log("en als het goed is dan hier de horseState waarde", selectedHorse);
+        console.log("dit is het geselecteerde paard", selectedHorse);
+        async function fetchPassport() {
+            try {
+                const selectedPassport = await axios.get(selectedHorse.passport.url);
+                console.log(selectedPassport);
+                // const passportUrl = URL.createObjectURL(selectedPassport);
+                // const passportUrl = URL.revokeObjectURL(selectedPassport);
+                setSelectedPassport(selectedPassport);
+                console.log("en zie je het paard nu?")
+            } catch(error) {
+                console.error(error);
+                setError(error);
+            }
+        }
+        void fetchPassport();
     }
 
     function handleCustomerForm(e) {
@@ -393,13 +420,6 @@ function Profile() {
                                             changeHandler={handleCustomerChange}
                                             required={false}
                                         />
-                                        {/*<input type="text" placeholder={profile.street}/>*/}
-                                        {/*<input type="text" placeholder={profile.houseNumber}/>*/}
-                                        {/*<input type="text" placeholder={profile.postalCode}/>*/}
-                                        {/*<input type="text" placeholder={profile.residence}/>*/}
-                                        {/*<input type="text" placeholder={profile.telephoneNumber}/>*/}
-                                        {/*<input type="text" placeholder={profile.emailAddress}/>*/}
-                                        {/*<input type="text" placeholder={profile.bankAccountNumber}/>*/}
                                         <Button
                                             type="submit"
                                             disabled={false}
@@ -542,11 +562,15 @@ function Profile() {
                                             <tr className="table-body">
                                                 {/*<td>{horse.preferredSubscription}</td>*/}
                                                 {horse.stall ? <td>{horse.stall.name} </td> : <td>- in aanvraag -</td>}
-                                                <td>{<Button type="button" disabled={false} note="hier komt toon file">
+                                                <td>{<Button type="button" disabled={false} handleClick={() => showPassport(horse.id)}>
                                                     bekijk </Button>}</td>
+                                                {/*<td>{horse.passport && <img src={URL.createObjectURL(horse.passport)} alt="paspoort"/>}</td>*/}
+                                                {horse.passport && <td>{horse.passport.url}</td>}
+
                                             </tr>
                                             </tbody>
                                         </table>
+                                        {selectedPassport && <img src={selectedPassport} alt="paspoort"/>}
                                     </div>
                                 })}
                         </article>
@@ -569,7 +593,7 @@ function Profile() {
                                             <Button
                                                 type="button"
                                                 disabled={false}
-                                                note="er is een annuleringsverzoek doorgestuurd"
+                                                handleClick={handleEnrollementForm}
                                             >
                                                 wijzig
                                             </Button>
