@@ -9,12 +9,14 @@ import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../context/AuthContext.jsx";
 import TextInput from "../../components/textInput/TextInput.jsx";
 import SubscribeCard from "../../components/subscribeCard/SubscribeCard.jsx";
+
 // import {i} from "vite/dist/node/types.d-FdqQ54oU.js";
 
 function Profile() {
     const [error, setError] = useState("");
     const [profile, setProfile] = useState({});
     const [horseList, setHorseList] = useState([]);
+    const [horses, setHorses] = useState([]);
     // const [enrollmentList, setEnrollmentList] = useState([]);
     const [enrollmentList, setEnrollmentList] = useState([]);
     const [stall, setStall] = useState({});
@@ -54,14 +56,14 @@ function Profile() {
 
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
-    const{customerProfileId} = useParams();
+    const {customerProfileId} = useParams();
     console.log(customerProfileId);
     const {isAuth, signOut} = useContext(AuthContext);
     console.log(isAuth);
 
     //// klantprofiel ophalen uit de backend by Id ////
     useEffect(() => {
-        async function fetchCustomerProfile(customerProfileId){
+        async function fetchCustomerProfile(customerProfileId) {
             setError("");
 
             try {
@@ -74,50 +76,55 @@ function Profile() {
                 const customer = response.data;
                 console.log(customer);
                 setProfile(customer);
-                setHorseList([
-                    customer.horses
-                ]);
-                setEnrollmentList([
-                    customer.enrollments,
-                ]);
+                // setHorseList([
+                //     customer.horses
+                // ]);
+                // setEnrollmentList([
+                //     customer.enrollments,
+                // ]);
 
-            } catch(error) {
+            } catch (error) {
                 console.error(error);
                 setError("Uw klantgegevens kunnen niet worden opgehaald")
             }
         }
+
         void fetchCustomerProfile(customerProfileId);
     }, []);
-console.log("dit zijn de paarden: ")
+    console.log("dit zijn de paarden: ")
 
-    //paarden ophalen uit backend
-    async function fetchHorsesByCustomer(){
-        try {
-            const response = await axios.get("http://localhost:8080/horses/customerprofile/5",
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
+    //paarden van desbetreffende klant ophalen uit backend
+    useEffect(() => {
+        async function fetchHorsesByCustomer() {
+            setError("");
+            try {
+                const response = await axios.get("http://localhost:8080/horses/customerprofile/5",
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        }
                     }
-                }
-            );
-            console.log(response)
-            const paarden = response.data;
-            console.log(paarden);
-            // setEnrollmentList(enrollments);
-        } catch(error) {
-            console.error(error);
-            setError("uw paardgegevens kunnen niet worden opgehaald")
+                );
+                console.log(response)
+                const paarden = response.data;
+                console.log("paarden per klant:", paarden);
+                setHorses(paarden);
+                // setEnrollmentList(enrollments);
+            } catch (error) {
+                console.error(error);
+                setError("uw paardgegevens kunnen niet worden opgehaald")
+            }
         }
-    }
-
+        void fetchHorsesByCustomer();
+    }, []);
 
 
 
     //// inschrijvingen van klant ophalen (uit backend) //////
     useEffect(() => {
-        void fetchHorsesByCustomer();
-        async function fetchEnrollementsByCustomer(customerProfileId){
+
+        async function fetchEnrollementsByCustomer(customerProfileId) {
             setError("");
             try {
                 const response = await axios.get(`http://localhost:8080/customerprofiles/${customerProfileId}/enrollments`, {
@@ -127,59 +134,29 @@ console.log("dit zijn de paarden: ")
                     }
                 });
                 const enrollments = response.data;
-                // console.log(enrollments);
+                console.log("dit zijn de abonnementen",enrollments);
                 setEnrollmentList(enrollments);
-            } catch(error) {
+            } catch (error) {
                 console.error(error);
                 setError("uw abonnementgegevens kunnen niet worden opgehaald")
             }
         }
+
         void fetchEnrollementsByCustomer(customerProfileId)
     }, []);
 
 
-    //// stallen ophalen uit de backend (omdat daar de koppeling met het paard zit/////
-    // useEffect(() => {
-    //     horseList.map((horse) => {
-    //         void fetchStall(horse)
-    //     });
-    //
-    // }, []);
-    // async function fetchStall(horse){
-    //     setError("");
-    //
-    //     try {
-    //         const response = await axios.get("http://localhost:8080/stalls");
-    //         const stalls = response.data;
-    //         console.log("stallen", stalls);
-    //         const foundStall = stalls.find((stall) => {
-    //             return stall.horse.id === horse.id;
-    //         });
-    //         setStall(foundStall);
-    //         // setHorse.stall: stall.id,
-    //         for (let i = 0; i < horseList.length; i++) {
-    //             horseList[i].stall = foundStall.id;
-    //         }
-    //     } catch(error) {
-    //         console.error(error);
-    //         setError("de stalgegevens kunnen niet worden opgehaald")
-    //     }
-    // }
-
-    console.log("dit zou dan een lijst met aangevulde paardinfo zijn: ", horseList);
-    console.log("dit is de lijst met paarden", horseList);
-    // console.log(enrollmentList);
-    console.log("dit is de bewust stal: ", stall);
 
     function selectHorse(selectedHorseId) {
-        const selectedHorse = horseList[0].find((horse) => {
+        const selectedHorse = horses.find((horse) => {
             return horse.id === selectedHorseId;
         });
-        console.log(horseList);
+        console.log(horses);
         console.log(selectedHorse);
         setHorse(selectedHorse);
     }
 
+//////// handle change //////////////////
     function handleCustomerChange(e) {
         const changedFieldName = e.target.name;
 
@@ -203,6 +180,7 @@ console.log("dit zijn de paarden: ")
         console.log(horseFormState);
     }
 
+//////// click handlers /////////////
     async function updateCustomer() {
         setError("");
 
@@ -217,7 +195,7 @@ console.log("dit zijn de paarden: ")
             });
             console.log("updaten van de klantgegevens is gelukt")
             console.log(response);
-        } catch(error) {
+        } catch (error) {
             console.error(error);
             setError(error);
         }
@@ -237,7 +215,7 @@ console.log("dit zijn de paarden: ")
             });
             console.log(`het updaten van paard id ${selectedHorseId} is gelukt!`);
             console.log(response);
-        } catch(error) {
+        } catch (error) {
             console.error(error);
             setError(error);
         }
@@ -260,7 +238,8 @@ console.log("dit zijn de paarden: ")
 
 
     }
-    console.log("dit is het profiel",profile);
+
+    console.log("dit is het profiel", profile);
     console.log("dit is de formState", customerFormState);
 
     function handleHorseForm(e) {
@@ -271,7 +250,13 @@ console.log("dit zijn de paarden: ")
         toggleEnabledHorseChange(false);
     }
 
-    console.log(`ditis de selectedHorseId: ${selectedHorseId} , dit is het geselecteerde paard ${horse} met de horseFormState: ${horseFormState} ` );
+    function handleEnrollementForm(e) {
+        e.preventDefault();
+        console.log("uw annulering wordt binnen 3 werkdagen verwerkt");
+    }
+
+
+    console.log(`dit is de selectedHorseId: ${selectedHorseId} , dit is het geselecteerde paard ${horse} met de horseFormState: ${horseFormState} `);
 
     return (
         <>
@@ -286,7 +271,8 @@ console.log("dit zijn de paarden: ")
                             >
                                 uitloggen
                             </Button>}
-                            <div className="profile-icon">{Object.keys(profile).length > 0 ? initialsName(profile.firstName, profile.lastName) :
+                            <div
+                                className="profile-icon">{Object.keys(profile).length > 0 ? initialsName(profile.firstName, profile.lastName) :
                                 <span>???</span>}</div>
                         </nav>
 
@@ -322,7 +308,8 @@ console.log("dit zijn de paarden: ")
                         </div>
                         <article id="yourpersonalia" className="content-wrapper persona">
                             <div className="content-title">
-                                {!enableCustomerChange ? <h4>Uw gegevens</h4> : <h4>Vul de persoonsgegevens die u wilt wijzigen hieronder in</h4>}
+                                {!enableCustomerChange ? <h4>Uw gegevens</h4> :
+                                    <h4>Vul de persoonsgegevens die u wilt wijzigen hieronder in</h4>}
                                 {!enableCustomerChange ? <Button
                                     type="button"
                                     disabled={false}
@@ -338,187 +325,101 @@ console.log("dit zijn de paarden: ")
                                 </Button>}
                             </div>
                             <div className="table-form-container">
-                            <table className="table">
-                                <thead>
-                                <tr className="table-head">
-                                    <th>adres:</th>
-                                    <th>huisnummer:</th>
-                                    <th>postcode</th>
-                                    <th>plaats</th>
-                                    <th>telefoonnumer</th>
-                                    <th>e-mail</th>
-                                    <th>IBAN</th>
-                                </tr>
-                                </thead>
-                                {!enableCustomerChange && <tbody>
-                                <tr className="table-body">
-                                    <td>{profile.street}</td>
-                                    <td>{profile.houseNumber}</td>
-                                    <td>{profile.postalCode}</td>
-                                    <td>{profile.residence}</td>
-                                    <td>{profile.telephoneNumber}</td>
-                                    <td>{profile.emailAddress}</td>
-                                    <td>{profile.bankAccountNumber}</td>
-                                </tr>
-                                </tbody>}
-                            </table>
-                            {enableCustomerChange &&
-                                <form className="profile-form" onSubmit={handleCustomerForm}>
-                                    <TextInput
-                                        inputName="street"
-                                        textValue={customerFormState.street}
-                                        placeholder={profile.street}
-                                        changeHandler={handleCustomerChange}
-                                        required={false}
-                                    />
-                                    <TextInput
-                                        inputName="houseNumber"
-                                        textValue={customerFormState.houseNumber}
-                                        placeholder={profile.houseNumber}
-                                        changeHandler={handleCustomerChange}
-                                        required={false}
-                                    />
-                                    <TextInput
-                                        inputName="postalCode"
-                                        textValue={customerFormState.postalCode}
-                                        placeholder={profile.postalCode}
-                                        changeHandler={handleCustomerChange}
-                                        required={false}
-                                    />
-                                    <TextInput
-                                        inputName="residence"
-                                        textValue={customerFormState.residence}
-                                        placeholder={profile.residence}
-                                        changeHandler={handleCustomerChange}
-                                        required={false}
-                                    />
-                                    <TextInput
-                                        inputName="telephoneNumber"
-                                        textValue={customerFormState.telephoneNumber}
-                                        placeholder={profile.telephoneNumber}
-                                        changeHandler={handleCustomerChange}
-                                        required={false}
-                                    />
-                                    <TextInput
-                                        inputName="bankAccountNumber"
-                                        textValue={customerFormState.bankAccountNumber}
-                                        placeholder={profile.bankAccountNumber}
-                                        changeHandler={handleCustomerChange}
-                                        required={false}
-                                    />
-                                    {/*<input type="text" placeholder={profile.street}/>*/}
-                                    {/*<input type="text" placeholder={profile.houseNumber}/>*/}
-                                    {/*<input type="text" placeholder={profile.postalCode}/>*/}
-                                    {/*<input type="text" placeholder={profile.residence}/>*/}
-                                    {/*<input type="text" placeholder={profile.telephoneNumber}/>*/}
-                                    {/*<input type="text" placeholder={profile.emailAddress}/>*/}
-                                    {/*<input type="text" placeholder={profile.bankAccountNumber}/>*/}
-                                    <Button
-                                        type="submit"
-                                        disabled={false}
-                                    >
-                                        Verstuur
-                                    </Button>
-                            </form>}
+                                <table className="table">
+                                    <thead>
+                                    <tr className="table-head">
+                                        <th>adres:</th>
+                                        <th>huisnummer:</th>
+                                        <th>postcode</th>
+                                        <th>plaats</th>
+                                        <th>telefoonnumer</th>
+                                        <th>e-mail</th>
+                                        <th>IBAN</th>
+                                    </tr>
+                                    </thead>
+                                    {!enableCustomerChange && <tbody>
+                                    <tr className="table-body">
+                                        <td>{profile.street}</td>
+                                        <td>{profile.houseNumber}</td>
+                                        <td>{profile.postalCode}</td>
+                                        <td>{profile.residence}</td>
+                                        <td>{profile.telephoneNumber}</td>
+                                        <td>{profile.emailAddress}</td>
+                                        <td>{profile.bankAccountNumber}</td>
+                                    </tr>
+                                    </tbody>}
+                                </table>
+                                {enableCustomerChange &&
+                                    <form className="profile-form" onSubmit={handleCustomerForm}>
+                                        <TextInput
+                                            inputName="street"
+                                            textValue={customerFormState.street}
+                                            placeholder={profile.street}
+                                            changeHandler={handleCustomerChange}
+                                            required={false}
+                                        />
+                                        <TextInput
+                                            inputName="houseNumber"
+                                            textValue={customerFormState.houseNumber}
+                                            placeholder={profile.houseNumber}
+                                            changeHandler={handleCustomerChange}
+                                            required={false}
+                                        />
+                                        <TextInput
+                                            inputName="postalCode"
+                                            textValue={customerFormState.postalCode}
+                                            placeholder={profile.postalCode}
+                                            changeHandler={handleCustomerChange}
+                                            required={false}
+                                        />
+                                        <TextInput
+                                            inputName="residence"
+                                            textValue={customerFormState.residence}
+                                            placeholder={profile.residence}
+                                            changeHandler={handleCustomerChange}
+                                            required={false}
+                                        />
+                                        <TextInput
+                                            inputName="telephoneNumber"
+                                            textValue={customerFormState.telephoneNumber}
+                                            placeholder={profile.telephoneNumber}
+                                            changeHandler={handleCustomerChange}
+                                            required={false}
+                                        />
+                                        <TextInput
+                                            inputName="bankAccountNumber"
+                                            textValue={customerFormState.bankAccountNumber}
+                                            placeholder={profile.bankAccountNumber}
+                                            changeHandler={handleCustomerChange}
+                                            required={false}
+                                        />
+                                        {/*<input type="text" placeholder={profile.street}/>*/}
+                                        {/*<input type="text" placeholder={profile.houseNumber}/>*/}
+                                        {/*<input type="text" placeholder={profile.postalCode}/>*/}
+                                        {/*<input type="text" placeholder={profile.residence}/>*/}
+                                        {/*<input type="text" placeholder={profile.telephoneNumber}/>*/}
+                                        {/*<input type="text" placeholder={profile.emailAddress}/>*/}
+                                        {/*<input type="text" placeholder={profile.bankAccountNumber}/>*/}
+                                        <Button
+                                            type="submit"
+                                            disabled={false}
+                                        >
+                                            Verstuur
+                                        </Button>
+                                    </form>}
 
                             </div>
 
-                    </article>
+                        </article>
 
-                    {enableCustomerChange && <article id="yourpersonalia" className="content-wrapper persona">
-                            <div className="content-title">
-                                <h4>Wijzig hier uw gegevens</h4>
-                            </div>
-                            <form action="/">
-                                <TextInput
-                                    labelFor="street-text-field"
-                                    inputId="street-text-field"
-                                    inputName="street"
-                                    textValue={customerFormState.street}
-                                    changeHandler={handleCustomerChange}
-                                    required={true}
-                                >
-                                    Straat:
-                                </TextInput>
-                                <TextInput
-                                    labelFor="houseNumber-text-field"
-                                    inputId="houseNumbername-text-field"
-                                    inputName="houseNumber"
-                                    textValue={customerFormState.houseNumber}
-                                    changeHandler={handleCustomerChange}
-                                    required={true}
-                                >
-                                    Huisnummer:
-                                </TextInput>
-                                <TextInput
-                                    labelFor="postalCode-text-field"
-                                    inputId="postalCode-text-field"
-                                    inputName="postalCode"
-                                    textValue={customerFormState.postalCode}
-                                    changeHandler={handleCustomerChange}
-                                    required={true}
-                                >
-                                    Postcode:
-                                </TextInput>
-                                <TextInput
-                                    labelFor="residence-text-field"
-                                    inputId="residence-text-field"
-                                    inputName="residence"
-                                    textValue={customerFormState.residence}
-                                    changeHandler={handleCustomerChange}
-                                    required={true}
-                                >
-                                    Woonplaats:
-                                </TextInput>
-                                <label htmlFor="email-field">
-                                    E-mail:
-                                    <input
-                                        type="email"
-                                        id="email-field"
-                                        name="emailAddress"
-                                        value={customerFormState.emailAddress}
-                                        onChange={handleCustomerChange}
-                                        required={true}
-                                    />
-                                </label>
-                                <label htmlFor="telephone-field">
-                                    Telefoonnummer:
-                                    <input
-                                        type="tel"
-                                        id="telephone-field"
-                                        name="telephoneNumber"
-                                        pattern="[0-9]{10}"
-                                        placeholder="0123456789"
-                                        value={customerFormState.telephoneNumber}
-                                        onChange={handleCustomerChange}
-                                        required={true}
-                                    />
-                                </label>
-                                <TextInput
-                                    labelFor="bankAccount-text-field"
-                                    inputId="bankAccount-text-field"
-                                    inputName="bankAccountNumber"
-                                    textValue={customerFormState.bankAccountNumber}
-                                    changeHandler={handleCustomerChange}
-                                    required={true}
-                                >
-                                    IBAN:
-                                </TextInput>
-                            <Button
-                                type="submit"
-                                disabled={false}
-                            >
-                                verstuur
-                            </Button>
-                            </form>
-                        </article>}
+
                         <article id="yourhorses" className="content-wrapper horses">
                             <div className="content-title">
                                 <h4>Uw paarden</h4>
                                 {/*<button type="button" onClick={() => getHorses(profile.id)}></button>*/}
                             </div>
-                            {horseList.length === 0 ?
-                                <p>U heeft nog geen paarden toegevoegd</p> : horseList[0].map((horse) => {
+                            {horses.length === 0 ?
+                                <p>U heeft nog geen paarden toegevoegd</p> : horses.map((horse) => {
                                     return <div key={horse.id} className="horse-wrapper">
                                         <div className="head-line">
                                             <p className="horsename">{horse.name}, {horse.id}</p>
@@ -539,95 +440,95 @@ console.log("dit zijn de paarden: ")
                                             </Button>}
                                         </div>
                                         <div className="horse-info-container">
-                                        <table className="table">
-                                            <thead>
-                                            <tr className="table-head">
-                                                <th>paardnummer</th>
-                                                <th>type voeding</th>
-                                                <th>type bodembedekking</th>
-                                                <th>naam dierenarts</th>
-                                                <th>woonplaats dierenarts</th>
-                                                <th>telefoonnummer dierenarts</th>
-                                            </tr>
-                                            </thead>
-                                            {!enabledHorseChange && <tbody>
-                                            <tr className="table-body">
-                                                <td>{horse.horseNumber}</td>
-                                                <td>{horse.typeOfFeed}</td>
-                                                <td>{horse.typeOfBedding}</td>
-                                                <td>{horse.nameOfVet}</td>
-                                                <td>{horse.residenceOfVet}</td>
-                                                <td>{horse.telephoneOfVet}</td>
-                                            </tr>
-                                            </tbody>}
-                                        </table>
-                                        {enabledHorseChange && selectedHorseId === horse.id &&
-                                            <form className="profile-form" onSubmit={handleHorseForm}>
-                                                <p>{horse.horseNumber}</p>
-                                            {/*<label htmlFor="typeOfFeed-field">*/}
-                                            {/*    Voeding:</label>*/}
-                                            <select
-                                                name="typeOfFeed"
-                                                id="typeOfFeed-field"
-                                                value={horseFormState.typeOfFeed}
-                                                onChange={handleHorseChange}
-                                            >
-                                                <option value="hay">hooi</option>
-                                                <option value="oats">haver</option>
-                                            </select>
-                                            {/*<label htmlFor="typeOfBedding-field">*/}
-                                            {/*    Bodembedekking:</label>*/}
-                                            <select
-                                                name="typeOfBedding"
-                                                id="typeOfBedding-field"
-                                                value={horseFormState.typeOfBedding}
-                                                onChange={handleHorseChange}
-                                            >
-                                                <option value="straw">stro</option>
-                                                <option value="shavings">houtvezel</option>
-                                            </select>
-                                            <TextInput
-                                                // labelFor="vet-text-field"
-                                                // inputId="vet-text-field"
-                                                inputName="nameOfVet"
-                                                textValue={horseFormState.nameOfVet}
-                                                placeholder={horse.nameOfVet}
-                                                changeHandler={handleHorseChange}
-                                                required={false}
-                                            />
-                                            {/*    Dierenarts:*/}
-                                            {/*</TextInput>*/}
-                                            <TextInput
-                                                // labelFor="residenceOfVet-text-field"
-                                                // inputId="residenceOfVet-text-field"
-                                                inputName="residenceOfVet"
-                                                textValue={horseFormState.residenceOfVet}
-                                                placeholder={horse.residenceOfVet}
-                                                changeHandler={handleHorseChange}
-                                                required={false}
-                                            />
-                                            {/*    Woonplaats dierenarts:*/}
-                                            {/*</TextInput>*/}
-                                            {/*<label htmlFor="telephoneOfVet-field">*/}
-                                            {/*    Telnr dierenarts:*/}
-                                                <input
-                                                    type="tel"
-                                                    id="telephoneOfVet-field"
-                                                    name="telephoneOfVet"
-                                                    pattern="[0-9]{10}"
-                                                    placeholder={horse.telephoneOfVet}
-                                                    value={horseFormState.telephoneOfVet}
-                                                    onChange={handleHorseChange}
-                                                    required={false}
-                                                />
-                                            {/*</label>*/}
-                                            <Button
-                                                type="submit"
-                                                disabled={false}
-                                            >
-                                                Wijzig
-                                            </Button>
-                                        </form>}
+                                            <table className="table">
+                                                <thead>
+                                                <tr className="table-head">
+                                                    <th>paardnummer</th>
+                                                    <th>type voeding</th>
+                                                    <th>type bodembedekking</th>
+                                                    <th>naam dierenarts</th>
+                                                    <th>woonplaats dierenarts</th>
+                                                    <th>telefoonnummer dierenarts</th>
+                                                </tr>
+                                                </thead>
+                                                {!enabledHorseChange && <tbody>
+                                                <tr className="table-body">
+                                                    <td>{horse.horseNumber}</td>
+                                                    <td>{horse.typeOfFeed}</td>
+                                                    <td>{horse.typeOfBedding}</td>
+                                                    <td>{horse.nameOfVet}</td>
+                                                    <td>{horse.residenceOfVet}</td>
+                                                    <td>{horse.telephoneOfVet}</td>
+                                                </tr>
+                                                </tbody>}
+                                            </table>
+                                            {enabledHorseChange && selectedHorseId === horse.id &&
+                                                <form className="profile-form" onSubmit={handleHorseForm}>
+                                                    <p>{horse.horseNumber}</p>
+                                                    {/*<label htmlFor="typeOfFeed-field">*/}
+                                                    {/*    Voeding:</label>*/}
+                                                    <select
+                                                        name="typeOfFeed"
+                                                        id="typeOfFeed-field"
+                                                        value={horseFormState.typeOfFeed}
+                                                        onChange={handleHorseChange}
+                                                    >
+                                                        <option value="hay">hooi</option>
+                                                        <option value="oats">haver</option>
+                                                    </select>
+                                                    {/*<label htmlFor="typeOfBedding-field">*/}
+                                                    {/*    Bodembedekking:</label>*/}
+                                                    <select
+                                                        name="typeOfBedding"
+                                                        id="typeOfBedding-field"
+                                                        value={horseFormState.typeOfBedding}
+                                                        onChange={handleHorseChange}
+                                                    >
+                                                        <option value="straw">stro</option>
+                                                        <option value="shavings">houtvezel</option>
+                                                    </select>
+                                                    <TextInput
+                                                        // labelFor="vet-text-field"
+                                                        // inputId="vet-text-field"
+                                                        inputName="nameOfVet"
+                                                        textValue={horseFormState.nameOfVet}
+                                                        placeholder={horse.nameOfVet}
+                                                        changeHandler={handleHorseChange}
+                                                        required={false}
+                                                    />
+                                                    {/*    Dierenarts:*/}
+                                                    {/*</TextInput>*/}
+                                                    <TextInput
+                                                        // labelFor="residenceOfVet-text-field"
+                                                        // inputId="residenceOfVet-text-field"
+                                                        inputName="residenceOfVet"
+                                                        textValue={horseFormState.residenceOfVet}
+                                                        placeholder={horse.residenceOfVet}
+                                                        changeHandler={handleHorseChange}
+                                                        required={false}
+                                                    />
+                                                    {/*    Woonplaats dierenarts:*/}
+                                                    {/*</TextInput>*/}
+                                                    {/*<label htmlFor="telephoneOfVet-field">*/}
+                                                    {/*    Telnr dierenarts:*/}
+                                                    <input
+                                                        type="tel"
+                                                        id="telephoneOfVet-field"
+                                                        name="telephoneOfVet"
+                                                        pattern="[0-9]{10}"
+                                                        placeholder={horse.telephoneOfVet}
+                                                        value={horseFormState.telephoneOfVet}
+                                                        onChange={handleHorseChange}
+                                                        required={false}
+                                                    />
+                                                    {/*</label>*/}
+                                                    <Button
+                                                        type="submit"
+                                                        disabled={false}
+                                                    >
+                                                        Wijzig
+                                                    </Button>
+                                                </form>}
                                         </div>
                                         <table className="table">
                                             <thead>
@@ -640,7 +541,7 @@ console.log("dit zijn de paarden: ")
                                             <tbody>
                                             <tr className="table-body">
                                                 {/*<td>{horse.preferredSubscription}</td>*/}
-                                                {stall.name && <td>{stall.name} </td>}
+                                                {horse.stall ? <td>{horse.stall.name} </td> : <td>- in aanvraag -</td>}
                                                 <td>{<Button type="button" disabled={false} note="hier komt toon file">
                                                     bekijk </Button>}</td>
                                             </tr>
@@ -677,10 +578,10 @@ console.log("dit zijn de paarden: ")
                                             <thead>
                                             <tr className="table-head">
                                                 <th>abonnement type</th>
-                                                <th>paard</th>
-                                                <th>stalnaam</th>
+                                                {/*<th>stalnaam</th>*/}
                                                 <th>type stal</th>
                                                 <th>type verzorging</th>
+                                                <th>paard</th>
                                                 <th>start-datum</th>
                                                 <th>annulering aangevraagd</th>
                                                 <th>prijs</th>
@@ -689,11 +590,11 @@ console.log("dit zijn de paarden: ")
                                             <tbody>
                                             <tr className="table-body">
                                                 {enrollment.subscription && <td>{enrollment.subscription.name}</td>}
-                                                {enrollment.horse && <td>{enrollment.horse.name}</td>}
-                                                {stall.name && <td>{stall.name} </td>}
-                                                {stall.type && <td>{stall.type}</td>}
+                                                {/*{stall.name && <td>{stall.name} </td>}*/}
+                                                {enrollment.subscription && <td>{enrollment.subscription.typeOfStall}</td>}
                                                 {enrollment.subscription &&
                                                     <td>{enrollment.subscription.typeOfCare}</td>}
+                                                {enrollment.horse && <td>{enrollment.horse.name}</td>}
                                                 {enrollment.startDate && <td>{enrollment.startDate}</td>}
                                                 {enrollment.cancellationRequested ? <td>ja</td> : <td>nee</td>}
                                                 {enrollment.subscription &&
