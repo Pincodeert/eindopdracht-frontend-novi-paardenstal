@@ -71,3 +71,35 @@ h3 {
     /*background-color: var(--faded-army);*/
 
 }
+
+.admin {
+    border: 2px solid transparent;
+    background-color: var(--faded-army);
+}
+
+.horse-list {
+    list-style: none;
+    padding: 20px;
+}
+
+.horse-list li {
+    padding: 5px 0;
+}
+
+.horse-form {
+    padding: 20px;
+}
+
+.horse-form select {
+    margin: 10px 0;
+    border: 2px solid var(--orange);
+    border-radius: 5px;
+}
+
+.horse-form button {
+    margin-top: 10px;
+}
+
+.nothing-message {
+    padding: 20px 10px;
+}
