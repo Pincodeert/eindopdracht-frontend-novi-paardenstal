@@ -103,3 +103,25 @@ h3 {
 .nothing-message {
     padding: 20px 10px;
 }
+
+.test {
+    /*border: 2px solid plum;*/
+}
+
+.table-test {
+    margin-right: 20px;
+    width: 160px;
+}
+
+.edit-part {
+    padding: 20px;
+    margin-left: 20px;
+}
+
+.edit-part button {
+    margin: 20px 0;
+}
+
+.edit-part p {
+    color: var(--orange);
+}

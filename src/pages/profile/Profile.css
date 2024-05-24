@@ -154,7 +154,7 @@ th, td {
 .horse-info-container {
     display: flex;
     flex-direction: row;
-    border: 2px solid plum;
+    /*border: 2px solid plum;*/
 
 }
 

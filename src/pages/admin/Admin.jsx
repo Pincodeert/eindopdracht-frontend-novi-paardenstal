@@ -23,6 +23,10 @@ function Admin() {
     const [enrollmentInfo, setEnrollmentInfo] = useState({});
     const [enrollmentCreatedSuccess, toggleEnrollmentCreatedSuccess] = useState(false);
     const [cancellationRequests, setCancellationRequests] = useState([]);
+    const [cancellationInfo, setCancellationInfo] = useState(null);
+    const [editingCancellation, toggleEditingCancellation] = useState(false);
+    const [horseRemovedSuccess, toggleHorseRemovedSuccess] = useState(false);
+    const [enrollmentTerminatedSuccess, toggleEnrollmentTerminatedSuccess] = useState(false);
     const [display, setDisplay] = useState("");
 
     async function fetchCustomers() {
@@ -48,7 +52,7 @@ function Admin() {
                 const fetchedHorses = response.data
                 setHorses(fetchedHorses);
                 const newHorses = fetchedHorses.filter((horse) => {
-                    return horse.stall === null;
+                    return horse.stall === null && horse.preferredSubscription != "activated";
                 });
                 console.log("en de nieuwe paarden:", newHorses);
                 setNewHorses(newHorses);
@@ -94,16 +98,7 @@ function Admin() {
         void fetchAllSubscriptions();
     }, []);
 
-    async function fetchAvailableStallsByType(stallType) {
-        try {
-            const response = await axios.get(`http://localhost:8080/stalls?type=${stallType}&isOccupied=false`);
-            console.log(response);
-            setAvailableStalls(response.data);
-        } catch (error) {
-            console.error(error);
-            setError(error);
-        }
-    }
+
 
     function showCustomers() {
         void fetchCustomers();
@@ -115,9 +110,11 @@ function Admin() {
     }
 
     function showHorses() {
-        void fetchHorses();
+        // void fetchHorses();
         setDisplay("horses");
     }
+
+/////////////////// Nieuwe aanvragen ///////////////////////
 
     function selectSubscription(horse) {
         const selectedSubscription = subscriptions.find((subscription) => {
@@ -126,15 +123,27 @@ function Admin() {
         return selectedSubscription;
     }
 
+    async function fetchAvailableStallsByType(stallType) {
+        setError("");
+        try {
+            const response = await axios.get(`http://localhost:8080/stalls?type=${stallType}&isOccupied=false`);
+            console.log(response);
+            setAvailableStalls(response.data);
+        } catch (error) {
+            console.error(error);
+            setError(error);
+        }
+    }
+
     function handleNewHorseClick(horse) {
 
         console.log("paard", horse);
-        // 1. sla gekozen paard tijdelijk op in de State als gekozen paard
-        // setNewHorseInfo(horse);
-        // 2. zoek bij de voor dit paard gekozen abonnements-naam het juiste abonnement op en daarbij behorende staltype
+        // 1. zoek bij de voor dit paard gekozen abonnements-naam het juiste abonnement op en daarbij behorende staltype
         console.log(subscriptions);
         const selectedSubscription = selectSubscription(horse);
         console.log("de gekozen subscription: ", selectedSubscription);
+
+        // 2. sla benodigde info van gekozen paard en bijbehorende subscroption info tijdelijk op in de State
         setHorseInfo({
             id: horse.id,
             name: horse.name,
@@ -170,7 +179,7 @@ function Admin() {
             const response = await axios.put(`http://localhost:8080/stalls/${chosenStall.id}/horse`, {
                 id: horseInfo.id,
             });
-            console.log("het paard staat nu in de stal",response);
+            console.log("het paard staat nu in de stal", response);
             setEnrollmentInfo({
                 subscriptionId: horseInfo.subscriptionId,
                 customerId: horseInfo.owner.id,
@@ -188,8 +197,10 @@ function Admin() {
         setError("");
         try {
             const response = await axios.post("http://localhost:8080/enrollments", {
-                ...enrollmentInfo});
+                ...enrollmentInfo
+            });
             console.log(response);
+            // setEnrollmentInfo({})
             toggleEnrollmentCreatedSuccess(true);
         } catch (error) {
             console.error(error);
@@ -197,10 +208,79 @@ function Admin() {
         }
     }
 
-    function setToDefault() {
+    function setNewToDefault() {
         toggleEditingNewEnrollment(false);
         toggleHorseAssignedSucces(false);
     }
+
+////////////////////// Annuleringen ///////////////////
+    function handleCancellationClick(enrollment) {
+        console.log("gekozen enrollement", enrollment);
+        // 1.zoek voor het paard dat gekoppeld is aan het enrollment uit in welke stal het staat
+        const selectedHorse = horses.find((horse) => {
+            return horse.id === enrollment.horse.id;
+        });
+        console.log("paard: ,", selectedHorse);
+        const stall = selectedHorse.stall;
+        console.log("paard", selectedHorse.name, "staat in stal ", stall.id);
+        // 2. sla de gecombineerde info tijdelijk op in cancellationInfo
+        setCancellationInfo({
+            horseName: selectedHorse.name,
+            horseId: selectedHorse.id,
+            stallName: stall.name,
+            stallId: stall.id,
+            stallType: stall.type,
+            enrollmentId: enrollment.id,
+            startDate: enrollment.startDate,
+            subscriptionName: enrollment.subscription.name,
+            subscriptionId: enrollment.subscription.id,
+            customerFirstname: selectedHorse.owner.firstName,
+            customerLastname: selectedHorse.owner.lastName,
+            customerId: selectedHorse.owner.id,
+        });
+        // 3. toggle weergave venster
+        toggleEditingCancellation(true);
+    }
+
+    async function removeHorseFromStall(stallId) {
+        setError("");
+        try {
+            const response = await axios.put(`http://localhost:8080/stalls/${stallId}`);
+            console.log("hetpaard is verwijderd uit stallnr,", stallId, response);
+            toggleHorseRemovedSuccess(true);
+        } catch (error) {
+            console.error(error);
+            setError("error");
+        }
+    }
+
+    async function terminateEnrollment(enrollmentId) {
+        setError("");
+        try {
+            const response = await axios.put(`http://localhost:8080/enrollments/${enrollmentId}`, {
+                "isOngoing": true,
+                "subscriptionId": cancellationInfo.subscriptionId,
+                "customerId": cancellationInfo.customerId,
+            });
+            toggleEnrollmentTerminatedSuccess(true);
+        } catch (error) {
+            console.error(error);
+            setError(error);
+        }
+    }
+
+    function setToCancellationDefault() {
+        toggleEditingCancellation(false);
+        toggleHorseRemovedSuccess(false);
+        toggleEnrollmentTerminatedSuccess(false);
+        setCancellationInfo(null);
+    }
+////////////////////////////////////////////
+
+
+
+
+
 
     return (
         <>
@@ -282,11 +362,6 @@ function Admin() {
                         </Button>
                         <Button
                             type="button"
-                        >
-                            maak nieuwe inschrijving
-                        </Button>
-                        <Button
-                            type="button"
                             text=""
                         >
                             toon cijfers
@@ -299,45 +374,47 @@ function Admin() {
                         </div>
                         {!editingNewEnrollment &&
                             <article className="content-wrapper persona">
-                            <div className="content-title">
-                                <h4>Nieuwe aanvragen</h4>
-                            </div>
-                            <div className="overwiew-container">
-                                <table className="admin-table">
-                                    <thead>
-                                    <tr className="admin-table-head">
-                                        <th>Paard</th>
-                                        <th>Gewenste abonnement</th>
-                                        <th>Klant</th>
-                                        <th>Telnr klant</th>
+                                <div className="content-title">
+                                    <h4>Nieuwe aanvragen</h4>
+                                </div>
+                                <div className="overwiew-container">
+                                    <table className="admin-table">
+                                        <thead>
+                                        <tr className="admin-table-head">
+                                            <th>Paard</th>
+                                            <th>Gewenste abonnement</th>
+                                            <th>Klant</th>
+                                            <th>Telnr klant</th>
 
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {newHorses.length === 0 ?
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {newHorses.length === 0 ?
 
                                             <p className="nothing-message">Er zijn momenteel geen nieuwe aanvragen.</p>
 
-                                        : newHorses.map((horse) => {
-                                            return <tr key={horse.id} className="admin-table-body">
-                                                <td>{horse.name}</td>
-                                                <td>{horse.preferredSubscription}</td>
-                                                {/*{horse.stall ? <td>{horse.stall.name}</td> : <td>---</td>}*/}
-                                                <td>{horse.owner.firstName} {horse.owner.lastName}</td>
-                                                <td>{horse.owner.telephoneNumber}</td>
-                                                <td>
-                                                    <button type="button"
-                                                            onClick={() => handleNewHorseClick(horse)}>neem in
-                                                        behandeling
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        })}
+                                            : newHorses.map((horse) => {
+                                                return <tr key={horse.id} className="admin-table-body">
+                                                    <td>{horse.name}</td>
+                                                    <td>{horse.preferredSubscription}</td>
+                                                    {/*{horse.stall ? <td>{horse.stall.name}</td> : <td>---</td>}*/}
+                                                    <td>{horse.owner.firstName} {horse.owner.lastName}</td>
+                                                    <td>{horse.owner.telephoneNumber}</td>
+                                                    <td>
+                                                        <Button type="button"
+                                                                disabled={false}
+                                                                handleClick={() => handleNewHorseClick(horse)}
+                                                        >
+                                                            neem in behandeling
+                                                        </Button>
+                                                    </td>
+                                                </tr>
+                                            })}
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </article>}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </article>}
                         {showNewEnrollmentForm && <article className="content-wrapper admin">
                             <div className="content-title">
                                 <h4>Verwerk nieuwe aanvraag voor {horseInfo.preferredSubscription}</h4>
@@ -376,11 +453,11 @@ function Admin() {
                         {horseAssignedSucces &&
                             <article className="content-wrapper admin">
 
-                                    <div className="content-title">
+                                <div className="content-title">
 
-                                        <h4>Verwerk nieuwe aanvraag voor {horseInfo.preferredSubscription}</h4>
-                                    </div>
-                                    {!enrollmentCreatedSuccess ?
+                                    <h4>Verwerk nieuwe aanvraag voor {horseInfo.preferredSubscription}</h4>
+                                </div>
+                                {!enrollmentCreatedSuccess ?
                                     <div className="overwiew-container">
                                         <p>{horseInfo.name} is succesvol toegevoegd aan een {horseInfo.typeOfStall}</p>
                                         <ul className="horse-list">
@@ -399,58 +476,148 @@ function Admin() {
                                             Bevestig nieuwe inschrijving
                                         </Button>
 
-                                    </div>    : <div>
-                                            <p>Gelukt!!!</p>
-                                            <Button
-                                                type="button"
-                                                disabled={false}
-                                                handleClick={setToDefault}
-                                            >Ga terug naar overzicht</Button>
-                                        </div>}
-                            </article>
-                                }
-                                <article className="content-wrapper persona">
-                            <div className="content-title">
-                                <h4>Annuleringsverzoeken</h4>
-                            </div>
-                            <div className="overwiew-container">
-                                <table className="admin-table">
-                                    <thead>
-                                    <tr className="admin-table-head">
-                                        <th>Abonnementnr</th>
-                                        <th>Paard</th>
-                                        {/*<th>Stal</th>*/}
-                                        <th>Klant</th>
-                                        <th>Telnr klant</th>
-                                        <th>Abonnementtype</th>
-                                        <th>Ingangsdatum</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {cancellationRequests.length === 0 ?
-                                        <tr>
-                                            <td>Er zijn momenteel geen annuleringsverzoeken.</td>
+                                    </div> : <div>
+                                        <p>Gelukt!!!</p>
+                                        <Button
+                                            type="button"
+                                            disabled={false}
+                                            handleClick={setNewToDefault}
+                                        >Ga terug naar overzicht</Button>
+                                    </div>}
+                            </article>}
+   {/*///////////////////////////////////  ANNULERINGSGEDEELTE  //////////////////////////////////*/}
+                        {!editingCancellation &&
+                            <article className="content-wrapper persona">
+                                <div className="content-title">
+                                    <h4>Annuleringsverzoeken</h4>
+                                </div>
+                                <div className="overwiew-container">
+                                    <table className="admin-table">
+                                        <thead>
+                                        <tr className="admin-table-head">
+                                            <th>AbonNr</th>
+                                            <th>Paard</th>
+                                            {/*<th>Stal</th>*/}
+                                            <th>Klant</th>
+                                            <th>Telnr klant</th>
+                                            <th>Abonnementtype</th>
+                                            <th>Ingangsdatum</th>
                                         </tr>
-                                        : cancellationRequests.map((enrollement) => {
-                                            return <tr key={enrollement.id} className="admin-table-body">
-                                                <td>{enrollement.id}</td>
-                                                <td>{enrollement.horse.name}</td>
-                                                {/*{horse.stall ? <td>{horse.stall.name}</td> : <td>---</td>}*/}
-                                                <td>{enrollement.customer.firstName} {enrollement.customer.lastName}</td>
-                                                <td>{enrollement.customer.telephoneNumber}</td>
-                                                <td>{enrollement.subscription.name}</td>
-                                                <td>{enrollement.startDate}</td>
-                                                <td>
-                                                    <button type="button">neem in behandeling</button>
-                                                </td>
+                                        </thead>
+                                        <tbody>
+                                        {cancellationRequests.length === 0 ?
+                                            <tr>
+                                                <td>Er zijn momenteel geen annuleringsverzoeken.</td>
                                             </tr>
-                                        })}
+                                            : cancellationRequests.map((enrollement) => {
+                                                return <tr key={enrollement.id} className="admin-table-body">
+                                                    <td>{enrollement.id}</td>
+                                                    <td>{enrollement.horse.name}</td>
+                                                    {/*{horse.stall ? <td>{horse.stall.name}</td> : <td>---</td>}*/}
+                                                    <td>{enrollement.customer.firstName} {enrollement.customer.lastName}</td>
+                                                    <td>{enrollement.customer.telephoneNumber}</td>
+                                                    <td>{enrollement.subscription.name}</td>
+                                                    <td>{enrollement.startDate}</td>
+                                                    <td>
+                                                        <Button
+                                                            type="button"
+                                                            disabled={false}
+                                                            handleClick={() => handleCancellationClick(enrollement)}
+                                                        >
+                                                            neem in behandeling
+                                                        </Button>
+                                                    </td>
+                                                </tr>
+                                            })}
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </article>
-
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </article>}
+                        {editingCancellation &&
+                            <article className="content-wrapper admin">
+                                <div className="content-title">
+                                    <h4>Verwerk nieuw annuleringsverzoek voor {cancellationInfo.horseName}</h4>
+                                </div>
+                                <div className="overwiew-container test">
+                                    <div className="horse-info-container">
+                                        <table className="table">
+                                            <thead>
+                                            <tr className="table-head table-test">
+                                                <th>paard</th>
+                                                <th>stal</th>
+                                                <th>staltype</th>
+                                                <th>abonnementtype</th>
+                                                <th>sinds</th>
+                                                <th>klant</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr className="table-body">
+                                                <td>{cancellationInfo.horseName}</td>
+                                                <td>{cancellationInfo.stallName}</td>
+                                                <td>{cancellationInfo.stallType}</td>
+                                                <td>{cancellationInfo.subscriptionName}</td>
+                                                <td>{cancellationInfo.startDate}</td>
+                                                <td>{cancellationInfo.customerFirstname} {cancellationInfo.customerLastname}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                        {/*<ul className="horse-list">*/}
+                                        {/*    <li>{cancellationInfo.horseName}</li>*/}
+                                        {/*    <li>{cancellationInfo.customerFirstname} {cancellationInfo.customerLastname}</li>*/}
+                                        {/*    <li>{cancellationInfo.stallName}</li>*/}
+                                        {/*    <li>{cancellationInfo.subscriptionName}</li>*/}
+                                        {/*</ul>*/}
+                                        {!horseRemovedSuccess &&
+                                            <div className="edit-part">
+                                                {error ?
+                                                    <p className="error">Het paard kon uit de stal verwijderd worden.
+                                                        Check of het in een
+                                                        stal staat en/of probeer het opnieuw</p>
+                                                    :
+                                                    <p>Verwijder paard {cancellationInfo.horseName} uit
+                                                        stal {cancellationInfo.stallName} </p>}
+                                                <Button
+                                                    type="button"
+                                                    disabled={false}
+                                                    handleClick={() => removeHorseFromStall(cancellationInfo.stallId)}
+                                                >
+                                                    Verwijder paard uit stal
+                                                </Button>
+                                            </div>}
+                                        {horseRemovedSuccess && !enrollmentTerminatedSuccess &&
+                                            <div className="edit-part">
+                                                {error ?
+                                                    <p className="error">Het abonnement kon niet worden beeindigd.
+                                                        Probeer het opnieuw.</p>
+                                                    :
+                                                    <p>Paard {cancellationInfo.horseName} is succesvol verwijderd uit
+                                                        stal {cancellationInfo.stallName} </p>}
+                                                <Button
+                                                    type="button"
+                                                    disabled={false}
+                                                    handleClick={() => terminateEnrollment(cancellationInfo.enrollmentId)}
+                                                >
+                                                    Annuleer dit abonnement
+                                                </Button>
+                                            </div>}
+                                        {horseRemovedSuccess && enrollmentTerminatedSuccess &&
+                                            <div className="edit-part">
+                                                <p>Het Abonnement voor paard {cancellationInfo.horseName} is succesvol
+                                                    beëindigd </p>
+                                                <Button
+                                                    type="button"
+                                                    disabled={false}
+                                                    handleClick={setToCancellationDefault}
+                                                >
+                                                    Terug naar overicht
+                                                </Button>
+                                            </div>}
+                                    </div>
+                            </article>
+                        }
                         {display === "customers" && <article className="content-wrapper persona">
                             <div className="content-title">
                                 <h4>Klanten</h4>
@@ -478,7 +645,7 @@ function Admin() {
                                 <table className="admin-table">
                                     <thead>
                                     <tr className="admin-table-head">
-                                        <th>Nr</th>
+                                    <th>Nr</th>
                                         <th>Achternaam</th>
                                         <th>Voornaam</th>
                                         <th>Plaats</th>
