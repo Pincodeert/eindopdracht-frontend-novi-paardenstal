@@ -2,22 +2,11 @@ h3 {
     /*color: var(--pale);*/
 }
 
-.overwiew-container {
-    display: flex;
-    flex-direction: row;
-}
-
-.radio-form {
-    width: 10%;
-    padding-top: 70px;
-    border-top: 2px solid var(--orange);
-    border-left: 2px solid var(--orange);
-    border-bottom: 2px solid var(--orange);
-}
-
-.radio-form input {
-    margin: 29px 0;
-}
+/*verplaatst naar Display.css*/
+/*.overwiew-container {*/
+/*     display: flex;*/
+/*     flex-direction: row;*/
+/* }*/
 
 /*.admin-table {*/
 /*    border: 2px solid plum;*/
@@ -27,11 +16,7 @@ h3 {
 /*    width: 856px;*/
 /*}*/
 
-/*.admin-table-head th {*/
-/*    padding: 10px 20px;*/
-/*    border: 2px dotted black;*/
-/*    width: 200px;*/
-/*}*/
+
 
 /*.admin-table-body td {*/
 /*    padding: 10px 20px;*/
@@ -43,7 +28,7 @@ h3 {
     border-collapse: collapse;
     border: 2px solid var(--orange);
     border-radius: 5px;
-    width: 90%;
+    width: 100%;
     /*margin-bottom: 2em;*/
     margin-bottom: 80px;
     /*display: flex;*/
@@ -64,18 +49,19 @@ h3 {
     background-color: var(--orange);
 }
 
-.admin-table th {
-    padding-top: 1em;
-    padding-bottom: 1em;
-    text-align: left;
-    /*background-color: var(--faded-army);*/
+/*.admin-table th {*/
+/*    padding-top: 1em;*/
+/*    padding-bottom: 1em;*/
+/*    text-align: left;*/
+/*    !*background-color: var(--faded-army);*!*/
 
-}
+/*}*/
 
-.admin {
-    border: 2px solid transparent;
-    background-color: var(--faded-army);
-}
+/*verplaatst naar Display.css*/
+/*.admin {*/
+/*    border: 2px solid transparent;*/
+/*    background-color: var(--faded-army);*/
+/*}*/
 
 .horse-list {
     list-style: none;
@@ -104,10 +90,6 @@ h3 {
     padding: 20px 10px;
 }
 
-.test {
-    /*border: 2px solid plum;*/
-}
-
 .table-test {
     margin-right: 20px;
     width: 160px;
@@ -122,6 +104,7 @@ h3 {
     margin: 20px 0;
 }
 
-.edit-part p {
-    color: var(--orange);
+
+.success-message {
+    color: var(--pale);
 }

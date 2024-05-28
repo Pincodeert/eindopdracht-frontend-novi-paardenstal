@@ -1,0 +1,13 @@
+/*.admin-table-head th {*/
+/*    padding: 10px 20px;*/
+/*    !*border: 2px dotted black;*!*/
+/*    width: 200px;*/
+/*}*/
+
+.admin-table-head th {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    text-align: left;
+    /*background-color: var(--faded-army);*/
+
+}
