@@ -20,6 +20,7 @@ function Admin() {
     const [horseInfo, setHorseInfo] = useState({});
     const [availableStalls, setAvailableStalls] = useState([]);
     const [chosenStall, setChosenStall] = useState({});
+    const [stalls, setStalls] = useState([]);
     const [horseAssignedSucces, toggleHorseAssignedSucces] = useState(false);
     const [enrollmentInfo, setEnrollmentInfo] = useState({});
     const [enrollmentCreatedSuccess, toggleEnrollmentCreatedSuccess] = useState(false);
@@ -93,7 +94,6 @@ function Admin() {
                 setError(error);
             }
         }
-
         void fetchAllSubscriptions();
     }, []);
 
@@ -274,9 +274,23 @@ function Admin() {
         toggleEnrollmentTerminatedSuccess(false);
         setCancellationInfo(null);
     }
-
 ////////////////////////////////////////////
+    async function fetchAllStalls() {
+        setError("");
+        try {
+            const response = await axios.get("http://localhost:8080/stalls");
+            console.log("dit zijn de stallen", response.data);
+            setStalls(response.data);
+        } catch(error) {
+            console.error(error);
+            setError(error);
+        }
+    }
 
+    function showStalls() {
+        void fetchAllStalls();
+        setDisplay("stalls");
+    }
 
     return (
         <>
@@ -326,7 +340,7 @@ function Admin() {
                         <Link><h3>Stallen</h3></Link>
                         <Button
                             type="button"
-                            note="hier komt een link"
+                            handleClick={showStalls}
                         >
                             Bekijk stallen
                         </Button>
@@ -689,6 +703,39 @@ function Admin() {
                                     </tbody>
                                 </table>
                             </Display>}
+                        {display === "stalls" &&
+                        <Display
+                            className="content-wrapper persona"
+                            title="Stallen"
+                        >
+                            <table className="admin-table">
+                                <TableHead className="admin-table-head">
+                                    <th>Naam</th>
+                                    <th>Staltype</th>
+                                    <th>Paard</th>
+                                    <th>Dierenarts</th>
+                                    <th>Tel dierenarts</th>
+                                </TableHead>
+                                <tbody>
+                                {stalls.length === 0 ?
+                                    <tr>
+                                        <td>Er zijn nog geen stallen.</td>
+                                    </tr>
+                                    : stalls.map((stall) => {
+                                        return <tr key={stall.id} className="admin-table-body">
+                                            <td>{stall.name}</td>
+                                            <td>{stall.type}</td>
+                                            {stall.horse ? <td>{stall.horse.name}</td>
+                                                : <td>---</td>}
+                                            {stall.horse ? <td>{stall.horse.nameOfVet}</td>
+                                                : <td>---</td>}
+                                            {stall.horse ? <td>{stall.horse.telephoneOfVet}</td>
+                                                : <td>---</td>}
+                                        </tr>
+                                    })}
+                                </tbody>
+                            </table>
+                        </Display>}
                     </div>
                 </div>
             </main>
