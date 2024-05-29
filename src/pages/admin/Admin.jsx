@@ -30,6 +30,7 @@ function Admin() {
     const [editingCancellation, toggleEditingCancellation] = useState(false);
     const [horseRemovedSuccess, toggleHorseRemovedSuccess] = useState(false);
     const [enrollmentTerminatedSuccess, toggleEnrollmentTerminatedSuccess] = useState(false);
+    const [enrollments, setEnrollments] = useState([]);
     const [display, setDisplay] = useState("default");
 
     async function fetchCustomers() {
@@ -293,6 +294,37 @@ function Admin() {
         setDisplay("stalls");
     }
 
+////////////////////////////////////////// INSCHRIJVINGEN ////////////////////////
+    async function fetchAllEnrollments() {
+        setError("");
+        try {
+            const response = await axios.get("http://localhost:8080/enrollments");
+            console.log(response.data);
+            setEnrollments(response.data);
+        } catch(error) {
+            console.error(error);
+            setError(error);
+        }
+    }
+
+    function determineEnrollmentStatus(cancellationRequested, isOngoing) {
+        let status = "";
+        if (cancellationRequested) {
+            status = "annulering"
+        } else if (isOngoing) {
+            status = "lopend"
+        } else {
+            status = "beëindigd"
+        }
+        return status;
+    }
+
+    function showEnrollments() {
+        void fetchAllEnrollments();
+        setDisplay("enrollments");
+    }
+/////////////////////////////////////////////////////////////////
+
     return (
         <>
             <header>
@@ -357,16 +389,9 @@ function Admin() {
                         <Link><h3>Inschrijvingen</h3></Link>
                         <Button
                             type="button"
+                            handleClick={showEnrollments}
                         >
                             inschrijvingen
-                        </Button>
-
-
-                        <Button
-                            type="button"
-                            text=""
-                        >
-                            toon cijfers
                         </Button>
                     </nav>
                     <div className="profile-content-container">
@@ -673,7 +698,6 @@ function Admin() {
                             >
                                 <table className="admin-table">
                                     <TableHead className="admin-table-head">
-                                        <th>Nr</th>
                                         <th>Naam</th>
                                         <th>Stal</th>
                                         <th>Dierenarts</th>
@@ -688,9 +712,9 @@ function Admin() {
                                         </tr>
                                         : horses.map((horse) => {
                                             return <tr key={horse.id} className="admin-table-body">
-                                                <td>{horse.id}</td>
                                                 <td>{horse.name}</td>
-                                                {horse.stall ? <td>{horse.stall.name}</td> : <td>---</td>}
+                                                {horse.stall ? <td>{horse.stall.name}</td>
+                                                    : <td>---</td>}
                                                 <td>{horse.nameOfVet}</td>
                                                 <td>{horse.telephoneOfVet}</td>
                                                 <td>{horse.typeOfFeed}</td>
@@ -760,6 +784,38 @@ function Admin() {
                                                 <td>{subscription.typeOfCare}</td>
                                                 <td>{subscription.typeOfStall}</td>
                                                 <td>{formatPrice(subscription.price)}</td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            </Display>}
+                        {display === "enrollments" &&
+                            <Display
+                                className="content-wrapper persona"
+                                title="Inschrijvingen"
+                            >
+                                <table className="admin-table">
+                                    <TableHead className="admin-table-head">
+                                        <th>AbonNr</th>
+                                        <th>Abonnementtype</th>
+                                        <th>Ingangsdatum</th>
+                                        <th>Status</th>
+                                        <th>Paard</th>
+                                        <th>Klant</th>
+                                    </TableHead>
+                                    <tbody>
+                                    {enrollments.length === 0 ?
+                                        <tr>
+                                            <td>Er zijn nog geen abonnementtypen toegevoegd.</td>
+                                        </tr>
+                                        : enrollments.map((enrollment) => {
+                                            return <tr key={enrollment.id} className="admin-table-body">
+                                                <td>{enrollment.id}</td>
+                                                <td>{enrollment.subscription.name}</td>
+                                                <td>{enrollment.startDate}</td>
+                                                <td>{determineEnrollmentStatus(enrollment.cancellationRequested, enrollment.ongoing)}</td>
+                                                {enrollment.horse ? <td>{enrollment.horse}</td> : <td>---</td>}
+                                                <td>{enrollment.customer.firstName} {enrollment.customer.lastName}</td>
                                             </tr>
                                         })}
                                     </tbody>
