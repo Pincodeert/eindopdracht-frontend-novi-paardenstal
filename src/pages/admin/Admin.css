@@ -1,3 +1,149 @@
+.outer-profile-container {
+    height: 100vh;
+}
+
+h2 {
+    margin-bottom: 15px;
+}
+
 h3 {
-    /*color: var(--pale);*/
+    margin-top: 20px;
+}
+
+/*verplaatst naar Display.css*/
+/*.overwiew-container {*/
+/*     display: flex;*/
+/*     flex-direction: row;*/
+/* }*/
+
+/*.admin-table {*/
+/*    border: 2px solid plum;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: flex-start;*/
+/*    width: 856px;*/
+/*}*/
+
+
+
+/*.admin-table-body td {*/
+/*    padding: 10px 20px;*/
+/*    border: 2px dotted black;*/
+/*    width: 200px;*/
+/*}*/
+
+.admin-table {
+    border-collapse: collapse;
+    border: 2px solid var(--orange);
+    border-radius: 5px;
+    width: 100%;
+    /*margin-bottom: 2em;*/
+    margin-bottom: 80px;
+    /*display: flex;*/
+
+}
+
+.admin-table td, .users th {
+    border: 2px solid var(--orange);
+    padding: 0.8em;
+}
+
+.admin-table tr {
+    border: 2px solid var(--orange);
+    border-radius: 5px;
+}
+
+.admin-table tr:hover {
+    background-color: var(--orange);
+}
+
+/*.admin-table th {*/
+/*    padding-top: 1em;*/
+/*    padding-bottom: 1em;*/
+/*    text-align: left;*/
+/*    !*background-color: var(--faded-army);*!*/
+
+/*}*/
+
+/*verplaatst naar Display.css*/
+/*.admin {*/
+/*    border: 2px solid transparent;*/
+/*    background-color: var(--faded-army);*/
+/*}*/
+
+.horse-list {
+    list-style: none;
+    padding: 20px;
+}
+
+.horse-list li {
+    padding: 5px 0;
+}
+
+.horse-form {
+    padding: 20px;
+}
+
+.horse-form select {
+    margin: 10px 0;
+    border: 2px solid var(--orange);
+    border-radius: 5px;
+}
+
+.horse-form button {
+    margin-top: 10px;
+}
+
+.nothing-message {
+    padding: 20px 10px;
+}
+
+.table-test {
+    margin-right: 20px;
+    width: 160px;
+}
+
+.edit-part {
+    padding: 20px;
+    margin-left: 20px;
+}
+
+.edit-part button {
+    margin: 20px 0;
+}
+
+
+.success-message {
+    color: var(--pale);
+}
+
+.admin-menu {
+    width: 190px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.notification {
+    background-color: darkred;
+    color: var(--pale);
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 50%;
+    margin-left: 15px;
+}
+
+.new-tasks-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /*margin: 10px 0;*/
+    /*border: 2px solid plum;*/
+}
+
+.new-tasks-title{
+    margin-top: 0;
 }

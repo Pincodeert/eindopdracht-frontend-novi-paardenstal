@@ -104,7 +104,9 @@ a:visited {
 
 .error {
     margin: 40px 0;
-    color: red;
+    color: darkred;
+    /*border: 2px solid var(--orange);*/
+    padding: 5px;
 }
 /*a {*/
 /*  font-weight: 500;*/

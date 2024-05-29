@@ -1,7 +1,7 @@
 import star from "../../assets/ster-image.jpg";
 import Button from "../button/Button.jsx";
 import './SubscriptionTile.css';
-import {formatPrice} from "../../helpers/helpers.js";
+import formatPrice from "../../helpers/formatPrice.js";
 import {useNavigate} from "react-router-dom";
 
 function SubscriptionTile(props) {

@@ -154,7 +154,7 @@ th, td {
 .horse-info-container {
     display: flex;
     flex-direction: row;
-    border: 2px solid plum;
+    /*border: 2px solid plum;*/
 
 }
 
@@ -162,4 +162,8 @@ th, td {
     border: 2px solid var(--orange);
     border-radius: 5px;
     padding: 2px 5px;
+}
+
+.success-message {
+    color: var(--orange);
 }

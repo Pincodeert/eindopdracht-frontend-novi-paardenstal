@@ -1,7 +1,7 @@
 import NavBar from "../../components/navBar/NavBar.jsx";
 import HeaderContent from "../../components/headerContent/HeaderContent.jsx";
 import "./Subscribe.css"
-import {generateSubscriptionDetails} from "../../helpers/helpers.js";
+import generateSubscriptionDetails from "../../helpers/generateSubscriptionDetails.js";
 import TextInput from "../../components/textInput/TextInput.jsx";
 import Button from "../../components/button/Button.jsx";
 import Footer from "../../components/footer/Footer.jsx";
@@ -10,6 +10,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {AuthContext} from "../../context/AuthContext.jsx";
+import {SubscriptionContext} from "../../context/SubscriptionContext.jsx";
 
 function Subscribe() {
     const [subscription, setSubscription] = useState({});
@@ -34,19 +35,23 @@ function Subscribe() {
         residenceOfVet: "",
         telephoneOfVet: "",
     });
-    const [file, setFile] = useState();
+    const [file, setFile] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState(null);
     const [termsFormState, toggleTermsFormState] = useState({
         termsAndConditions: false,
     });
     const [newlyCustomerId, setNewlyCustomerId] = useState(null);
-    const [assignUserSuccess, toggleAssignUserSuccess] = useState(false);
+    // const [assignUserSuccess, toggleAssignUserSuccess] = useState(false);
     const [newlyHorseId, setNewlyHorseId] = useState(null);
-    const [step, setStep] = useState("step1");
+    const [step, setStep] = useState("");
 
     const navigate = useNavigate();
     const {subscriptionId} = useParams();
 
-    const {user} = useContext(AuthContext);
+    const {user, completeUserInfo} = useContext(AuthContext);
+    const {resetSubscription} = useContext(SubscriptionContext);
+
+    const token = localStorage.getItem('token');
 
 /////////// Handle Change /////////////////////
     function handleCustomerChange(e) {
@@ -69,7 +74,11 @@ function Subscribe() {
     }
 
     function handlePassportChange(e) {
-        setFile(e.target.files[0]);
+        const uploadedFile = e.target.files[0];
+        console.log(uploadedFile);
+        setFile(uploadedFile);
+        setPreviewUrl(URL.createObjectURL(uploadedFile));
+        // setPreviewUrl(uploadedFile.data);
     }
 
     function handleTermsChange(e) {
@@ -102,6 +111,19 @@ function Subscribe() {
         void fetchSubscription(subscriptionId);
     }, []);
 
+    ///
+    useEffect(() => {
+        function determineStep () {
+            if(user.customerProfile) {
+                setStep("step2")
+            } else {
+                setStep("step1")
+            }
+        }
+        console.log("dit is de cpId van de ingelogde user" ,user.customerProfile, user);
+        determineStep();
+    }, []);
+
 ///////// Handle Submit ////////////
     async function handleSubmitCustomer(e) {
         e.preventDefault();
@@ -131,10 +153,13 @@ function Subscribe() {
         console.log("deze klantId gaan we nu koppelen: ", newlyCustomerId);
         try {
             const response = await axios.put(`http://localhost:8080/customerprofiles/${newlyCustomerId}/user`, {
-                username: "freshprince",
+                username: user.username,
             });
-            toggleAssignUserSuccess(true); // hebben we dit eigenlijk wel nodig?
+            // toggleAssignUserSuccess(true); // hebben we dit eigenlijk wel nodig?
             console.log("koppelen is gelukt: ", response) // de data in de response=null omdat backendfunctie hierin niet voorziet
+
+            //// hier moet de newlyCustomerId als customerProfileId worden opgeslagen in de context.
+            completeUserInfo(newlyCustomerId);
             setStep("step2");
         } catch (error) {
             console.error(error);
@@ -151,6 +176,11 @@ function Subscribe() {
             const response = await axios.post("http://localhost:8080/horses", {
                 ...horseFormState,
                 preferredSubscription: subscription.name,
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
             });
             console.log(response);
             console.log(response.status);
@@ -169,7 +199,12 @@ function Subscribe() {
         setError("");
         try {
             const response = await axios.put(`http://localhost:8080/horses/${newlyHorseId}/customerprofile`, {
-                "id": newlyCustomerId,
+                "id": user.customerProfile,
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
             });
             console.log(response);
             console.log("het is je gewoon gelukt!!!")
@@ -189,6 +224,7 @@ function Subscribe() {
         const config = {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`,
             },
         }
         try {
@@ -206,7 +242,9 @@ function Subscribe() {
         e.preventDefault();
         void assignHorseToCustomer();
         console.log("akkoord?: " + termsFormState.termsAndConditions);
-        navigate(`/profiel/${newlyCustomerId}`);
+        resetSubscription();
+        // navigate(`/profiel/${newlyCustomerId}`);
+        navigate(`/profiel/${user.customerProfile}`)
     }
 
     return (
@@ -230,16 +268,7 @@ function Subscribe() {
                 <section className="outer-container intro-section">
                     <div className="inner-container">
                         <div className="profile-content-container">
-                            {/*<SubscribeCard*/}
-                            {/*    subscribeCardTitle="Stap 0 - Maak een account aan of login"*/}
-                            {/*    subscribeStep="thisWillBeSkippedStep"*/}
-                            {/*>*/}
-                            {/*    <p>Om een abonnement te kunnen af sluiten, heeft u eerst een account nodig:</p>*/}
-                            {/*    <Link to="/registreer">maak hier een account aan</Link>*/}
-                            {/*    <p>Heeft u al een account?</p>*/}
-                            {/*    <Link to="/login">log dan eerst hier in</Link>*/}
-                            {/*</SubscribeCard>*/}
-                            {/*/////////// stap 1 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
+{/*/////////// stap 1 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
                             {step === "step1" &&
                                 <SubscribeCard
                                     subscribeCardTitle="Stap 1 - Vul uw persoonsgegevens in"
@@ -458,15 +487,8 @@ function Subscribe() {
                                             Sla op
                                         </Button>
                                     </form>
-                                    {/*<Button*/}
-                                    {/*    type="button"*/}
-                                    {/*    disabled={false}*/}
-                                    {/*    handleClick={assignHorseToCustomer}*/}
-                                    {/*>*/}
-                                    {/*    Volgende stap*/}
-                                    {/*</Button>*/}
                                 </SubscribeCard>}
-                            {/*/////////// stap 3 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
+{/*/////////// stap 3 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
                             {step === "step3" &&
                                 <SubscribeCard
                                     subscribeCardTitle="Stap 3 - Voeg een kopie van het paardenpaspport van uw paard toe"
@@ -483,13 +505,16 @@ function Subscribe() {
                                                 onChange={handlePassportChange}
                                             />
                                         </label>
-                                        <input type="submit"/>
-
+                                        {/*<input type="submit"/>*/}
+                                        {previewUrl &&
+                                        <label htmlFor="preview-file">
+                                            <img src={previewUrl} alt="Voorbeeld van de afbeelding die zojuist gekozen is" className="image-preview"/>
+                                        </label>}
                                         <Button
                                             type="submit"
                                             disabled={false}
                                         >
-                                            Sla op
+                                            Voeg toe
                                         </Button>
                                     </form>
                                 </SubscribeCard>}

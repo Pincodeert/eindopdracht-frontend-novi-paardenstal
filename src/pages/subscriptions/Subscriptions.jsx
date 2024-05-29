@@ -4,9 +4,11 @@ import HeaderContent from "../../components/headerContent/HeaderContent.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import star from "../../assets/ster-image.jpg";
 import SubscriptionTile from "../../components/subscriptionTile/SubscriptionTile.jsx";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {SubscriptionContext} from "../../context/SubscriptionContext.jsx";
+import {AuthContext} from "../../context/AuthContext.jsx";
 // import {s} from "vite/dist/node/types.d-FdqQ54oU.js";
 // import {ReactComponent as StrawIcon} from '../../assets/strawIcon.svg';
 // import { ReactComponent as Hay } from '../../assets/Hay.svg';
@@ -19,6 +21,8 @@ function Subscriptions() {
     const [availableStalls, setAvailableStalls] = useState([]);
     const [error, setError] = useState("");
     // const [subscription, setSubscription] = useState({});
+    const {isAuth} = useContext(AuthContext);
+    const {selectSubscription} = useContext(SubscriptionContext);
 
     ////// ALLE ABONNEMENTEN OPHALEN UIT DE BACKEND /////
     useEffect(() => {
@@ -89,11 +93,17 @@ function Subscriptions() {
 
     function handleSubscriptionClick(subscriptionId) {
         // e.preventDefault();
+        selectSubscription(subscriptionId);
+        // e.preventDefault();
         // const subscription = subscriptions[subscriptionId - 1];
         // setSubscription(subscription);
         // console.log(subscription);
-        navigate(`/inschrijven/${subscriptionId}`);
-
+        // navigate(`/inschrijven/${subscriptionId}`);
+        if(isAuth) {
+            navigate(`/inschrijven/${subscriptionId}`)
+        } else {
+            navigate("/login")
+        }
     }
 
     return (

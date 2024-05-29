@@ -1,0 +1,9 @@
+.overwiew-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.admin {
+    border: 2px solid transparent;
+    background-color: var(--faded-army);
+}
