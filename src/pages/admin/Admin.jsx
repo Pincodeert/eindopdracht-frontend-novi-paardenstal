@@ -325,6 +325,14 @@ function Admin() {
         void fetchAllEnrollments();
         setDisplay("enrollments");
     }
+///////////////////////////////////////////////
+function calculateNewTasks() {
+        const newHorseTasks = newHorses.length;
+        const newCancellationTasks = cancellationRequests.length;
+        const newTasks = newHorseTasks + newCancellationTasks;
+        return newTasks;
+}
+
 /////////////////////////////////////////////////////////////////
 
     return (
@@ -345,58 +353,66 @@ function Admin() {
                 <div className="inner-container inner-profile-container">
                     <nav className="side-nav">
                         <h2>Menu</h2>
-                        <h3>Nieuw!</h3>
-                        <Button
-                            type="button"
-                            handleClick={() => setDisplay("default")}
-                        >
-                            Aanvragen & Annuleringen
-                        </Button>
-                        <h3>Klanten</h3>
-                        <Button
-                            type="button"
-                            handleClick={showCustomers}
-                        >
-                            Bekijk klanten
-                        </Button>
-                        <h3>Paarden</h3>
-                        <Button
-                            type="button"
-                            handleClick={showHorses}
-                        >
-                            Bekijk paarden
-                        </Button>
-                        <Button
-                            type="button"
-                            note="hier komt een link"
-                        >
-                            Zoek paard
-                        </Button>
-                        <Link><h3>Stallen</h3></Link>
-                        <Button
-                            type="button"
-                            handleClick={showStalls}
-                        >
-                            Bekijk stallen
-                        </Button>
-
-                        <Link><h3>Abonnementsoorten</h3></Link>
-                        <Button
-                            type="button"
-                            handleClick={() => setDisplay("subscriptions")}
-                        >
-                            abonnementstypen
-                        </Button>
-
-                        <Link><h3>Inschrijvingen</h3></Link>
-                        <Button
-                            type="button"
-                            handleClick={showEnrollments}
-                        >
-                            inschrijvingen
-                        </Button>
-                    </nav>
-                    <div className="profile-content-container">
+                        <div className="new-tasks-container">
+                            <h3 className="new-tasks-title">Taken</h3>
+                            <div className="notification">{calculateNewTasks()}</div>
+                        </div>
+                    <Button
+                        type="button"
+                        classname="admin-menu"
+                        handleClick={() => setDisplay("default")}
+                    >
+                        Aanvragen & Annuleringen
+                    </Button>
+                    <h3>Klanten</h3>
+                    <Button
+                        type="button"
+                        classname="admin-menu"
+                        handleClick={showCustomers}
+                    >
+                        Bekijk klanten
+                    </Button>
+                    <h3>Paarden</h3>
+                    <Button
+                        type="button"
+                        classname="admin-menu"
+                        handleClick={showHorses}
+                    >
+                        Bekijk paarden
+                    </Button>
+                    {/*<Button*/}
+                    {/*    type="button"*/}
+                    {/*    classname="admin-menu"*/}
+                    {/*    note="hier komt een link"*/}
+                    {/*>*/}
+                    {/*    Zoek paard*/}
+                    {/*</Button>*/}
+                    <h3>Stallen</h3>
+                    <Button
+                        type="button"
+                        classname="admin-menu"
+                        handleClick={showStalls}
+                    >
+                        Bekijk stallen
+                    </Button>
+                    <h3>Abonnementsoorten</h3>
+                    <Button
+                        type="button"
+                        classname="admin-menu"
+                        handleClick={() => setDisplay("subscriptions")}
+                    >
+                        Bekijk abonnementstypen
+                    </Button>
+                    <h3>Inschrijvingen</h3>
+                    <Button
+                        type="button"
+                        classname="admin-menu"
+                        handleClick={showEnrollments}
+                    >
+                        Bekijk inschrijvingen
+                    </Button>
+                </nav>
+                <div className="profile-content-container">
                         <div className="intro-content-wrapper">
                             <h3>Welkom dirtyharry!</h3>
                             {/*<h3>Welkom {user.username} </h3>*/}

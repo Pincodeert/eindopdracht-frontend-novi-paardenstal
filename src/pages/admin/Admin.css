@@ -1,5 +1,13 @@
+.outer-profile-container {
+    height: 100vh;
+}
+
+h2 {
+    margin-bottom: 15px;
+}
+
 h3 {
-    /*color: var(--pale);*/
+    margin-top: 20px;
 }
 
 /*verplaatst naar Display.css*/
@@ -107,4 +115,35 @@ h3 {
 
 .success-message {
     color: var(--pale);
+}
+
+.admin-menu {
+    width: 190px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.notification {
+    background-color: darkred;
+    color: var(--pale);
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 50%;
+    margin-left: 15px;
+}
+
+.new-tasks-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /*margin: 10px 0;*/
+    /*border: 2px solid plum;*/
+}
+
+.new-tasks-title{
+    margin-top: 0;
 }
