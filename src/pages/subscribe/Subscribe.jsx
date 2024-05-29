@@ -1,7 +1,7 @@
 import NavBar from "../../components/navBar/NavBar.jsx";
 import HeaderContent from "../../components/headerContent/HeaderContent.jsx";
 import "./Subscribe.css"
-import {generateSubscriptionDetails} from "../../helpers/helpers.js";
+import generateSubscriptionDetails from "../../helpers/generateSubscriptionDetails.js";
 import TextInput from "../../components/textInput/TextInput.jsx";
 import Button from "../../components/button/Button.jsx";
 import Footer from "../../components/footer/Footer.jsx";

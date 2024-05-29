@@ -5,7 +5,9 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Display from "../../components/display/Display.jsx";
 import TableHead from "../../components/tableHead/TableHead.jsx";
-import {formatPrice} from "../../helpers/helpers.js";
+import formatPrice from "../../helpers/formatPrice.js";
+import {displayCompleteName} from "../../helpers/editName.js";
+import reverseDate from "../../helpers/reverseDate.js";
 
 function Admin() {
 
@@ -424,7 +426,7 @@ function Admin() {
                                                 <td>{horse.name}</td>
                                                 <td>{horse.preferredSubscription}</td>
                                                 {/*{horse.stall ? <td>{horse.stall.name}</td> : <td>---</td>}*/}
-                                                <td>{horse.owner.firstName} {horse.owner.lastName}</td>
+                                                <td>{displayCompleteName(horse.owner.firstName, horse.owner.lastName)}</td>
                                                 <td>{horse.owner.telephoneNumber}</td>
                                                 <td>{console.log(horse.owner.enrollments)}</td>
                                                 <td>
@@ -462,7 +464,7 @@ function Admin() {
                                             <td>{horseInfo.typeOfStall}</td>
                                             <td>{horseInfo.typeOfFeed}</td>
                                             <td>{horseInfo.typeOfBedding}</td>
-                                            <td>{horseInfo.owner.firstName} {horseInfo.owner.lastName}</td>
+                                            <td>{displayCompleteName(horseInfo.owner.firstName, horseInfo.owner.lastName)}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -556,10 +558,10 @@ function Admin() {
                                                 <td>{enrollement.id}</td>
                                                 <td>{enrollement.horse.name}</td>
                                                 {/*{horse.stall ? <td>{horse.stall.name}</td> : <td>---</td>}*/}
-                                                <td>{enrollement.customer.firstName} {enrollement.customer.lastName}</td>
+                                                <td>{displayCompleteName(enrollement.customer.firstName, enrollement.customer.lastName)}</td>
                                                 <td>{enrollement.customer.telephoneNumber}</td>
                                                 <td>{enrollement.subscription.name}</td>
-                                                <td>{enrollement.startDate}</td>
+                                                <td>{reverseDate(enrollement.startDate)}</td>
                                                 <td>
                                                     <Button
                                                         type="button"
@@ -595,8 +597,8 @@ function Admin() {
                                             <td>{cancellationInfo.stallName}</td>
                                             <td>{cancellationInfo.stallType}</td>
                                             <td>{cancellationInfo.subscriptionName}</td>
-                                            <td>{cancellationInfo.startDate}</td>
-                                            <td>{cancellationInfo.customerFirstname} {cancellationInfo.customerLastname}</td>
+                                            <td>{reverseDate(cancellationInfo.startDate)}</td>
+                                            <td>{displayCompleteName(cancellationInfo.customerFirstname, cancellationInfo.customerLastname)}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -811,11 +813,15 @@ function Admin() {
                                         : enrollments.map((enrollment) => {
                                             return <tr key={enrollment.id} className="admin-table-body">
                                                 <td>{enrollment.id}</td>
-                                                <td>{enrollment.subscription.name}</td>
-                                                <td>{enrollment.startDate}</td>
+                                                {enrollment.subscription ? <td>{enrollment.subscription.name}</td>
+                                                    : <td>---</td>}
+                                                <td>{reverseDate(enrollment.startDate)}</td>
                                                 <td>{determineEnrollmentStatus(enrollment.cancellationRequested, enrollment.ongoing)}</td>
-                                                {enrollment.horse ? <td>{enrollment.horse}</td> : <td>---</td>}
-                                                <td>{enrollment.customer.firstName} {enrollment.customer.lastName}</td>
+                                                {enrollment.horse ? <td>{enrollment.horse}</td>
+                                                    : <td>---</td>}
+                                                {enrollment.customer ?
+                                                    <td>{displayCompleteName(enrollment.customer.firstName, enrollment.customer.lastName)}</td>
+                                                    : <td>---</td>}
                                             </tr>
                                         })}
                                     </tbody>

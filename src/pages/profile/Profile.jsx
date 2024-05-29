@@ -1,7 +1,7 @@
 import "./Profile.css"
 import Button from "../../components/button/Button.jsx";
-// import axl, {enrollments} from "../../constants/testdata.js";
-import initialsName, {formatPrice} from "../../helpers/helpers.js";
+import initialsName from "../../helpers/editName.js";
+import formatPrice from "../../helpers/formatPrice.js";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import calculateCustomersPrice from "../../helpers/calculateCustomersPrice.js";
 import axios from "axios";
