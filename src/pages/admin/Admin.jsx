@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Display from "../../components/display/Display.jsx";
 import TableHead from "../../components/tableHead/TableHead.jsx";
+import {formatPrice} from "../../helpers/helpers.js";
 
 function Admin() {
 
@@ -348,7 +349,7 @@ function Admin() {
                         <Link><h3>Abonnementsoorten</h3></Link>
                         <Button
                             type="button"
-                            note="hier komt een link"
+                            handleClick={() => setDisplay("subscriptions")}
                         >
                             abonnementstypen
                         </Button>
@@ -736,6 +737,34 @@ function Admin() {
                                 </tbody>
                             </table>
                         </Display>}
+                        {display === "subscriptions" &&
+                            <Display
+                                className="content-wrapper persona"
+                                title="Abonnementstypen"
+                            >
+                                <table className="admin-table">
+                                    <TableHead className="admin-table-head">
+                                        <th>Naam</th>
+                                        <th>Verzorging</th>
+                                        <th>Stal</th>
+                                        <th>Prijs</th>
+                                    </TableHead>
+                                    <tbody>
+                                    {subscriptions.length === 0 ?
+                                        <tr>
+                                            <td>Er zijn nog geen abonnementtypen toegevoegd.</td>
+                                        </tr>
+                                        : subscriptions.map((subscription) => {
+                                            return <tr key={subscription.id} className="admin-table-body">
+                                                <td>{subscription.name}</td>
+                                                <td>{subscription.typeOfCare}</td>
+                                                <td>{subscription.typeOfStall}</td>
+                                                <td>{formatPrice(subscription.price)}</td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            </Display>}
                     </div>
                 </div>
             </main>
