@@ -579,7 +579,8 @@ function Profile() {
                                                 {horse.stall ? <td>{horse.stall.name} </td> : <td>- in aanvraag -</td>}
                                                 <td>{<Button type="button" disabled={false} handleClick={() => showPassport(horse.id)}>
                                                     bekijk </Button>}</td>
-                                                {/*<td>{horse.passport && <img src={URL.createObjectURL(horse.passport)} alt="paspoort"/>}</td>*/}
+                                                {console.log(horse.passport? horse.passport.url : "nope")}
+                                                <td>{horse.passport && <img src={`${horse.passport.url}`} alt="paspoort"/>}</td>
                                                 {horse.passport && <td>{horse.passport.url}</td>}
 
                                             </tr>

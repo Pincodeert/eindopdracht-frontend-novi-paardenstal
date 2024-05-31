@@ -1,5 +1,5 @@
 .outer-profile-container {
-    height: 100vh;
+    min-height: 100vh;
 }
 
 h2 {
@@ -147,3 +147,9 @@ h3 {
 .new-tasks-title{
     margin-top: 0;
 }
+
+.disabled {
+    background-color: grey;
+    /*background-color: var(--faded-army);*/
+}
+

@@ -7,7 +7,7 @@ import AuthContextProvider from "./context/AuthContext.jsx";
 import SubscriptionContextProvider, {SubscriptionContext} from "./context/SubscriptionContext.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
+    // <React.StrictMode>
         <Router>
             <AuthContextProvider>
                 <SubscriptionContextProvider>
@@ -15,5 +15,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 </SubscriptionContextProvider>
             </AuthContextProvider>
         </Router>
-    </React.StrictMode>,
+    // </React.StrictMode>,
 )
