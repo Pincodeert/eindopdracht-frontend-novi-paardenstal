@@ -63,6 +63,7 @@ function Admin() {
     }, [editingNewEnrollment]);
 
     useEffect(() => {
+        const abortController = new AbortController();
         async function fetchCancellationRequests() {
             toggleIsLoading(true);
             setCancellationRequestError("");
@@ -70,7 +71,8 @@ function Admin() {
                 const response = await axios.get("http://localhost:8080/enrollments", {
                     params: {
                         cancellationRequested: true,
-                    }
+                    },
+                    signal: abortController.signal,
                 });
                 // console.log("annuleringsverzoeken", response.data);
                 setCancellationRequests(response.data);
@@ -82,14 +84,21 @@ function Admin() {
             }
         }
         void fetchCancellationRequests();
-    }, [editingNewEnrollment]);
+
+        return function cleanUp() {
+            abortController.abort();
+        }
+    }, [editingCancellation]);
 
     useEffect(() => {
+        const abortController = new AbortController();
         async function fetchAllSubscriptions() {
             toggleIsLoading(true);
             setError("");
             try {
-                const response = await axios.get("http://localhost:8080/subscriptions");
+                const response = await axios.get("http://localhost:8080/subscriptions", {
+                    signal: abortController.signal,
+                });
                 // console.log("alle abonnementtypen: ", response.data);
                 setSubscriptions(response.data);
             } catch (error) {
@@ -100,6 +109,9 @@ function Admin() {
             }
         }
         void fetchAllSubscriptions();
+        return function cleanup() {
+            abortController.abort();
+        }
     }, []);
 
 
@@ -246,7 +258,7 @@ function Admin() {
         toggleEditingNewEnrollment(false);
         toggleHorseAssignedSuccess(false);
         setEnrollmentInfo(null);
-
+        toggleEnrollmentCreatedSuccess(false);
     }
 
 ////////////////////// Annuleringen ///////////////////
@@ -345,7 +357,7 @@ function Admin() {
         setError("");
         try {
             const response = await axios.get("http://localhost:8080/enrollments");
-            // console.log(response.data);
+            console.log(response.data);
             setEnrollments(response.data);
         } catch(error) {
             console.error(error);
@@ -467,7 +479,7 @@ function calculateNewTasks() {
                                     <p className="error">De nieuwe aanvragen konden niet worden opgehaald.</p>}
                                 {!newHorsesError && !isLoading && newHorses.length === 0 &&
                                     <p className="nothing-message">Er zijn momenteel geen nieuwe aanvragen.</p>}
-                                {!newHorsesError && newHorses.length > 0 &&
+                                {!newHorsesError && !isLoading && newHorses.length > 0 &&
                                     <table className="admin-table">
                                         <TableHead
                                             className="admin-table-head"
@@ -599,7 +611,7 @@ function calculateNewTasks() {
                                     <p className="error">De annuleringen konden niet worden opgehaald.</p>}
                                 {!cancellationRequestError && !isLoading && cancellationRequests.length === 0 &&
                                     <p className="nothing-message">Er zijn momenteel geen annuleringsverzoeken.</p>}
-                                {!error && cancellationRequests.length > 0 &&
+                                {!cancellationRequestError && cancellationRequests.length > 0 &&
                                     <table className="admin-table">
                                         <TableHead className="admin-table-head">
                                             <th>AbonNr</th>
@@ -862,7 +874,7 @@ function calculateNewTasks() {
                                 {error && <p className="error">{error.message}</p>}
                                 {!isLoading && !error && enrollments.length === 0 && <p>Er zijn nog geen inschrijvingen.
                                     Keep the faith!</p>}
-                                {customers.length > 0 &&
+                                {enrollments.length > 0 &&
                                 <table className="admin-table">
                                     <TableHead className="admin-table-head">
                                         <th>AbonNr</th>
