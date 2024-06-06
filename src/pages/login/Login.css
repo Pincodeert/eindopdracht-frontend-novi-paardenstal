@@ -102,3 +102,7 @@ a {
     font-size: 0.9em;
     padding: 10px;
 }
+
+.form-error {
+    color: var(--orange);
+}
