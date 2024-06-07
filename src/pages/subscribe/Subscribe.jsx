@@ -67,6 +67,22 @@ function Subscribe() {
         determineStep();
     }, []);
 
+
+    // function handleImageChange(e) {
+    //     const uploadedFile = e.target.files[0];
+    //     console.log(uploadedFile);
+    //     setFile(uploadedFile);
+    //     setPreviewUrl(URL.createObjectURL(uploadedFile));
+    // }
+
+    function generatePreview(e){
+        // const uploadedFile = e.target.files[0];
+        // console.log(uploadedFile);
+        // setFile(uploadedFile);
+        setPreviewUrl(URL.createObjectURL(e.target.files[0]));
+    }
+
+
 ///////// Handle Submit ////////////
     async function handleSubmitCustomer(customerFormState) {
 
@@ -632,6 +648,7 @@ function Subscribe() {
                                                         message: "Het uploaden van een paardenpaspoort is verplicht"
                                                     }
                                                 })}
+                                                onChange={generatePreview}
                                             />
                                             {errors.file && <p className="form-error">{errors.file.message}</p>}
                                         </label>
