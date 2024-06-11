@@ -100,9 +100,9 @@ function Login() {
                                         },
                                     })}
                                 />
-                                {errors.password && <p className="form-error">{errors.password.message}</p>}
+                                {errors.password && <p className="form-error-login">{errors.password.message}</p>}
                             </label>
-                            {error && <p className="form-error">Inloggen niet gelukt. Probeer het opnieuw!</p>}
+                            {error && <p className="form-error-login">Inloggen niet gelukt. Probeer het opnieuw!</p>}
                             <div className="form-button-wrapper">
                                 <a href="https://www.seniorweb.nl/tip/sterk-wachtwoord-maken-onthouden" target="_blank"
                                 >

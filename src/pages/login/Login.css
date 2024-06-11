@@ -103,7 +103,7 @@ a {
     padding: 10px;
 }
 
-.form-error {
+.form-error-login {
     color: var(--orange);
     /*background-color: var(--army);*/
 }

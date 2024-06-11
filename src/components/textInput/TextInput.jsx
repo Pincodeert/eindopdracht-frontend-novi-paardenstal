@@ -15,7 +15,7 @@ function TextInput({labelFor, children, inputId, inputName, register, validation
 
                 required={required}
             />
-            {errors[inputName] && <p className="form-error">{errors[inputName].message}</p>}
+            {errors[inputName] && <p className="form-error-login">{errors[inputName].message}</p>}
         </label>
     );
 }

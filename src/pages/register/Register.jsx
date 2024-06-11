@@ -100,7 +100,7 @@ function Register() {
                                         }
                                     )}
                                 />
-                                {errors.password && <p className="form-error">{errors.password.message}</p>}
+                                {errors.password && <p className="form-error-login">{errors.password.message}</p>}
                             </label>
                             <label htmlFor="email-field">
                                 <input
@@ -114,7 +114,7 @@ function Register() {
                                         }
                                     })}
                                 />
-                                {errors.email && <p className="form-error">{errors.email.message}</p>}
+                                {errors.email && <p className="form-error-login">{errors.email.message}</p>}
                             </label>
                             {error &&
                                 <p className="form-error">De account kon niet worden aangemaakt. Probeer het opnieuw.
