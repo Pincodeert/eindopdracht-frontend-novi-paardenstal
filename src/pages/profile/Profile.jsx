@@ -38,6 +38,8 @@ function Profile() {
     const [selectedPassport, setSelectedPassport] = useState(null);
     const [cancellationSuccess, toggleCancellationSuccess] = useState(false);
     const [selectedEnrollmentId, setSelectedEnrollmentId] = useState(0);
+    const [customerUpdateSuccess, toggleCustomerUpdateSuccess] = useState(false);
+    const [horseUpdateSuccess, toggleHorseUpdateSuccess] = useState(false);
 
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
@@ -60,6 +62,7 @@ function Profile() {
 
     //// klantprofiel ophalen uit de backend by Id ////
     useEffect(() => {
+        const abortController = new AbortController();
         async function fetchCustomerProfile(customerProfileId) {
             setError("");
 
@@ -68,7 +71,8 @@ function Profile() {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
-                    }
+                    },
+                    signal: abortController.signal,
                 });
                 const customer = response.data;
                 console.log(customer);
@@ -85,28 +89,35 @@ function Profile() {
                 setError("Uw klantgegevens kunnen niet worden opgehaald")
             }
         }
-
         void fetchCustomerProfile(customerProfileId);
-    }, []);
+        return function cleanUp(){
+            abortController.abort();
+        }
+    }, [customerUpdateSuccess]);
     console.log("dit zijn de paarden: ")
 
     //paarden van desbetreffende klant ophalen uit backend
     useEffect(() => {
+        const abortController = new AbortController();
         async function fetchHorsesByCustomer() {
             setError("");
             try {
-                const response = await axios.get("http://localhost:8080/horses/customerprofile/5",
+                const response = await axios.get(`http://localhost:8080/horses/customerprofile/${customerProfileId}`,
                     {
                         headers: {
                             "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`,
-                        }
+                        },
+                        signal: abortController.signal,
                     }
                 );
                 console.log(response)
                 const paarden = response.data;
                 console.log("paarden per klant:", paarden);
-                setHorses(paarden);
+                const gesorteerdePaarden = paarden.sort((paardA, paardB) => {
+                    return paardA.id - paardB.id;
+                });
+                setHorses(gesorteerdePaarden);
                 // setEnrollmentList(enrollments);
             } catch (error) {
                 console.error(error);
@@ -114,13 +125,16 @@ function Profile() {
             }
         }
         void fetchHorsesByCustomer();
-    }, []);
+        return function cleanUp(){
+            abortController.abort();
+        }
+    }, [horseUpdateSuccess]);
 
 
 
     //// inschrijvingen van klant ophalen (uit backend) //////
     useEffect(() => {
-
+        const abortController = new AbortController();
         async function fetchEnrollementsByCustomer(customerProfileId) {
             setError("");
             try {
@@ -128,7 +142,8 @@ function Profile() {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
-                    }
+                    },
+                    signal: abortController.signal,
                 });
                 const enrollments = response.data;
                 console.log("dit zijn de abonnementen",enrollments);
@@ -138,9 +153,11 @@ function Profile() {
                 setError("uw abonnementgegevens kunnen niet worden opgehaald")
             }
         }
-
-        void fetchEnrollementsByCustomer(customerProfileId)
-    }, []);
+        void fetchEnrollementsByCustomer(customerProfileId);
+        return function cleanUp() {
+            abortController.abort();
+        }
+    }, [cancellationSuccess]);
 
 
 
@@ -191,6 +208,7 @@ function Profile() {
 //     async function updateCustomer() {
        async function handleCustomerForm(customerFormState) {
         setError("");
+        toggleCustomerUpdateSuccess(false);
         console.log("dit is de customerFormState: ", customerFormState);
         try {
             const response = await axios.patch(`http://localhost:8080/customerprofiles/${customerProfileId}`, {
@@ -203,6 +221,7 @@ function Profile() {
             });
             console.log("updaten van de klantgegevens is gelukt")
             console.log(response);
+            toggleCustomerUpdateSuccess(true);
             toggleEnableCustomerChange(false);
         } catch (error) {
             console.error(error);
@@ -220,6 +239,7 @@ function Profile() {
     // async function updateHorse() {
     async function handleHorseForm(horseFormState) {
         setError("");
+        toggleHorseUpdateSuccess(false);
         selectHorse(selectedHorseId);
         console.log("dit is de horseFormState", horseFormState);
         try {
@@ -235,6 +255,7 @@ function Profile() {
             console.log(`het updaten van paard id ${selectedHorseId} is gelukt!`);
             console.log(response);
             console.log("uw paard gegevens zijn gewijzigd");
+            toggleHorseUpdateSuccess(true);
             toggleEnabledHorseChange(false);
         } catch (error) {
             console.error(error);
@@ -277,7 +298,7 @@ function Profile() {
 
 
     function handleCancellationRequest(id) {
-        // e.preventDefault();
+        toggleCancellationSuccess(false);
         console.log("uw annulering wordt binnen 3 werkdagen verwerkt van abonnementNr", id);
         async function makeCancellationRequest(){
             setError("");
