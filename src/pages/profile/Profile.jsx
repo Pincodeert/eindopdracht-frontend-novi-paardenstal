@@ -8,7 +8,8 @@ import axios from "axios";
 import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../context/AuthContext.jsx";
 import TextInput from "../../components/textInput/TextInput.jsx";
-import SubscribeCard from "../../components/subscribeCard/SubscribeCard.jsx";
+import {useForm} from "react-hook-form";
+// import SubscribeCard from "../../components/subscribeCard/SubscribeCard.jsx";
 
 // import {i} from "vite/dist/node/types.d-FdqQ54oU.js";
 
@@ -22,26 +23,6 @@ function Profile() {
     const [stall, setStall] = useState({});
     const [enableCustomerChange, toggleEnableCustomerChange] = useState(false);
     const [enabledHorseChange, toggleEnabledHorseChange] = useState(false);
-    const [customerFormState, setCustomerFormState] = useState({
-        firstName: "",
-        lastName: "",
-        street: "",
-        houseNumber: "",
-        postalCode: "",
-        residence: "",
-        emailAddress: "",
-        telephoneNumber: "",
-        bankAccountNumber: "",
-    });
-    const [horseFormState, setHorseFormState] = useState({
-        name: "",
-        horseNumber: "",
-        typeOfFeed: "hay",
-        typeOfBedding: "straw",
-        nameOfVet: "",
-        residenceOfVet: "",
-        telephoneOfVet: "",
-    });
     const [selectedHorseId, setSelectedHorseId] = useState(0);
     const [horse, setHorse] = useState(null
         // id: 0,
@@ -61,9 +42,21 @@ function Profile() {
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const {customerProfileId} = useParams();
-    console.log(customerProfileId);
+    const {register, formState: {errors},handleSubmit} = useForm({
+        mode: "onBlur",
+        // defaultValues: {
+        //     // street: `${profile.street}`,
+        //     // houseNumber: `${profile.houseNumber}`,
+        //     // postalCode: `${profile.postalCode}`,
+        //     // residence: `${profile.residence}`,
+        //     // telephoneNumber: `${profile.telephoneNumber}`,
+        //     // emailAddress: `${profile.emailAddress}`,
+        //     // bankAccountNumber: `${profile.bankAccountNumber}`,
+        // }
+    });
     const {isAuth, signOut} = useContext(AuthContext);
     console.log(isAuth);
+    console.log(customerProfileId);
 
     //// klantprofiel ophalen uit de backend by Id ////
     useEffect(() => {
@@ -165,36 +158,43 @@ function Profile() {
     }
 
 //////// handle change //////////////////
-    function handleCustomerChange(e) {
-        const changedFieldName = e.target.name;
+//     function handleCustomerChange(e) {
+//         const changedFieldName = e.target.name;
+//
+//         setCustomerFormState({
+//             ...profile,
+//             [changedFieldName]: e.target.value,
+//         })
+//         // setProfile({
+//         //     ...profile,
+//         //     [changedFieldName]: e.target.value,
+//         // })
+//     }
 
-        setCustomerFormState({
-            ...profile,
-            [changedFieldName]: e.target.value,
-        })
-        // setProfile({
-        //     ...profile,
-        //     [changedFieldName]: e.target.value,
-        // })
-    }
-
-    function handleHorseChange(e) {
-        const changedFieldName = e.target.name;
-
-        setHorseFormState({
-            ...horse,
-            [changedFieldName]: e.target.value,
-        })
-        console.log(horseFormState);
-    }
+    // function handleHorseChange(e) {
+    //     const changedFieldName = e.target.name;
+    //
+    //     setHorseFormState({
+    //         ...horse,
+    //         [changedFieldName]: e.target.value,
+    //     })
+    //     console.log(horseFormState);
+    // }
 
 //////// click handlers /////////////
-    async function updateCustomer() {
-        setError("");
+// function handleCustomerForm(customerFormState) {
+//         void updateCustomer();
+//         console.log("uw gegevens zijn gewijzigd");
+//
+//     }
 
+//     async function updateCustomer() {
+       async function handleCustomerForm(customerFormState) {
+        setError("");
+        console.log("dit is de customerFormState: ", customerFormState);
         try {
             const response = await axios.patch(`http://localhost:8080/customerprofiles/${customerProfileId}`, {
-                ...customerFormState
+                ...customerFormState,
             }, {
                 headers: {
                     "Content-Type": "application/json",
@@ -203,18 +203,29 @@ function Profile() {
             });
             console.log("updaten van de klantgegevens is gelukt")
             console.log(response);
+            toggleEnableCustomerChange(false);
         } catch (error) {
             console.error(error);
             setError(error);
         }
     }
 
-    async function updateHorse() {
-        setError("");
+    // function handleHorseForm(horseFormState) {
+    //     selectHorse(selectedHorseId);
+    //     void updateHorse();
+    //     console.log("uw paard gegevens zijn gewijzigd");
+    //     toggleEnabledHorseChange(false);
+    // }
 
+    // async function updateHorse() {
+    async function handleHorseForm(horseFormState) {
+        setError("");
+        selectHorse(selectedHorseId);
+        console.log("dit is de horseFormState", horseFormState);
         try {
             const response = await axios.patch(`http://localhost:8080/horses/${selectedHorseId}`, {
                 ...horseFormState,
+                preferredSubscription: "activated",
             }, {
                 headers: {
                     "Content-Type": "application/json",
@@ -223,6 +234,8 @@ function Profile() {
             });
             console.log(`het updaten van paard id ${selectedHorseId} is gelukt!`);
             console.log(response);
+            console.log("uw paard gegevens zijn gewijzigd");
+            toggleEnabledHorseChange(false);
         } catch (error) {
             console.error(error);
             setError(error);
@@ -258,26 +271,10 @@ function Profile() {
         }
         void fetchPassport();
     }
-
-    function handleCustomerForm(e) {
-        e.preventDefault();
-        void updateCustomer();
-        console.log("uw gegevens zijn gewijzigd");
-        toggleEnableCustomerChange(false);
-
-
-    }
-
     console.log("dit is het profiel", profile);
-    console.log("dit is de formState", customerFormState);
+    // console.log("dit is de formState", customerFormState);
 
-    function handleHorseForm(e) {
-        e.preventDefault();
-        selectHorse(selectedHorseId);
-        void updateHorse();
-        console.log("uw paard gegevens zijn gewijzigd");
-        toggleEnabledHorseChange(false);
-    }
+
 
     function handleCancellationRequest(id) {
         // e.preventDefault();
@@ -296,9 +293,7 @@ function Profile() {
         }
         void makeCancellationRequest();
     }
-
-
-    console.log(`dit is de selectedHorseId: ${selectedHorseId} , dit is het geselecteerde paard ${horse} met de horseFormState: ${horseFormState} `);
+    // console.log(`dit is de selectedHorseId: ${selectedHorseId} , dit is het geselecteerde paard ${horse} met de horseFormState: ${horseFormState} `);
 
     return (
         <>
@@ -351,7 +346,7 @@ function Profile() {
                         <article id="yourpersonalia" className="content-wrapper persona">
                             <div className="content-title">
                                 {!enableCustomerChange ? <h4>Uw gegevens</h4> :
-                                    <h4>Vul de persoonsgegevens die u wilt wijzigen hieronder in</h4>}
+                                    <h4>Wijzig de gewenste persoonsgegevens:</h4>}
                                 {!enableCustomerChange ? <Button
                                     type="button"
                                     disabled={false}
@@ -392,48 +387,142 @@ function Profile() {
                                     </tbody>}
                                 </table>
                                 {enableCustomerChange &&
-                                    <form className="profile-form" onSubmit={handleCustomerForm}>
+                                    <form className="profile-form" onSubmit={handleSubmit(handleCustomerForm)}>
                                         <TextInput
                                             inputName="street"
-                                            textValue={customerFormState.street}
                                             placeholder={profile.street}
-                                            changeHandler={handleCustomerChange}
-                                            required={false}
+                                            register={register}
+                                            validationRules={{
+                                                required: {
+                                                    value: false,
+                                                    // message: "Straat is verplicht"
+                                                },
+                                                minLength: {
+                                                    value: 3,
+                                                    message: "Straat moet minimaal 3 letters bevatten"
+                                                },
+                                                maxLength: {
+                                                    value: 60,
+                                                    message: "Straat mag maximaal 60 letters bevatten"
+                                                }
+                                            }}
+                                            errors={errors}
                                         />
                                         <TextInput
                                             inputName="houseNumber"
-                                            textValue={customerFormState.houseNumber}
                                             placeholder={profile.houseNumber}
-                                            changeHandler={handleCustomerChange}
-                                            required={false}
+                                            register={register}
+                                            validationRules={{
+                                                required: {
+                                                    value: false,
+                                                    // message: "Huisnummer is verplicht"
+                                                },
+                                                minLength: {
+                                                    value: 1,
+                                                    message: "Huisnummer moet uit minimaal 1 teken bestaan"
+                                                },
+                                                maxLength: {
+                                                    value: 20,
+                                                    message: "Huisnummer mag maximaal uit 20 tekens bestaan"
+                                                }
+                                            }}
+                                            errors={errors}
                                         />
                                         <TextInput
                                             inputName="postalCode"
-                                            textValue={customerFormState.postalCode}
                                             placeholder={profile.postalCode}
-                                            changeHandler={handleCustomerChange}
-                                            required={false}
+                                            register={register}
+                                            validationRules={{
+                                                required: {
+                                                    value: false,
+                                                    // message: "Postcode is verplicht"
+                                                },
+                                                minLength: {
+                                                    value: 4,
+                                                    message: "Postcode moet minimaal 4 tekens bevatten"
+                                                },
+                                                maxLength: {
+                                                    value: 6,
+                                                    message: "Postcode mag maximaal 6 tekens bevatten"
+                                                }
+                                            }}
+                                            errors={errors}
                                         />
                                         <TextInput
                                             inputName="residence"
-                                            textValue={customerFormState.residence}
                                             placeholder={profile.residence}
-                                            changeHandler={handleCustomerChange}
-                                            required={false}
+                                            register={register}
+                                            validationRules={{
+                                                required: {
+                                                    value: false,
+                                                    // message: "Woonplaats is verplicht"
+                                                },
+                                                minLength: {
+                                                    value: 2,
+                                                    message: "Woonplaats moet minimaal 2 letters bevatten"
+                                                },
+                                                maxLength: {
+                                                    value: 60,
+                                                    message: "Woonplaats mag maximaal 60 letters bevatten"
+                                                }
+                                            }}
+                                            errors={errors}
                                         />
-                                        <TextInput
-                                            inputName="telephoneNumber"
-                                            textValue={customerFormState.telephoneNumber}
+                                        <input
+                                            type="tel"
+                                            id="telephoneOfVet-field"
+                                            // name="telephoneOfVet"
+                                            pattern="[0-9]{10}"
                                             placeholder={profile.telephoneNumber}
-                                            changeHandler={handleCustomerChange}
-                                            required={false}
+                                            {...register("telephoneNumber", {
+                                                required: {
+                                                    value: false,
+                                                    // message: 'telefoonnummer is verplicht',
+                                                },
+                                                minLength: {
+                                                    value: 10,
+                                                    message: "het telefoonnummer moet uit 10 cijfers bestaan"
+                                                },
+                                                maxLength: {
+                                                    value: 10,
+                                                    message: "het telefoonnummer moet uit 10 cijfers bestaan"
+                                                }
+                                            })}
                                         />
+                                        {errors.telephoneNumber &&
+                                            <p className="form-error-login">{errors.telephoneNumber.message}</p>}
+                                        <input
+                                            type="email"
+                                            placeholder={profile.emailAddress}
+                                            {...register("emailAddress", {
+                                                required: {
+                                                    value: false,
+                                                    // message: 'e-mailadres is verplicht',
+                                                },
+                                            })}
+                                        />
+                                        {errors.emailAddress &&
+                                            <p className="form-error">{errors.emailAddress.message}</p>}
+
                                         <TextInput
                                             inputName="bankAccountNumber"
-                                            textValue={customerFormState.bankAccountNumber}
                                             placeholder={profile.bankAccountNumber}
-                                            changeHandler={handleCustomerChange}
-                                            required={false}
+                                            register={register}
+                                            validationRules={{
+                                                required: {
+                                                    value: false,
+                                                    message: "bank/IBAN-nummer is verplicht"
+                                                },
+                                                minLength: {
+                                                    value: 16,
+                                                    message: "De Iban moet uit 16 tekens bestaan"
+                                                },
+                                                maxLength: {
+                                                    value: 16,
+                                                    message: "De Iban moet uit 16 tekens bestaan"
+                                                }
+                                            }}
+                                            errors={errors}
                                         />
                                         <Button
                                             type="submit"
@@ -457,11 +546,12 @@ function Profile() {
                                 <p>U heeft nog geen paarden toegevoegd</p> : horses.map((horse) => {
                                     return <div key={horse.id} className="horse-wrapper">
                                         <div className="head-line">
-                                            <p className="horsename">{horse.name}, {horse.id}</p>
+                                            <p className="horsename">{horse.name} {horse.id}</p>
                                             {/*{enabledHorseChange && selectedHorseId === horse.id && <p>Wijzig hieronder de gegevens van {horse.name}</p>}*/}
+                                            {horse.preferredSubscription!="activated" && <p>-In aanvraag-</p>}
                                             {!enabledHorseChange && <Button
                                                 type="button"
-                                                disabled={false}
+                                                disabled={horse.preferredSubscription!="activated"}
                                                 handleClick={() => showHorseForm(horse.id)}
                                             >
                                                 wijzig
@@ -498,49 +588,86 @@ function Profile() {
                                                 </tbody>}
                                             </table>
                                             {enabledHorseChange && selectedHorseId === horse.id &&
-                                                <form className="profile-form" onSubmit={handleHorseForm}>
+                                                <form className="profile-form" onSubmit={handleSubmit(handleHorseForm)}>
                                                     <p>{horse.horseNumber}</p>
                                                     {/*<label htmlFor="typeOfFeed-field">*/}
                                                     {/*    Voeding:</label>*/}
                                                     <select
-                                                        name="typeOfFeed"
+                                                        // name="typeOfFeed"
                                                         id="typeOfFeed-field"
-                                                        value={horseFormState.typeOfFeed}
-                                                        onChange={handleHorseChange}
+                                                        {...register("typeOfFeed", {
+                                                            required: {
+                                                                value: false,
+                                                                // message: "maak een keuze",
+                                                            }
+                                                        })}
                                                     >
                                                         <option value="hay">hooi</option>
                                                         <option value="oats">haver</option>
+                                                        <option value="grass">vers gras</option>
                                                     </select>
+                                                    {errors.typeOfFeed && <p className="form-error-login">{errors.typeOfFeed.message}</p>}
                                                     {/*<label htmlFor="typeOfBedding-field">*/}
                                                     {/*    Bodembedekking:</label>*/}
                                                     <select
-                                                        name="typeOfBedding"
+                                                        // name="typeOfBedding"
                                                         id="typeOfBedding-field"
-                                                        value={horseFormState.typeOfBedding}
-                                                        onChange={handleHorseChange}
+                                                        {...register("typeOfBedding", {
+                                                            required: {
+                                                                value: false,
+                                                                // message: "maak een keuze",
+                                                            }
+                                                        })}
                                                     >
                                                         <option value="straw">stro</option>
                                                         <option value="shavings">houtvezel</option>
+                                                        <option value="flax">vlas</option>
                                                     </select>
+                                                    {errors.typeOfBedding &&
+                                                        <p className="form-error-login">{errors.typeOfBedding.message}</p>}
                                                     <TextInput
                                                         // labelFor="vet-text-field"
                                                         // inputId="vet-text-field"
                                                         inputName="nameOfVet"
-                                                        textValue={horseFormState.nameOfVet}
                                                         placeholder={horse.nameOfVet}
-                                                        changeHandler={handleHorseChange}
-                                                        required={false}
+                                                        register={register}
+                                                        validationRules={{
+                                                            required: {
+                                                                value: false,
+                                                                // message: "Naam van dierenarts is verplicht"
+                                                            },
+                                                            minLength: {
+                                                                value: 2,
+                                                                message: "Naam moet minimaal 2 letters bevatten"
+                                                            },
+                                                            maxLength: {
+                                                                value: 60,
+                                                                message: "Naam mag maximaal 60 letters bevatten"
+                                                            }
+                                                        }}
+                                                        errors={errors}
                                                     />
-                                                    {/*    Dierenarts:*/}
-                                                    {/*</TextInput>*/}
                                                     <TextInput
                                                         // labelFor="residenceOfVet-text-field"
                                                         // inputId="residenceOfVet-text-field"
                                                         inputName="residenceOfVet"
-                                                        textValue={horseFormState.residenceOfVet}
                                                         placeholder={horse.residenceOfVet}
-                                                        changeHandler={handleHorseChange}
-                                                        required={false}
+                                                        register={register}
+                                                        validationRules={{
+                                                            required: {
+                                                                value: false,
+                                                                // message: "Woonplaats van dierenarts is verplicht"
+                                                            },
+                                                            minLength: {
+                                                                value: 2,
+                                                                message: "Woonplaats moet minimaal 2 letters bevatten"
+                                                            },
+                                                            maxLength: {
+                                                                value: 60,
+                                                                message: "Woonplaats mag maximaal 60 letters bevatten"
+                                                            }
+                                                        }}
+                                                        errors={errors}
                                                     />
                                                     {/*    Woonplaats dierenarts:*/}
                                                     {/*</TextInput>*/}
@@ -549,20 +676,33 @@ function Profile() {
                                                     <input
                                                         type="tel"
                                                         id="telephoneOfVet-field"
-                                                        name="telephoneOfVet"
                                                         pattern="[0-9]{10}"
                                                         placeholder={horse.telephoneOfVet}
-                                                        value={horseFormState.telephoneOfVet}
-                                                        onChange={handleHorseChange}
-                                                        required={false}
+                                                        {...register("telephoneOfVet", {
+                                                            required: {
+                                                                value: false,
+                                                                // message: 'telefoonnummer is verplicht',
+                                                            },
+                                                            minLength: {
+                                                                value: 10,
+                                                                message: "het telefoonnummer moet uit 10 cijfers bestaan"
+                                                            },
+                                                            maxLength: {
+                                                                value: 10,
+                                                                message: "het telefoonnummer moet uit 10 cijfers bestaan"
+                                                            }
+                                                        })}
                                                     />
-                                                    {/*</label>*/}
+                                                    {errors.telephoneOfVet &&
+                                                        <p className="form-error-login">{errors.telephoneOfVet.message}</p>}
                                                     <Button
                                                         type="submit"
+                                                        // disabled={horse.preferredSubscription!="activated"}
                                                         disabled={false}
                                                     >
                                                         Wijzig
                                                     </Button>
+                                                    {/*{horse.preferredSubscription!="activated" && <p className="form-error-login">Zolang uw aanvraag nog loopt, kunnen de paard gegevens niet gewijzigd worden</p>}*/}
                                                 </form>}
                                         </div>
                                         <table className="table">
