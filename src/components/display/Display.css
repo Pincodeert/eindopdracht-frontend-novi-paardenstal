@@ -3,6 +3,11 @@
     flex-direction: row;
 }
 
+.overwiew-column-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .admin {
     border: 2px solid transparent;
     background-color: var(--faded-army);
