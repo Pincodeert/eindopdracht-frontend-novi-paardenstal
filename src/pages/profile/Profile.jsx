@@ -10,6 +10,7 @@ import {AuthContext} from "../../context/AuthContext.jsx";
 import TextInput from "../../components/textInput/TextInput.jsx";
 import {useForm} from "react-hook-form";
 import Display from "../../components/display/Display.jsx";
+import generateSubscriptionDetails from "../../helpers/generateSubscriptionDetails.js";
 // import SubscribeCard from "../../components/subscribeCard/SubscribeCard.jsx";
 
 // import {i} from "vite/dist/node/types.d-FdqQ54oU.js";
@@ -42,6 +43,8 @@ function Profile() {
     const [selectedEnrollmentId, setSelectedEnrollmentId] = useState(0);
     const [customerUpdateSuccess, toggleCustomerUpdateSuccess] = useState(false);
     const [horseUpdateSuccess, toggleHorseUpdateSuccess] = useState(false);
+    const [editingCancellation, toggleEditingCancellation] = useState(false);
+    const [selectedEnrollement, setSelectedEnrollement] = useState(null);
 
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
@@ -278,10 +281,10 @@ function Profile() {
         toggleEnabledHorseChange(true);
     }
 
-    function showHorseForm(horse) {
-        setSelectedHorseId(horse.id)
-        toggleEnabledHorseChange(true);
-    }
+    // function showHorseForm(horse) {
+    //     setSelectedHorseId(horse.id)
+    //     toggleEnabledHorseChange(true);
+    // }
 
     function showPassport(id) {
         console.log("de horseId die we gaan gebruiken is", id);
@@ -313,28 +316,53 @@ function Profile() {
     function setToDefault() {
         toggleEnabledHorseChange(false);
         toggleHorseUpdateSuccess(false);
+        setSelectedHorse(null);
     }
 
-
-    function handleCancellationRequest(id) {
+    function setToCancellationDefault() {
         toggleCancellationSuccess(false);
-        console.log("uw annulering wordt binnen 3 werkdagen verwerkt van abonnementNr", id);
-
-        async function makeCancellationRequest() {
-            setError("");
-            try {
-                const response = await axios.patch(`http://localhost:8080/enrollments/${id}`);
-                console.log(response);
-                setSelectedEnrollmentId(id);
-                toggleCancellationSuccess(true);
-            } catch (error) {
-                console.error(error);
-                setError(error)
-            }
-        }
-
-        void makeCancellationRequest();
+        toggleEditingCancellation(false);
+        setSelectedEnrollement(null);
     }
+
+    function handleCancellationClick(enrollement) {
+        toggleEditingCancellation(true);
+        setSelectedEnrollement(enrollement);
+    }
+
+     async function handleCancellation(id){
+        setError("");
+        toggleCancellationSuccess(false);
+        try {
+            const response = await axios.patch(`http://localhost:8080/enrollments/${id}`);
+            console.log(response);
+            // setSelectedEnrollmentId(id);
+            toggleCancellationSuccess(true);
+        } catch (error) {
+            console.error(error);
+            setError(error);
+        }
+     }
+
+    // function handleCancellationRequest(id) {
+    //     toggleCancellationSuccess(false);
+    //     console.log("uw annulering wordt binnen 3 werkdagen verwerkt van abonnementNr", id);
+    //
+    //     async function makeCancellationRequest() {
+    //         setError("");
+    //         try {
+    //             const response = await axios.patch(`http://localhost:8080/enrollments/${id}`);
+    //             console.log(response);
+    //             setSelectedEnrollmentId(id);
+    //             toggleCancellationSuccess(true);
+    //         } catch (error) {
+    //             console.error(error);
+    //             setError(error)
+    //         }
+    //     }
+    //
+    //     void makeCancellationRequest();
+    // }
 
     // console.log(`dit is de selectedHorseId: ${selectedHorseId} , dit is het geselecteerde paard ${horse} met de horseFormState: ${horseFormState} `);
 
@@ -579,7 +607,7 @@ function Profile() {
                         {!enabledHorseChange &&
                             <Display
                                 className="content-wrapper horses"
-                                title="YOUR horses"
+                                title="Uw paarden"
                             >
                                 {horses.length === 0 ?
                                     <p>U heeft nog geen paarden toegevoegd</p>
@@ -687,9 +715,9 @@ function Profile() {
                                                             }
                                                         })}
                                                     >
-                                                        <option value="hay">hooi</option>
-                                                        <option value="oats">haver</option>
-                                                        <option value="grass">vers gras</option>
+                                                        <option value="hooi">hooi</option>
+                                                        <option value="haver">haver</option>
+                                                        <option value="vers gras">vers gras</option>
                                                     </select></label>
                                                 {errors.typeOfFeed &&
                                                     <p className="form-error-login">{errors.typeOfFeed.message}</p>}
@@ -704,9 +732,9 @@ function Profile() {
                                                             }
                                                         })}
                                                     >
-                                                        <option value="straw">stro</option>
-                                                        <option value="shavings">houtvezel</option>
-                                                        <option value="flax">vlas</option>
+                                                        <option value="stro">stro</option>
+                                                        <option value="houtvezel">houtvezel</option>
+                                                        <option value="houtvezel">vlas</option>
                                                     </select></label>
                                                 {errors.typeOfBedding &&
                                                     <p className="form-error-login">{errors.typeOfBedding.message}</p>}
@@ -799,217 +827,11 @@ function Profile() {
                                     </div>
                                 </div>
                             </Display>}
-
-
-                        {/*<article id="yourhorses" className="content-wrapper horses">*/}
-                        {/*    <div className="content-title">*/}
-                        {/*        <h4>Uw paarden</h4>*/}
-                        {/*    </div>*/}
-                        {/*    {horses.length === 0 ?*/}
-                        {/*        <p>U heeft nog geen paarden toegevoegd</p> : horses.map((horse) => {*/}
-                        {/*            return <div key={horse.id} className="horse-wrapper">*/}
-                        {/*                <div className="head-line">*/}
-                        {/*                    <p className="horsename">{horse.name} {horse.id}</p>*/}
-                        {/*                    /!*{enabledHorseChange && selectedHorseId === horse.id && <p>Wijzig hieronder de gegevens van {horse.name}</p>}*!/*/}
-                        {/*                    {horse.preferredSubscription != "activated" && <p>-In aanvraag-</p>}*/}
-                        {/*                    {!enabledHorseChange &&*/}
-                        {/*                        <Button*/}
-                        {/*                            type="button"*/}
-                        {/*                            disabled={horse.preferredSubscription != "activated"}*/}
-                        {/*                            // handleClick={() => showHorseForm(horse.id)}*/}
-                        {/*                            handleClick={() => showHorseForm(horse)}*/}
-                        {/*                        >*/}
-                        {/*                            wijzig*/}
-                        {/*                        </Button>}*/}
-                        {/*                    {enabledHorseChange && selectedHorseId === horse.id &&*/}
-                        {/*                        <Button*/}
-                        {/*                            type="button"*/}
-                        {/*                            disabled={false}*/}
-                        {/*                            handleClick={() => toggleEnabledHorseChange(false)}*/}
-                        {/*                        >*/}
-                        {/*                            Annuleer*/}
-                        {/*                        </Button>}*/}
-                        {/*                </div>*/}
-                        {/*                <div className="horse-info-container">*/}
-                        {/*                    <table className="table">*/}
-                        {/*                        <thead>*/}
-                        {/*                        <tr className="table-head">*/}
-                        {/*                            <th>paardnummer</th>*/}
-                        {/*                            <th>type voeding</th>*/}
-                        {/*                            <th>type bodembedekking</th>*/}
-                        {/*                            <th>naam dierenarts</th>*/}
-                        {/*                            <th>woonplaats dierenarts</th>*/}
-                        {/*                            <th>telefoonnummer dierenarts</th>*/}
-                        {/*                        </tr>*/}
-                        {/*                        </thead>*/}
-                        {/*                        {!enabledHorseChange && <tbody>*/}
-                        {/*                        <tr className="table-body">*/}
-                        {/*                            <td>{horse.horseNumber}</td>*/}
-                        {/*                            <td>{horse.typeOfFeed}</td>*/}
-                        {/*                            <td>{horse.typeOfBedding}</td>*/}
-                        {/*                            <td>{horse.nameOfVet}</td>*/}
-                        {/*                            <td>{horse.residenceOfVet}</td>*/}
-                        {/*                            <td>{horse.telephoneOfVet}</td>*/}
-                        {/*                        </tr>*/}
-                        {/*                        </tbody>}*/}
-                        {/*                    </table>*/}
-                        {/*                    {enabledHorseChange && selectedHorseId === horse.id &&*/}
-                        {/*                        <form className="profile-form" onSubmit={handleSubmit(handleHorseForm)}>*/}
-                        {/*                            <p>{horse.horseNumber}</p>*/}
-                        {/*                            /!*<label htmlFor="typeOfFeed-field">*!/*/}
-                        {/*                            /!*    Voeding:</label>*!/*/}
-                        {/*                            <select*/}
-                        {/*                                // name="typeOfFeed"*/}
-                        {/*                                id="typeOfFeed-field"*/}
-                        {/*                                {...register("typeOfFeed", {*/}
-                        {/*                                    required: {*/}
-                        {/*                                        value: false,*/}
-                        {/*                                        // message: "maak een keuze",*/}
-                        {/*                                    }*/}
-                        {/*                                })}*/}
-                        {/*                            >*/}
-                        {/*                                <option value="hay">hooi</option>*/}
-                        {/*                                <option value="oats">haver</option>*/}
-                        {/*                                <option value="grass">vers gras</option>*/}
-                        {/*                            </select>*/}
-                        {/*                            {errors.typeOfFeed &&*/}
-                        {/*                                <p className="form-error-login">{errors.typeOfFeed.message}</p>}*/}
-                        {/*                            /!*<label htmlFor="typeOfBedding-field">*!/*/}
-                        {/*                            /!*    Bodembedekking:</label>*!/*/}
-                        {/*                            <select*/}
-                        {/*                                // name="typeOfBedding"*/}
-                        {/*                                id="typeOfBedding-field"*/}
-                        {/*                                {...register("typeOfBedding", {*/}
-                        {/*                                    required: {*/}
-                        {/*                                        value: false,*/}
-                        {/*                                        // message: "maak een keuze",*/}
-                        {/*                                    }*/}
-                        {/*                                })}*/}
-                        {/*                            >*/}
-                        {/*                                <option value="straw">stro</option>*/}
-                        {/*                                <option value="shavings">houtvezel</option>*/}
-                        {/*                                <option value="flax">vlas</option>*/}
-                        {/*                            </select>*/}
-                        {/*                            {errors.typeOfBedding &&*/}
-                        {/*                                <p className="form-error-login">{errors.typeOfBedding.message}</p>}*/}
-                        {/*                            <TextInput*/}
-                        {/*                                // labelFor="vet-text-field"*/}
-                        {/*                                // inputId="vet-text-field"*/}
-                        {/*                                inputName="nameOfVet"*/}
-                        {/*                                placeholder={horse.nameOfVet}*/}
-                        {/*                                register={register}*/}
-                        {/*                                validationRules={{*/}
-                        {/*                                    required: {*/}
-                        {/*                                        value: false,*/}
-                        {/*                                        // message: "Naam van dierenarts is verplicht"*/}
-                        {/*                                    },*/}
-                        {/*                                    minLength: {*/}
-                        {/*                                        value: 2,*/}
-                        {/*                                        message: "Naam moet minimaal 2 letters bevatten"*/}
-                        {/*                                    },*/}
-                        {/*                                    maxLength: {*/}
-                        {/*                                        value: 60,*/}
-                        {/*                                        message: "Naam mag maximaal 60 letters bevatten"*/}
-                        {/*                                    }*/}
-                        {/*                                }}*/}
-                        {/*                                errors={errors}*/}
-                        {/*                            />*/}
-                        {/*                            <TextInput*/}
-                        {/*                                // labelFor="residenceOfVet-text-field"*/}
-                        {/*                                // inputId="residenceOfVet-text-field"*/}
-                        {/*                                inputName="residenceOfVet"*/}
-                        {/*                                placeholder={horse.residenceOfVet}*/}
-                        {/*                                register={register}*/}
-                        {/*                                validationRules={{*/}
-                        {/*                                    required: {*/}
-                        {/*                                        value: false,*/}
-                        {/*                                        // message: "Woonplaats van dierenarts is verplicht"*/}
-                        {/*                                    },*/}
-                        {/*                                    minLength: {*/}
-                        {/*                                        value: 2,*/}
-                        {/*                                        message: "Woonplaats moet minimaal 2 letters bevatten"*/}
-                        {/*                                    },*/}
-                        {/*                                    maxLength: {*/}
-                        {/*                                        value: 60,*/}
-                        {/*                                        message: "Woonplaats mag maximaal 60 letters bevatten"*/}
-                        {/*                                    }*/}
-                        {/*                                }}*/}
-                        {/*                                errors={errors}*/}
-                        {/*                            />*/}
-                        {/*                            /!*    Woonplaats dierenarts:*!/*/}
-                        {/*                            /!*</TextInput>*!/*/}
-                        {/*                            /!*<label htmlFor="telephoneOfVet-field">*!/*/}
-                        {/*                            /!*    Telnr dierenarts:*!/*/}
-                        {/*                            <input*/}
-                        {/*                                type="tel"*/}
-                        {/*                                id="telephoneOfVet-field"*/}
-                        {/*                                pattern="[0-9]{10}"*/}
-                        {/*                                placeholder={horse.telephoneOfVet}*/}
-                        {/*                                {...register("telephoneOfVet", {*/}
-                        {/*                                    required: {*/}
-                        {/*                                        value: false,*/}
-                        {/*                                        // message: 'telefoonnummer is verplicht',*/}
-                        {/*                                    },*/}
-                        {/*                                    minLength: {*/}
-                        {/*                                        value: 10,*/}
-                        {/*                                        message: "het telefoonnummer moet uit 10 cijfers bestaan"*/}
-                        {/*                                    },*/}
-                        {/*                                    maxLength: {*/}
-                        {/*                                        value: 10,*/}
-                        {/*                                        message: "het telefoonnummer moet uit 10 cijfers bestaan"*/}
-                        {/*                                    }*/}
-                        {/*                                })}*/}
-                        {/*                            />*/}
-                        {/*                            {errors.telephoneOfVet &&*/}
-                        {/*                                <p className="form-error-login">{errors.telephoneOfVet.message}</p>}*/}
-                        {/*                            <Button*/}
-                        {/*                                type="submit"*/}
-                        {/*                                // disabled={horse.preferredSubscription!="activated"}*/}
-                        {/*                                disabled={false}*/}
-                        {/*                            >*/}
-                        {/*                                Wijzig*/}
-                        {/*                            </Button>*/}
-                        {/*                            /!*{horse.preferredSubscription!="activated" && <p className="form-error-login">Zolang uw aanvraag nog loopt, kunnen de paard gegevens niet gewijzigd worden</p>}*!/*/}
-                        {/*                        </form>}*/}
-                        {/*                </div>*/}
-                        {/*                <table className="table">*/}
-                        {/*                    <thead>*/}
-                        {/*                    <tr className="table-head">*/}
-                        {/*                        /!*<th>Abonnement</th>*!/*/}
-                        {/*                        <th>Stal</th>*/}
-                        {/*                        <th>Paardenpaspoort</th>*/}
-                        {/*                    </tr>*/}
-                        {/*                    </thead>*/}
-                        {/*                    <tbody>*/}
-                        {/*                    <tr className="table-body">*/}
-                        {/*                        /!*<td>{horse.preferredSubscription}</td>*!/*/}
-                        {/*                        {horse.stall ? <td>{horse.stall.name} </td> : <td>- in aanvraag -</td>}*/}
-                        {/*                        <td>{<Button type="button" disabled={false}*/}
-                        {/*                                     handleClick={() => showPassport(horse.id)}>*/}
-                        {/*                            bekijk </Button>}</td>*/}
-                        {/*                        {console.log(horse.passport ? horse.passport.url : "nope")}*/}
-                        {/*                        <td>{horse.passport &&*/}
-                        {/*                            <img src={`${horse.passport.url}`} alt="paspoort"/>}</td>*/}
-                        {/*                        {horse.passport && <td>{horse.passport.url}</td>}*/}
-
-                        {/*                    </tr>*/}
-                        {/*                    </tbody>*/}
-                        {/*                </table>*/}
-                        {/*                {selectedPassport && <img src={selectedPassport} alt="paspoort"/>}*/}
-                        {/*            </div>*/}
-                        {/*        })}*/}
-                        {/*</article>*/}
-                        <article className="content-wrapper subscriptions">
-                            <div className="content-title">
-                                <h4>Uw abonnementen</h4>
-                                <Button
-                                    type="button"
-                                    disabled={false}
-                                    note="hier wordt een helperfunctie getriggerd"
-                                >
-                                    bereken totale prijs
-                                </Button>
-                            </div>
+                        {!editingCancellation &&
+                        <Display
+                            className="content-wrapper horses"
+                            title="Uw abonnementen"
+                        >
                             {enrollmentList.length === 0 ?
                                 <p>U heeft nog geen abonnementen</p> : enrollmentList.map((enrollment) => {
                                     return <div key={enrollment.id} className="subscriptiom-wrapper">
@@ -1018,15 +840,15 @@ function Profile() {
                                             <Button
                                                 type="button"
                                                 disabled={enrollment.cancellationRequested}
-                                                handleClick={() => handleCancellationRequest(enrollment.id)}
+                                                handleClick={() => handleCancellationClick(enrollment)}
                                             >
                                                 {enrollment.cancellationRequested ? <p>annulering aangevraagd</p> :
                                                     <p>annuleer</p>}
                                             </Button>
                                         </div>
-                                        {cancellationSuccess && selectedEnrollmentId === enrollment.id &&
-                                            <p className="success-message">Uw verzoek tot annulering van abonnementnr
-                                                {enrollment.id} is ontvangen en wordt binnen 3 werkdagen verwerkt</p>}
+                                        {/*{cancellationSuccess && selectedEnrollmentId === enrollment.id &&*/}
+                                        {/*    <p className="success-message">Uw verzoek tot annulering van abonnementnr*/}
+                                        {/*        {enrollment.id} is ontvangen en wordt binnen 3 werkdagen verwerkt</p>}*/}
                                         <table className="table">
                                             <thead>
                                             <tr className="table-head">
@@ -1058,9 +880,52 @@ function Profile() {
                                         </table>
                                     </div>
                                 })}
-                        </article>
-                        <article>
-                        </article>
+                        </Display>}
+                        {editingCancellation &&
+                            <Display
+                                className="content-wrapper horses"
+                                title="Annuleer het volgende abonnement:"
+                            >
+                                <div className="horse-wrapper">
+                                    <div className="head-line">
+                                        <p className="horsename">Abonnementnummer: {selectedEnrollement.id}</p>
+                                        {/*{enabledHorseChange && selectedHorseId === horse.id && <p>Wijzig hieronder de gegevens van {horse.name}</p>}*/}
+                                        <Button
+                                            type="button"
+                                            disabled={false}
+                                            handleClick={() => toggleEditingCancellation(false)}
+                                        >
+                                            Ga terug
+                                        </Button>
+                                    </div>
+                                    {!cancellationSuccess &&
+                                    <div className="cancellation-container">
+                                        <p>U staat op het punt om het volgende abonnement te annuleren voor uw
+                                            paard {selectedEnrollement.horse.name} </p>
+                                        <p>{selectedEnrollement.subscription.name} sinds {selectedEnrollement.startDate}</p>
+                                        {selectedEnrollement.subscription &&
+                                            <p className="italic">{generateSubscriptionDetails(selectedEnrollement.subscription)}</p>}
+                                            <Button
+                                                type="button"
+                                                disabled={false}
+                                                handleClick={() => handleCancellation(selectedEnrollement.id)}
+                                            >
+                                                Bevestig annulering
+                                            </Button>
+                                    </div>}
+                                        {cancellationSuccess && <div>
+                                            <p className="success">Uw verzoek tot annulering van dit abonnement is
+                                                succesvol verstuurd en wordt binnen 3 werkdagen door ons verwerkt.</p>
+                                            <Button
+                                                type="button"
+                                                disabled={false}
+                                                handleClick={setToCancellationDefault}
+                                            >
+                                                Terug naar overzicht
+                                            </Button>
+                                        </div>}
+                                    </div>
+                            </Display>}
                     </div>
                 </div>
             </main>
