@@ -12,6 +12,7 @@ import {useForm} from "react-hook-form";
 import Display from "../../components/display/Display.jsx";
 import generateSubscriptionDetails from "../../helpers/generateSubscriptionDetails.js";
 import TableHead from "../../components/tableHead/TableHead.jsx";
+import generateFetchErrorString from "../../helpers/generate ErrorString.js";
 // import SubscribeCard from "../../components/subscribeCard/SubscribeCard.jsx";
 
 // import {i} from "vite/dist/node/types.d-FdqQ54oU.js";
@@ -40,7 +41,7 @@ function Profile() {
     const [selectedHorse, setSelectedHorse] = useState(null);
     const [selectedPassport, setSelectedPassport] = useState(null);
     const [cancellationSuccess, toggleCancellationSuccess] = useState(false);
-    // const [selectedEnrollmentId, setSelectedEnrollmentId] = useState(0);
+    const [isLoading, toggleIsLoading] = useState(false);
     const [customerUpdateSuccess, toggleCustomerUpdateSuccess] = useState(false);
     const [horseUpdateSuccess, toggleHorseUpdateSuccess] = useState(false);
     const [editingCancellation, toggleEditingCancellation] = useState(false);
@@ -72,9 +73,9 @@ function Profile() {
 
         async function fetchCustomerProfile(customerProfileId) {
             setError("");
-
+            toggleIsLoading(true);
             try {
-                const response = await axios.get(`http://localhost:8080/customerprofiles/${customerProfileId}`, {
+                const response = await axios.get(`http://localhost:8080/customerprofils/${customerProfileId}`, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
@@ -86,7 +87,9 @@ function Profile() {
                 setProfile(customer);
             } catch (error) {
                 console.error(error);
-                setError("Uw klantgegevens kunnen niet worden opgehaald")
+                setError(generateFetchErrorString("klantgegegevens"));
+            } finally {
+                toggleIsLoading(false);
             }
         }
         void fetchCustomerProfile(customerProfileId);
@@ -102,6 +105,7 @@ function Profile() {
 
         async function fetchHorsesByCustomer() {
             setError("");
+            toggleIsLoading(true);
             try {
                 const response = await axios.get(`http://localhost:8080/horses/customerprofile/${customerProfileId}`,
                     {
@@ -112,20 +116,20 @@ function Profile() {
                         signal: abortController.signal,
                     }
                 );
-                console.log(response)
-                const paarden = response.data;
-                console.log("paarden per klant:", paarden);
-                const gesorteerdePaarden = paarden.sort((paardA, paardB) => {
-                    return paardA.id - paardB.id;
+                // console.log(response)
+                const horseList = response.data;
+                // console.log("paarden per klant:", horseList);
+                const sortedHorseList = horseList.sort((horseA, horseB) => {
+                    return horseA.id - horseB.id;
                 });
-                setHorses(gesorteerdePaarden);
-                // setEnrollmentList(enrollments);
+                setHorses(sortedHorseList);
             } catch (error) {
                 console.error(error);
-                setError("uw paardgegevens kunnen niet worden opgehaald")
+                setError(generateFetchErrorString("paardgegevens"));
+            } finally {
+                toggleIsLoading(false);
             }
         }
-
         void fetchHorsesByCustomer();
         return function cleanUp() {
             abortController.abort();
@@ -396,6 +400,7 @@ function Profile() {
                                     Annuleer
                                 </Button>}
                             </div>
+                            {error ? <p className="error">{error}</p> :
                             <div className="table-form-container">
                                 <table className="table">
                                     <TableHead
@@ -566,13 +571,14 @@ function Profile() {
                                             Verstuur
                                         </Button>
                                     </form>}
-                            </div>
+                            </div>}
                         </article>
                         {!enabledHorseChange &&
                             <Display
                                 className="content-wrapper horses"
                                 title="Uw paarden"
                             >
+                                {error && <p className="error">{error}</p>}
                                 {horses.length === 0 ?
                                     <p>U heeft nog geen paarden toegevoegd</p>
                                     :
