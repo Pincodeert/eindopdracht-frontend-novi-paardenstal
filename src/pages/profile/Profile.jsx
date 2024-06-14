@@ -8,7 +8,7 @@ import axios from "axios";
 import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../context/AuthContext.jsx";
 import TextInput from "../../components/textInput/TextInput.jsx";
-import {useForm} from "react-hook-form";
+import {set, useForm} from "react-hook-form";
 import Display from "../../components/display/Display.jsx";
 import generateSubscriptionDetails from "../../helpers/generateSubscriptionDetails.js";
 // import SubscribeCard from "../../components/subscribeCard/SubscribeCard.jsx";
@@ -45,6 +45,7 @@ function Profile() {
     const [horseUpdateSuccess, toggleHorseUpdateSuccess] = useState(false);
     const [editingCancellation, toggleEditingCancellation] = useState(false);
     const [selectedEnrollement, setSelectedEnrollement] = useState(null);
+    const [passportDownloadSuccess, togglePassportDownloadSuccess] = useState(false);
 
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
@@ -286,28 +287,57 @@ function Profile() {
     //     toggleEnabledHorseChange(true);
     // }
 
-    function showPassport(id) {
-        console.log("de horseId die we gaan gebruiken is", id);
-        const selectedHorse = selectHorse(id);
+    function showPassport(horse) {
+        // console.log("de horseId die we gaan gebruiken is", id);
+        setSelectedHorse(horse);
         // console.log("en als het goed is dan hier de horseState waarde", selectedHorse);
-        console.log("dit is het geselecteerde paard", selectedHorse);
+
 
         async function fetchPassport() {
             try {
-                const selectedPassport = await axios.get(selectedHorse.passport.url);
+                const selectedPassport = await axios.get(horse.passport.url);
                 console.log(selectedPassport);
                 // const passportUrl = URL.createObjectURL(selectedPassport);
                 // const passportUrl = URL.revokeObjectURL(selectedPassport);
                 setSelectedPassport(selectedPassport);
+                togglePassportDownloadSuccess(true);
                 console.log("en zie je het paard nu?")
             } catch (error) {
                 console.error(error);
                 setError(error);
             }
         }
-
         void fetchPassport();
     }
+    console.log("dit is het geselecteerde paard", selectedHorse);
+
+    function hidePassport() {
+        togglePassportDownloadSuccess(false);
+        // setSelectedHorse({});
+    }
+console.log("dit is de togglePaasportDownloadSuccess", passportDownloadSuccess);
+    // function showPassport(id) {
+    //     console.log("de horseId die we gaan gebruiken is", id);
+    //     const selectedHorse = selectHorse(id);
+    //     // console.log("en als het goed is dan hier de horseState waarde", selectedHorse);
+    //     console.log("dit is het geselecteerde paard", selectedHorse);
+    //
+    //     async function fetchPassport() {
+    //         try {
+    //             const selectedPassport = await axios.get(selectedHorse.passport.url);
+    //             console.log(selectedPassport);
+    //             // const passportUrl = URL.createObjectURL(selectedPassport);
+    //             // const passportUrl = URL.revokeObjectURL(selectedPassport);
+    //             setSelectedPassport(selectedPassport);
+    //             togglePassportDownloadSuccess(true);
+    //             console.log("en zie je het paard nu?")
+    //         } catch (error) {
+    //             console.error(error);
+    //             setError(error);
+    //         }
+    //     }
+    //     void fetchPassport();
+    // }
 
     console.log("dit is het profiel", profile);
 
@@ -652,18 +682,23 @@ function Profile() {
                                                         <td>{horse.stall.name} </td>
                                                         :
                                                         <td>- in aanvraag -</td>}
+                                                    {!passportDownloadSuccess &&
                                                     <td>{<Button type="button" disabled={false}
-                                                                 handleClick={() => showPassport(horse.id)}>
-                                                        bekijk </Button>}</td>
-                                                    {console.log(horse.passport ? horse.passport.url : "nope")}
-                                                    <td>{horse.passport &&
-                                                        <img src={`${horse.passport.url}`} alt="paspoort"/>}</td>
-                                                    {horse.passport &&
-                                                        <td>{horse.passport.url}</td>}
+                                                                 handleClick={() => showPassport(horse)}>
+                                                        bekijk </Button>}</td>}
+                                                    {passportDownloadSuccess && horse.id === selectedHorse.id &&
+                                                    <td>{<Button type="button" disabled={false}
+                                                                     handleClick={hidePassport}>
+                                                            Verberg</Button>}</td>}
+
+                                                    <td>{horse.passport && passportDownloadSuccess && horse.id === selectedHorse.id &&
+                                                        <div className="passport-image"><img src={`${horse.passport.url}`} alt="paardenpaspoort"/></div>}</td>
+                                                    {/*{horse.passport &&*/}
+                                                    {/*    <td>{horse.passport.url}</td>}*/}
                                                 </tr>
                                                 </tbody>}
                                             </table>
-                                            {selectedPassport && <img src={selectedPassport} alt="paspoort"/>}
+                                            {/*{selectedPassport && <img src={selectedPassport} alt="paspoort"/>}*/}
                                         </div>
                                     })}
                             </Display>}
