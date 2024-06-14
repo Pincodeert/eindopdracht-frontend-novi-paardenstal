@@ -8,9 +8,10 @@ import axios from "axios";
 import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../context/AuthContext.jsx";
 import TextInput from "../../components/textInput/TextInput.jsx";
-import {set, useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import Display from "../../components/display/Display.jsx";
 import generateSubscriptionDetails from "../../helpers/generateSubscriptionDetails.js";
+import TableHead from "../../components/tableHead/TableHead.jsx";
 // import SubscribeCard from "../../components/subscribeCard/SubscribeCard.jsx";
 
 // import {i} from "vite/dist/node/types.d-FdqQ54oU.js";
@@ -18,14 +19,13 @@ import generateSubscriptionDetails from "../../helpers/generateSubscriptionDetai
 function Profile() {
     const [error, setError] = useState("");
     const [profile, setProfile] = useState({});
-    const [horseList, setHorseList] = useState([]);
     const [horses, setHorses] = useState([]);
     // const [enrollmentList, setEnrollmentList] = useState([]);
     const [enrollmentList, setEnrollmentList] = useState([]);
-    const [stall, setStall] = useState({});
+    // const [stall, setStall] = useState({});
     const [enableCustomerChange, toggleEnableCustomerChange] = useState(false);
     const [enabledHorseChange, toggleEnabledHorseChange] = useState(false);
-    const [selectedHorseId, setSelectedHorseId] = useState(0);
+    // const [selectedHorseId, setSelectedHorseId] = useState(0);
     const [horse, setHorse] = useState(null
         // id: 0,
         // name: "",
@@ -40,7 +40,7 @@ function Profile() {
     const [selectedHorse, setSelectedHorse] = useState(null);
     const [selectedPassport, setSelectedPassport] = useState(null);
     const [cancellationSuccess, toggleCancellationSuccess] = useState(false);
-    const [selectedEnrollmentId, setSelectedEnrollmentId] = useState(0);
+    // const [selectedEnrollmentId, setSelectedEnrollmentId] = useState(0);
     const [customerUpdateSuccess, toggleCustomerUpdateSuccess] = useState(false);
     const [horseUpdateSuccess, toggleHorseUpdateSuccess] = useState(false);
     const [editingCancellation, toggleEditingCancellation] = useState(false);
@@ -84,19 +84,11 @@ function Profile() {
                 const customer = response.data;
                 console.log(customer);
                 setProfile(customer);
-                // setHorseList([
-                //     customer.horses
-                // ]);
-                // setEnrollmentList([
-                //     customer.enrollments,
-                // ]);
-
             } catch (error) {
                 console.error(error);
                 setError("Uw klantgegevens kunnen niet worden opgehaald")
             }
         }
-
         void fetchCustomerProfile(customerProfileId);
         return function cleanUp() {
             abortController.abort();
@@ -209,11 +201,7 @@ function Profile() {
     // }
 
 //////// click handlers /////////////
-// function handleCustomerForm(customerFormState) {
-//         void updateCustomer();
-//         console.log("uw gegevens zijn gewijzigd");
-//
-//     }
+
 
 //     async function updateCustomer() {
     async function handleCustomerForm(customerFormState) {
@@ -229,7 +217,7 @@ function Profile() {
                     Authorization: `Bearer ${token}`,
                 }
             });
-            console.log("updaten van de klantgegevens is gelukt")
+            // console.log("updaten van de klantgegevens is gelukt")
             console.log(response);
             toggleCustomerUpdateSuccess(true);
             toggleEnableCustomerChange(false);
@@ -239,12 +227,6 @@ function Profile() {
         }
     }
 
-    // function handleHorseForm(horseFormState) {
-    //     selectHorse(selectedHorseId);
-    //     void updateHorse();
-    //     console.log("uw paard gegevens zijn gewijzigd");
-    //     toggleEnabledHorseChange(false);
-    // }
 
     // async function updateHorse() {
     async function handleHorseForm(horseFormState) {
@@ -282,11 +264,6 @@ function Profile() {
         toggleEnabledHorseChange(true);
     }
 
-    // function showHorseForm(horse) {
-    //     setSelectedHorseId(horse.id)
-    //     toggleEnabledHorseChange(true);
-    // }
-
     function showPassport(horse) {
         // console.log("de horseId die we gaan gebruiken is", id);
         setSelectedHorse(horse);
@@ -309,39 +286,18 @@ function Profile() {
         }
         void fetchPassport();
     }
-    console.log("dit is het geselecteerde paard", selectedHorse);
+    // console.log("dit is het geselecteerde paard", selectedHorse);
 
     function hidePassport() {
         togglePassportDownloadSuccess(false);
         // setSelectedHorse({});
     }
-console.log("dit is de togglePaasportDownloadSuccess", passportDownloadSuccess);
-    // function showPassport(id) {
-    //     console.log("de horseId die we gaan gebruiken is", id);
-    //     const selectedHorse = selectHorse(id);
-    //     // console.log("en als het goed is dan hier de horseState waarde", selectedHorse);
-    //     console.log("dit is het geselecteerde paard", selectedHorse);
-    //
-    //     async function fetchPassport() {
-    //         try {
-    //             const selectedPassport = await axios.get(selectedHorse.passport.url);
-    //             console.log(selectedPassport);
-    //             // const passportUrl = URL.createObjectURL(selectedPassport);
-    //             // const passportUrl = URL.revokeObjectURL(selectedPassport);
-    //             setSelectedPassport(selectedPassport);
-    //             togglePassportDownloadSuccess(true);
-    //             console.log("en zie je het paard nu?")
-    //         } catch (error) {
-    //             console.error(error);
-    //             setError(error);
-    //         }
-    //     }
-    //     void fetchPassport();
-    // }
+    // console.log("dit is de togglePaasportDownloadSuccess", passportDownloadSuccess);
 
-    console.log("dit is het profiel", profile);
 
-    // console.log("dit is de formState", customerFormState);
+    // console.log("dit is het profiel", profile);
+
+
 
     function setToDefault() {
         toggleEnabledHorseChange(false);
@@ -373,28 +329,6 @@ console.log("dit is de togglePaasportDownloadSuccess", passportDownloadSuccess);
             setError(error);
         }
      }
-
-    // function handleCancellationRequest(id) {
-    //     toggleCancellationSuccess(false);
-    //     console.log("uw annulering wordt binnen 3 werkdagen verwerkt van abonnementNr", id);
-    //
-    //     async function makeCancellationRequest() {
-    //         setError("");
-    //         try {
-    //             const response = await axios.patch(`http://localhost:8080/enrollments/${id}`);
-    //             console.log(response);
-    //             setSelectedEnrollmentId(id);
-    //             toggleCancellationSuccess(true);
-    //         } catch (error) {
-    //             console.error(error);
-    //             setError(error)
-    //         }
-    //     }
-    //
-    //     void makeCancellationRequest();
-    // }
-
-    // console.log(`dit is de selectedHorseId: ${selectedHorseId} , dit is het geselecteerde paard ${horse} met de horseFormState: ${horseFormState} `);
 
     return (
         <>
@@ -464,8 +398,9 @@ console.log("dit is de togglePaasportDownloadSuccess", passportDownloadSuccess);
                             </div>
                             <div className="table-form-container">
                                 <table className="table">
-                                    <thead>
-                                    <tr className="table-head">
+                                    <TableHead
+                                        className="table-head"
+                                    >
                                         <th>adres:</th>
                                         <th>huisnummer:</th>
                                         <th>postcode</th>
@@ -473,8 +408,7 @@ console.log("dit is de togglePaasportDownloadSuccess", passportDownloadSuccess);
                                         <th>telefoonnumer</th>
                                         <th>e-mail</th>
                                         <th>IBAN</th>
-                                    </tr>
-                                    </thead>
+                                    </TableHead>
                                     {!enableCustomerChange && <tbody>
                                     <tr className="table-body">
                                         <td>{profile.street}</td>
@@ -658,8 +592,9 @@ console.log("dit is de togglePaasportDownloadSuccess", passportDownloadSuccess);
                                             </div>
                                             {/*<div className="horse-info-container">*/}
                                             <table className="table">
-                                                <thead>
-                                                <tr className="table-head">
+                                                <TableHead
+                                                    className="table-head"
+                                                >
                                                     <th>paardnummer</th>
                                                     <th>type voeding</th>
                                                     <th>type bodembedekking</th>
@@ -668,8 +603,7 @@ console.log("dit is de togglePaasportDownloadSuccess", passportDownloadSuccess);
                                                     <th>telefoonnummer dierenarts</th>
                                                     <th>Stal</th>
                                                     <th>Paardenpaspoort</th>
-                                                </tr>
-                                                </thead>
+                                                </TableHead>
                                                 {!enabledHorseChange && <tbody>
                                                 <tr className="table-body">
                                                     <td>{horse.horseNumber}</td>
@@ -693,12 +627,9 @@ console.log("dit is de togglePaasportDownloadSuccess", passportDownloadSuccess);
 
                                                     <td>{horse.passport && passportDownloadSuccess && horse.id === selectedHorse.id &&
                                                         <div className="passport-image"><img src={`${horse.passport.url}`} alt="paardenpaspoort"/></div>}</td>
-                                                    {/*{horse.passport &&*/}
-                                                    {/*    <td>{horse.passport.url}</td>}*/}
                                                 </tr>
                                                 </tbody>}
                                             </table>
-                                            {/*{selectedPassport && <img src={selectedPassport} alt="paspoort"/>}*/}
                                         </div>
                                     })}
                             </Display>}
@@ -710,7 +641,6 @@ console.log("dit is de togglePaasportDownloadSuccess", passportDownloadSuccess);
                                 <div className="horse-wrapper">
                                     <div className="head-line">
                                         <p className="horsename">{selectedHorse.name} {selectedHorse.id}</p>
-                                        {/*{enabledHorseChange && selectedHorseId === horse.id && <p>Wijzig hieronder de gegevens van {horse.name}</p>}*/}
                                         <Button
                                             type="button"
                                             disabled={false}
@@ -721,12 +651,12 @@ console.log("dit is de togglePaasportDownloadSuccess", passportDownloadSuccess);
                                     </div>
                                     <div className="horse-info-container">
                                         <table className="table">
-                                            <thead>
-                                            <tr className="table-head">
+                                            <TableHead
+                                                className="table-head"
+                                            >
                                                 <th>paardnummer</th>
                                                 <th>Stal</th>
-                                            </tr>
-                                            </thead>
+                                            </TableHead>
                                             <tbody>
                                             <tr className="table-body">
                                                 <td>{selectedHorse.horseNumber}</td>
@@ -885,18 +815,17 @@ console.log("dit is de togglePaasportDownloadSuccess", passportDownloadSuccess);
                                         {/*    <p className="success-message">Uw verzoek tot annulering van abonnementnr*/}
                                         {/*        {enrollment.id} is ontvangen en wordt binnen 3 werkdagen verwerkt</p>}*/}
                                         <table className="table">
-                                            <thead>
-                                            <tr className="table-head">
+                                            <TableHead
+                                                className="table-head"
+                                            >
                                                 <th>abonnement type</th>
-                                                {/*<th>stalnaam</th>*/}
                                                 <th>type stal</th>
                                                 <th>type verzorging</th>
                                                 <th>paard</th>
                                                 <th>start-datum</th>
                                                 <th>annulering aangevraagd</th>
                                                 <th>prijs</th>
-                                            </tr>
-                                            </thead>
+                                            </TableHead>
                                             <tbody>
                                             <tr className="table-body">
                                                 {enrollment.subscription && <td>{enrollment.subscription.name}</td>}
