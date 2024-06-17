@@ -50,3 +50,11 @@ select, option {
 .image-preview {
     width: 100px;
 }
+
+.subscribe-info-container {
+    text-align: center;
+}
+
+.form-error {
+    color: darkred;
+}

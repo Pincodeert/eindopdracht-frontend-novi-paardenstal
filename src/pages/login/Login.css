@@ -102,3 +102,12 @@ a {
     font-size: 0.9em;
     padding: 10px;
 }
+
+.form-error-login {
+    color: var(--orange);
+    /*background-color: var(--army);*/
+}
+
+.loading-login {
+    color: var(--pale);
+}

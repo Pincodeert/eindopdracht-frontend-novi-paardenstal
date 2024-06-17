@@ -9,6 +9,7 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {SubscriptionContext} from "../../context/SubscriptionContext.jsx";
 import {AuthContext} from "../../context/AuthContext.jsx";
+import generateFetchErrorString, {generateAdminErrorString} from "../../helpers/generate ErrorString.js";
 // import {s} from "vite/dist/node/types.d-FdqQ54oU.js";
 // import {ReactComponent as StrawIcon} from '../../assets/strawIcon.svg';
 // import { ReactComponent as Hay } from '../../assets/Hay.svg';
@@ -20,66 +21,70 @@ function Subscriptions() {
     const [subscriptions, setSubscriptions] = useState([]);
     const [availableStalls, setAvailableStalls] = useState([]);
     const [error, setError] = useState("");
+    const [isLoading, toggleIsLoading] = useState(false);
     // const [subscription, setSubscription] = useState({});
     const {isAuth} = useContext(AuthContext);
     const {selectSubscription} = useContext(SubscriptionContext);
 
     ////// ALLE ABONNEMENTEN OPHALEN UIT DE BACKEND /////
     useEffect(() => {
+        // const abortController = new AbortController();
         async function fetchSubscriptions() {
             setError("");
-
+            toggleIsLoading(true);
             try {
-                const response = await axios.get("http://localhost:8080/subscriptions");
-                console.log(response.data);
+                const response = await axios.get("http://localhost:8080/subscriptions", {
+                    // signal: abortController.signal,
+                });
                 setSubscriptions(response.data);
             } catch(error) {
                 console.error(error);
-                console.log(error.response.status);
-                setError("Het ophalen van de abonnementen is mislukt. Probeer het opnieuw");
+                setError(generateAdminErrorString("het ophalen van de abonnementen", error.message));
+            } finally {
+                toggleIsLoading(false);
             }
         }
         void fetchSubscriptions();
-    }, []);
-
-
-
-    console.log(subscriptions);
+        // return function cleanup() {
+        //     abortController.abort();
+        // }
+    }, [availableStalls]);
 
 
     // OPGEHAALDE ABONNEMENTEN FILTEREN OP BINNEN - EN BUITEN STALLEN (2x)
-
     const indoorSubscriptions = subscriptions.filter((subscription) => {
         return subscription.typeOfStall === "kleine binnenstal" || subscription.typeOfStall === "grote binnenstal";
     });
-    console.log(indoorSubscriptions);
 
     const outdoorSubscriptions = subscriptions.filter((subscription) => {
         return subscription.typeOfStall === "kleine buitenstal" || subscription.typeOfStall === "grote buitenstal";
     });
-    console.log(outdoorSubscriptions);
 
 
     ////// ALLE BESCHIKBARE STALLEN OPHALEN UIT DE BACKEND /////
     useEffect(() => {
+        // const abortController = new AbortController();
         async function fetchAvailableStalls() {
             setError("");
-
+            toggleIsLoading(true);
             try {
-                const response = await axios.get("http://localhost:8080/stalls/isOccupied/false");
-                console.log(response.data);
+                const response = await axios.get("http://localhost:8080/stalls/isOccupied/false", {
+                    // signal: abortController.signal,
+                });
                 setAvailableStalls(response.data);
             } catch (error) {
                 console.error(error);
                 console.log(error.response.status);
-                setError("Het ophalen van de beschikbare stallen is mislukt. Probeer het opnieuw");
+                setError(generateAdminErrorString(" het ophalen van de beschikbare stallen", error.message));
+            } finally {
+                toggleIsLoading(false);
             }
         }
         void fetchAvailableStalls();
+        // return function cleanUp() {
+        //     abortController.abort();
+        // }
     }, []);
-
-
-    console.log(availableStalls);
 
 
     // en nu een functie ervan maken die per map-ronde toegepast kan worden op de hele aray:
@@ -140,8 +145,8 @@ function Subscriptions() {
                 <section className="outer-container subscription-section">
                     <div className="inner-container">
                         <h2>Binnen Stal Abonnementen</h2>
+                        {isLoading && <p>Loading...</p>}
                         {error && <p className="error">{error}</p>}
-                        {console.log(availableStalls)}
                         {indoorSubscriptions.length > 0 && <div className="subscription-article-wrapper">
                             {indoorSubscriptions.map((indoorSubscription) => {
                                 return <SubscriptionTile
@@ -169,8 +174,8 @@ function Subscriptions() {
                 <section className="outer-container subscription-section">
                     <div className="inner-container">
                         <h2>Buiten Stal Abonnementen</h2>
+                        {isLoading && <p>Loading...</p>}
                         {error && <p className="error">{error}</p>}
-                        {console.log(subscriptions)}
                         {outdoorSubscriptions.length > 0 && <div className="subscription-article-wrapper">
                              {outdoorSubscriptions.map((outdoorSubscription) => {
                                 return <SubscriptionTile

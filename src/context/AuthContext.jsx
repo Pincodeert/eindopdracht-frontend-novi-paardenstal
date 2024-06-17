@@ -40,6 +40,7 @@ function AuthContextProvider({children}) {
                 }
             });
             console.log("dit is de ingelogde user: ", response);
+
             setAuth({
                 isAuth: true,
                 user: {
@@ -50,19 +51,16 @@ function AuthContextProvider({children}) {
                 },
                 status: "done",
             });
-            if(subscriptionId) {
+
+            if(response.data.authorities[0].authority === "ROLE_ADMIN" || response.data.authorities[1] === "ROLE_ADMIN") {
+                navigate(`/admin`)
+            } else if(subscriptionId) {
                 navigate(`/inschrijven/${subscriptionId}`);
+            } else if(!response.data.customerProfile) {
+                navigate(`/abonnementen`);
             } else {
                 navigate(`/profiel/${response.data.customerProfile}`)
             }
-
-
-            // hier nog een if-else statement plaatsen?
-            // if(ROLE===admin) {
-            //    navigate((`/admin`))
-            // } else if (ROLE===user) {
-            // zie boven
-            // }
         } catch (error) {
             console.error(error);
             signOut();

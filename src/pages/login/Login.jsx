@@ -7,43 +7,35 @@ import {useNavigate} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext.jsx";
 import axios from "axios";
 import {SubscriptionContext} from "../../context/SubscriptionContext.jsx";
+import {useForm} from "react-hook-form";
 
 
 function Login() {
-    const [loginFormState, setLoginFormState] = useState({
-        username: "",
-        password: "",
-    });
     const [error, setError] = useState("");
+    const [isLoading, toggleIsLoading] = useState(false);
 
     const navigate = useNavigate();
-
+    const {register, formState: {errors}, handleSubmit} = useForm({mode: "onBlur"});
     const {signIn} = useContext(AuthContext);
     const {subscriptionId} = useContext(SubscriptionContext);
-    console.log("hier de Loginpagina speaking: dit is de doorgegeven", subscriptionId);
 
-    function handleChange(e) {
-        const changedFieldName = e.target.name;
+    // console.log("hier de Loginpagina speaking: dit is de doorgegeven", subscriptionId);
 
-        setLoginFormState({
-            ...loginFormState,
-            [changedFieldName]: e.target.value,
-        })
-    }
-
-     async function handleSubmit(e) {
-        e.preventDefault();
+    async function handleFormSubmit(data) {
         setError("");
-        // console.log(loginFormState);
+        toggleIsLoading(true);
         try {
             const response = await axios.post("http://localhost:8080/authenticate", {
-                ...loginFormState
+                ...data
             });
             console.log(response, response.data.jwt);
             signIn(response.data.jwt, subscriptionId);
-        } catch(error) {
+        } catch (error) {
             console.error(error);
-            setError(error);
+            setError("Inloggen niet gelukt. Probeer het opnieuw. Neem contact met ons op, wanneer dit probleem " +
+                "zich blijft voordoen.");
+        } finally {
+            toggleIsLoading(false);
         }
     }
 
@@ -69,30 +61,59 @@ function Login() {
             <main className="outer-container ">
                 <section className="inner-container content-section">
                     <div className="form-container">
-                        {/*{error && <p className="error">Inloggen niet gelukt. Probeer het opnieuw!</p>}*/}
                         <h2>Inloggen: </h2>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit(handleFormSubmit)}>
                             <TextInput
                                 labelFor="username-text-field"
                                 inputId="username-text-field"
-                                inputName="username"
-                                textValue={loginFormState.username}
-                                changeHandler={handleChange}
                                 placeholder="gebruikersnaam"
+                                inputName="username"
+                                register={register}
+                                validationRules={{
+                                    required: {
+                                        value: true,
+                                        message: "Het invullen van een gebruikersnaam is verplicht"
+                                    },
+                                    minLength: {
+                                        value: 8,
+                                        message: "Vul minimaal 8 tekens in"
+                                    },
+                                    maxLength: {
+                                        value: 20,
+                                        message: "Vul maximaal 20 tekens in"
+                                    }
+                                }}
+                                errors={errors}
                             />
                             <label htmlFor="password-field">
                                 <input
                                     type="password"
                                     placeholder="wachtwoord"
                                     id="password-field"
-                                    name="password"
-                                    value={loginFormState.password}
-                                    onChange={handleChange}
+                                    {...register("password", {
+                                        required: {
+                                            value: true,
+                                            message: 'Wachtwoord is verplicht',
+                                        },
+                                        minLength: {
+                                            value: 8,
+                                            message: "Vul minimaal 8 tekens in",
+                                        },
+                                        maxLength: {
+                                            value: 20,
+                                            message: "Vul maximaal 20 tekens in",
+                                        },
+                                    })}
                                 />
+                                {errors.password && <p className="form-error-login">{errors.password.message}</p>}
                             </label>
+                            {isLoading && <p className="loading-login">Loading...</p>}
+                            {error && <p className="form-error-login">{error}</p>}
                             <div className="form-button-wrapper">
-                                <a href="https://www.seniorweb.nl/tip/sterk-wachtwoord-maken-onthouden" target="_blank">wachtwoord
-                                    vergeten?</a>
+                                <a href="https://www.seniorweb.nl/tip/sterk-wachtwoord-maken-onthouden" target="_blank"
+                                >
+                                    wachtwoord vergeten?
+                                </a>
                                 <Button
                                     type="submit"
                                     disabled={false}
@@ -101,7 +122,6 @@ function Login() {
                                     Log in
                                 </Button>
                             </div>
-                            {error && <p className="error">Inloggen niet gelukt. Probeer het opnieuw!</p>}
                         </form>
                     </div>
                     <div className="info-container">

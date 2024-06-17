@@ -1,13 +1,16 @@
 import './Admin.css';
 import Button from "../../components/button/Button.jsx";
 import {Link} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import Display from "../../components/display/Display.jsx";
 import TableHead from "../../components/tableHead/TableHead.jsx";
 import formatPrice from "../../helpers/formatPrice.js";
 import {displayCompleteName} from "../../helpers/editName.js";
 import reverseDate from "../../helpers/reverseDate.js";
+import {generateAdminErrorString} from "../../helpers/generate ErrorString.js";
+import {useForm} from "react-hook-form";
+import {AuthContext} from "../../context/AuthContext.jsx";
 
 function Admin() {
 
@@ -15,6 +18,7 @@ function Admin() {
     const [newHorsesError, setNewHorsesError] = useState("");
     const [fetchStallError, setFetchStallError] = useState("");
     const [cancellationRequestError, setCancellationRequestError] = useState("");
+    const [isLoading, toggleIsLoading] = useState(false);
     const [customers, setCustomers] = useState([]);
     const [editingNewEnrollment, toggleEditingNewEnrollment] = useState(false);
     const [horses, setHorses] = useState([]);
@@ -24,7 +28,7 @@ function Admin() {
     const [availableStalls, setAvailableStalls] = useState([]);
     const [chosenStall, setChosenStall] = useState({});
     const [stalls, setStalls] = useState([]);
-    const [horseAssignedSucces, toggleHorseAssignedSucces] = useState(false);
+    const [horseAssignedSuccess, toggleHorseAssignedSuccess] = useState(false);
     const [enrollmentInfo, setEnrollmentInfo] = useState({});
     const [enrollmentCreatedSuccess, toggleEnrollmentCreatedSuccess] = useState(false);
     const [cancellationRequests, setCancellationRequests] = useState([]);
@@ -35,73 +39,124 @@ function Admin() {
     const [enrollments, setEnrollments] = useState([]);
     const [display, setDisplay] = useState("default");
 
-    async function fetchCustomers() {
-        setError("");
-        try {
-            const response = await axios.get("http://localhost:8080/customerprofiles");
-            console.log("hier zijn alle klanten: ", response);
-            setCustomers(response.data);
-        } catch (error) {
-            console.error(error);
-            setError(error);
-        }
-    }
+    const {register, formState: {errors}, handleSubmit} = useForm({mode: "onBlur"});
+    const token = localStorage.getItem('token');
+    const {isAuth, signOut} = useContext(AuthContext);
 
     useEffect(() => {
+        // const abortController = new AbortController();
         async function fetchHorses() {
+            toggleIsLoading(true);
             setNewHorsesError("");
             try {
-                const response = await axios.get("http://localhost:8080/horses");
-                console.log("hier zijn de paarden:", response);
+                const response = await axios.get("http://localhost:8080/horses", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    // signal: abortController.signal,
+                });
+                // console.log("hier zijn de paarden:", response);
                 const fetchedHorses = response.data
                 setHorses(fetchedHorses);
                 const newHorses = fetchedHorses.filter((horse) => {
                     // return horse.stall === null && horse.preferredSubscription != "activated";
                     return horse.preferredSubscription != "activated";
                 });
-                console.log("en de nieuwe paarden:", newHorses);
+                // console.log("en de nieuwe paarden:", newHorses);
                 setNewHorses(newHorses);
             } catch (error) {
                 console.error(error);
-                setNewHorsesError(error);
+                setNewHorsesError(generateAdminErrorString("het ophalen van de paarden", error.message));
+            } finally {
+                toggleIsLoading(false);
             }
         }
-
         void fetchHorses();
-    }, []);
+        // return function cleanUp() {
+        //     abortController.abort();
+        // }
+    }, [editingNewEnrollment]);
 
     useEffect(() => {
+        const abortController = new AbortController();
         async function fetchCancellationRequests() {
+            toggleIsLoading(true);
             setCancellationRequestError("");
             try {
-                const response = await axios.get("http://localhost:8080/enrollments?cancellationRequested=true");
-                console.log("annuleringsverzoeken", response.data);
+                const response = await axios.get("http://localhost:8080/enrollments", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    params: {
+                        cancellationRequested: true,
+                    },
+                    signal: abortController.signal,
+                });
+                // console.log("annuleringsverzoeken", response.data);
                 setCancellationRequests(response.data);
             } catch (error) {
                 console.error(error);
-                setCancellationRequestError(error);
+                setCancellationRequestError(generateAdminErrorString("het ophalen van de annuleringsverzoeken", error.message));
+            } finally {
+                toggleIsLoading(false);
             }
         }
-
         void fetchCancellationRequests();
-    }, []);
+        return function cleanUp() {
+            abortController.abort();
+        }
+    }, [editingCancellation]);
 
     useEffect(() => {
+        // const abortController = new AbortController();
         async function fetchAllSubscriptions() {
+            toggleIsLoading(true);
             setError("");
             try {
-                const response = await axios.get("http://localhost:8080/subscriptions");
-                console.log("alle abonnementtypen: ", response.data);
+                const response = await axios.get("http://localhost:8080/subscriptions", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    // signal: abortController.signal,
+                });
+                // console.log("alle abonnementtypen: ", response.data);
                 setSubscriptions(response.data);
             } catch (error) {
                 console.error(error);
-                setError(error);
+                setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
+            } finally {
+                toggleIsLoading(false);
             }
         }
         void fetchAllSubscriptions();
+        // return function cleanup() {
+        //     abortController.abort();
+        // }
     }, []);
 
 
+    async function fetchCustomers() {
+        toggleIsLoading(true);
+        setError("");
+        try {
+            const response = await axios.get("http://localhost:8080/customerprofiles", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            // console.log("hier zijn alle klanten: ", response);
+            setCustomers(response.data);
+        } catch (error) {
+            console.error(error);
+            setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
+        } finally {
+            toggleIsLoading(false);
+        }
+    }
     function showCustomers() {
         void fetchCustomers();
         setDisplay("customers");
@@ -126,24 +181,38 @@ function Admin() {
     }
 
     async function fetchAvailableStallsByType(stallType) {
+        toggleIsLoading(true);
         setFetchStallError("");
         try {
-            const response = await axios.get(`http://localhost:8080/stalls?type=${stallType}&isOccupied=false`);
-            console.log(response);
+            const response = await axios.get(`http://localhost:8080/stalls`, {
+                headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                params: {
+                    type: `${stallType}`,
+                    isOccupied: false,
+                }
+            }
+            );
+            console.log("de available stalls" ,response);
             setAvailableStalls(response.data);
         } catch (error) {
             console.error(error);
-            setFetchStallError(error);
+            setFetchStallError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
+        } finally {
+            toggleIsLoading(false);
         }
     }
 
+
     function handleNewHorseClick(horse) {
 
-        console.log("paard", horse);
+        // console.log("paard", horse);
         // 1. zoek bij de voor dit paard gekozen abonnements-naam het juiste abonnement op en daarbij behorende staltype
-        console.log(subscriptions);
+        // console.log(subscriptions);
         const selectedSubscription = selectSubscription(horse);
-        console.log("de gekozen subscription: ", selectedSubscription);
+        // console.log("de gekozen subscription: ", selectedSubscription);
 
         // 2. sla benodigde info van gekozen paard en bijbehorende subscroption info tijdelijk op in de State
         setHorseInfo({
@@ -163,24 +232,30 @@ function Admin() {
         toggleEditingNewEnrollment(true);
     }
 
-    console.log("de horseInfo:", horseInfo);
-    console.log("de beschikbare stallen: ", availableStalls);
+    // console.log("de horseInfo:", horseInfo);
+    // console.log("de beschikbare stallen: ", availableStalls);
 
-    function handleStallChange(e) {
-        setChosenStall(
-            {
-                id: e.target.value,
-            });
-    }
+    // function handleStallChange(e) {
+    //     setChosenStall(
+    //         {
+    //             id: e.target.value,
+    //         });
+    // }
 
-    console.log("de gekozen stallId: ", chosenStall.id);
+    // console.log("de gekozen stallId: ", chosenStall.id);
 
-    async function assignHorseToStall(e) {
-        e.preventDefault();
+    async function assignHorseToStall(data) {
+        toggleIsLoading(true);
         setError("");
+        console.log("horseInfo.Id = ", horseInfo.id, " en data.id = ", data.id, " en data = ", data);
         try {
-            const response = await axios.put(`http://localhost:8080/stalls/${chosenStall.id}/horse`, {
+            const response = await axios.put(`http://localhost:8080/stalls/${data.typeOfStall}/horse`, {
                 id: horseInfo.id,
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
             });
             console.log("het paard staat nu in de stal", response);
             setEnrollmentInfo({
@@ -188,44 +263,55 @@ function Admin() {
                 customerId: horseInfo.owner.id,
                 horseId: horseInfo.id,
             });
-            toggleHorseAssignedSucces(true);
+            toggleHorseAssignedSuccess(true);
         } catch (error) {
             console.error(error);
-            setError(error);
+            setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
+        } finally {
+            toggleIsLoading(false);
         }
     }
 
     async function createNewEnrollment() {
+        toggleIsLoading(true);
         setError("");
         try {
             const response = await axios.post("http://localhost:8080/enrollments", {
                 ...enrollmentInfo
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
             });
-            console.log(response);
+            // console.log(response);
             // setEnrollmentInfo({})
             toggleEnrollmentCreatedSuccess(true);
         } catch (error) {
             console.error(error);
-            setError(error);
+            setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
+        } finally {
+            toggleIsLoading(false);
         }
     }
 
     function setToNewHorsesDefault() {
         toggleEditingNewEnrollment(false);
-        toggleHorseAssignedSucces(false);
+        toggleHorseAssignedSuccess(false);
         setEnrollmentInfo(null);
+        toggleEnrollmentCreatedSuccess(false);
     }
 
 ////////////////////// Annuleringen ///////////////////
     function handleCancellationClick(enrollment) {
-        console.log("gekozen enrollement", enrollment);
+        // console.log("gekozen enrollement", enrollment);
         // 1.zoek voor het paard dat gekoppeld is aan het enrollment uit in welke stal het staat
         const selectedHorse = horses.find((horse) => {
             return horse.id === enrollment.horse.id;
         });
-        console.log("paard: ,", selectedHorse);
+        // console.log("paard: ,", selectedHorse);
         const stall = selectedHorse.stall;
-        console.log("paard", selectedHorse.name, "staat in stal ", stall.id);
+        // console.log("paard", selectedHorse.name, "staat in stal ", stall.id);
         // 2. sla de gecombineerde info tijdelijk op in cancellationInfo
         setCancellationInfo({
             horseName: selectedHorse.name,
@@ -246,29 +332,46 @@ function Admin() {
     }
 
     async function removeHorseFromStall(stallId) {
+        toggleIsLoading(true);
         setError("");
         try {
-            const response = await axios.put(`http://localhost:8080/stalls/${stallId}`);
-            console.log("hetpaard is verwijderd uit stallnr,", stallId, response);
+            const response = await axios.put(`http://localhost:8080/stalls/${stallId}`, {}, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            // console.log("hetpaard is verwijderd uit stallnr,", stallId, response);
             toggleHorseRemovedSuccess(true);
         } catch (error) {
             console.error(error);
-            setError("error");
+            setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
+        } finally {
+            toggleIsLoading(false);
         }
     }
 
     async function terminateEnrollment(enrollmentId) {
+        toggleIsLoading(true);
         setError("");
         try {
             const response = await axios.put(`http://localhost:8080/enrollments/${enrollmentId}`, {
                 "isOngoing": true,
                 "subscriptionId": cancellationInfo.subscriptionId,
                 "customerId": cancellationInfo.customerId,
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
             });
+            // console.log("abonnement beeindigd!!", response);
             toggleEnrollmentTerminatedSuccess(true);
         } catch (error) {
             console.error(error);
-            setError(error);
+            setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
+        } finally {
+            toggleIsLoading(false);
         }
     }
 
@@ -280,14 +383,22 @@ function Admin() {
     }
 ////////////////////////////////////////////
     async function fetchAllStalls() {
+        toggleIsLoading(true);
         setError("");
         try {
-            const response = await axios.get("http://localhost:8080/stalls");
-            console.log("dit zijn de stallen", response.data);
+            const response = await axios.get("http://localhost:8080/stalls", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            // console.log("dit zijn de stallen", response.data);
             setStalls(response.data);
         } catch(error) {
             console.error(error);
-            setError(error);
+            setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
+        } finally {
+            toggleIsLoading(false);
         }
     }
 
@@ -298,14 +409,22 @@ function Admin() {
 
 ////////////////////////////////////////// INSCHRIJVINGEN ////////////////////////
     async function fetchAllEnrollments() {
+        toggleIsLoading(true);
         setError("");
         try {
-            const response = await axios.get("http://localhost:8080/enrollments");
+            const response = await axios.get("http://localhost:8080/enrollments", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             console.log(response.data);
             setEnrollments(response.data);
         } catch(error) {
             console.error(error);
-            setError(error);
+            setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
+        } finally {
+            toggleIsLoading(false);
         }
     }
 
@@ -343,7 +462,12 @@ function calculateNewTasks() {
                         <nav className="header-navigation">
                             {/*<h2>Blaze of Glory</h2>*/}
                             <Link to="/"><h2>Blaze of Glory</h2></Link>
-                            <h3>Here to make your day</h3>
+                            {isAuth && <Button
+                                type="button"
+                                handleClick={signOut}
+                            >
+                                uitloggen
+                            </Button>}
                             <div className="profile-icon">CE</div>
                         </nav>
                     </div>
@@ -380,13 +504,6 @@ function calculateNewTasks() {
                     >
                         Bekijk paarden
                     </Button>
-                    {/*<Button*/}
-                    {/*    type="button"*/}
-                    {/*    classname="admin-menu"*/}
-                    {/*    note="hier komt een link"*/}
-                    {/*>*/}
-                    {/*    Zoek paard*/}
-                    {/*</Button>*/}
                     <h3>Stallen</h3>
                     <Button
                         type="button"
@@ -423,13 +540,17 @@ function calculateNewTasks() {
                                 className="content-wrapper persona"
                                 title="Nieuwe Aanvragen"
                             >
+                                {isLoading && <p>Loading...</p>}
                                 {newHorsesError &&
-                                    <p className="error">De nieuwe aanvragen konden niet worden opgehaald.</p>}
-                                {!error && newHorses.length === 0 &&
+                                    <p className="error">{newHorsesError}</p>}
+                                {!newHorsesError && !isLoading && newHorses.length === 0 &&
                                     <p className="nothing-message">Er zijn momenteel geen nieuwe aanvragen.</p>}
-                                {!newHorsesError && newHorses.length > 0 &&
+                                {!newHorsesError && !isLoading && newHorses.length > 0 &&
                                     <table className="admin-table">
-                                        <TableHead className="admin-table-head">
+                                        <TableHead
+                                            className="admin-table-head"
+                                            // list={["Paard", "Gewenste abonnement", "Klant", "Klant Label", "Bekijk Klant"]}
+                                            >
                                             <th>Paard</th>
                                             <th>Gewenste abonnement</th>
                                             <th>Klant</th>
@@ -444,7 +565,7 @@ function calculateNewTasks() {
                                                 {/*{horse.stall ? <td>{horse.stall.name}</td> : <td>---</td>}*/}
                                                 <td>{displayCompleteName(horse.owner.firstName, horse.owner.lastName)}</td>
                                                 <td>{horse.owner.telephoneNumber}</td>
-                                                <td>{console.log(horse.owner.enrollments)}</td>
+                                                {/*<td>{console.log(horse.owner.enrollments)}</td>*/}
                                                 <td>
                                                     <Button type="button"
                                                             disabled={false}
@@ -486,26 +607,33 @@ function calculateNewTasks() {
                                     </table>
                                 </div>
                                 {fetchStallError &&
-                                    <p className="error">De beschikbare stallen konden niet worden opgehaald.
-                                        Probeer het opnieuw</p>}
+                                    <p className="error">{fetchStallError}</p>}
                                 {availableStalls.length === 0 &&
                                     <p>er zijn geen stallen meer beschikbaar van dit type. Neem contact op met de
                                         klant</p>}
-                                {!horseAssignedSucces && availableStalls.length > 0 &&
+                                {!horseAssignedSuccess && availableStalls.length > 0 &&
                                     <div className="edit-part">
-                                        <form className="horse-form" onSubmit={assignHorseToStall}>
+                                        <form className="horse-form" onSubmit={handleSubmit(assignHorseToStall)}>
                                             <label htmlFor="stall-type-select-field">
                                                 {horseInfo.typeOfStall}
                                             </label>
                                             <select
-                                                name="typeOfStall"
+                                                // name="typeOfStall"
                                                 id="stall-type-select-field"
-                                                value={chosenStall.id}
-                                                onChange={handleStallChange}
-                                            >{availableStalls.map((stall) => {
+                                                {...register("typeOfStall", {
+                                                    required: {
+                                                        value: true,
+                                                        message: "maak een keuze",
+                                                    }
+                                                })}
+                                                // value={chosenStall.id}
+                                                // onChange={handleStallChange}
+                                            ><option className="disabled" >kies een stal</option>
+                                                {availableStalls.map((stall) => {
                                                 return <option key={stall.id} value={stall.id}>{stall.name}</option>
                                             })}
                                             </select>
+                                            {errors.typeOfStall && <p className="form-error">{errors.typeOfStall}</p>}
                                             <Button
                                                 type="submit"
                                                 disabled={false}
@@ -513,18 +641,17 @@ function calculateNewTasks() {
                                                 Kies deze stal
                                             </Button>
                                             {error &&
-                                                <p className="error">Het paard kon niet toegewezen worden aan de
-                                                    stal.
-                                                    Zorg ervoor dat de optie ook echt geslecteerd wordt. Probeer het
-                                                    anders opnieuw.</p>}
+                                                // <p className="error">Het paard kon niet toegewezen worden aan de
+                                                //     stal. Probeer het opnieuw.</p>}
+                                                <p className="error">{error}</p>}
                                         </form>
                                     </div>}
-                                {horseAssignedSucces && !enrollmentCreatedSuccess &&
+                                {horseAssignedSuccess && !enrollmentCreatedSuccess &&
                                     <div className="edit-part">
                                         {error ?
-                                            <p className="error">Er kon geen nieuw abonnement worden aangemaakt.
-                                                Probeer
-                                                het opnieuw.</p> :
+                                            // <p className="error">Er kon geen nieuw abonnement worden aangemaakt.
+                                            //     Probeer het opnieuw.</p>
+                                            <p className="error">{error}</p> :
                                             <p className="success-message">{horseInfo.name} is succesvol toegevoegd
                                                 aan
                                                 een {horseInfo.typeOfStall}</p>}
@@ -536,7 +663,7 @@ function calculateNewTasks() {
                                             Bevestig nieuwe inschrijving
                                         </Button>
                                     </div>}
-                                {horseAssignedSucces && enrollmentCreatedSuccess &&
+                                {horseAssignedSuccess && enrollmentCreatedSuccess &&
                                     <div className="edit-part">
                                         <p className="success-message">Gelukt!!!</p>
                                         <Button
@@ -553,11 +680,12 @@ function calculateNewTasks() {
                                 className="content-wrapper persona"
                                 title="Annuleringsverzoeken"
                             >
+                                {isLoading && <p>Loading...</p>}
                                 {cancellationRequestError &&
-                                    <p className="error">De annuleringen konden niet worden opgehaald.</p>}
-                                {!cancellationRequestError && cancellationRequests.length === 0 &&
+                                    <p className="error">{cancellationRequestError}</p>}
+                                {!cancellationRequestError && !isLoading && cancellationRequests.length === 0 &&
                                     <p className="nothing-message">Er zijn momenteel geen annuleringsverzoeken.</p>}
-                                {!error && cancellationRequests.length > 0 &&
+                                {!cancellationRequestError && cancellationRequests.length > 0 &&
                                     <table className="admin-table">
                                         <TableHead className="admin-table-head">
                                             <th>AbonNr</th>
@@ -622,9 +750,10 @@ function calculateNewTasks() {
                                 {!horseRemovedSuccess &&
                                     <div className="edit-part">
                                         {error ?
-                                            <p className="error">Het paard kon uit de stal verwijderd worden.
-                                                Check of het in een
-                                                stal staat en/of probeer het opnieuw</p>
+                                            // <p className="error">Het paard kon uit de stal verwijderd worden.
+                                            //     Check of het in een
+                                            //     stal staat en/of probeer het opnieuw</p>
+                                            <p className="error">{error}</p>
                                             :
                                             <p className="success-message">Verwijder
                                                 paard {cancellationInfo.horseName} uit
@@ -640,8 +769,9 @@ function calculateNewTasks() {
                                 {horseRemovedSuccess && !enrollmentTerminatedSuccess &&
                                     <div className="edit-part">
                                         {error ?
-                                            <p className="error">Het abonnement kon niet worden beeindigd.
-                                                Probeer het opnieuw.</p>
+                                            // <p className="error">Het abonnement kon niet worden beeindigd.
+                                            //     Probeer het opnieuw.</p>
+                                            <p className="error">{error}</p>
                                             :
                                             <p className="success-message">Paard {cancellationInfo.horseName} is
                                                 succesvol verwijderd uit
@@ -675,6 +805,10 @@ function calculateNewTasks() {
                                 className="content-wrapper persona"
                                 title="Klanten"
                             >
+                                {isLoading && <p>Loading...</p>}
+                                {error && <p className="error">{error}</p>}
+                                {!isLoading && !error && customers.length === 0 && <p>Er zijn nog geen klanten. Keep the faith!</p>}
+                                {customers.length > 0 &&
                                 <table className="admin-table">
                                     <TableHead className="admin-table-head">
                                         <th>Achternaam</th>
@@ -684,11 +818,8 @@ function calculateNewTasks() {
                                         <th>E-mail</th>
                                     </TableHead>
                                     <tbody>
-                                    {customers.length === 0 ?
-                                        <tr>
-                                            <td>Er zijn nog geen klanten. Keep the faith!</td>
-                                        </tr>
-                                        : customers.map((customer) => {
+
+                                    {customers.map((customer) => {
                                             return <tr key={customer.id} className="admin-table-body">
                                                 <td>{customer.lastName}</td>
                                                 <td>{customer.firstName}</td>
@@ -705,7 +836,7 @@ function calculateNewTasks() {
                                             </tr>
                                         })}
                                     </tbody>
-                                </table>
+                                </table>}
                             </Display>}
 
 {/*///////////////////////////////////  PAARDEN  //////////////////////////////////*/}
@@ -714,6 +845,10 @@ function calculateNewTasks() {
                                 className="content-wrapper persona"
                                 title="Paarden"
                             >
+                                {isLoading && <p>Loading...</p>}
+                                {error && <p className="error">{error}</p>}
+                                {!isLoading && !error && horses.length === 0 && <p>Er zijn nog geen paarden. Keep the faith!</p>}
+                                {horses.length > 0 &&
                                 <table className="admin-table">
                                     <TableHead className="admin-table-head">
                                         <th>Naam</th>
@@ -724,11 +859,7 @@ function calculateNewTasks() {
                                         <th>bodem</th>
                                     </TableHead>
                                     <tbody>
-                                    {horses.length === 0 ?
-                                        <tr>
-                                            <td>Er zijn nog geen paarden. Keep the faith!</td>
-                                        </tr>
-                                        : horses.map((horse) => {
+                                    {horses.map((horse) => {
                                             return <tr key={horse.id} className="admin-table-body">
                                                 <td>{horse.name}</td>
                                                 {horse.stall ? <td>{horse.stall.name}</td>
@@ -744,13 +875,18 @@ function calculateNewTasks() {
                                             </tr>
                                         })}
                                     </tbody>
-                                </table>
+                                </table>}
                             </Display>}
+{/*///////////////////////////////////  STALLEN  //////////////////////////////////*/}
                         {display === "stalls" &&
                         <Display
                             className="content-wrapper persona"
                             title="Stallen"
                         >
+                            {isLoading && <p>Loading...</p>}
+                            {error && <p className="error">{error}</p>}
+                            {!isLoading && !error && stalls.length === 0 && <p>Er zijn geen stallen.</p>}
+                            {stalls.length > 0 &&
                             <table className="admin-table">
                                 <TableHead className="admin-table-head">
                                     <th>Naam</th>
@@ -760,11 +896,7 @@ function calculateNewTasks() {
                                     <th>Tel dierenarts</th>
                                 </TableHead>
                                 <tbody>
-                                {stalls.length === 0 ?
-                                    <tr>
-                                        <td>Er zijn nog geen stallen.</td>
-                                    </tr>
-                                    : stalls.map((stall) => {
+                                {stalls.map((stall) => {
                                         return <tr key={stall.id} className="admin-table-body">
                                             <td>{stall.name}</td>
                                             <td>{stall.type}</td>
@@ -777,13 +909,18 @@ function calculateNewTasks() {
                                         </tr>
                                     })}
                                 </tbody>
-                            </table>
+                            </table>}
                         </Display>}
+{/*///////////////////////////////////  ABONNEMENTTYPEN  //////////////////////////////////*/}
                         {display === "subscriptions" &&
                             <Display
                                 className="content-wrapper persona"
                                 title="Abonnementstypen"
                             >
+                                {isLoading && <p>Loading...</p>}
+                                {error && <p className="error">{error}</p>}
+                                {!isLoading && !error && subscriptions.length === 0 && <p>Er zijn nog geen abonnementsoorten.</p>}
+                                {subscriptions.length > 0 &&
                                 <table className="admin-table">
                                     <TableHead className="admin-table-head">
                                         <th>Naam</th>
@@ -792,11 +929,7 @@ function calculateNewTasks() {
                                         <th>Prijs</th>
                                     </TableHead>
                                     <tbody>
-                                    {subscriptions.length === 0 ?
-                                        <tr>
-                                            <td>Er zijn nog geen abonnementtypen toegevoegd.</td>
-                                        </tr>
-                                        : subscriptions.map((subscription) => {
+                                    {subscriptions.map((subscription) => {
                                             return <tr key={subscription.id} className="admin-table-body">
                                                 <td>{subscription.name}</td>
                                                 <td>{subscription.typeOfCare}</td>
@@ -805,13 +938,19 @@ function calculateNewTasks() {
                                             </tr>
                                         })}
                                     </tbody>
-                                </table>
+                                </table>}
                             </Display>}
+{/*///////////////////////////////////  INSCHRIJVINGEN  //////////////////////////////////*/}
                         {display === "enrollments" &&
                             <Display
                                 className="content-wrapper persona"
                                 title="Inschrijvingen"
                             >
+                                {isLoading && <p>Loading...</p>}
+                                {error && <p className="error">{error}</p>}
+                                {!isLoading && !error && enrollments.length === 0 && <p>Er zijn nog geen inschrijvingen.
+                                    Keep the faith!</p>}
+                                {enrollments.length > 0 &&
                                 <table className="admin-table">
                                     <TableHead className="admin-table-head">
                                         <th>AbonNr</th>
@@ -822,11 +961,7 @@ function calculateNewTasks() {
                                         <th>Klant</th>
                                     </TableHead>
                                     <tbody>
-                                    {enrollments.length === 0 ?
-                                        <tr>
-                                            <td>Er zijn nog geen abonnementtypen toegevoegd.</td>
-                                        </tr>
-                                        : enrollments.map((enrollment) => {
+                                    {enrollments.map((enrollment) => {
                                             return <tr key={enrollment.id} className="admin-table-body">
                                                 <td>{enrollment.id}</td>
                                                 {enrollment.subscription ? <td>{enrollment.subscription.name}</td>
@@ -841,7 +976,7 @@ function calculateNewTasks() {
                                             </tr>
                                         })}
                                     </tbody>
-                                </table>
+                                </table>}
                             </Display>}
                     </div>
                 </div>

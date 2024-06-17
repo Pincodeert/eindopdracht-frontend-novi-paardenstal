@@ -7,7 +7,7 @@ function Display({className ,title, children}) {
             <div className="content-title">
                 <h4>{title}</h4>
             </div>
-            <div className="overwiew-container">
+            <div className="overwiew-column-container">
                 {children}
             </div>
         </article>

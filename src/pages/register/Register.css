@@ -83,3 +83,7 @@ h2 {
     width: 88%;
     padding: 20px 10px 25px 10px;
 }
+
+.loading-login {
+    color: var(--pale);
+}
