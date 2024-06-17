@@ -145,7 +145,7 @@ function Subscriptions() {
                 <section className="outer-container subscription-section">
                     <div className="inner-container">
                         <h2>Binnen Stal Abonnementen</h2>
-                        {isLoading && <p>...Loading</p>}
+                        {isLoading && <p>Loading...</p>}
                         {error && <p className="error">{error}</p>}
                         {indoorSubscriptions.length > 0 && <div className="subscription-article-wrapper">
                             {indoorSubscriptions.map((indoorSubscription) => {
@@ -174,7 +174,7 @@ function Subscriptions() {
                 <section className="outer-container subscription-section">
                     <div className="inner-container">
                         <h2>Buiten Stal Abonnementen</h2>
-                        {isLoading && <p>...Loading</p>}
+                        {isLoading && <p>Loading...</p>}
                         {error && <p className="error">{error}</p>}
                         {outdoorSubscriptions.length > 0 && <div className="subscription-article-wrapper">
                              {outdoorSubscriptions.map((outdoorSubscription) => {

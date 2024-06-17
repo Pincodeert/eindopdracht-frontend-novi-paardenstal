@@ -51,6 +51,13 @@ function Profile() {
         //     // emailAddress: `${profile.emailAddress}`,
         //     // bankAccountNumber: `${profile.bankAccountNumber}`,
         // }
+        // defaultValues: async () => await axios.get(`http://localhost:8080/customerprofiles/${customerProfileId}`, {
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         Authorization: `Bearer ${token}`,
+        //     }
+        // })
+
     });
     const {isAuth, signOut} = useContext(AuthContext);
     console.log(isAuth);
@@ -440,8 +447,9 @@ function Profile() {
                                         {isLoading && <p>...Loading</p>}
                                         <TextInput
                                             inputName="street"
-                                            placeholder={profile.street}
+                                            // placeholder={profile.street}
                                             register={register}
+                                            textValue={profile.street}
                                             validationRules={{
                                                 required: {
                                                     value: false,
@@ -460,8 +468,9 @@ function Profile() {
                                         />
                                         <TextInput
                                             inputName="houseNumber"
-                                            placeholder={profile.houseNumber}
+                                            // placeholder={profile.houseNumber}
                                             register={register}
+                                            textValue={profile.houseNumber}
                                             validationRules={{
                                                 required: {
                                                     value: false,
@@ -480,8 +489,9 @@ function Profile() {
                                         />
                                         <TextInput
                                             inputName="postalCode"
-                                            placeholder={profile.postalCode}
+                                            // placeholder={profile.postalCode}
                                             register={register}
+                                            textValue={profile.postalCode}
                                             validationRules={{
                                                 required: {
                                                     value: false,
@@ -500,7 +510,7 @@ function Profile() {
                                         />
                                         <TextInput
                                             inputName="residence"
-                                            placeholder={profile.residence}
+                                            textValue={profile.residence}
                                             register={register}
                                             validationRules={{
                                                 required: {
@@ -523,7 +533,7 @@ function Profile() {
                                             id="telephoneOfVet-field"
                                             // name="telephoneOfVet"
                                             pattern="[0-9]{10}"
-                                            placeholder={profile.telephoneNumber}
+                                            defaultValue={profile.telephoneNumber}
                                             {...register("telephoneNumber", {
                                                 required: {
                                                     value: false,
@@ -543,7 +553,7 @@ function Profile() {
                                             <p className="form-error-login">{errors.telephoneNumber.message}</p>}
                                         <input
                                             type="email"
-                                            placeholder={profile.emailAddress}
+                                            defaultValue={profile.emailAddress}
                                             {...register("emailAddress", {
                                                 required: {
                                                     value: false,
@@ -556,7 +566,7 @@ function Profile() {
 
                                         <TextInput
                                             inputName="bankAccountNumber"
-                                            placeholder={profile.bankAccountNumber}
+                                            textValue={profile.bankAccountNumber}
                                             register={register}
                                             validationRules={{
                                                 required: {
@@ -688,11 +698,12 @@ function Profile() {
                                             </tbody>
                                         </table>
                                         {!horseUpdateSuccess &&
-                                            <form className="profile-form" onSubmit={handleSubmit(handleHorseForm)}>
+                                            <form className="profile-form" onSubmit={handleSubmit(handleHorseForm)} key={selectedHorse.id}>
                                                 <label htmlFor="typeOfFeed-field">
                                                     Voeding:
                                                     <select
                                                         id="typeOfFeed-field"
+                                                        defaultValue={selectedHorse.typeOfFeed}
                                                         {...register("typeOfFeed", {
                                                             required: {
                                                                 value: false,
@@ -710,6 +721,7 @@ function Profile() {
                                                     Bodembedekking:
                                                     <select
                                                         id="typeOfBedding-field"
+                                                        defaultValue={selectedHorse.typeOfBedding}
                                                         {...register("typeOfBedding", {
                                                             required: {
                                                                 value: false,
@@ -719,7 +731,7 @@ function Profile() {
                                                     >
                                                         <option value="stro">stro</option>
                                                         <option value="houtvezel">houtvezel</option>
-                                                        <option value="houtvezel">vlas</option>
+                                                        <option value="vlas">vlas</option>
                                                     </select></label>
                                                 {errors.typeOfBedding &&
                                                     <p className="form-error-login">{errors.typeOfBedding.message}</p>}
@@ -727,7 +739,7 @@ function Profile() {
                                                     labelFor="vet-text-field"
                                                     inputId="vet-text-field"
                                                     inputName="nameOfVet"
-                                                    placeholder={selectedHorse.nameOfVet}
+                                                    textValue={selectedHorse.nameOfVet}
                                                     register={register}
                                                     validationRules={{
                                                         required: {
@@ -749,7 +761,7 @@ function Profile() {
                                                     labelFor="residenceOfVet-text-field"
                                                     inputId="residenceOfVet-text-field"
                                                     inputName="residenceOfVet"
-                                                    placeholder={selectedHorse.residenceOfVet}
+                                                    textValue={selectedHorse.residenceOfVet}
                                                     register={register}
                                                     validationRules={{
                                                         required: {
@@ -772,7 +784,7 @@ function Profile() {
                                                         type="tel"
                                                         id="telephoneOfVet-field"
                                                         pattern="[0-9]{10}"
-                                                        placeholder={selectedHorse.telephoneOfVet}
+                                                        defaultValue={selectedHorse.telephoneOfVet}
                                                         {...register("telephoneOfVet", {
                                                             required: {
                                                                 value: false,

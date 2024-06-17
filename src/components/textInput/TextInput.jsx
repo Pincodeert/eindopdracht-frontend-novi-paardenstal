@@ -7,12 +7,12 @@ function TextInput({labelFor, children, inputId, inputName, register, validation
             {children}
             <input
                 id={inputId}
-                value={textValue}
+                // value={textValue}
                 placeholder={placeholder}
                 {...register(inputName, validationRules)}
 
-                onChange={changeHandler}
-
+                // onChange={changeHandler}
+                defaultValue={textValue}
                 required={required}
             />
             {errors[inputName] && <p className="form-error-login">{errors[inputName].message}</p>}

@@ -9,6 +9,7 @@ import formatPrice from "../../helpers/formatPrice.js";
 import {displayCompleteName} from "../../helpers/editName.js";
 import reverseDate from "../../helpers/reverseDate.js";
 import {generateAdminErrorString} from "../../helpers/generate ErrorString.js";
+import {useForm} from "react-hook-form";
 
 function Admin() {
 
@@ -37,6 +38,7 @@ function Admin() {
     const [enrollments, setEnrollments] = useState([]);
     const [display, setDisplay] = useState("default");
 
+    const {register, formState: {errors}, handleSubmit} = useForm({mode: "onBlur"});
 
     useEffect(() => {
         // const abortController = new AbortController();
@@ -210,21 +212,21 @@ function Admin() {
     // console.log("de horseInfo:", horseInfo);
     // console.log("de beschikbare stallen: ", availableStalls);
 
-    function handleStallChange(e) {
-        setChosenStall(
-            {
-                id: e.target.value,
-            });
-    }
+    // function handleStallChange(e) {
+    //     setChosenStall(
+    //         {
+    //             id: e.target.value,
+    //         });
+    // }
 
     // console.log("de gekozen stallId: ", chosenStall.id);
 
-    async function assignHorseToStall(e) {
-        e.preventDefault();
+    async function assignHorseToStall(data) {
         toggleIsLoading(true);
         setError("");
+        console.log("horseInfo.Id = ", horseInfo.id, " en data.id = ", data.id, " en data = ", data);
         try {
-            const response = await axios.put(`http://localhost:8080/stalls/${chosenStall.id}/horse`, {
+            const response = await axios.put(`http://localhost:8080/stalls/${data.typeOfStall}/horse`, {
                 id: horseInfo.id,
             });
             console.log("het paard staat nu in de stal", response);
@@ -553,20 +555,27 @@ function calculateNewTasks() {
                                         klant</p>}
                                 {!horseAssignedSuccess && availableStalls.length > 0 &&
                                     <div className="edit-part">
-                                        <form className="horse-form" onSubmit={assignHorseToStall}>
+                                        <form className="horse-form" onSubmit={handleSubmit(assignHorseToStall)}>
                                             <label htmlFor="stall-type-select-field">
                                                 {horseInfo.typeOfStall}
                                             </label>
                                             <select
-                                                name="typeOfStall"
+                                                // name="typeOfStall"
                                                 id="stall-type-select-field"
+                                                {...register("typeOfStall", {
+                                                    required: {
+                                                        value: true,
+                                                        message: "maak een keuze",
+                                                    }
+                                                })}
                                                 // value={chosenStall.id}
-                                                onChange={handleStallChange}
+                                                // onChange={handleStallChange}
                                             ><option className="disabled" >kies een stal</option>
                                                 {availableStalls.map((stall) => {
                                                 return <option key={stall.id} value={stall.id}>{stall.name}</option>
                                             })}
                                             </select>
+                                            {errors.typeOfStall && <p className="form-error">{errors.typeOfStall}</p>}
                                             <Button
                                                 type="submit"
                                                 disabled={false}
