@@ -12,32 +12,21 @@ import {useForm} from "react-hook-form";
 import Display from "../../components/display/Display.jsx";
 import generateSubscriptionDetails from "../../helpers/generateSubscriptionDetails.js";
 import TableHead from "../../components/tableHead/TableHead.jsx";
-import generateFetchErrorString from "../../helpers/generate ErrorString.js";
-// import SubscribeCard from "../../components/subscribeCard/SubscribeCard.jsx";
-
-// import {i} from "vite/dist/node/types.d-FdqQ54oU.js";
+import generateFetchErrorString, {generateSaveErrorString} from "../../helpers/generate ErrorString.js";
 
 function Profile() {
     const [error, setError] = useState("");
+    const [customerError, setCustomerError] = useState("");
+    const [horsesError, setHorsesError] = useState("");
+    const [enrollmentsError, setEnrollmentsError] = useState("");
+    const [customerUpdateError, setCustomerUpdateError] = useState("");
+    const [horseUpdateError, setHorseUpdateError] = useState("");
+    const [passportError, setPassportError] = useState("");
     const [profile, setProfile] = useState({});
     const [horses, setHorses] = useState([]);
-    // const [enrollmentList, setEnrollmentList] = useState([]);
     const [enrollmentList, setEnrollmentList] = useState([]);
-    // const [stall, setStall] = useState({});
     const [enableCustomerChange, toggleEnableCustomerChange] = useState(false);
     const [enabledHorseChange, toggleEnabledHorseChange] = useState(false);
-    // const [selectedHorseId, setSelectedHorseId] = useState(0);
-    const [horse, setHorse] = useState(null
-        // id: 0,
-        // name: "",
-        // horseNumber: "",
-        // typeOfFeed: "hay",
-        // typeOfBedding: "straw",
-        // nameOfVet: "",
-        // residenceOfVet: "",
-        // telephoneOfVet: "",
-        // passport: null,
-    );
     const [selectedHorse, setSelectedHorse] = useState(null);
     const [selectedPassport, setSelectedPassport] = useState(null);
     const [cancellationSuccess, toggleCancellationSuccess] = useState(false);
@@ -75,7 +64,7 @@ function Profile() {
             setError("");
             toggleIsLoading(true);
             try {
-                const response = await axios.get(`http://localhost:8080/customerprofils/${customerProfileId}`, {
+                const response = await axios.get(`http://localhost:8080/customerprofiles/${customerProfileId}`, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
@@ -87,7 +76,7 @@ function Profile() {
                 setProfile(customer);
             } catch (error) {
                 console.error(error);
-                setError(generateFetchErrorString("klantgegegevens"));
+                setCustomerError(generateFetchErrorString("klantgegegevens"));
             } finally {
                 toggleIsLoading(false);
             }
@@ -97,7 +86,7 @@ function Profile() {
             abortController.abort();
         }
     }, [customerUpdateSuccess]);
-    console.log("dit zijn de paarden: ")
+    // console.log("dit zijn de paarden: ");
 
     //paarden van desbetreffende klant ophalen uit backend
     useEffect(() => {
@@ -125,7 +114,7 @@ function Profile() {
                 setHorses(sortedHorseList);
             } catch (error) {
                 console.error(error);
-                setError(generateFetchErrorString("paardgegevens"));
+                setHorsesError(generateFetchErrorString("paardgegevens"));
             } finally {
                 toggleIsLoading(false);
             }
@@ -143,6 +132,7 @@ function Profile() {
 
         async function fetchEnrollementsByCustomer(customerProfileId) {
             setError("");
+            toggleIsLoading(true);
             try {
                 const response = await axios.get(`http://localhost:8080/customerprofiles/${customerProfileId}/enrollments`, {
                     headers: {
@@ -156,10 +146,11 @@ function Profile() {
                 setEnrollmentList(enrollments);
             } catch (error) {
                 console.error(error);
-                setError("uw abonnementgegevens kunnen niet worden opgehaald")
+                setEnrollmentsError(generateFetchErrorString("abonnementgegevens"));
+            } finally {
+                toggleIsLoading(false);
             }
         }
-
         void fetchEnrollementsByCustomer(customerProfileId);
         return function cleanUp() {
             abortController.abort();
@@ -167,18 +158,18 @@ function Profile() {
     }, [cancellationSuccess]);
 
 
-    function selectHorse(selectedHorseId) {
-        const selectedHorse = horses.find((horse) => {
-            return horse.id === selectedHorseId;
-        });
-        console.log(horses);
-        console.log(selectedHorse);
-        setHorse({
-            ...horse,
-            selectedHorse
-        });
-        return selectedHorse;
-    }
+    // function selectHorse(selectedHorseId) {
+    //     const selectedHorse = horses.find((horse) => {
+    //         return horse.id === selectedHorseId;
+    //     });
+    //     console.log(horses);
+    //     console.log(selectedHorse);
+    //     setHorse({
+    //         ...horse,
+    //         selectedHorse
+    //     });
+    //     return selectedHorse;
+    // }
 
 //////// handle change //////////////////
 //     function handleCustomerChange(e) {
@@ -210,6 +201,7 @@ function Profile() {
 //     async function updateCustomer() {
     async function handleCustomerForm(customerFormState) {
         setError("");
+        toggleIsLoading(true);
         toggleCustomerUpdateSuccess(false);
         console.log("dit is de customerFormState: ", customerFormState);
         try {
@@ -227,7 +219,9 @@ function Profile() {
             toggleEnableCustomerChange(false);
         } catch (error) {
             console.error(error);
-            setError(error);
+            setCustomerUpdateError(generateSaveErrorString("persoonsgegevens"));
+        } finally {
+            toggleIsLoading(false);
         }
     }
 
@@ -236,6 +230,7 @@ function Profile() {
     async function handleHorseForm(horseFormState) {
         setError("");
         toggleHorseUpdateSuccess(false);
+        toggleIsLoading(true);
         // selectHorse(selectedHorseId);
         console.log("dit is de horseFormState", horseFormState);
         try {
@@ -248,14 +243,16 @@ function Profile() {
                     Authorization: `Bearer ${token}`,
                 }
             });
-            console.log(`het updaten van paard id ${selectedHorse.id} is gelukt!`);
-            console.log(response);
-            console.log("uw paard gegevens zijn gewijzigd");
+            // console.log(`het updaten van paard id ${selectedHorse.id} is gelukt!`);
+            // console.log(response);
+            // console.log("uw paard gegevens zijn gewijzigd");
             toggleHorseUpdateSuccess(true);
             // toggleEnabledHorseChange(false);
         } catch (error) {
             console.error(error);
-            setError(error);
+            setHorseUpdateError(generateSaveErrorString("paardgegevens"));
+        } finally {
+            toggleIsLoading(false);
         }
     }
 
@@ -275,17 +272,19 @@ function Profile() {
 
 
         async function fetchPassport() {
+            setError("");
+            toggleIsLoading(true);
             try {
                 const selectedPassport = await axios.get(horse.passport.url);
-                console.log(selectedPassport);
                 // const passportUrl = URL.createObjectURL(selectedPassport);
                 // const passportUrl = URL.revokeObjectURL(selectedPassport);
                 setSelectedPassport(selectedPassport);
                 togglePassportDownloadSuccess(true);
-                console.log("en zie je het paard nu?")
             } catch (error) {
                 console.error(error);
-                setError(error);
+                setPassportError(generateFetchErrorString("paardenpaspoort"));
+            } finally {
+                toggleIsLoading(false);
             }
         }
         void fetchPassport();
@@ -294,14 +293,8 @@ function Profile() {
 
     function hidePassport() {
         togglePassportDownloadSuccess(false);
-        // setSelectedHorse({});
+        setSelectedHorse({});
     }
-    // console.log("dit is de togglePaasportDownloadSuccess", passportDownloadSuccess);
-
-
-    // console.log("dit is het profiel", profile);
-
-
 
     function setToDefault() {
         toggleEnabledHorseChange(false);
@@ -322,6 +315,7 @@ function Profile() {
 
      async function handleCancellation(id){
         setError("");
+        toggleIsLoading(true);
         toggleCancellationSuccess(false);
         try {
             const response = await axios.patch(`http://localhost:8080/enrollments/${id}`);
@@ -330,7 +324,9 @@ function Profile() {
             toggleCancellationSuccess(true);
         } catch (error) {
             console.error(error);
-            setError(error);
+            setError(generateSaveErrorString("annuleringsverzoek"));
+        } finally {
+            toggleIsLoading(false);
         }
      }
 
@@ -378,10 +374,21 @@ function Profile() {
                         </Button>
                     </nav>
                     <div className="profile-content-container">
-                        <div className="intro-content-wrapper">
-                            {Object.keys(profile).length > 0 && <h3>Welkom {profile.firstName} {profile.lastName}</h3>}
-                            {Object.keys(profile).length > 0 && <p>klantnummer: 20240{profile.id} </p>}
-                        </div>
+                        {/*{Object.keys(profile).length > 0 ?*/}
+                        {/*<div className="intro-content-wrapper">*/}
+                        {/*     <h3>Welkom {profile.firstName} {profile.lastName}</h3>*/}
+                        {/*    <p>klantnummer: 20240{profile.id}</p>*/}
+                        {/*</div> : <div>*/}
+                        {/*        <h3>Welkom stranger</h3>*/}
+                        {/*        <p>Er zijn nog geen gegevens van u bekend. Meld u eerst via het menu aan voor een abonnement.</p>*/}
+                        {/*    </div>}*/}
+
+                        {Object.keys(profile).length > 0 &&
+                            <div className="intro-content-wrapper">
+                                <h3>Welkom {profile.firstName} {profile.lastName}</h3>
+                                <p>klantnummer: 20240{profile.id}</p>
+                            </div>}
+
                         <article id="yourpersonalia" className="content-wrapper persona">
                             <div className="content-title">
                                 {!enableCustomerChange ? <h4>Uw gegevens</h4> :
@@ -400,7 +407,9 @@ function Profile() {
                                     Annuleer
                                 </Button>}
                             </div>
-                            {error ? <p className="error">{error}</p> :
+                            {isLoading && <p>...Loading</p>}
+                            {/*{Object.keys(profile).length === 0 && <p>Er zijn nog geen gegevens van uw bekend bij ons. Meld u eerst aan voor een abonnement.</p> }*/}
+                            {customerError ? <p className="error">{customerError}</p> :
                             <div className="table-form-container">
                                 <table className="table">
                                     <TableHead
@@ -416,18 +425,19 @@ function Profile() {
                                     </TableHead>
                                     {!enableCustomerChange && <tbody>
                                     <tr className="table-body">
-                                        <td>{profile.street}</td>
-                                        <td>{profile.houseNumber}</td>
-                                        <td>{profile.postalCode}</td>
-                                        <td>{profile.residence}</td>
-                                        <td>{profile.telephoneNumber}</td>
-                                        <td>{profile.emailAddress}</td>
-                                        <td>{profile.bankAccountNumber}</td>
+                                        {profile.street && <td>{profile.street}</td>}
+                                        {profile.houseNumber && <td>{profile.houseNumber}</td>}
+                                        {profile.postalCode && <td>{profile.postalCode}</td>}
+                                        {profile.residence && <td>{profile.residence}</td>}
+                                        {profile.telephoneNumber && <td>{profile.telephoneNumber}</td>}
+                                        {profile.emailAddress && <td>{profile.emailAddress}</td>}
+                                        {profile.bankAccountNumber && <td>{profile.bankAccountNumber}</td>}
                                     </tr>
                                     </tbody>}
                                 </table>
                                 {enableCustomerChange &&
                                     <form className="profile-form" onSubmit={handleSubmit(handleCustomerForm)}>
+                                        {isLoading && <p>...Loading</p>}
                                         <TextInput
                                             inputName="street"
                                             placeholder={profile.street}
@@ -551,7 +561,7 @@ function Profile() {
                                             validationRules={{
                                                 required: {
                                                     value: false,
-                                                    message: "bank/IBAN-nummer is verplicht"
+                                                    // message: "bank/IBAN-nummer is verplicht"
                                                 },
                                                 minLength: {
                                                     value: 16,
@@ -570,6 +580,7 @@ function Profile() {
                                         >
                                             Verstuur
                                         </Button>
+                                        {customerUpdateError && <p className="error">{customerUpdateError}</p>}
                                     </form>}
                             </div>}
                         </article>
@@ -578,8 +589,9 @@ function Profile() {
                                 className="content-wrapper horses"
                                 title="Uw paarden"
                             >
-                                {error && <p className="error">{error}</p>}
-                                {horses.length === 0 ?
+                                {isLoading && <p>...Loading</p>}
+                                {horsesError && <p className="error">{horsesError}</p>}
+                                {!horsesError && horses.length === 0 ?
                                     <p>U heeft nog geen paarden toegevoegd</p>
                                     :
                                     horses.map((horse) => {
@@ -612,12 +624,12 @@ function Profile() {
                                                 </TableHead>
                                                 {!enabledHorseChange && <tbody>
                                                 <tr className="table-body">
-                                                    <td>{horse.horseNumber}</td>
-                                                    <td>{horse.typeOfFeed}</td>
-                                                    <td>{horse.typeOfBedding}</td>
-                                                    <td>{horse.nameOfVet}</td>
-                                                    <td>{horse.residenceOfVet}</td>
-                                                    <td>{horse.telephoneOfVet}</td>
+                                                    {horse.horseNumber && <td>{horse.horseNumber}</td>}
+                                                {horse.typeOfFeed && <td>{horse.typeOfFeed}</td>}
+                                                {horse.typeOfBedding && <td>{horse.typeOfBedding}</td>}
+                                                {horse.nameOfVet && <td>{horse.nameOfVet}</td>}
+                                                {horse.residenceOfVet && <td>{horse.residenceOfVet}</td>}
+                                                {horse.telephoneOfVet && <td>{horse.telephoneOfVet}</td>}
                                                     {horse.stall ?
                                                         <td>{horse.stall.name} </td>
                                                         :
@@ -630,12 +642,13 @@ function Profile() {
                                                     <td>{<Button type="button" disabled={false}
                                                                      handleClick={hidePassport}>
                                                             Verberg</Button>}</td>}
-
                                                     <td>{horse.passport && passportDownloadSuccess && horse.id === selectedHorse.id &&
                                                         <div className="passport-image"><img src={`${horse.passport.url}`} alt="paardenpaspoort"/></div>}</td>
                                                 </tr>
                                                 </tbody>}
                                             </table>
+                                            {isLoading && <p>...isLoading</p>}
+                                            {passportError && <p className="error">{passportError}</p>}
                                         </div>
                                     })}
                             </Display>}
@@ -646,6 +659,7 @@ function Profile() {
                             >
                                 <div className="horse-wrapper">
                                     <div className="head-line">
+                                        {isLoading && <p>...Loading</p>}
                                         <p className="horsename">{selectedHorse.name} {selectedHorse.id}</p>
                                         <Button
                                             type="button"
@@ -783,6 +797,7 @@ function Profile() {
                                                 >
                                                     Wijzig
                                                 </Button>
+                                                {horseUpdateError && <p className="error">{horseUpdateError}</p>}
                                             </form>}
                                         {horseUpdateSuccess && <div>
                                             <p className="success">De gegevens van uw paard {selectedHorse.name} zijn
@@ -803,7 +818,9 @@ function Profile() {
                             className="content-wrapper horses"
                             title="Uw abonnementen"
                         >
-                            {enrollmentList.length === 0 ?
+                            {isLoading && <p>...Loading</p>}
+                            {enrollmentsError && <p className="error">{enrollmentsError}</p>}
+                            {!enrollmentsError && enrollmentList.length === 0 ?
                                 <p>U heeft nog geen abonnementen</p> : enrollmentList.map((enrollment) => {
                                     return <div key={enrollment.id} className="subscriptiom-wrapper">
                                         <div className="head-line">
@@ -870,6 +887,7 @@ function Profile() {
                                     </div>
                                     {!cancellationSuccess &&
                                     <div className="cancellation-container">
+                                        {isLoading && <p>...Loading</p>}
                                         <p>U staat op het punt om het volgende abonnement te annuleren voor uw
                                             paard {selectedEnrollement.horse.name} </p>
                                         <p>{selectedEnrollement.subscription.name} sinds {selectedEnrollement.startDate}</p>
@@ -882,6 +900,7 @@ function Profile() {
                                             >
                                                 Bevestig annulering
                                             </Button>
+                                        {error && <p className="error">{error}</p>}
                                     </div>}
                                         {cancellationSuccess && <div>
                                             <p className="success">Uw verzoek tot annulering van dit abonnement is

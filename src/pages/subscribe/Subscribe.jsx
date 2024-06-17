@@ -12,6 +12,7 @@ import axios from "axios";
 import {useForm} from "react-hook-form";
 import {AuthContext} from "../../context/AuthContext.jsx";
 import {SubscriptionContext} from "../../context/SubscriptionContext.jsx";
+import generateFetchErrorString, {generateSaveErrorString} from "../../helpers/generate ErrorString.js";
 
 function Subscribe() {
     const [subscription, setSubscription] = useState({});
@@ -49,13 +50,11 @@ function Subscribe() {
                 setSubscription(response.data);
             } catch (error) {
                 console.error(error);
-                setSubscribeInfoError("het ophalen van het gekozen abonnement is niet gelukt. " +
-                    "Mocht dit probleem zich blijven voordoen, neem dan contact met ons op");
+                setSubscribeInfoError(generateFetchErrorString("gekozen abonnement"));
             } finally {
                 toggleIsLoading(false);
             }
         }
-
         void fetchSubscription(subscriptionId);
         return function cleanUp() {
             abortController.abort();
@@ -90,14 +89,14 @@ function Subscribe() {
         setError("");
         toggleIsLoading(true);
         try {
-            console.log("dit gaan we zo posten naar de backend: ", customerFormState);
+            // console.log("dit gaan we zo posten naar de backend: ", customerFormState);
             const response = await axios.post("http://localhost:8080/customerprofiles", {
                 ...customerFormState
             });
             setNewlyCustomerId(response.data);
         } catch (error) {
             console.error(error);
-            setError("Uw gegevens konden niet worden verwerkt. Probeer het opnieuw. Neem contact met ons op, wanneer dit probleem zich blijft voordoen.");
+            setError(generateSaveErrorString("gegevens "));
         } finally {
             toggleIsLoading(false);
         }
@@ -119,7 +118,7 @@ function Subscribe() {
             setStep("step2");
         } catch (error) {
             console.error(error);
-            setError("Uw gegevens konden niet gekoppeld worden. Probeer het opnieuw. Neem contact met ons op, wanneer dit probleem zich blijft voordoen.");
+            setError(generateSaveErrorString("gegevens"));
         } finally {
             toggleIsLoading(false);
         }
@@ -144,8 +143,7 @@ function Subscribe() {
             setStep("step3")
         } catch (error) {
             console.error(error);
-            setError("De paardgegevens konden niet worden verwerkt. Probeer het opnieuw. Indien dit probleem zich " +
-                "voor blijft doen, neem dan contact met ons op.");
+            setError(generateSaveErrorString("paardgegevens"));
         } finally {
             toggleIsLoading(false);
         }
@@ -204,8 +202,7 @@ function Subscribe() {
             // }
         } catch (error) {
             console.error(error);
-            setError("Uw aanvraag kon niet worden verwerkt. Probeer het opnieuw. Neem contact met ons op, wanneer " +
-                "dit probleem zich blijft voordoen.");
+            setError(generateSaveErrorString("aanvraag"));
         } finally {
             toggleIsLoading(false);
             resetSubscription();

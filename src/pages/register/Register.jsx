@@ -10,15 +10,14 @@ import axios from "axios";
 
 function Register() {
     const [error, setError] = useState("");
+    const [isLoading, toggleIsLoading] = useState(false);
 
     const navigate = useNavigate();
-    const {
-        register, formState: {errors},
-        handleSubmit
-    } = useForm({mode: "onBlur"});
+    const {register, formState: {errors}, handleSubmit} = useForm({mode: "onBlur"});
 
     async function handleFormSubmit(formState) {
         setError("");
+        toggleIsLoading(true);
         try {
             const response = await axios.post("http://localhost:8080/users", {
                 ...formState
@@ -29,7 +28,10 @@ function Register() {
             }
         } catch (error) {
             console.error(error);
-            setError(error);
+            setError("De account kon niet worden aangemaakt. Probeer het opnieuw. Wanneer dit probleem zich " +
+                "blijft voordoen, neem dan contact met op ons.");
+        } finally {
+            toggleIsLoading(false);
         }
     }
 
@@ -116,9 +118,9 @@ function Register() {
                                 />
                                 {errors.email && <p className="form-error-login">{errors.email.message}</p>}
                             </label>
+                            {isLoading && <p className="loading-login">Loading...</p>}
                             {error &&
-                                <p className="form-error">De account kon niet worden aangemaakt. Probeer het opnieuw.
-                                    Wanneer dit probleem zich blijft voordoen, neem dan contact met op ons.</p>}
+                                <p className="form-error-login">{error}</p>}
                             <div className="form-button-wrapper">
                                 <Button
                                     type="submit"

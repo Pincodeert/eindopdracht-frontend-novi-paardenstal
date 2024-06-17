@@ -8,6 +8,7 @@ import TableHead from "../../components/tableHead/TableHead.jsx";
 import formatPrice from "../../helpers/formatPrice.js";
 import {displayCompleteName} from "../../helpers/editName.js";
 import reverseDate from "../../helpers/reverseDate.js";
+import {generateAdminErrorString} from "../../helpers/generate ErrorString.js";
 
 function Admin() {
 
@@ -38,11 +39,14 @@ function Admin() {
 
 
     useEffect(() => {
+        // const abortController = new AbortController();
         async function fetchHorses() {
             toggleIsLoading(true);
             setNewHorsesError("");
             try {
-                const response = await axios.get("http://localhost:8080/horses");
+                const response = await axios.get("http://localhost:8080/horses", {
+                    // signal: abortController.signal,
+                });
                 // console.log("hier zijn de paarden:", response);
                 const fetchedHorses = response.data
                 setHorses(fetchedHorses);
@@ -54,12 +58,15 @@ function Admin() {
                 setNewHorses(newHorses);
             } catch (error) {
                 console.error(error);
-                setNewHorsesError(error);
+                setNewHorsesError(generateAdminErrorString("het ophalen van de paarden", error.message));
             } finally {
                 toggleIsLoading(false);
             }
         }
         void fetchHorses();
+        // return function cleanUp() {
+        //     abortController.abort();
+        // }
     }, [editingNewEnrollment]);
 
     useEffect(() => {
@@ -78,40 +85,39 @@ function Admin() {
                 setCancellationRequests(response.data);
             } catch (error) {
                 console.error(error);
-                setCancellationRequestError(error);
+                setCancellationRequestError(generateAdminErrorString("het ophalen van de annuleringsverzoeken", error.message));
             } finally {
                 toggleIsLoading(false);
             }
         }
         void fetchCancellationRequests();
-
         return function cleanUp() {
             abortController.abort();
         }
     }, [editingCancellation]);
 
     useEffect(() => {
-        const abortController = new AbortController();
+        // const abortController = new AbortController();
         async function fetchAllSubscriptions() {
             toggleIsLoading(true);
             setError("");
             try {
                 const response = await axios.get("http://localhost:8080/subscriptions", {
-                    signal: abortController.signal,
+                    // signal: abortController.signal,
                 });
                 // console.log("alle abonnementtypen: ", response.data);
                 setSubscriptions(response.data);
             } catch (error) {
                 console.error(error);
-                setError(error);
+                setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
             } finally {
                 toggleIsLoading(false);
             }
         }
         void fetchAllSubscriptions();
-        return function cleanup() {
-            abortController.abort();
-        }
+        // return function cleanup() {
+        //     abortController.abort();
+        // }
     }, []);
 
 
@@ -124,7 +130,7 @@ function Admin() {
             setCustomers(response.data);
         } catch (error) {
             console.error(error);
-            setError(error);
+            setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
         } finally {
             toggleIsLoading(false);
         }
@@ -168,7 +174,7 @@ function Admin() {
             setAvailableStalls(response.data);
         } catch (error) {
             console.error(error);
-            setFetchStallError(error);
+            setFetchStallError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
         } finally {
             toggleIsLoading(false);
         }
@@ -221,7 +227,7 @@ function Admin() {
             const response = await axios.put(`http://localhost:8080/stalls/${chosenStall.id}/horse`, {
                 id: horseInfo.id,
             });
-            // console.log("het paard staat nu in de stal", response);
+            console.log("het paard staat nu in de stal", response);
             setEnrollmentInfo({
                 subscriptionId: horseInfo.subscriptionId,
                 customerId: horseInfo.owner.id,
@@ -230,7 +236,7 @@ function Admin() {
             toggleHorseAssignedSuccess(true);
         } catch (error) {
             console.error(error);
-            setError(error);
+            setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
         } finally {
             toggleIsLoading(false);
         }
@@ -248,7 +254,7 @@ function Admin() {
             toggleEnrollmentCreatedSuccess(true);
         } catch (error) {
             console.error(error);
-            setError(error);
+            setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
         } finally {
             toggleIsLoading(false);
         }
@@ -299,7 +305,7 @@ function Admin() {
             toggleHorseRemovedSuccess(true);
         } catch (error) {
             console.error(error);
-            setError("error");
+            setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
         } finally {
             toggleIsLoading(false);
         }
@@ -318,7 +324,7 @@ function Admin() {
             toggleEnrollmentTerminatedSuccess(true);
         } catch (error) {
             console.error(error);
-            setError(error);
+            setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
         } finally {
             toggleIsLoading(false);
         }
@@ -340,7 +346,7 @@ function Admin() {
             setStalls(response.data);
         } catch(error) {
             console.error(error);
-            setError(error);
+            setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
         } finally {
             toggleIsLoading(false);
         }
@@ -361,7 +367,7 @@ function Admin() {
             setEnrollments(response.data);
         } catch(error) {
             console.error(error);
-            setError(error);
+            setError(generateAdminErrorString("het ophalen/bewerken van de gegevens", error.message));
         } finally {
             toggleIsLoading(false);
         }
@@ -476,7 +482,7 @@ function calculateNewTasks() {
                             >
                                 {isLoading && <p>Loading...</p>}
                                 {newHorsesError &&
-                                    <p className="error">De nieuwe aanvragen konden niet worden opgehaald.</p>}
+                                    <p className="error">{newHorsesError}</p>}
                                 {!newHorsesError && !isLoading && newHorses.length === 0 &&
                                     <p className="nothing-message">Er zijn momenteel geen nieuwe aanvragen.</p>}
                                 {!newHorsesError && !isLoading && newHorses.length > 0 &&
@@ -541,8 +547,7 @@ function calculateNewTasks() {
                                     </table>
                                 </div>
                                 {fetchStallError &&
-                                    <p className="error">De beschikbare stallen konden niet worden opgehaald.
-                                        Probeer het opnieuw</p>}
+                                    <p className="error">{fetchStallError}</p>}
                                 {availableStalls.length === 0 &&
                                     <p>er zijn geen stallen meer beschikbaar van dit type. Neem contact op met de
                                         klant</p>}
@@ -569,15 +574,17 @@ function calculateNewTasks() {
                                                 Kies deze stal
                                             </Button>
                                             {error &&
-                                                <p className="error">Het paard kon niet toegewezen worden aan de
-                                                    stal. Probeer het opnieuw.</p>}
+                                                // <p className="error">Het paard kon niet toegewezen worden aan de
+                                                //     stal. Probeer het opnieuw.</p>}
+                                                <p className="error">{error}</p>}
                                         </form>
                                     </div>}
                                 {horseAssignedSuccess && !enrollmentCreatedSuccess &&
                                     <div className="edit-part">
                                         {error ?
-                                            <p className="error">Er kon geen nieuw abonnement worden aangemaakt.
-                                                Probeer het opnieuw.</p> :
+                                            // <p className="error">Er kon geen nieuw abonnement worden aangemaakt.
+                                            //     Probeer het opnieuw.</p>
+                                            <p className="error">{error}</p> :
                                             <p className="success-message">{horseInfo.name} is succesvol toegevoegd
                                                 aan
                                                 een {horseInfo.typeOfStall}</p>}
@@ -608,7 +615,7 @@ function calculateNewTasks() {
                             >
                                 {isLoading && <p>Loading...</p>}
                                 {cancellationRequestError &&
-                                    <p className="error">De annuleringen konden niet worden opgehaald.</p>}
+                                    <p className="error">{cancellationRequestError}</p>}
                                 {!cancellationRequestError && !isLoading && cancellationRequests.length === 0 &&
                                     <p className="nothing-message">Er zijn momenteel geen annuleringsverzoeken.</p>}
                                 {!cancellationRequestError && cancellationRequests.length > 0 &&
@@ -676,9 +683,10 @@ function calculateNewTasks() {
                                 {!horseRemovedSuccess &&
                                     <div className="edit-part">
                                         {error ?
-                                            <p className="error">Het paard kon uit de stal verwijderd worden.
-                                                Check of het in een
-                                                stal staat en/of probeer het opnieuw</p>
+                                            // <p className="error">Het paard kon uit de stal verwijderd worden.
+                                            //     Check of het in een
+                                            //     stal staat en/of probeer het opnieuw</p>
+                                            <p className="error">{error}</p>
                                             :
                                             <p className="success-message">Verwijder
                                                 paard {cancellationInfo.horseName} uit
@@ -694,8 +702,9 @@ function calculateNewTasks() {
                                 {horseRemovedSuccess && !enrollmentTerminatedSuccess &&
                                     <div className="edit-part">
                                         {error ?
-                                            <p className="error">Het abonnement kon niet worden beeindigd.
-                                                Probeer het opnieuw.</p>
+                                            // <p className="error">Het abonnement kon niet worden beeindigd.
+                                            //     Probeer het opnieuw.</p>
+                                            <p className="error">{error}</p>
                                             :
                                             <p className="success-message">Paard {cancellationInfo.horseName} is
                                                 succesvol verwijderd uit
@@ -730,7 +739,7 @@ function calculateNewTasks() {
                                 title="Klanten"
                             >
                                 {isLoading && <p>Loading...</p>}
-                                {error && <p className="error">{error.message}</p>}
+                                {error && <p className="error">{error}</p>}
                                 {!isLoading && !error && customers.length === 0 && <p>Er zijn nog geen klanten. Keep the faith!</p>}
                                 {customers.length > 0 &&
                                 <table className="admin-table">
@@ -770,7 +779,7 @@ function calculateNewTasks() {
                                 title="Paarden"
                             >
                                 {isLoading && <p>Loading...</p>}
-                                {error && <p className="error">{error.message}</p>}
+                                {error && <p className="error">{error}</p>}
                                 {!isLoading && !error && horses.length === 0 && <p>Er zijn nog geen paarden. Keep the faith!</p>}
                                 {horses.length > 0 &&
                                 <table className="admin-table">
@@ -808,7 +817,7 @@ function calculateNewTasks() {
                             title="Stallen"
                         >
                             {isLoading && <p>Loading...</p>}
-                            {error && <p className="error">{error.message}</p>}
+                            {error && <p className="error">{error}</p>}
                             {!isLoading && !error && stalls.length === 0 && <p>Er zijn geen stallen.</p>}
                             {stalls.length > 0 &&
                             <table className="admin-table">
@@ -842,7 +851,7 @@ function calculateNewTasks() {
                                 title="Abonnementstypen"
                             >
                                 {isLoading && <p>Loading...</p>}
-                                {error && <p className="error">{error.message}</p>}
+                                {error && <p className="error">{error}</p>}
                                 {!isLoading && !error && subscriptions.length === 0 && <p>Er zijn nog geen abonnementsoorten.</p>}
                                 {subscriptions.length > 0 &&
                                 <table className="admin-table">
@@ -871,7 +880,7 @@ function calculateNewTasks() {
                                 title="Inschrijvingen"
                             >
                                 {isLoading && <p>Loading...</p>}
-                                {error && <p className="error">{error.message}</p>}
+                                {error && <p className="error">{error}</p>}
                                 {!isLoading && !error && enrollments.length === 0 && <p>Er zijn nog geen inschrijvingen.
                                     Keep the faith!</p>}
                                 {enrollments.length > 0 &&

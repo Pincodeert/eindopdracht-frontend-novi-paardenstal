@@ -12,6 +12,7 @@ import {useForm} from "react-hook-form";
 
 function Login() {
     const [error, setError] = useState("");
+    const [isLoading, toggleIsLoading] = useState(false);
 
     const navigate = useNavigate();
     const {register, formState: {errors}, handleSubmit} = useForm({mode: "onBlur"});
@@ -22,6 +23,7 @@ function Login() {
 
     async function handleFormSubmit(data) {
         setError("");
+        toggleIsLoading(true);
         try {
             const response = await axios.post("http://localhost:8080/authenticate", {
                 ...data
@@ -30,7 +32,10 @@ function Login() {
             signIn(response.data.jwt, subscriptionId);
         } catch (error) {
             console.error(error);
-            setError(error);
+            setError("Inloggen niet gelukt. Probeer het opnieuw. Neem contact met ons op, wanneer dit probleem " +
+                "zich blijft voordoen.");
+        } finally {
+            toggleIsLoading(false);
         }
     }
 
@@ -102,7 +107,8 @@ function Login() {
                                 />
                                 {errors.password && <p className="form-error-login">{errors.password.message}</p>}
                             </label>
-                            {error && <p className="form-error-login">Inloggen niet gelukt. Probeer het opnieuw!</p>}
+                            {isLoading && <p className="loading-login">Loading...</p>}
+                            {error && <p className="form-error-login">{error}</p>}
                             <div className="form-button-wrapper">
                                 <a href="https://www.seniorweb.nl/tip/sterk-wachtwoord-maken-onthouden" target="_blank"
                                 >

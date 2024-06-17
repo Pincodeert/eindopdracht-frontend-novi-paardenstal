@@ -107,3 +107,7 @@ a {
     color: var(--orange);
     /*background-color: var(--army);*/
 }
+
+.loading-login {
+    color: var(--pale);
+}
