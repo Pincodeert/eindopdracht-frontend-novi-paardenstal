@@ -1,7 +1,7 @@
 import './Admin.css';
 import Button from "../../components/button/Button.jsx";
 import {Link} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import Display from "../../components/display/Display.jsx";
 import TableHead from "../../components/tableHead/TableHead.jsx";
@@ -10,6 +10,7 @@ import {displayCompleteName} from "../../helpers/editName.js";
 import reverseDate from "../../helpers/reverseDate.js";
 import {generateAdminErrorString} from "../../helpers/generate ErrorString.js";
 import {useForm} from "react-hook-form";
+import {AuthContext} from "../../context/AuthContext.jsx";
 
 function Admin() {
 
@@ -39,6 +40,8 @@ function Admin() {
     const [display, setDisplay] = useState("default");
 
     const {register, formState: {errors}, handleSubmit} = useForm({mode: "onBlur"});
+    const token = localStorage.getItem('token');
+    const {isAuth, signOut} = useContext(AuthContext);
 
     useEffect(() => {
         // const abortController = new AbortController();
@@ -47,6 +50,10 @@ function Admin() {
             setNewHorsesError("");
             try {
                 const response = await axios.get("http://localhost:8080/horses", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
                     // signal: abortController.signal,
                 });
                 // console.log("hier zijn de paarden:", response);
@@ -78,6 +85,10 @@ function Admin() {
             setCancellationRequestError("");
             try {
                 const response = await axios.get("http://localhost:8080/enrollments", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
                     params: {
                         cancellationRequested: true,
                     },
@@ -105,6 +116,10 @@ function Admin() {
             setError("");
             try {
                 const response = await axios.get("http://localhost:8080/subscriptions", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
                     // signal: abortController.signal,
                 });
                 // console.log("alle abonnementtypen: ", response.data);
@@ -127,7 +142,12 @@ function Admin() {
         toggleIsLoading(true);
         setError("");
         try {
-            const response = await axios.get("http://localhost:8080/customerprofiles");
+            const response = await axios.get("http://localhost:8080/customerprofiles", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             // console.log("hier zijn alle klanten: ", response);
             setCustomers(response.data);
         } catch (error) {
@@ -164,8 +184,11 @@ function Admin() {
         toggleIsLoading(true);
         setFetchStallError("");
         try {
-            const response = await axios.get(`http://localhost:8080/stalls`
-                , {
+            const response = await axios.get(`http://localhost:8080/stalls`, {
+                headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
                 params: {
                     type: `${stallType}`,
                     isOccupied: false,
@@ -228,6 +251,11 @@ function Admin() {
         try {
             const response = await axios.put(`http://localhost:8080/stalls/${data.typeOfStall}/horse`, {
                 id: horseInfo.id,
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
             });
             console.log("het paard staat nu in de stal", response);
             setEnrollmentInfo({
@@ -250,6 +278,11 @@ function Admin() {
         try {
             const response = await axios.post("http://localhost:8080/enrollments", {
                 ...enrollmentInfo
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
             });
             // console.log(response);
             // setEnrollmentInfo({})
@@ -302,7 +335,12 @@ function Admin() {
         toggleIsLoading(true);
         setError("");
         try {
-            const response = await axios.put(`http://localhost:8080/stalls/${stallId}`);
+            const response = await axios.put(`http://localhost:8080/stalls/${stallId}`, {}, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             // console.log("hetpaard is verwijderd uit stallnr,", stallId, response);
             toggleHorseRemovedSuccess(true);
         } catch (error) {
@@ -321,6 +359,11 @@ function Admin() {
                 "isOngoing": true,
                 "subscriptionId": cancellationInfo.subscriptionId,
                 "customerId": cancellationInfo.customerId,
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
             });
             // console.log("abonnement beeindigd!!", response);
             toggleEnrollmentTerminatedSuccess(true);
@@ -343,7 +386,12 @@ function Admin() {
         toggleIsLoading(true);
         setError("");
         try {
-            const response = await axios.get("http://localhost:8080/stalls");
+            const response = await axios.get("http://localhost:8080/stalls", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             // console.log("dit zijn de stallen", response.data);
             setStalls(response.data);
         } catch(error) {
@@ -364,7 +412,12 @@ function Admin() {
         toggleIsLoading(true);
         setError("");
         try {
-            const response = await axios.get("http://localhost:8080/enrollments");
+            const response = await axios.get("http://localhost:8080/enrollments", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             console.log(response.data);
             setEnrollments(response.data);
         } catch(error) {
@@ -409,7 +462,12 @@ function calculateNewTasks() {
                         <nav className="header-navigation">
                             {/*<h2>Blaze of Glory</h2>*/}
                             <Link to="/"><h2>Blaze of Glory</h2></Link>
-                            <h3>Here to make your day</h3>
+                            {isAuth && <Button
+                                type="button"
+                                handleClick={signOut}
+                            >
+                                uitloggen
+                            </Button>}
                             <div className="profile-icon">CE</div>
                         </nav>
                     </div>
