@@ -1,4 +1,3 @@
-
 function generateFetchErrorString(category) {
     return `Uw ${category} konden niet worden opgehaald. Neem contact met ons op, 
     wanneer dit probleem zich blijft voordoen.`

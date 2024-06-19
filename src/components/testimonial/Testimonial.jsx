@@ -1,18 +1,18 @@
 import quoteup from "../../assets/quotes-up.jpg";
 import quotedown from "../../assets/quotes-down.jpg";
-import './Testimonial.css';
+import styles from './Testimonial.module.css';
 
-function Testimonial(props) {
+function Testimonial({text, author}) {
     return (
-        <article className="testimonial-article">
-            <div className="quote-wrapper">
+        <article className={styles["testimonial-article"]}>
+            <div className={styles["quote-wrapper"]}>
                 <img src={quoteup} alt="quote-icon"/>
                 <p>
-                    {props.text}
+                    {text}
                 </p>
                 <img src={quotedown} alt="quote-icon"/>
             </div>
-            <p>-- {props.author} --</p>
+            <p>-- {author} --</p>
         </article>
     );
 }

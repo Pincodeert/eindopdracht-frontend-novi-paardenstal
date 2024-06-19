@@ -1,15 +1,15 @@
 import horse from "../../assets/Paard-bewerkt-header.jpg";
-import './HeaderContent.css';
+import styles from './HeaderContent.module.css';
 
 function HeaderContent() {
     return (
-        <div className="header-content-wrapper">
-                        <span className="header-content-image">
+        <div className={styles["header-content-wrapper"]}>
+                        <span className={styles["header-content-image"]}>
                             <img src={horse} alt="Original image by Taylor Brandon"/>
                         </span>
-            <div className="header-content-title">
+            <div className={styles["header-content-title"]}>
                 <h1>Blaze of Glory</h1>
-                <h2>Pensionstallen</h2>
+                <h2 className={styles["header-subtitle"]}>Pensionstallen</h2>
             </div>
         </div>
     );

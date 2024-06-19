@@ -17,3 +17,10 @@
     position: relative;
     right: 193px;
 }
+
+.header-subtitle {
+    font-family: "Jim Nightshade", cursive;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--orange);
+}

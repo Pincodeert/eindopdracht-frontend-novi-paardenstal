@@ -1,11 +1,11 @@
-import './FooterArticle.css';
+import styles from './FooterArticle.module.css';
 
-function FooterArticle(props) {
+function FooterArticle({classname, title, children}) {
     return (
-        <article className={props.classname}>
+        <article className={`${styles["footer-info"]} ${styles[classname]}`}>
             <div className="info-text-wrapper">
-                <p className="footer-info-title">{props.title}</p>
-                {props.children}
+                <p className={styles["footer-info-title"]}>{title}</p>
+                {children}
             </div>
         </article>
     );

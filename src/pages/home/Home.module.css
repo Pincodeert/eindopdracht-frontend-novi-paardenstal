@@ -32,11 +32,11 @@ body {
 
 }
 
-h1 {
-    font-family: "Jim Nightshade", cursive;
-    font-weight: 400;
-    font-style: normal;
-}
+/*h1 {*/
+/*    font-family: "Jim Nightshade", cursive;*/
+/*    font-weight: 400;*/
+/*    font-style: normal;*/
+/*}*/
 
 h2 {
     font-family: "Playbill", Source Code Pro;
@@ -47,21 +47,21 @@ h2 {
 
 /*      ---------- 3.1 Reusables --------------------------------------*/
 
-.outer-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    background-color: var(--army);
-}
+/*.outer-container {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: center;*/
+/*    background-color: var(--army);*/
+/*}*/
 
-.inner-container {
-    flex-basis: 1400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 20px;
-    background-color: var(--pale);
-}
+/*.inner-container {*/
+/*    flex-basis: 1400px;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    margin: 0 20px;*/
+/*    background-color: var(--pale);*/
+/*}*/
 
 
 /*      ---------- 3.2 Others -------------------------------*/
@@ -91,10 +91,10 @@ h2 {
     padding: 50px 0;
 }
 
-.star-image {
-    width: 70px;
-    padding: 50px 10px 10px 10px;
-}
+/*.star-image {*/
+/*    width: 70px;*/
+/*    padding: 50px 10px 10px 10px;*/
+/*}*/
 
 
 .intro-image-wrapper {
@@ -154,29 +154,29 @@ h2 {
 
 /*      ---------- 4.4 feature Section -------------------*/
 
-.title-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    margin: 30px 0;
-    width: 350px;
-}
+/*.title-wrapper {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: space-between;*/
+/*    align-items: center;*/
+/*    padding: 10px;*/
+/*    margin: 30px 0;*/
+/*    width: 350px;*/
+/*}*/
 
-.title-wrapper img {
-    padding: 0;
-}
+/*.title-wrapper img {*/
+/*    padding: 0;*/
+/*}*/
 
-.feature-article-wrapper {
-    margin: 40px 0;
-    padding: 30px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 1400px;
-    background-color: var(--faded-army);
-}
+/*.feature-article-wrapper {*/
+/*    margin: 40px 0;*/
+/*    padding: 30px 0;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    max-width: 1400px;*/
+/*    background-color: var(--faded-army);*/
+/*}*/
 
 
 /*      ---------- 4.5 testimonial Section -------------------*/
@@ -213,14 +213,14 @@ h2 {
     }
 
 
-    .footer-info-wrapper {
-        margin: 20px 0;
-        width: 800px;
-    }
+    /*.footer-info-wrapper {*/
+    /*    margin: 20px 0;*/
+    /*    width: 800px;*/
+    /*}*/
 
-    .closing-outer {
-        background-color: var(--pale);
-    }
+    /*.closing-outer {*/
+    /*    background-color: var(--pale);*/
+    /*}*/
 
 }
 
@@ -262,38 +262,38 @@ h2 {
         margin: 15px 0 20px 0;
     }
 
-    .footer-info-wrapper {
-        flex-direction: column;
-        align-items: center;
-        width: auto;
-        margin: 20px 0;
-    }
+    /*.footer-info-wrapper {*/
+    /*    flex-direction: column;*/
+    /*    align-items: center;*/
+    /*    width: auto;*/
+    /*    margin: 20px 0;*/
+    /*}*/
 
-    .footer-info {
-        width: 250px;
-        border-bottom: 2px solid var(--pale);
-        border-right: none;
-        padding: 50px 0;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        font-size: 1.0em;
-    }
+    /*.footer-info {*/
+    /*    width: 250px;*/
+    /*    border-bottom: 2px solid var(--pale);*/
+    /*    border-right: none;*/
+    /*    padding: 50px 0;*/
+    /*    display: flex;*/
+    /*    flex-direction: row;*/
+    /*    justify-content: center;*/
+    /*    font-size: 1.0em;*/
+    /*}*/
 
-    .borderless {
-        border: none;
-    }
+    /*.borderless {*/
+    /*    border: none;*/
+    /*}*/
 
-    .info-text-wrapper {
-        width: 200px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+    /*.info-text-wrapper {*/
+    /*    width: 200px;*/
+    /*    display: flex;*/
+    /*    flex-direction: column;*/
+    /*    align-items: center;*/
+    /*}*/
 
-    .footer-close-section {
-        font-size: 15px;
-    }
+    /*.footer-close-section {*/
+    /*    font-size: 15px;*/
+    /*}*/
 
 }
 
@@ -336,28 +336,28 @@ h2 {
         background-color: var(--pale);
     }
 
-    .feature-image {
-        border: 8px solid var(--faded-army);
-    }
+    /*.feature-image {*/
+    /*    border: 8px solid var(--faded-army);*/
+    /*}*/
 
     .testimonial-section {
         font-size: 18px;
     }
 
-    .footer-close-section {
-        font-size: 10px;
-    }
+    /*.footer-close-section {*/
+    /*    font-size: 10px;*/
+    /*}*/
 
     .outer-container {
         background-color: var(--pale);
     }
 
-    .header-section {
-        background-color: var(--dark);
-    }
+    /*.header-section {*/
+    /*    background-color: var(--dark);*/
+    /*}*/
 
-    .footer-info-outer {
-        background-color: var(--army);
-    }
+    /*.footer-info-outer {*/
+    /*    background-color: var(--army);*/
+    /*}*/
 
 }

@@ -1,4 +1,4 @@
-import './Home.css';
+import styles from './Home.module.css';
 import almeria1 from '../../assets/Almeria-1.JPG';
 import almeria2 from '../../assets/Almeria-2.JPG';
 import almeria5 from '../../assets/Almeria-5.JPG';
@@ -7,7 +7,6 @@ import star from '../../assets/ster-image.jpg';
 import stable from '../../assets/anna-kaminova-cCsbIhfjfTY-unsplash.jpg';
 import straw from '../../assets/ben-shbeeb-HyTvVA8Ye8I-unsplash.jpg';
 import Button from "../../components/button/Button.jsx";
-import button from "../../components/button/Button.jsx";
 import NavBar from "../../components/navBar/NavBar.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import Usp from "../../components/usp/Usp.jsx";
@@ -19,12 +18,11 @@ import {useNavigate} from "react-router-dom";
 function Home() {
 
     const navigate = useNavigate();
-// function logClick() {
-//     console.log("YEZZZ!")
-// }
+
     return (
         <>
-            <header className="outer-container header-section">
+            {/*<header className="outer-container header-section">*/}
+            <header className="outer-container">
                 <div className="inner-container">
                     <NavBar
                         classname="header-navigation"
@@ -35,9 +33,10 @@ function Home() {
             </header>
             <main>
                 {/*intro-section*/}
-                <section className="outer-container intro-section">
+                {/*<section className="outer-container intro-section">   ///// no declaration of intro-section found! */}
+                <section className="outer-container">
                     <div className="inner-container">
-                        <div className="intro-text-wrapper">
+                        <div className={styles["intro-text-wrapper"]}>
                             <h2>Welkom bij pensionstal Blaze of Glory!</h2>
                             <p>Pensiostal Blaze of Glory is een 5-steren pensionstal waar niet alleen u, maar ook uw
                                 paard
@@ -57,24 +56,25 @@ function Home() {
                                 <img className="star-image" src={star} alt="ster"/>
                             </div>
                         </div>
-                        <div className="intro-image-wrapper">
-                            <span className="intro-image">
+                        <div className={styles["intro-image-wrapper"]}>
+                            <span className={styles["intro-image"]}>
                                 <img src={almeria1} alt="foto-by-Nico-Houweling"/>
                             </span>
-                            <span className="intro-image">
+                            <span className={styles["intro-image"]}>
                                 <img src={almeria2} alt="foto-by-Nico-Houweling"/>
                             </span>
-                            <span className="intro-image">
+                            <span className={styles["intro-image"]}>
                                 <img src={almeria5} alt="foto-by-Nico-Houweling"/>
                             </span>
                         </div>
                     </div>
                 </section>
                 {/*usp-section*/}
-                <section className="outer-container usp-section">
+                {/*<section className="outer-container usp-section">   ///// no declaration of intro-section found! //// */}
+                <section className="outer-container">
                     <div className="inner-container">
                         <h2>Waarom Blaze of Glory?</h2>
-                        <div className="usp-article-wrapper">
+                        <div className={styles["usp-article-wrapper"]}>
                             <Usp
                                 text="Comfortabele Binnen en Buiten Stallen"
                             />
@@ -91,7 +91,7 @@ function Home() {
                                 text="Eenvoudige online aanmelding en afmelding"
                             />
                         </div>
-                        <div className="usp-button">
+                        <div className={styles["usp-button"]}>
                             <img src={nico} alt="foto-by-Leonie-Pin"/>
                             <Button
                                 type="button"
@@ -105,8 +105,9 @@ function Home() {
                     </div>
                 </section>
                 {/*features-section*/}
-                <section className="outer-container feature-section">
-                    <div className="inner-container test">
+                {/*<section className="outer-container feature-section">   /// de feature-section wordt nergens gebruikt*/}
+                <section className="outer-container">
+                    <div className="inner-container">
                         <div className="title-wrapper">
                             <img className="star-image" src={star} alt="ster-icoon"/>
                             <h2>Welke voorzieningen?</h2>
@@ -123,7 +124,7 @@ function Home() {
                                 info="Image by Anna Kaminova-Unsplashed"
                                 linkText="naar onze stallen"
                                 linkPath="/stallen"
-                                classname="feature-article"
+                                // classname="feature-article"
                             />
                             <Feature
                                 title="Onze abonnementen en tarieven"
@@ -135,9 +136,8 @@ function Home() {
                                 info="Image by Ben shbeen-Unsplashed"
                                 linkText="naar onze abonnementen en tarieven"
                                 linkPath="/abonnementen"
-                                classname="feature-article reversed-direction"
+                                classname="reversed-direction"
                             />
-
                             <Feature
                                 title="Onze Extra's"
                                 item1="ad fundum"
@@ -147,8 +147,7 @@ function Home() {
                                 image={stable}
                                 info="Image by Anna Kaminova-Unsplashed"
                                 linkText="naar onze extra's"
-
-                                classname="feature-article"
+                                // classname="feature-article"
                             />
                         </div>
                     </div>
@@ -161,7 +160,7 @@ function Home() {
                             <h2>Testimonials</h2>
                             <img className="star-image" src={star} alt="ster-iccon"/>
                         </div>
-                        <div className="testimonial-article-wrapper">
+                        <div className={styles["testimonial-article-wrapper"]}>
                             <Testimonial
                                 text="This place is really a Paradise City for horses. The grass is green
                                         and the horses are pretty."
@@ -178,7 +177,7 @@ function Home() {
                                 author="Jon Bon Jovi"
                             />
                         </div>
-                        <div className="usp-button">
+                        <div className={styles["usp-button"]}>
                             <img src={nico} alt="foto-by-Leonie-Pin"/>
                             <Button
                                 type="button"
