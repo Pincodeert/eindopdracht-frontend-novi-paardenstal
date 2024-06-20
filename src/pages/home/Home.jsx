@@ -6,6 +6,7 @@ import nico from '../../assets/Nico-wijs.jpg';
 import star from '../../assets/ster-image.jpg';
 import stable from '../../assets/anna-kaminova-cCsbIhfjfTY-unsplash.jpg';
 import straw from '../../assets/ben-shbeeb-HyTvVA8Ye8I-unsplash.jpg';
+import {homeIntro} from "../../constants/introText.js";
 import Button from "../../components/button/Button.jsx";
 import NavBar from "../../components/navBar/NavBar.jsx";
 import Footer from "../../components/footer/Footer.jsx";
@@ -15,9 +16,9 @@ import Testimonial from "../../components/testimonial/Testimonial.jsx";
 import Feature from "../../components/feature/Feature.jsx";
 import {useNavigate} from "react-router-dom";
 import NavLinkList from "../../components/navLinkList/NavLinkList.jsx";
+import IntroSection from "../../components/introSection/IntroSection.jsx";
 
 function Home() {
-
     const navigate = useNavigate();
 
     return (
@@ -32,43 +33,22 @@ function Home() {
                 </div>
             </header>
             <main>
-                {/*intro-section*/}
-                {/*<section className="outer-container intro-section">   ///// no declaration of intro-section found! */}
-                <section className="outer-container">
-                    <div className="inner-container">
-                        <div className={styles["intro-text-wrapper"]}>
-                            <h2>Welkom bij pensionstal Blaze of Glory!</h2>
-                            <p>Pensiostal Blaze of Glory is een 5-steren pensionstal waar niet alleen u, maar ook uw
-                                paard
-                                een
-                                ster is. Lorem ipsum dolor sit amet, consectetur adipisicing. Lorem ipsum dolor sit
-                                amet,
-                                consectetur adipisicing elit. At consectetur corporis deleniti dolor, est necessitatibus
-                                officiis pariatur sapiente sint temporibus. A alias animi commodi consectetur,
-                                consequatur
-                                consequuntur deserunt doloremque doloribus eligendi eos error esse laborum maxime natus
-                                non
-                                omnis pariatur possimus, quis ratione soluta ullam ut voluptates voluptatibus.
-                            </p>
-                            <div>
-                                <img className="star-image" src={star} alt="ster"/>
-                                <img className="star-image" src={star} alt="ster"/>
-                                <img className="star-image" src={star} alt="ster"/>
-                            </div>
-                        </div>
-                        <div className={styles["intro-image-wrapper"]}>
+                <IntroSection
+                    title="Welkom bij pensionstal Blaze of Glory!"
+                    text={homeIntro}
+                >
+                    <div className={styles["intro-image-wrapper"]}>
                             <span className={styles["intro-image"]}>
                                 <img src={almeria1} alt="foto-by-Nico-Houweling"/>
                             </span>
-                            <span className={styles["intro-image"]}>
+                        <span className={styles["intro-image"]}>
                                 <img src={almeria2} alt="foto-by-Nico-Houweling"/>
                             </span>
-                            <span className={styles["intro-image"]}>
+                        <span className={styles["intro-image"]}>
                                 <img src={almeria5} alt="foto-by-Nico-Houweling"/>
                             </span>
-                        </div>
                     </div>
-                </section>
+                </IntroSection>
                 {/*usp-section*/}
                 {/*<section className="outer-container usp-section">   ///// no declaration of intro-section found! //// */}
                 <section className="outer-container">

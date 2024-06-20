@@ -10,6 +10,8 @@ import Feature from "../../components/feature/Feature.jsx";
 import stable from "../../assets/anna-kaminova-cCsbIhfjfTY-unsplash.jpg";
 import straw from "../../assets/ben-shbeeb-HyTvVA8Ye8I-unsplash.jpg";
 import NavLinkList from "../../components/navLinkList/NavLinkList.jsx";
+import IntroSection from "../../components/introSection/IntroSection.jsx";
+import {stallsIntro} from "../../constants/introText.js";
 
 function Stalls() {
     return (
@@ -23,24 +25,10 @@ function Stalls() {
                 </div>
             </header>
             <main>
-                <section className="outer-container intro-section">
-                    <div className="inner-container">
-                        <div className="intro-text-wrapper">
-                            <h2>Maak kennis met onze stallen</h2>
-                            <p>Onze stallen kenmerken zich door consectetur adipisicing elit. At consectetur corporis
-                                deleniti dolor, est necessitatibus officiis pariatur sapiente sint temporibus. A alias
-                                animi commodi consectetur, consequatur consequuntur deserunt doloremque doloribus
-                                eligendi eos error esse laborum maxime natus non omnis pariatur possimus, quis ratione
-                                soluta ullam ut voluptates voluptatibus.
-                            </p>
-                            <div>
-                                <img className="star-image" src={star} alt="ster"/>
-                                <img className="star-image" src={star} alt="ster"/>
-                                <img className="star-image" src={star} alt="ster"/>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <IntroSection
+                    title="Maak kennis met onze stallen"
+                    text={stallsIntro}
+                />
                 <section className="outer-container feature-section">
                     <div className="inner-container colored">
                         <div className="title-wrapper">

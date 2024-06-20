@@ -11,6 +11,8 @@ import {SubscriptionContext} from "../../context/SubscriptionContext.jsx";
 import {AuthContext} from "../../context/AuthContext.jsx";
 import {generateAdminErrorString} from "../../helpers/generate ErrorString.js";
 import NavLinkList from "../../components/navLinkList/NavLinkList.jsx";
+import IntroSection from "../../components/introSection/IntroSection.jsx";
+import {subscriptionsIntro} from "../../constants/introText.js";
 
 // import {ReactComponent as StrawIcon} from '../../assets/strawIcon.svg';
 // import { ReactComponent as Hay } from '../../assets/Hay.svg';
@@ -124,25 +126,10 @@ function Subscriptions() {
                 </div>
             </header>
             <main>
-                <section className="outer-container intro-section">
-                    <div className="inner-container">
-                        <div className="intro-text-wrapper">
-                            <h2>Onze abonnementen en tarieven</h2>
-                            <p>Bij Pensiostal Blaze of Glory kunt u kiezen uit maar liefts 2 uitstekende
-                                verzorgingsniveaus Lorem ipsum dolor sit amet, consectetur adipisicing. Lorem ipsum
-                                dolor sit amet, consectetur adipisicing elit. At consectetur corporis deleniti dolor,
-                                est necessitatibus officiis pariatur sapiente sint temporibus.
-                            </p>
-                            {/*<StrawIcon className="straw-icon" />*/}
-                            {/*<Hay />*/}
-                            <div>
-                                <img className="star-image" src={star} alt="ster"/>
-                                <img className="star-image" src={star} alt="ster"/>
-                                <img className="star-image" src={star} alt="ster"/>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <IntroSection
+                    title="Onze abonnementen en tarieven"
+                    text={subscriptionsIntro}
+                />
                 <section className="outer-container subscription-section">
                     <div className="inner-container">
                         <h2>Binnen Stal Abonnementen</h2>

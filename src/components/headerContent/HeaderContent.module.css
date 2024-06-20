@@ -9,6 +9,7 @@
 
 .header-content-image {
     flex-basis: 700px;
+    border: 2px solid plum;
 }
 
 .header-content-title {
@@ -18,9 +19,23 @@
     right: 193px;
 }
 
-.header-subtitle {
+.header-content-subtitle {
     font-family: "Jim Nightshade", cursive;
-    font-style: italic;
+    font-style: normal;
     font-weight: 400;
     color: var(--orange);
+}
+
+@media screen and (max-width: 820px){
+    .header-content-title {
+        right: 100px;
+        font-size: 0.9em;
+    }
+}
+
+@media screen and (max-width: 620px){
+    .header-content-title {
+        right: 70px;
+        font-size: 0.8em;
+    }
 }

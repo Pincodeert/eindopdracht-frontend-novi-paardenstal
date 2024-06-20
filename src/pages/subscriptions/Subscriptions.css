@@ -20,6 +20,8 @@
     /*margin: 70px*/
 }
 
+/* deze stijlregel geldt alleen voor de subscription pagina, maar moet op een andere manier geregeld worden. dus niet
+via IntroSection component. maar erop volgende element*/
 .intro-text-wrapper div {
     margin-bottom: 40px;
 }

@@ -1,0 +1,22 @@
+.intro-text-wrapper {
+    max-width: 800px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.intro-text-wrapper p {
+    padding: 5px 10px;
+}
+
+
+/* deze stijlregel zolang in index.css gezet, omdat hij samne voorkomt met de outer-container
+(die ook in index.css staat. */
+/*.intro-section h2 {*/
+/*    padding: 50px 0;*/
+/*}*/
+
+@media screen and (max-width: 620px){
+    .intro-text-wrapper p {
+        padding: 0;
+    }
+}

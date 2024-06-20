@@ -173,6 +173,11 @@ a:visited {
 
 /*      ---------- 3.2 Others -------------------------------*/
 
+/*deze stijlregels zolang uit IntroSection.module.css gehaald ivm combi met outer-container*/
+.intro-section h2 {
+    padding: 50px 0;
+}
+
 /* deze stijlregels uit footer.module.css gehaald omdat anders niet pakt*/
 .footer-info-section {
     background-color: var(--army);
