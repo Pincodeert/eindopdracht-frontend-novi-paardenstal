@@ -9,15 +9,16 @@ import almeria5 from "../../assets/Almeria-5.JPG";
 import Feature from "../../components/feature/Feature.jsx";
 import stable from "../../assets/anna-kaminova-cCsbIhfjfTY-unsplash.jpg";
 import straw from "../../assets/ben-shbeeb-HyTvVA8Ye8I-unsplash.jpg";
+import NavLinkList from "../../components/navLinkList/NavLinkList.jsx";
 
 function Stalls() {
     return (
         <>
             <header className="outer-container header-section">
                 <div className="inner-container">
-                    <NavBar
-                        classname="header-navigation"
-                    />
+                    <NavBar>
+                        <NavLinkList/>
+                    </NavBar>
                     <HeaderContent/>
                 </div>
             </header>

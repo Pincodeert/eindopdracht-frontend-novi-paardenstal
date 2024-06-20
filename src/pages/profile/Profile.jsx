@@ -13,6 +13,7 @@ import Display from "../../components/display/Display.jsx";
 import generateSubscriptionDetails from "../../helpers/generateSubscriptionDetails.js";
 import TableHead from "../../components/tableHead/TableHead.jsx";
 import generateFetchErrorString, {generateSaveErrorString} from "../../helpers/generate ErrorString.js";
+import NavBar from "../../components/navBar/NavBar.jsx";
 
 function Profile() {
     const [error, setError] = useState("");
@@ -342,6 +343,19 @@ function Profile() {
             <header>
                 <section className="outer-container">
                     <div className="inner-container inverted-header">
+                        <NavBar>
+                            <div className="nav-portal">
+                            {isAuth && <Button
+                                type="button"
+                                handleClick={signOut}
+                            >
+                                uitloggen
+                            </Button>}
+                            <div
+                                className="profile-icon">{Object.keys(profile).length > 0 ? initialsName(profile.firstName, profile.lastName) :
+                                <span>???</span>}</div>
+                            </div>
+                        </NavBar>
                         <nav className="header-navigation">
                             <Link to="/"><h2>Blaze of Glory</h2></Link>
                             {isAuth && <Button

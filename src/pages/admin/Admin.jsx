@@ -11,6 +11,7 @@ import reverseDate from "../../helpers/reverseDate.js";
 import {generateAdminErrorString} from "../../helpers/generate ErrorString.js";
 import {useForm} from "react-hook-form";
 import {AuthContext} from "../../context/AuthContext.jsx";
+import NavBar from "../../components/navBar/NavBar.jsx";
 
 function Admin() {
 
@@ -459,8 +460,18 @@ function calculateNewTasks() {
             <header>
                 <section className="outer-container">
                     <div className="inner-container inverted-header">
+                        <NavBar>
+                            <div className="nav-portal">
+                                {isAuth && <Button
+                                type="button"
+                                handleClick={signOut}
+                            >
+                                uitloggen
+                            </Button>}
+                                <div className="profile-icon">CE</div>
+                            </div>
+                        </NavBar>
                         <nav className="header-navigation">
-                            {/*<h2>Blaze of Glory</h2>*/}
                             <Link to="/"><h2>Blaze of Glory</h2></Link>
                             {isAuth && <Button
                                 type="button"

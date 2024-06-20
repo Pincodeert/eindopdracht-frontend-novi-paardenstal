@@ -8,6 +8,7 @@ import {AuthContext} from "../../context/AuthContext.jsx";
 import axios from "axios";
 import {SubscriptionContext} from "../../context/SubscriptionContext.jsx";
 import {useForm} from "react-hook-form";
+import NavLinkList from "../../components/navLinkList/NavLinkList.jsx";
 
 
 function Login() {
@@ -44,9 +45,9 @@ function Login() {
             <header>
                 <section className="outer-container nav-section">
                     <div className="inner-container">
-                        <NavBar
-                            classname="header-navigation"
-                        />
+                        <NavBar>
+                            <NavLinkList/>
+                        </NavBar>
                     </div>
                 </section>
                 <section className="outer-container">

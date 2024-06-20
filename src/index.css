@@ -91,7 +91,7 @@ header h2 {
     color: var(--orange);
 }
 
-button, input {
+button, input, a{
     font-family: inherit;
     font-size: inherit;
 }
@@ -100,8 +100,9 @@ a:link {
     color: var(--dark);
 }
 
+/*//deze zolang uitgezet omdat anders color in NaLink domineert*/
 a:visited {
-    color: var(--orange);
+    /*color: var(--orange);*/
 }
 
 .error {

@@ -7,6 +7,7 @@ import {useForm} from "react-hook-form";
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import NavLinkList from "../../components/navLinkList/NavLinkList.jsx";
 
 function Register() {
     const [error, setError] = useState("");
@@ -40,9 +41,9 @@ function Register() {
             <header>
                 <section className="outer-container nav-section">
                     <div className="inner-container">
-                        <NavBar
-                            classname="header-navigation"
-                        />
+                        <NavBar>
+                            <NavLinkList/>
+                        </NavBar>
                     </div>
                 </section>
                 <section className="outer-container">

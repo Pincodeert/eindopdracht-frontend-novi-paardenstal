@@ -14,6 +14,7 @@ import HeaderContent from "../../components/headerContent/HeaderContent.jsx";
 import Testimonial from "../../components/testimonial/Testimonial.jsx";
 import Feature from "../../components/feature/Feature.jsx";
 import {useNavigate} from "react-router-dom";
+import NavLinkList from "../../components/navLinkList/NavLinkList.jsx";
 
 function Home() {
 
@@ -24,11 +25,10 @@ function Home() {
             {/*<header className="outer-container header-section">*/}
             <header className="outer-container">
                 <div className="inner-container">
-                    <NavBar
-                        classname="header-navigation"
-                    />
+                    <NavBar>
+                        <NavLinkList/>
+                    </NavBar>
                     <HeaderContent/>
-                    {/*<a href="./Stalls.jsx">Naar stallen</a>*/}
                 </div>
             </header>
             <main>

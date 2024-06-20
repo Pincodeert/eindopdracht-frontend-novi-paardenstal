@@ -9,8 +9,9 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {SubscriptionContext} from "../../context/SubscriptionContext.jsx";
 import {AuthContext} from "../../context/AuthContext.jsx";
-import generateFetchErrorString, {generateAdminErrorString} from "../../helpers/generate ErrorString.js";
-// import {s} from "vite/dist/node/types.d-FdqQ54oU.js";
+import {generateAdminErrorString} from "../../helpers/generate ErrorString.js";
+import NavLinkList from "../../components/navLinkList/NavLinkList.jsx";
+
 // import {ReactComponent as StrawIcon} from '../../assets/strawIcon.svg';
 // import { ReactComponent as Hay } from '../../assets/Hay.svg';
 // import {ReactComponent as Hay} from "../../assets/Hay.svg";
@@ -115,9 +116,9 @@ function Subscriptions() {
         <>
             <header className="outer-container header-section">
                 <div className="inner-container">
-                    <NavBar
-                        classname="header-navigation"
-                    />
+                    <NavBar>
+                        <NavLinkList/>
+                    </NavBar>
                     <HeaderContent/>
                     {/*<a href="./Stalls.jsx">Naar stallen</a>*/}
                 </div>

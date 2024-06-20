@@ -13,6 +13,17 @@
     align-items: flex-start;
 }
 
+.nav-portal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-basis: 230px;
+    list-style: none;
+    padding: 10px 0;
+    margin: 0 10px;
+    border: 2px solid plum;
+}
+
 .profile-icon {
     background-color: var(--faded-army);
     color: var(--dark);
@@ -213,3 +224,4 @@ th, td {
     background-color: var(--faded-army);
     box-shadow: 4px 4px 10px var(--army);
 }
+

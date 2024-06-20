@@ -13,6 +13,7 @@ import {useForm} from "react-hook-form";
 import {AuthContext} from "../../context/AuthContext.jsx";
 import {SubscriptionContext} from "../../context/SubscriptionContext.jsx";
 import generateFetchErrorString, {generateSaveErrorString} from "../../helpers/generate ErrorString.js";
+import NavLinkList from "../../components/navLinkList/NavLinkList.jsx";
 
 function Subscribe() {
     const [subscription, setSubscription] = useState({});
@@ -217,9 +218,9 @@ function Subscribe() {
         <>
             <header className="outer-container header-section">
                 <div className="inner-container">
-                    <NavBar
-                        classname="header-navigation"
-                    />
+                    <NavBar>
+                        <NavLinkList/>
+                    </NavBar>
                     <HeaderContent/>
                 </div>
             </header>
