@@ -49,9 +49,7 @@ function Home() {
                             </span>
                     </div>
                 </IntroSection>
-                {/*usp-section*/}
-                {/*<section className="outer-container usp-section">   ///// no declaration of intro-section found! //// */}
-                <section className="outer-container">
+                <section className="outer-container usp-section">
                     <div className="inner-container">
                         <h2>Waarom Blaze of Glory?</h2>
                         <div className={styles["usp-article-wrapper"]}>
@@ -86,7 +84,7 @@ function Home() {
                 </section>
                 {/*features-section*/}
                 {/*<section className="outer-container feature-section">   /// de feature-section wordt nergens gebruikt*/}
-                <section className="outer-container">
+                <section className="outer-container feature-section">
                     <div className="inner-container">
                         <div className="title-wrapper">
                             <img className="star-image" src={star} alt="ster-icoon"/>
@@ -101,7 +99,7 @@ function Home() {
                                 item3="marcus servus est"
                                 item4="in vino veritas est"
                                 image={stable}
-                                info="Image by Anna Kaminova-Unsplashed"
+                                imageInfo="Image by Anna Kaminova-Unsplashed"
                                 linkText="naar onze stallen"
                                 linkPath="/stallen"
                                 // classname="feature-article"
@@ -113,7 +111,7 @@ function Home() {
                                 item3="ubi pus ibi evacua"
                                 item4="tumor dolor calor rubor"
                                 image={straw}
-                                info="Image by Ben shbeen-Unsplashed"
+                                imageInfo="Image by Ben shbeen-Unsplashed"
                                 linkText="naar onze abonnementen en tarieven"
                                 linkPath="/abonnementen"
                                 classname="reversed-direction"
@@ -125,7 +123,7 @@ function Home() {
                                 item3="decompensatio cordis"
                                 item4="contusio cerebri"
                                 image={stable}
-                                info="Image by Anna Kaminova-Unsplashed"
+                                imageInfo="Image by Anna Kaminova-Unsplashed"
                                 linkText="naar onze extra's"
                                 // classname="feature-article"
                             />

@@ -1,11 +1,8 @@
-import './Stalls.css';
+// import './Stalls.css';
 import NavBar from "../../components/navBar/NavBar.jsx";
 import HeaderContent from "../../components/headerContent/HeaderContent.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import star from "../../assets/ster-image.jpg";
-import almeria1 from "../../assets/Almeria-1.JPG";
-import almeria2 from "../../assets/Almeria-2.JPG";
-import almeria5 from "../../assets/Almeria-5.JPG";
 import Feature from "../../components/feature/Feature.jsx";
 import stable from "../../assets/anna-kaminova-cCsbIhfjfTY-unsplash.jpg";
 import straw from "../../assets/ben-shbeeb-HyTvVA8Ye8I-unsplash.jpg";
@@ -30,13 +27,13 @@ function Stalls() {
                     text={stallsIntro}
                 />
                 <section className="outer-container feature-section">
-                    <div className="inner-container colored">
+                    <div className="inner-container ">
                         <div className="title-wrapper">
                             <img className="star-image" src={star} alt="ster-icoon"/>
                             <h2>Binnen Stallen</h2>
                             <img className="star-image" src={star} alt="ster-iccon"/>
                         </div>
-                        <div className="feature-article-wrapper">
+                        <div className="feature-article-wrapper colored">
                             <Feature
                                 title="Kleine Binnen Stal"
                                 item1="binnenstal klein en groot"
@@ -44,8 +41,9 @@ function Stalls() {
                                 item3="marcus servus est"
                                 item4="in vino veritas est"
                                 image={stable}
-                                info="Image by Anna Kaminova-Unsplashed"
-                                buttontext="vol"
+                                imageInfo="Image by Anna Kaminova-Unsplashed"
+                                linkPath="/abonnementen"
+                                linkText="naar abonnementen"
                                 // classname="feature-article"
                             />
                             <Feature
@@ -55,8 +53,9 @@ function Stalls() {
                                 item3="ubi pus ibi evacua"
                                 item4="tumor dolor calor rubor"
                                 image={straw}
-                                info="Image by Ben shbeen-Unsplashed"
-                                buttontext="laatste stallen!!"
+                                imageInfo="Image by Ben shbeen-Unsplashed"
+                                linkPath="/abonnementen"
+                                linkText="naar abonnementen"
                                 classname="reversed-direction"
                                 // classname="feature-article reversed-direction"
                             />
@@ -78,9 +77,10 @@ function Stalls() {
                                 item3="marcus servus est"
                                 item4="in vino veritas est"
                                 image={stable}
-                                info="Image by Anna Kaminova-Unsplashed"
-                                buttontext="vol"
-                                // classname="feature-article"
+                                imageInfo="Image by Anna Kaminova-Unsplashed"
+                                linkPath="/abonnementen"
+                                linkText="naar abonnementen"
+                                imageClassname="dark-border"
                             />
                             <Feature
                                 title="Grote Buiten stal"
@@ -89,17 +89,17 @@ function Stalls() {
                                 item3="ubi pus ibi evacua"
                                 item4="tumor dolor calor rubor"
                                 image={straw}
-                                info="Image by Ben shbeen-Unsplashed"
-                                buttontext="laatste stallen!!"
+                                imageInfo="Image by Ben shbeen-Unsplashed"
+                                linkPath="/abonnementen"
+                                linkText="naar abonnementen"
                                 classname="reversed-direction"
-                                // classname="feature-article reversed-direction"
+                                imageClassname="dark-border"
                             />
                         </div>
                     </div>
                 </section>
             </main>
             <Footer/>
-
         </>
     );
 }

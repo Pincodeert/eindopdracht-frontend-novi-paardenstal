@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap');*/
 
 /* Table of Contents
    1.Global Styles
@@ -21,56 +21,56 @@
 
 /*     ------------------ 1. Global Styles ----------------------------*/
 
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
+/** {*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*    box-sizing: border-box;*/
+/*}*/
 
-/*      ------------------ 2. Typography ------------------------------*/
-body {
+/*!*      ------------------ 2. Typography ------------------------------*!*/
+/*body {*/
 
-}
+/*}*/
 
-h1 {
-    font-family: "Jim Nightshade", cursive;
-    font-weight: 400;
-    font-style: normal;
-}
+/*h1 {*/
+/*    font-family: "Jim Nightshade", cursive;*/
+/*    font-weight: 400;*/
+/*    font-style: normal;*/
+/*}*/
 
-h2 {
-    font-family: "Playbill", Source Code Pro;
-    font-weight: 400;
-}
+/*h2 {*/
+/*    font-family: "Playbill", Source Code Pro;*/
+/*    font-weight: 400;*/
+/*}*/
 
 /*      ------------------ 3. Layout -------------------------------------*/
 
 /*      ---------- 3.1 Reusables --------------------------------------*/
 
-.outer-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    background-color: var(--army);
-}
+/*.outer-container {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: center;*/
+/*    background-color: var(--army);*/
+/*}*/
 
-.inner-container {
-    flex-basis: 1400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 20px;
-    background-color: var(--pale);
-}
+/*.inner-container {*/
+/*    flex-basis: 1400px;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    margin: 0 20px;*/
+/*    background-color: var(--pale);*/
+/*}*/
 
 
 /*      ---------- 3.2 Others -------------------------------*/
 
 /*      ------------------ 4. Area's ------------------*/
 
-.footer-info-section {
-    background-color: var(--army);
-}
+/*.footer-info-section {*/
+/*    background-color: var(--army);*/
+/*}*/
 /*     ------------------  Feature Section  ---------------- */
 
 /*.title-wrapper {*/
@@ -97,11 +97,13 @@ h2 {
 /*    background-color: var(--faded-army);*/
 /*}*/
 
-.colored {
-    background-color: var(--faded-army);
-}
+/* zolang verplaatst naar inedx.css*/
+/*.colored {*/
+/*    background-color: var(--faded-army);*/
+/*}*/
 
-.pale {
-    background-color: var(--pale);
-}
+/* zolang verplaats naar index.css*/
+/*.pale {*/
+/*    background-color: var(--pale);*/
+/*}*/
 

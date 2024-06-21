@@ -111,6 +111,16 @@ a:visited {
     /*border: 2px solid var(--orange);*/
     padding: 5px;
 }
+
+.form-error-login {
+    color: var(--orange);
+    /*background-color: var(--army);*/
+}
+
+.loading-login {
+    color: var(--pale);
+}
+
 /*a {*/
 /*  font-weight: 500;*/
 /*  color: #646cff;*/
@@ -178,6 +188,60 @@ a:visited {
     padding: 50px 0;
 }
 
+/*deze stijlregels zolang uit home.module.css gehaald ivm combi met outer-container*/
+.usp-section h2 {
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.feature-article-wrapper {
+    margin: 40px 0;
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1400px;
+    background-color: var(--faded-army);
+    /*border: 2px solid plum;*/
+}
+
+/* idem */
+.feature-section h2 {
+    /*margin-top: 50px;*/
+}
+
+/* overbodig: is al de default background-coller van de feature-article-wrappper*/
+/* idem maar dan voor de inner-container op stalls.jsx*/
+.colored {
+    /*background-color: var(--faded-army);*/
+}
+
+/* idem maar dan voor de div articlewrapper calss (staat in app.css) op de stalls.jsx*/
+.pale {
+    background-color: var(--pale);
+}
+
+/* idem voor login en registeer pagina*/
+.login-nav-section {
+    background-color: var(--pale);
+}
+
+/* idem voor login en registeer pagina*/
+.login-header-section {
+    background-color: var(--army);
+    justify-content: center;
+}
+
+/* idem voor login en registeer pagina*/
+.login-content-section {
+    height: 100vh;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: var(--army);
+    flex-wrap: wrap;
+}
+
 /* deze stijlregels uit footer.module.css gehaald omdat anders niet pakt*/
 .footer-info-section {
     background-color: var(--army);
@@ -208,19 +272,52 @@ a:visited {
     padding: 0;
 }
 
+.star-image {
+    width: 70px;
+    padding: 50px 10px 10px 10px;
+}
+
 @media screen and (max-width: 992px) {
+    h1 {
+        color: powderblue;
+    }
+
+    p, button {
+        font-size: 0.9em;
+    }
+
     .closing-outer {
         background-color: var(--pale);
     }
 }
 
 @media screen and (max-width: 820px) {
+    h1 {
+        color: yellow;
+    }
+
     .footer-close-section {
         font-size: 15px;
     }
 }
 
 @media screen and (max-width: 620px) {
+    h1 {
+        color: white;
+    }
+
+    p, button {
+        font-size: 0.9em;
+    }
+
+    .outer-container {
+        background-color: var(--pale);
+    }
+
+    .feature-article-wrapper {
+        background-color: var(--pale);
+    }
+
     .footer-info-outer {
         background-color: var(--army);
     }

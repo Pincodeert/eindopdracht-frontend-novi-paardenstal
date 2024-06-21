@@ -2,17 +2,16 @@ import star from "../../assets/ster-image.jpg";
 import styles from './Feature.module.css';
 import {Link} from "react-router-dom";
 
-function Feature({classname, title, item1, item2, item3, item4, image, imageInfo, linkPath, linkText}) {
+function Feature({classname, imageClassname, title, item1, item2, item3, item4, image, imageInfo, linkPath, linkText}) {
 
-    let classnameString = "feature-article";
+    const featureClassname = "feature-article";
     // if(classname) {
     //     classnameString = `${classnameString} ${classname}`;
     // }
-
+    const borderClassname = "feature-image";
 
     return (
-        <article className={`${styles[classnameString]} ${styles[classname]}`}>
-            {console.log("dit is de classnameString:" , classnameString)}
+        <article className={`${styles[featureClassname]} ${styles[classname]}`}>
             <div className={styles["feature-text"]}>
                 <h3>{title}</h3>
                 <div className={styles["feature-text-item"]}>
@@ -32,7 +31,7 @@ function Feature({classname, title, item1, item2, item3, item4, image, imageInfo
                     <p>{item4}</p>
                 </div>
             </div>
-            <div className={styles["feature-image"]}>
+            <div className={`${styles[borderClassname]} ${styles[imageClassname]}`}>
                 <span>
                     <img src={image} alt={imageInfo}/>
                 </span>

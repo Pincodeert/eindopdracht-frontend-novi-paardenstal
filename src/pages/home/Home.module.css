@@ -1,26 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap');*/
 
 /*      ---------- Intro Section -------------------*/
-
-/*.intro-text-wrapper {*/
-/*    max-width: 800px;*/
-/*    text-align: center;*/
-/*    margin-top: 20px;*/
-/*}*/
-
-/*.intro-text-wrapper p {*/
-/*    padding: 5px 10px;*/
-/*}*/
-
-/*.intro-section h2 {*/
-/*    padding: 50px 0;*/
-/*}*/
 
 /*.star-image {*/
 /*    width: 70px;*/
 /*    padding: 50px 10px 10px 10px;*/
 /*}*/
-
 
 .intro-image-wrapper {
     padding: 30px 0;
@@ -46,12 +31,13 @@
 
 /*}*/
 
-/*      ---------- 4.3 USP Section -------------------*/
+/*      ---------- USP Section -------------------*/
 
-.usp-section h2 {
-    padding: 10px;
-    margin-top: 20px;
-}
+/* dit zolang in index.css gezet ivm combi met outer-container (die daar ook staat)  */
+/*.usp-section h2 {*/
+/*    padding: 10px;*/
+/*    margin-top: 20px;*/
+/*}*/
 
 .usp-article-wrapper {
     display: flex;
@@ -94,20 +80,20 @@
 /*      ------------------ 5. Media Queries ------------------------------*/
 
 
-@media screen and (max-width: 992px){
-    h1 {
-        color: powderblue;
-    }
+/*@media screen and (max-width: 992px){*/
+/*    h1 {*/
+/*        color: powderblue;*/
+/*    }*/
 
-    p, button {
-        font-size: 0.9em;
-    }
-}
+/*    p, button {*/
+/*        font-size: 0.9em;*/
+/*    }*/
+/*}*/
 
 @media screen and (max-width: 820px){
-    h1 {
-        color: yellow;
-    }
+    /*h1 {*/
+    /*    color: yellow;*/
+    /*}*/
 
     .intro-image-wrapper {
         flex-wrap: wrap;
@@ -122,21 +108,21 @@
 }
 
 @media screen and (max-width: 620px){
-    h1 {
-        color: white;
-    }
+    /*h1 {*/
+    /*    color: white;*/
+    /*}*/
 
-    p, button {
-        font-size: 0.9em;
-    }
+    /*p, button {*/
+    /*    font-size: 0.9em;*/
+    /*}*/
 
     /*.intro-text-wrapper p {*/
     /*    padding: 0;*/
     /*}*/
 
-    .feature-article-wrapper {
-        background-color: var(--pale);
-    }
+    /*.feature-article-wrapper {*/
+    /*    background-color: var(--pale);*/
+    /*}*/
 
     /*.feature-image {*/
     /*    border: 8px solid var(--faded-army);*/
@@ -150,9 +136,9 @@
     /*    font-size: 10px;*/
     /*}*/
 
-    .outer-container {
-        background-color: var(--pale);
-    }
+    /*.outer-container {*/
+    /*    background-color: var(--pale);*/
+    /*}*/
 
     /*.header-section {*/
     /*    background-color: var(--dark);*/

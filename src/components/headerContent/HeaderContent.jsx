@@ -1,5 +1,6 @@
 import horse from "../../assets/Paard-bewerkt-header.jpg";
 import styles from './HeaderContent.module.css';
+import HeaderTitle from "../headerTitle/HeaderTitle.jsx";
 
 function HeaderContent() {
     return (
@@ -7,10 +8,7 @@ function HeaderContent() {
             <span className={styles["header-content-image"]}>
                 <img src={horse} alt="Original image by Taylor Brandon"/>
             </span>
-            <div className={styles["header-content-title"]}>
-                <h1>Blaze of Glory</h1>
-                <h2 className={styles["header-content-subtitle"]}>Pensionstallen</h2>
-            </div>
+            <HeaderTitle classname="header-default-title"/>
         </div>
     );
 }

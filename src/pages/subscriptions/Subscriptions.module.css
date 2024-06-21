@@ -1,0 +1,21 @@
+.subscription-article-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 1300px;
+    padding: 60px 0;
+    flex-wrap: wrap;
+    row-gap: 30px;
+    /*border: 2px dotted black*/
+}
+
+.indoor-title {
+    padding: 40px;
+    margin-top: 40px
+}
+
+.outdoor-title {
+    padding: 40px;
+}
+

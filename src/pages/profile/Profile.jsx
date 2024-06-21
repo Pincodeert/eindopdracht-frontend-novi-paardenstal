@@ -41,7 +41,7 @@ function Profile() {
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const {customerProfileId} = useParams();
-    const {register, formState: {errors}, handleSubmit} = useForm({
+    const {register, formState: {errors}, handleSubmit, reset} = useForm({
         mode: "onBlur",
         // defaultValues: {
         //     // street: `${profile.street}`,
@@ -58,8 +58,8 @@ function Profile() {
         //         Authorization: `Bearer ${token}`,
         //     }
         // })
-
     });
+
     const {isAuth, signOut} = useContext(AuthContext);
     console.log(isAuth);
     console.log(customerProfileId);
@@ -233,6 +233,15 @@ function Profile() {
         }
     }
 
+    useEffect(() => {
+        if(selectedHorse) {
+        let defaultValues = {
+            telephoneOfVet: selectedHorse.telephoneOfVet,
+        };
+        reset({...defaultValues});
+        }
+    }, []);
+
 
     // async function updateHorse() {
     async function handleHorseForm(horseFormState) {
@@ -261,6 +270,7 @@ function Profile() {
             setHorseUpdateError(generateSaveErrorString("paardgegevens"));
         } finally {
             toggleIsLoading(false);
+            // reset({...defaultValues})
         }
     }
 
