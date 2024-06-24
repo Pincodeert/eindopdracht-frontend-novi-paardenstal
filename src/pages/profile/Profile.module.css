@@ -67,24 +67,24 @@
 /*}*/
 
 /*  tijde lijk open gezet voor het persoonsgegevens gedeelte zonder Dispaly */
-.content-title {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-}
+/*.content-title {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: space-between;*/
+/*    align-items: flex-start;*/
+/*    margin-bottom: 20px;*/
+/*}*/
 
-article h4 {
-    background-color: var(--army);
-    color: var(--pale);
-    padding: 8px 15px;
-}
+/*article h4 {*/
+/*    background-color: var(--army);*/
+/*    color: var(--pale);*/
+/*    padding: 8px 15px;*/
+/*}*/
 
-th, td {
-    text-align: start;
-    padding: 3px;
-}
+/*th, td {*/
+/*    text-align: start;*/
+/*    padding: 3px;*/
+/*}*/
 
 /*.table {*/
 /*    display: flex;*/
@@ -130,12 +130,10 @@ th, td {
     justify-content: flex-end;
     /*margin: 18px 0;*/
     margin: 30px 0;
-    /*border: 2px solid greenyellow;*/
-
+    border: 2px solid greenyellow;
+    margin-left: 30px;
+    width: 555px;
 }
-
-
-
 
 .profile-form input, select {
     padding: 3px;
@@ -148,10 +146,11 @@ th, td {
 }
 .profile-form select {
     font-family: Playbill;
-    font-size: 18px;
+    /*font-size: 18px;*/
 }
 .profile-form button {
-    width: 45%;
+    width: 250px;
+    margin-top: 10px;
 }
 
 .profile-form label {
@@ -160,47 +159,56 @@ th, td {
     width: 550px;
     display: flex;
     justify-content: space-between;
+    /*margin-left: 30px;*/
 }
 
-.table-body input {
-    padding: 3px;
-    border: 2px solid var(--orange);
-    border-radius: 5px;
-    margin: 0;
-    font-size: 18px;
-    width: 300px;
+.horse-edit-button-wrapper {
+    border: 2px solid plum;
+    width: 550px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
+
+
+/*.table-body input {*/
+/*    padding: 3px;*/
+/*    border: 2px solid var(--orange);*/
+/*    border-radius: 5px;*/
+/*    margin: 0;*/
+/*    font-size: 18px;*/
+/*    width: 300px;*/
+/*}*/
 
 .table-form-container {
     display: flex;
     flex-direction: row;
-    /*border: 2px solid plum;*/
+    border: 2px solid plum;
     align-items: start;
     /*padding: 20px 0;*/
 }
 
-#yourpersonalia input{
-    border: 2px solid var(--orange);
-    border-radius: 5px;
-}
 
-.horse-info-container {
-    display: flex;
-    /*flex-direction: row;*/
-    flex-direction: column;
-    /*border: 2px solid plum;*/
 
-}
+/**** verplaatst naar index.css*/
+/*.horse-info-container {*/
+/*    display: flex;*/
+/*    !*flex-direction: row;*!*/
+/*    flex-direction: column;*/
+/*    border: 2px solid black;*/
+/*    background-color: plum;*/
+/*}*/
 
+/* *** verplatst naar index.css  ****/
 .horse-info-container select {
     border: 2px solid var(--orange);
     border-radius: 5px;
     padding: 2px 5px;
 }
 
-.success-message {
-    color: var(--orange);
-}
+/*.success-message {*/
+/*    color: var(--orange);*/
+/*}*/
 
 .success {
     padding: 30px;
@@ -217,6 +225,10 @@ th, td {
     /*font-weight: bold;*/
 }
 
+.cancellation-container button {
+    margin-top: 20px;
+}
+
 .passport-image {
     border: 2px solid var(--faded-army);
     border-radius: 3px;
@@ -227,3 +239,6 @@ th, td {
     box-shadow: 4px 4px 10px var(--army);
 }
 
+.profile-menu {
+    margin-bottom: 30px;
+}

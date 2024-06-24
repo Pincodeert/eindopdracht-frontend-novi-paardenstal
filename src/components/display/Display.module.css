@@ -13,6 +13,12 @@
     margin: 10px 0;
 }
 
+article h4 {
+    background-color: var(--army);
+    color: var(--pale);
+    padding: 8px 15px;
+}
+
 /*********  onduidelijk waar dit bij hoort   ******/
 /*.overwiew-container {*/
 /*    display: flex;*/

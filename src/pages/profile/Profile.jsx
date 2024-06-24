@@ -372,61 +372,39 @@ function Profile() {
                                 <span>???</span>}</div>
                             </div>
                         </NavBar>
-                        {/*<nav className="header-navigation">*/}
-                        {/*    <Link to="/"><h2>Blaze of Glory</h2></Link>*/}
-                        {/*    {isAuth && <Button*/}
-                        {/*        type="button"*/}
-                        {/*        handleClick={signOut}*/}
-                        {/*    >*/}
-                        {/*        uitloggen*/}
-                        {/*    </Button>}*/}
-                        {/*    <div*/}
-                        {/*        className="profile-icon">{Object.keys(profile).length > 0 ? initialsName(profile.firstName, profile.lastName) :*/}
-                        {/*        <span>???</span>}</div>*/}
-                        {/*</nav>*/}
-
                     </div>
                 </section>
             </header>
             <main className="outer-container outer-profile-container">
                 <div className="inner-container inner-profile-container">
                     <nav className="side-nav">
-                        <h2>Menu</h2>
-                        <Link to="#yourpersonalia">Uw gegevens</Link>
-                        <Link to="#yourhorses">Uw paarden</Link>
-                        <Link to="#yoursubscriptions">Uw abonnementen</Link>
+                        <h2 className={styles["profile-menu"]}>Menu</h2>
+                        {/*<Link to="#yourpersonalia">Uw gegevens</Link>*/}
+                        {/*<Link to="#yourhorses">Uw paarden</Link>*/}
+                        {/*<Link to="#yoursubscriptions">Uw abonnementen</Link>*/}
                         <Button
                             type="button"
                             disabled={enableCustomerChange}
                             handleClick={showCustomerForm}
                         >
-                            wijzig uw persoonsgegevens
+                            Wijzig uw persoonsgegevens
                         </Button>
                         <Button
                             type="button"
                             disabled={false}
                             handleClick={() => navigate("/abonnementen")}
                         >
-                            Vraag nieuw abonnement aan
+                            Vraag een abonnement aan
                         </Button>
                         <Button
                             type="button"
                             disabled={false}
                             handleClick={calculateCustomersPrice}
                         >
-                            bereken uw totale abonnementskosten
+                            Bereken uw totale abonnementskosten
                         </Button>
                     </nav>
                     <div className="content-container">
-                        {/*{Object.keys(profile).length > 0 ?*/}
-                        {/*<div className="intro-content-wrapper">*/}
-                        {/*     <h3>Welkom {profile.firstName} {profile.lastName}</h3>*/}
-                        {/*    <p>klantnummer: 20240{profile.id}</p>*/}
-                        {/*</div> : <div>*/}
-                        {/*        <h3>Welkom stranger</h3>*/}
-                        {/*        <p>Er zijn nog geen gegevens van u bekend. Meld u eerst via het menu aan voor een abonnement.</p>*/}
-                        {/*    </div>}*/}
-
                         {Object.keys(profile).length > 0 &&
                             <div className="intro-content-wrapper">
                                 <h3>Welkom {displayCompleteName(profile.firstName, profile.lastName)}</h3>
@@ -434,26 +412,17 @@ function Profile() {
                             </div>}
                         {!enableCustomerChange &&
                         <Display
-                            className="content-wrapper persona"
+                            className="persona"
                             title="Uw gegevens"
                         >
                             {isLoading && <p>...Loading</p>}
-                            {/*{Object.keys(profile).length === 0 && <p>Er zijn nog geen gegevens van uw bekend bij ons. Meld u eerst aan voor een abonnement.</p> }*/}
                             {customerError ? <p className="error">{customerError}</p> :
                                 <div className={styles["table-form-container"]}>
-                                    {/*<table className="table">*/}
                                     <Table
                                         className="default-table"
                                         tableHeadClassName="default-table-head"
                                         tableHeadArray={profilePersonaTableHead}
                                     >
-                                        {/*<th>adres:</th>*/}
-                                        {/*<th>huisnummer:</th>*/}
-                                        {/*<th>postcode</th>*/}
-                                        {/*<th>plaats</th>*/}
-                                        {/*<th>telefoonnumer</th>*/}
-                                        {/*<th>e-mail</th>*/}
-                                        {/*<th>IBAN</th>*/}
                                         <tbody>
                                         <tr className="table-body">
                                             {profile.street && <td>{profile.street}</td>}
@@ -466,31 +435,19 @@ function Profile() {
                                         </tr>
                                         </tbody>
                                     </Table>
-
-                                    {/*</table>*/}
                                 </div>}
                         </Display>}
                         {enableCustomerChange &&
                             <Display
-                                className="content-wrapper persona"
-                                title="Wijzig de gewenste persoonsgegevens"
+                                className="persona"
+                                title="Wijzig de gewenste persoonsgegevens:"
                             >
                                 <div className={styles["table-form-container"]}>
-                                    {/*<table className="table">*/}
                                         <Table
                                             className="default-table"
                                             tableHeadClassName="default-table-head"
                                             tableHeadArray={profilePersonaTableHead}
-                                        >
-                                            {/*<th>adres:</th>*/}
-                                            {/*<th>huisnummer:</th>*/}
-                                            {/*<th>postcode</th>*/}
-                                            {/*<th>plaats</th>*/}
-                                            {/*<th>telefoonnumer</th>*/}
-                                            {/*<th>e-mail</th>*/}
-                                            {/*<th>IBAN</th>*/}
-                                        </Table>
-                                    {/*</table>*/}
+                                        />
                                         <form className={styles["profile-form"]}
                                               onSubmit={handleSubmit(handleCustomerForm)}>
                                             {isLoading &&
@@ -651,208 +608,9 @@ function Profile() {
                                         </Button>
                                 </div>
                             </Display>}
-                        {/*<article id="yourpersonalia" className="content-wrapper persona">*/}
-                        {/*    <div className={styles["content-title"]}>*/}
-                        {/*        {!enableCustomerChange ? <h4>Uw gegevens</h4> :*/}
-                        {/*            <h4>Wijzig de gewenste persoonsgegevens:</h4>}*/}
-                        {/*        {!enableCustomerChange ? <Button*/}
-                        {/*            type="button"*/}
-                        {/*            disabled={false}*/}
-                        {/*            handleClick={showCustomerForm}*/}
-                        {/*        >*/}
-                        {/*            wijzig uw gegevens*/}
-                        {/*        </Button> : <Button*/}
-                        {/*            type="button"*/}
-                        {/*            disabled={false}*/}
-                        {/*            handleClick={() => toggleEnableCustomerChange(false)}*/}
-                        {/*        >*/}
-                        {/*            Annuleer*/}
-                        {/*        </Button>}*/}
-                        {/*    </div>*/}
-                        {/*    {isLoading && <p>...Loading</p>}*/}
-                        {/*    /!*{Object.keys(profile).length === 0 && <p>Er zijn nog geen gegevens van uw bekend bij ons. Meld u eerst aan voor een abonnement.</p> }*!/*/}
-                        {/*    {customerError ? <p className="error">{customerError}</p> :*/}
-                        {/*    <div className={styles["table-form-container"]}>*/}
-                        {/*        <table className="table">*/}
-                        {/*            <Table*/}
-                        {/*                className="table-head"*/}
-                        {/*            >*/}
-                        {/*                <th>adres:</th>*/}
-                        {/*                <th>huisnummer:</th>*/}
-                        {/*                <th>postcode</th>*/}
-                        {/*                <th>plaats</th>*/}
-                        {/*                <th>telefoonnumer</th>*/}
-                        {/*                <th>e-mail</th>*/}
-                        {/*                <th>IBAN</th>*/}
-                        {/*            </Table>*/}
-                        {/*            {!enableCustomerChange && <tbody>*/}
-                        {/*            <tr className="table-body">*/}
-                        {/*                {profile.street && <td>{profile.street}</td>}*/}
-                        {/*                {profile.houseNumber && <td>{profile.houseNumber}</td>}*/}
-                        {/*                {profile.postalCode && <td>{profile.postalCode}</td>}*/}
-                        {/*                {profile.residence && <td>{profile.residence}</td>}*/}
-                        {/*                {profile.telephoneNumber && <td>{profile.telephoneNumber}</td>}*/}
-                        {/*                {profile.emailAddress && <td>{profile.emailAddress}</td>}*/}
-                        {/*                {profile.bankAccountNumber && <td>{profile.bankAccountNumber}</td>}*/}
-                        {/*            </tr>*/}
-                        {/*            </tbody>}*/}
-                        {/*        </table>*/}
-                        {/*        {enableCustomerChange &&*/}
-                        {/*            <form className={styles["profile-form"]} onSubmit={handleSubmit(handleCustomerForm)}>*/}
-                        {/*                {isLoading && <p>...Loading</p>}*/}
-                        {/*                <TextInput*/}
-                        {/*                    inputName="street"*/}
-                        {/*                    // placeholder={profile.street}*/}
-                        {/*                    register={register}*/}
-                        {/*                    textValue={profile.street}*/}
-                        {/*                    validationRules={{*/}
-                        {/*                        required: {*/}
-                        {/*                            value: false,*/}
-                        {/*                            // message: "Straat is verplicht"*/}
-                        {/*                        },*/}
-                        {/*                        minLength: {*/}
-                        {/*                            value: 3,*/}
-                        {/*                            message: "Straat moet minimaal 3 letters bevatten"*/}
-                        {/*                        },*/}
-                        {/*                        maxLength: {*/}
-                        {/*                            value: 60,*/}
-                        {/*                            message: "Straat mag maximaal 60 letters bevatten"*/}
-                        {/*                        }*/}
-                        {/*                    }}*/}
-                        {/*                    errors={errors}*/}
-                        {/*                />*/}
-                        {/*                <TextInput*/}
-                        {/*                    inputName="houseNumber"*/}
-                        {/*                    // placeholder={profile.houseNumber}*/}
-                        {/*                    register={register}*/}
-                        {/*                    textValue={profile.houseNumber}*/}
-                        {/*                    validationRules={{*/}
-                        {/*                        required: {*/}
-                        {/*                            value: false,*/}
-                        {/*                            // message: "Huisnummer is verplicht"*/}
-                        {/*                        },*/}
-                        {/*                        minLength: {*/}
-                        {/*                            value: 1,*/}
-                        {/*                            message: "Huisnummer moet uit minimaal 1 teken bestaan"*/}
-                        {/*                        },*/}
-                        {/*                        maxLength: {*/}
-                        {/*                            value: 20,*/}
-                        {/*                            message: "Huisnummer mag maximaal uit 20 tekens bestaan"*/}
-                        {/*                        }*/}
-                        {/*                    }}*/}
-                        {/*                    errors={errors}*/}
-                        {/*                />*/}
-                        {/*                <TextInput*/}
-                        {/*                    inputName="postalCode"*/}
-                        {/*                    // placeholder={profile.postalCode}*/}
-                        {/*                    register={register}*/}
-                        {/*                    textValue={profile.postalCode}*/}
-                        {/*                    validationRules={{*/}
-                        {/*                        required: {*/}
-                        {/*                            value: false,*/}
-                        {/*                            // message: "Postcode is verplicht"*/}
-                        {/*                        },*/}
-                        {/*                        minLength: {*/}
-                        {/*                            value: 4,*/}
-                        {/*                            message: "Postcode moet minimaal 4 tekens bevatten"*/}
-                        {/*                        },*/}
-                        {/*                        maxLength: {*/}
-                        {/*                            value: 6,*/}
-                        {/*                            message: "Postcode mag maximaal 6 tekens bevatten"*/}
-                        {/*                        }*/}
-                        {/*                    }}*/}
-                        {/*                    errors={errors}*/}
-                        {/*                />*/}
-                        {/*                <TextInput*/}
-                        {/*                    inputName="residence"*/}
-                        {/*                    textValue={profile.residence}*/}
-                        {/*                    register={register}*/}
-                        {/*                    validationRules={{*/}
-                        {/*                        required: {*/}
-                        {/*                            value: false,*/}
-                        {/*                            // message: "Woonplaats is verplicht"*/}
-                        {/*                        },*/}
-                        {/*                        minLength: {*/}
-                        {/*                            value: 2,*/}
-                        {/*                            message: "Woonplaats moet minimaal 2 letters bevatten"*/}
-                        {/*                        },*/}
-                        {/*                        maxLength: {*/}
-                        {/*                            value: 60,*/}
-                        {/*                            message: "Woonplaats mag maximaal 60 letters bevatten"*/}
-                        {/*                        }*/}
-                        {/*                    }}*/}
-                        {/*                    errors={errors}*/}
-                        {/*                />*/}
-                        {/*                <input*/}
-                        {/*                    type="tel"*/}
-                        {/*                    id="telephoneOfVet-field"*/}
-                        {/*                    // name="telephoneOfVet"*/}
-                        {/*                    pattern="[0-9]{10}"*/}
-                        {/*                    defaultValue={profile.telephoneNumber}*/}
-                        {/*                    {...register("telephoneNumber", {*/}
-                        {/*                        required: {*/}
-                        {/*                            value: false,*/}
-                        {/*                            // message: 'telefoonnummer is verplicht',*/}
-                        {/*                        },*/}
-                        {/*                        minLength: {*/}
-                        {/*                            value: 10,*/}
-                        {/*                            message: "het telefoonnummer moet uit 10 cijfers bestaan"*/}
-                        {/*                        },*/}
-                        {/*                        maxLength: {*/}
-                        {/*                            value: 10,*/}
-                        {/*                            message: "het telefoonnummer moet uit 10 cijfers bestaan"*/}
-                        {/*                        }*/}
-                        {/*                    })}*/}
-                        {/*                />*/}
-                        {/*                {errors.telephoneNumber &&*/}
-                        {/*                    <p className="form-error-login">{errors.telephoneNumber.message}</p>}*/}
-                        {/*                <input*/}
-                        {/*                    type="email"*/}
-                        {/*                    defaultValue={profile.emailAddress}*/}
-                        {/*                    {...register("emailAddress", {*/}
-                        {/*                        required: {*/}
-                        {/*                            value: false,*/}
-                        {/*                            // message: 'e-mailadres is verplicht',*/}
-                        {/*                        },*/}
-                        {/*                    })}*/}
-                        {/*                />*/}
-                        {/*                {errors.emailAddress &&*/}
-                        {/*                    <p className="form-error">{errors.emailAddress.message}</p>}*/}
-
-                        {/*                <TextInput*/}
-                        {/*                    inputName="bankAccountNumber"*/}
-                        {/*                    textValue={profile.bankAccountNumber}*/}
-                        {/*                    register={register}*/}
-                        {/*                    validationRules={{*/}
-                        {/*                        required: {*/}
-                        {/*                            value: false,*/}
-                        {/*                            // message: "bank/IBAN-nummer is verplicht"*/}
-                        {/*                        },*/}
-                        {/*                        minLength: {*/}
-                        {/*                            value: 16,*/}
-                        {/*                            message: "De Iban moet uit 16 tekens bestaan"*/}
-                        {/*                        },*/}
-                        {/*                        maxLength: {*/}
-                        {/*                            value: 16,*/}
-                        {/*                            message: "De Iban moet uit 16 tekens bestaan"*/}
-                        {/*                        }*/}
-                        {/*                    }}*/}
-                        {/*                    errors={errors}*/}
-                        {/*                />*/}
-                        {/*                <Button*/}
-                        {/*                    type="submit"*/}
-                        {/*                    disabled={false}*/}
-                        {/*                >*/}
-                        {/*                    Verstuur*/}
-                        {/*                </Button>*/}
-                        {/*                {customerUpdateError && <p className="error">{customerUpdateError}</p>}*/}
-                        {/*            </form>}*/}
-                        {/*    </div>}*/}
-                        {/*</article>*/}
                         {!enabledHorseChange &&
                             <Display
-                                // className="content-wrapper horses"
-                                className="content-wrapper"
+                                className="horses"
                                 title="Uw paarden"
                             >
                                 {isLoading && <p>...Loading</p>}
@@ -874,21 +632,12 @@ function Profile() {
                                                     wijzig
                                                 </Button>
                                             </div>
-                                            {/*<div className="horse-info-container">*/}
-                                            {/*<table className="table">*/}
+                                            <div className="horse-info-container">
                                                 <Table
                                                     className="default-table"
                                                     tableHeadClassName="default-table-head"
                                                     tableHeadArray={profileHorseTableHead}
                                                 >
-                                                    {/*<th>paardnummer</th>*/}
-                                                    {/*<th>type voeding</th>*/}
-                                                    {/*<th>type bodembedekking</th>*/}
-                                                    {/*<th>naam dierenarts</th>*/}
-                                                    {/*<th>woonplaats dierenarts</th>*/}
-                                                    {/*<th>telefoonnummer dierenarts</th>*/}
-                                                    {/*<th>Stal</th>*/}
-                                                    {/*<th>Paardenpaspoort</th>*/}
                                                     {!enabledHorseChange &&
                                                         <tbody>
                                                         <tr className="table-body">
@@ -915,8 +664,7 @@ function Profile() {
                                                         </tr>
                                                         </tbody>}
                                                 </Table>
-
-                                            {/*</table>*/}
+                                            </div>
                                             {isLoading && <p>...isLoading</p>}
                                             {passportError && <p className="error">{passportError}</p>}
                                         </div>
@@ -924,7 +672,7 @@ function Profile() {
                             </Display>}
                         {enabledHorseChange &&
                             <Display
-                                className="content-wrapper horses"
+                                className="horses"
                                 title="Wijzig hier uw paardgegevens:"
                             >
                                 <div className={styles["horse-wrapper"]}>
@@ -940,14 +688,11 @@ function Profile() {
                                         </Button>
                                     </div>
                                     <div className="horse-info-container">
-                                        {/*<table className="table">*/}
                                         <Table
                                             className="default-table"
                                             tableHeadClassName="default-table-head"
                                             tableHeadArray={horseFormTableHead}
                                         >
-                                            {/*<th>paardnummer</th>*/}
-                                            {/*<th>Stal</th>*/}
                                             <tbody>
                                             <tr className="table-body">
                                                 <td>{selectedHorse.horseNumber}</td>
@@ -958,8 +703,6 @@ function Profile() {
                                             </tr>
                                             </tbody>
                                         </Table>
-
-                                        {/*</table>*/}
                                         {!horseUpdateSuccess &&
                                             <form className={styles["profile-form"]}
                                                   onSubmit={handleSubmit(handleHorseForm)} key={selectedHorse.id}>
@@ -1066,6 +809,7 @@ function Profile() {
                                                     /></label>
                                                 {errors.telephoneOfVet &&
                                                     <p className="form-error-login">{errors.telephoneOfVet.message}</p>}
+                                                <div className={styles["horse-edit-button-wrapper"]}>
                                                 <Button
                                                     type="submit"
                                                     // disabled={horse.preferredSubscription!="activated"}
@@ -1073,11 +817,13 @@ function Profile() {
                                                 >
                                                     Wijzig
                                                 </Button>
+                                                </div>
                                                 {horseUpdateError && <p className="error">{horseUpdateError}</p>}
                                             </form>}
                                         {horseUpdateSuccess && <div>
                                             <p className={styles.success}>De gegevens van uw paard {selectedHorse.name} zijn
                                                 succesvol gewijzigd!</p>
+                                            <div className={styles["horse-edit-button-wrapper"]}>
                                             <Button
                                                 type="button"
                                                 disabled={false}
@@ -1085,13 +831,14 @@ function Profile() {
                                             >
                                                 Terug naar overzicht
                                             </Button>
+                                            </div>
                                         </div>}
                                     </div>
                                 </div>
                             </Display>}
                         {!editingCancellation &&
                         <Display
-                            className="content-wrapper horses"
+                            className="horses"
                             title="Uw abonnementen"
                         >
                             {isLoading && <p>...Loading</p>}
@@ -1110,22 +857,11 @@ function Profile() {
                                                     <p>annuleer</p>}
                                             </Button>
                                         </div>
-                                        {/*{cancellationSuccess && selectedEnrollmentId === enrollment.id &&*/}
-                                        {/*    <p className="success-message">Uw verzoek tot annulering van abonnementnr*/}
-                                        {/*        {enrollment.id} is ontvangen en wordt binnen 3 werkdagen verwerkt</p>}*/}
-                                        {/*<table className="table">*/}
                                         <Table
                                             className="default-table"
                                             tableHeadClassName="default-table-head"
                                             tableHeadArray={profileEnrollmentTableHead}
                                         >
-                                            {/*<th>abonnement type</th>*/}
-                                            {/*<th>type stal</th>*/}
-                                            {/*<th>type verzorging</th>*/}
-                                            {/*<th>paard</th>*/}
-                                            {/*<th>start-datum</th>*/}
-                                            {/*<th>annulering aangevraagd</th>*/}
-                                            {/*<th>prijs</th>*/}
                                             <tbody>
                                             <tr className="table-body">
                                                 {enrollment.subscription && <td>{enrollment.subscription.name}</td>}
@@ -1142,15 +878,12 @@ function Profile() {
                                             </tr>
                                             </tbody>
                                         </Table>
-
-                                        {/*</table>*/}
                                     </div>
                                 })}
                         </Display>}
                         {editingCancellation &&
                             <Display
-                                // className="content-wrapper horses"
-                                className="content-wrapper"
+                                className="horses"
                                 title="Annuleer het volgende abonnement:"
                             >
                                 <div className={styles["horse-wrapper"]}>
