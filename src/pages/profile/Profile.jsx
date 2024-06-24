@@ -1,6 +1,6 @@
-import "./Profile.css"
+import styles from "./Profile.module.css";
 import Button from "../../components/button/Button.jsx";
-import initialsName from "../../helpers/editName.js";
+import initialsName, {displayCompleteName} from "../../helpers/editName.js";
 import formatPrice from "../../helpers/formatPrice.js";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import calculateCustomersPrice from "../../helpers/calculateCustomersPrice.js";
@@ -11,9 +11,15 @@ import TextInput from "../../components/textInput/TextInput.jsx";
 import {useForm} from "react-hook-form";
 import Display from "../../components/display/Display.jsx";
 import generateSubscriptionDetails from "../../helpers/generateSubscriptionDetails.js";
-import TableHead from "../../components/tableHead/TableHead.jsx";
+import Table from "../../components/table/Table.jsx";
 import generateFetchErrorString, {generateSaveErrorString} from "../../helpers/generate ErrorString.js";
 import NavBar from "../../components/navBar/NavBar.jsx";
+import {
+    horseFormTableHead,
+    profileEnrollmentTableHead,
+    profileHorseTableHead,
+    profilePersonaTableHead
+} from "../../constants/tableContent.js";
 
 function Profile() {
     const [error, setError] = useState("");
@@ -240,7 +246,7 @@ function Profile() {
         };
         reset({...defaultValues});
         }
-    }, []);
+    }, [horseUpdateSuccess, enabledHorseChange]);
 
 
     // async function updateHorse() {
@@ -366,18 +372,18 @@ function Profile() {
                                 <span>???</span>}</div>
                             </div>
                         </NavBar>
-                        <nav className="header-navigation">
-                            <Link to="/"><h2>Blaze of Glory</h2></Link>
-                            {isAuth && <Button
-                                type="button"
-                                handleClick={signOut}
-                            >
-                                uitloggen
-                            </Button>}
-                            <div
-                                className="profile-icon">{Object.keys(profile).length > 0 ? initialsName(profile.firstName, profile.lastName) :
-                                <span>???</span>}</div>
-                        </nav>
+                        {/*<nav className="header-navigation">*/}
+                        {/*    <Link to="/"><h2>Blaze of Glory</h2></Link>*/}
+                        {/*    {isAuth && <Button*/}
+                        {/*        type="button"*/}
+                        {/*        handleClick={signOut}*/}
+                        {/*    >*/}
+                        {/*        uitloggen*/}
+                        {/*    </Button>}*/}
+                        {/*    <div*/}
+                        {/*        className="profile-icon">{Object.keys(profile).length > 0 ? initialsName(profile.firstName, profile.lastName) :*/}
+                        {/*        <span>???</span>}</div>*/}
+                        {/*</nav>*/}
 
                     </div>
                 </section>
@@ -389,6 +395,13 @@ function Profile() {
                         <Link to="#yourpersonalia">Uw gegevens</Link>
                         <Link to="#yourhorses">Uw paarden</Link>
                         <Link to="#yoursubscriptions">Uw abonnementen</Link>
+                        <Button
+                            type="button"
+                            disabled={enableCustomerChange}
+                            handleClick={showCustomerForm}
+                        >
+                            wijzig uw persoonsgegevens
+                        </Button>
                         <Button
                             type="button"
                             disabled={false}
@@ -404,7 +417,7 @@ function Profile() {
                             bereken uw totale abonnementskosten
                         </Button>
                     </nav>
-                    <div className="profile-content-container">
+                    <div className="content-container">
                         {/*{Object.keys(profile).length > 0 ?*/}
                         {/*<div className="intro-content-wrapper">*/}
                         {/*     <h3>Welkom {profile.firstName} {profile.lastName}</h3>*/}
@@ -416,211 +429,430 @@ function Profile() {
 
                         {Object.keys(profile).length > 0 &&
                             <div className="intro-content-wrapper">
-                                <h3>Welkom {profile.firstName} {profile.lastName}</h3>
+                                <h3>Welkom {displayCompleteName(profile.firstName, profile.lastName)}</h3>
                                 <p>klantnummer: 20240{profile.id}</p>
                             </div>}
-
-                        <article id="yourpersonalia" className="content-wrapper persona">
-                            <div className="content-title">
-                                {!enableCustomerChange ? <h4>Uw gegevens</h4> :
-                                    <h4>Wijzig de gewenste persoonsgegevens:</h4>}
-                                {!enableCustomerChange ? <Button
-                                    type="button"
-                                    disabled={false}
-                                    handleClick={showCustomerForm}
-                                >
-                                    wijzig uw gegevens
-                                </Button> : <Button
-                                    type="button"
-                                    disabled={false}
-                                    handleClick={() => toggleEnableCustomerChange(false)}
-                                >
-                                    Annuleer
-                                </Button>}
-                            </div>
+                        {!enableCustomerChange &&
+                        <Display
+                            className="content-wrapper persona"
+                            title="Uw gegevens"
+                        >
                             {isLoading && <p>...Loading</p>}
                             {/*{Object.keys(profile).length === 0 && <p>Er zijn nog geen gegevens van uw bekend bij ons. Meld u eerst aan voor een abonnement.</p> }*/}
                             {customerError ? <p className="error">{customerError}</p> :
-                            <div className="table-form-container">
-                                <table className="table">
-                                    <TableHead
-                                        className="table-head"
+                                <div className={styles["table-form-container"]}>
+                                    {/*<table className="table">*/}
+                                    <Table
+                                        className="default-table"
+                                        tableHeadClassName="default-table-head"
+                                        tableHeadArray={profilePersonaTableHead}
                                     >
-                                        <th>adres:</th>
-                                        <th>huisnummer:</th>
-                                        <th>postcode</th>
-                                        <th>plaats</th>
-                                        <th>telefoonnumer</th>
-                                        <th>e-mail</th>
-                                        <th>IBAN</th>
-                                    </TableHead>
-                                    {!enableCustomerChange && <tbody>
-                                    <tr className="table-body">
-                                        {profile.street && <td>{profile.street}</td>}
-                                        {profile.houseNumber && <td>{profile.houseNumber}</td>}
-                                        {profile.postalCode && <td>{profile.postalCode}</td>}
-                                        {profile.residence && <td>{profile.residence}</td>}
-                                        {profile.telephoneNumber && <td>{profile.telephoneNumber}</td>}
-                                        {profile.emailAddress && <td>{profile.emailAddress}</td>}
-                                        {profile.bankAccountNumber && <td>{profile.bankAccountNumber}</td>}
-                                    </tr>
-                                    </tbody>}
-                                </table>
-                                {enableCustomerChange &&
-                                    <form className="profile-form" onSubmit={handleSubmit(handleCustomerForm)}>
-                                        {isLoading && <p>...Loading</p>}
-                                        <TextInput
-                                            inputName="street"
-                                            // placeholder={profile.street}
-                                            register={register}
-                                            textValue={profile.street}
-                                            validationRules={{
-                                                required: {
-                                                    value: false,
-                                                    // message: "Straat is verplicht"
-                                                },
-                                                minLength: {
-                                                    value: 3,
-                                                    message: "Straat moet minimaal 3 letters bevatten"
-                                                },
-                                                maxLength: {
-                                                    value: 60,
-                                                    message: "Straat mag maximaal 60 letters bevatten"
-                                                }
-                                            }}
-                                            errors={errors}
-                                        />
-                                        <TextInput
-                                            inputName="houseNumber"
-                                            // placeholder={profile.houseNumber}
-                                            register={register}
-                                            textValue={profile.houseNumber}
-                                            validationRules={{
-                                                required: {
-                                                    value: false,
-                                                    // message: "Huisnummer is verplicht"
-                                                },
-                                                minLength: {
-                                                    value: 1,
-                                                    message: "Huisnummer moet uit minimaal 1 teken bestaan"
-                                                },
-                                                maxLength: {
-                                                    value: 20,
-                                                    message: "Huisnummer mag maximaal uit 20 tekens bestaan"
-                                                }
-                                            }}
-                                            errors={errors}
-                                        />
-                                        <TextInput
-                                            inputName="postalCode"
-                                            // placeholder={profile.postalCode}
-                                            register={register}
-                                            textValue={profile.postalCode}
-                                            validationRules={{
-                                                required: {
-                                                    value: false,
-                                                    // message: "Postcode is verplicht"
-                                                },
-                                                minLength: {
-                                                    value: 4,
-                                                    message: "Postcode moet minimaal 4 tekens bevatten"
-                                                },
-                                                maxLength: {
-                                                    value: 6,
-                                                    message: "Postcode mag maximaal 6 tekens bevatten"
-                                                }
-                                            }}
-                                            errors={errors}
-                                        />
-                                        <TextInput
-                                            inputName="residence"
-                                            textValue={profile.residence}
-                                            register={register}
-                                            validationRules={{
-                                                required: {
-                                                    value: false,
-                                                    // message: "Woonplaats is verplicht"
-                                                },
-                                                minLength: {
-                                                    value: 2,
-                                                    message: "Woonplaats moet minimaal 2 letters bevatten"
-                                                },
-                                                maxLength: {
-                                                    value: 60,
-                                                    message: "Woonplaats mag maximaal 60 letters bevatten"
-                                                }
-                                            }}
-                                            errors={errors}
-                                        />
-                                        <input
-                                            type="tel"
-                                            id="telephoneOfVet-field"
-                                            // name="telephoneOfVet"
-                                            pattern="[0-9]{10}"
-                                            defaultValue={profile.telephoneNumber}
-                                            {...register("telephoneNumber", {
-                                                required: {
-                                                    value: false,
-                                                    // message: 'telefoonnummer is verplicht',
-                                                },
-                                                minLength: {
-                                                    value: 10,
-                                                    message: "het telefoonnummer moet uit 10 cijfers bestaan"
-                                                },
-                                                maxLength: {
-                                                    value: 10,
-                                                    message: "het telefoonnummer moet uit 10 cijfers bestaan"
-                                                }
-                                            })}
-                                        />
-                                        {errors.telephoneNumber &&
-                                            <p className="form-error-login">{errors.telephoneNumber.message}</p>}
-                                        <input
-                                            type="email"
-                                            defaultValue={profile.emailAddress}
-                                            {...register("emailAddress", {
-                                                required: {
-                                                    value: false,
-                                                    // message: 'e-mailadres is verplicht',
-                                                },
-                                            })}
-                                        />
-                                        {errors.emailAddress &&
-                                            <p className="form-error">{errors.emailAddress.message}</p>}
+                                        {/*<th>adres:</th>*/}
+                                        {/*<th>huisnummer:</th>*/}
+                                        {/*<th>postcode</th>*/}
+                                        {/*<th>plaats</th>*/}
+                                        {/*<th>telefoonnumer</th>*/}
+                                        {/*<th>e-mail</th>*/}
+                                        {/*<th>IBAN</th>*/}
+                                        <tbody>
+                                        <tr className="table-body">
+                                            {profile.street && <td>{profile.street}</td>}
+                                            {profile.houseNumber && <td>{profile.houseNumber}</td>}
+                                            {profile.postalCode && <td>{profile.postalCode}</td>}
+                                            {profile.residence && <td>{profile.residence}</td>}
+                                            {profile.telephoneNumber && <td>{profile.telephoneNumber}</td>}
+                                            {profile.emailAddress && <td>{profile.emailAddress}</td>}
+                                            {profile.bankAccountNumber && <td>{profile.bankAccountNumber}</td>}
+                                        </tr>
+                                        </tbody>
+                                    </Table>
 
-                                        <TextInput
-                                            inputName="bankAccountNumber"
-                                            textValue={profile.bankAccountNumber}
-                                            register={register}
-                                            validationRules={{
-                                                required: {
-                                                    value: false,
-                                                    // message: "bank/IBAN-nummer is verplicht"
-                                                },
-                                                minLength: {
-                                                    value: 16,
-                                                    message: "De Iban moet uit 16 tekens bestaan"
-                                                },
-                                                maxLength: {
-                                                    value: 16,
-                                                    message: "De Iban moet uit 16 tekens bestaan"
-                                                }
-                                            }}
-                                            errors={errors}
-                                        />
-                                        <Button
-                                            type="submit"
-                                            disabled={false}
+                                    {/*</table>*/}
+                                </div>}
+                        </Display>}
+                        {enableCustomerChange &&
+                            <Display
+                                className="content-wrapper persona"
+                                title="Wijzig de gewenste persoonsgegevens"
+                            >
+                                <div className={styles["table-form-container"]}>
+                                    {/*<table className="table">*/}
+                                        <Table
+                                            className="default-table"
+                                            tableHeadClassName="default-table-head"
+                                            tableHeadArray={profilePersonaTableHead}
                                         >
-                                            Verstuur
+                                            {/*<th>adres:</th>*/}
+                                            {/*<th>huisnummer:</th>*/}
+                                            {/*<th>postcode</th>*/}
+                                            {/*<th>plaats</th>*/}
+                                            {/*<th>telefoonnumer</th>*/}
+                                            {/*<th>e-mail</th>*/}
+                                            {/*<th>IBAN</th>*/}
+                                        </Table>
+                                    {/*</table>*/}
+                                        <form className={styles["profile-form"]}
+                                              onSubmit={handleSubmit(handleCustomerForm)}>
+                                            {isLoading &&
+                                                <p>...Loading</p>}
+                                            <TextInput
+                                                inputName="street"
+                                                // placeholder={profile.street}
+                                                register={register}
+                                                textValue={profile.street}
+                                                validationRules={{
+                                                    required: {
+                                                        value: false,
+                                                        // message: "Straat is verplicht"
+                                                    },
+                                                    minLength: {
+                                                        value: 3,
+                                                        message: "Straat moet minimaal 3 letters bevatten"
+                                                    },
+                                                    maxLength: {
+                                                        value: 60,
+                                                        message: "Straat mag maximaal 60 letters bevatten"
+                                                    }
+                                                }}
+                                                errors={errors}
+                                            />
+                                            <TextInput
+                                                inputName="houseNumber"
+                                                // placeholder={profile.houseNumber}
+                                                register={register}
+                                                textValue={profile.houseNumber}
+                                                validationRules={{
+                                                    required: {
+                                                        value: false,
+                                                        // message: "Huisnummer is verplicht"
+                                                    },
+                                                    minLength: {
+                                                        value: 1,
+                                                        message: "Huisnummer moet uit minimaal 1 teken bestaan"
+                                                    },
+                                                    maxLength: {
+                                                        value: 20,
+                                                        message: "Huisnummer mag maximaal uit 20 tekens bestaan"
+                                                    }
+                                                }}
+                                                errors={errors}
+                                            />
+                                            <TextInput
+                                                inputName="postalCode"
+                                                // placeholder={profile.postalCode}
+                                                register={register}
+                                                textValue={profile.postalCode}
+                                                validationRules={{
+                                                    required: {
+                                                        value: false,
+                                                        // message: "Postcode is verplicht"
+                                                    },
+                                                    minLength: {
+                                                        value: 4,
+                                                        message: "Postcode moet minimaal 4 tekens bevatten"
+                                                    },
+                                                    maxLength: {
+                                                        value: 6,
+                                                        message: "Postcode mag maximaal 6 tekens bevatten"
+                                                    }
+                                                }}
+                                                errors={errors}
+                                            />
+                                            <TextInput
+                                                inputName="residence"
+                                                textValue={profile.residence}
+                                                register={register}
+                                                validationRules={{
+                                                    required: {
+                                                        value: false,
+                                                        // message: "Woonplaats is verplicht"
+                                                    },
+                                                    minLength: {
+                                                        value: 2,
+                                                        message: "Woonplaats moet minimaal 2 letters bevatten"
+                                                    },
+                                                    maxLength: {
+                                                        value: 60,
+                                                        message: "Woonplaats mag maximaal 60 letters bevatten"
+                                                    }
+                                                }}
+                                                errors={errors}
+                                            />
+                                            <input
+                                                type="tel"
+                                                id="telephoneOfVet-field"
+                                                // name="telephoneOfVet"
+                                                pattern="[0-9]{10}"
+                                                defaultValue={profile.telephoneNumber}
+                                                {...register("telephoneNumber", {
+                                                    required: {
+                                                        value: false,
+                                                        // message: 'telefoonnummer is verplicht',
+                                                    },
+                                                    minLength: {
+                                                        value: 10,
+                                                        message: "het telefoonnummer moet uit 10 cijfers bestaan"
+                                                    },
+                                                    maxLength: {
+                                                        value: 10,
+                                                        message: "het telefoonnummer moet uit 10 cijfers bestaan"
+                                                    }
+                                                })}
+                                            />
+                                            {errors.telephoneNumber &&
+                                                <p className="form-error-login">{errors.telephoneNumber.message}</p>}
+                                            <input
+                                                type="email"
+                                                defaultValue={profile.emailAddress}
+                                                {...register("emailAddress", {
+                                                    required: {
+                                                        value: false,
+                                                        // message: 'e-mailadres is verplicht',
+                                                    },
+                                                })}
+                                            />
+                                            {errors.emailAddress &&
+                                                <p className="form-error">{errors.emailAddress.message}</p>}
+
+                                            <TextInput
+                                                inputName="bankAccountNumber"
+                                                textValue={profile.bankAccountNumber}
+                                                register={register}
+                                                validationRules={{
+                                                    required: {
+                                                        value: false,
+                                                        // message: "bank/IBAN-nummer is verplicht"
+                                                    },
+                                                    minLength: {
+                                                        value: 16,
+                                                        message: "De Iban moet uit 16 tekens bestaan"
+                                                    },
+                                                    maxLength: {
+                                                        value: 16,
+                                                        message: "De Iban moet uit 16 tekens bestaan"
+                                                    }
+                                                }}
+                                                errors={errors}
+                                            />
+                                            <Button
+                                                type="submit"
+                                                disabled={false}
+                                            >
+                                                Verstuur
+                                            </Button>
+                                            {customerUpdateError && <p className="error">{customerUpdateError}</p>}
+                                        </form>
+                                        <Button
+                                            type="button"
+                                            disabled={false}
+                                            handleClick={() => toggleEnableCustomerChange(false)}
+                                        >
+                                            Annuleer
                                         </Button>
-                                        {customerUpdateError && <p className="error">{customerUpdateError}</p>}
-                                    </form>}
-                            </div>}
-                        </article>
+                                </div>
+                            </Display>}
+                        {/*<article id="yourpersonalia" className="content-wrapper persona">*/}
+                        {/*    <div className={styles["content-title"]}>*/}
+                        {/*        {!enableCustomerChange ? <h4>Uw gegevens</h4> :*/}
+                        {/*            <h4>Wijzig de gewenste persoonsgegevens:</h4>}*/}
+                        {/*        {!enableCustomerChange ? <Button*/}
+                        {/*            type="button"*/}
+                        {/*            disabled={false}*/}
+                        {/*            handleClick={showCustomerForm}*/}
+                        {/*        >*/}
+                        {/*            wijzig uw gegevens*/}
+                        {/*        </Button> : <Button*/}
+                        {/*            type="button"*/}
+                        {/*            disabled={false}*/}
+                        {/*            handleClick={() => toggleEnableCustomerChange(false)}*/}
+                        {/*        >*/}
+                        {/*            Annuleer*/}
+                        {/*        </Button>}*/}
+                        {/*    </div>*/}
+                        {/*    {isLoading && <p>...Loading</p>}*/}
+                        {/*    /!*{Object.keys(profile).length === 0 && <p>Er zijn nog geen gegevens van uw bekend bij ons. Meld u eerst aan voor een abonnement.</p> }*!/*/}
+                        {/*    {customerError ? <p className="error">{customerError}</p> :*/}
+                        {/*    <div className={styles["table-form-container"]}>*/}
+                        {/*        <table className="table">*/}
+                        {/*            <Table*/}
+                        {/*                className="table-head"*/}
+                        {/*            >*/}
+                        {/*                <th>adres:</th>*/}
+                        {/*                <th>huisnummer:</th>*/}
+                        {/*                <th>postcode</th>*/}
+                        {/*                <th>plaats</th>*/}
+                        {/*                <th>telefoonnumer</th>*/}
+                        {/*                <th>e-mail</th>*/}
+                        {/*                <th>IBAN</th>*/}
+                        {/*            </Table>*/}
+                        {/*            {!enableCustomerChange && <tbody>*/}
+                        {/*            <tr className="table-body">*/}
+                        {/*                {profile.street && <td>{profile.street}</td>}*/}
+                        {/*                {profile.houseNumber && <td>{profile.houseNumber}</td>}*/}
+                        {/*                {profile.postalCode && <td>{profile.postalCode}</td>}*/}
+                        {/*                {profile.residence && <td>{profile.residence}</td>}*/}
+                        {/*                {profile.telephoneNumber && <td>{profile.telephoneNumber}</td>}*/}
+                        {/*                {profile.emailAddress && <td>{profile.emailAddress}</td>}*/}
+                        {/*                {profile.bankAccountNumber && <td>{profile.bankAccountNumber}</td>}*/}
+                        {/*            </tr>*/}
+                        {/*            </tbody>}*/}
+                        {/*        </table>*/}
+                        {/*        {enableCustomerChange &&*/}
+                        {/*            <form className={styles["profile-form"]} onSubmit={handleSubmit(handleCustomerForm)}>*/}
+                        {/*                {isLoading && <p>...Loading</p>}*/}
+                        {/*                <TextInput*/}
+                        {/*                    inputName="street"*/}
+                        {/*                    // placeholder={profile.street}*/}
+                        {/*                    register={register}*/}
+                        {/*                    textValue={profile.street}*/}
+                        {/*                    validationRules={{*/}
+                        {/*                        required: {*/}
+                        {/*                            value: false,*/}
+                        {/*                            // message: "Straat is verplicht"*/}
+                        {/*                        },*/}
+                        {/*                        minLength: {*/}
+                        {/*                            value: 3,*/}
+                        {/*                            message: "Straat moet minimaal 3 letters bevatten"*/}
+                        {/*                        },*/}
+                        {/*                        maxLength: {*/}
+                        {/*                            value: 60,*/}
+                        {/*                            message: "Straat mag maximaal 60 letters bevatten"*/}
+                        {/*                        }*/}
+                        {/*                    }}*/}
+                        {/*                    errors={errors}*/}
+                        {/*                />*/}
+                        {/*                <TextInput*/}
+                        {/*                    inputName="houseNumber"*/}
+                        {/*                    // placeholder={profile.houseNumber}*/}
+                        {/*                    register={register}*/}
+                        {/*                    textValue={profile.houseNumber}*/}
+                        {/*                    validationRules={{*/}
+                        {/*                        required: {*/}
+                        {/*                            value: false,*/}
+                        {/*                            // message: "Huisnummer is verplicht"*/}
+                        {/*                        },*/}
+                        {/*                        minLength: {*/}
+                        {/*                            value: 1,*/}
+                        {/*                            message: "Huisnummer moet uit minimaal 1 teken bestaan"*/}
+                        {/*                        },*/}
+                        {/*                        maxLength: {*/}
+                        {/*                            value: 20,*/}
+                        {/*                            message: "Huisnummer mag maximaal uit 20 tekens bestaan"*/}
+                        {/*                        }*/}
+                        {/*                    }}*/}
+                        {/*                    errors={errors}*/}
+                        {/*                />*/}
+                        {/*                <TextInput*/}
+                        {/*                    inputName="postalCode"*/}
+                        {/*                    // placeholder={profile.postalCode}*/}
+                        {/*                    register={register}*/}
+                        {/*                    textValue={profile.postalCode}*/}
+                        {/*                    validationRules={{*/}
+                        {/*                        required: {*/}
+                        {/*                            value: false,*/}
+                        {/*                            // message: "Postcode is verplicht"*/}
+                        {/*                        },*/}
+                        {/*                        minLength: {*/}
+                        {/*                            value: 4,*/}
+                        {/*                            message: "Postcode moet minimaal 4 tekens bevatten"*/}
+                        {/*                        },*/}
+                        {/*                        maxLength: {*/}
+                        {/*                            value: 6,*/}
+                        {/*                            message: "Postcode mag maximaal 6 tekens bevatten"*/}
+                        {/*                        }*/}
+                        {/*                    }}*/}
+                        {/*                    errors={errors}*/}
+                        {/*                />*/}
+                        {/*                <TextInput*/}
+                        {/*                    inputName="residence"*/}
+                        {/*                    textValue={profile.residence}*/}
+                        {/*                    register={register}*/}
+                        {/*                    validationRules={{*/}
+                        {/*                        required: {*/}
+                        {/*                            value: false,*/}
+                        {/*                            // message: "Woonplaats is verplicht"*/}
+                        {/*                        },*/}
+                        {/*                        minLength: {*/}
+                        {/*                            value: 2,*/}
+                        {/*                            message: "Woonplaats moet minimaal 2 letters bevatten"*/}
+                        {/*                        },*/}
+                        {/*                        maxLength: {*/}
+                        {/*                            value: 60,*/}
+                        {/*                            message: "Woonplaats mag maximaal 60 letters bevatten"*/}
+                        {/*                        }*/}
+                        {/*                    }}*/}
+                        {/*                    errors={errors}*/}
+                        {/*                />*/}
+                        {/*                <input*/}
+                        {/*                    type="tel"*/}
+                        {/*                    id="telephoneOfVet-field"*/}
+                        {/*                    // name="telephoneOfVet"*/}
+                        {/*                    pattern="[0-9]{10}"*/}
+                        {/*                    defaultValue={profile.telephoneNumber}*/}
+                        {/*                    {...register("telephoneNumber", {*/}
+                        {/*                        required: {*/}
+                        {/*                            value: false,*/}
+                        {/*                            // message: 'telefoonnummer is verplicht',*/}
+                        {/*                        },*/}
+                        {/*                        minLength: {*/}
+                        {/*                            value: 10,*/}
+                        {/*                            message: "het telefoonnummer moet uit 10 cijfers bestaan"*/}
+                        {/*                        },*/}
+                        {/*                        maxLength: {*/}
+                        {/*                            value: 10,*/}
+                        {/*                            message: "het telefoonnummer moet uit 10 cijfers bestaan"*/}
+                        {/*                        }*/}
+                        {/*                    })}*/}
+                        {/*                />*/}
+                        {/*                {errors.telephoneNumber &&*/}
+                        {/*                    <p className="form-error-login">{errors.telephoneNumber.message}</p>}*/}
+                        {/*                <input*/}
+                        {/*                    type="email"*/}
+                        {/*                    defaultValue={profile.emailAddress}*/}
+                        {/*                    {...register("emailAddress", {*/}
+                        {/*                        required: {*/}
+                        {/*                            value: false,*/}
+                        {/*                            // message: 'e-mailadres is verplicht',*/}
+                        {/*                        },*/}
+                        {/*                    })}*/}
+                        {/*                />*/}
+                        {/*                {errors.emailAddress &&*/}
+                        {/*                    <p className="form-error">{errors.emailAddress.message}</p>}*/}
+
+                        {/*                <TextInput*/}
+                        {/*                    inputName="bankAccountNumber"*/}
+                        {/*                    textValue={profile.bankAccountNumber}*/}
+                        {/*                    register={register}*/}
+                        {/*                    validationRules={{*/}
+                        {/*                        required: {*/}
+                        {/*                            value: false,*/}
+                        {/*                            // message: "bank/IBAN-nummer is verplicht"*/}
+                        {/*                        },*/}
+                        {/*                        minLength: {*/}
+                        {/*                            value: 16,*/}
+                        {/*                            message: "De Iban moet uit 16 tekens bestaan"*/}
+                        {/*                        },*/}
+                        {/*                        maxLength: {*/}
+                        {/*                            value: 16,*/}
+                        {/*                            message: "De Iban moet uit 16 tekens bestaan"*/}
+                        {/*                        }*/}
+                        {/*                    }}*/}
+                        {/*                    errors={errors}*/}
+                        {/*                />*/}
+                        {/*                <Button*/}
+                        {/*                    type="submit"*/}
+                        {/*                    disabled={false}*/}
+                        {/*                >*/}
+                        {/*                    Verstuur*/}
+                        {/*                </Button>*/}
+                        {/*                {customerUpdateError && <p className="error">{customerUpdateError}</p>}*/}
+                        {/*            </form>}*/}
+                        {/*    </div>}*/}
+                        {/*</article>*/}
                         {!enabledHorseChange &&
                             <Display
-                                className="content-wrapper horses"
+                                // className="content-wrapper horses"
+                                className="content-wrapper"
                                 title="Uw paarden"
                             >
                                 {isLoading && <p>...Loading</p>}
@@ -629,9 +861,9 @@ function Profile() {
                                     <p>U heeft nog geen paarden toegevoegd</p>
                                     :
                                     horses.map((horse) => {
-                                        return <div key={horse.id} className="horse-wrapper">
-                                            <div className="head-line">
-                                                <p className="horsename">{horse.name} {horse.id}</p>
+                                        return <div key={horse.id} className={styles["horse-wrapper"]}>
+                                            <div className={styles["head-line"]}>
+                                                <p className={styles.horsename}>{horse.name} {horse.id}</p>
                                                 {/*{enabledHorseChange && selectedHorseId === horse.id && <p>Wijzig hieronder de gegevens van {horse.name}</p>}*/}
                                                 {horse.preferredSubscription != "activated" && <p>-In aanvraag-</p>}
                                                 <Button
@@ -643,44 +875,48 @@ function Profile() {
                                                 </Button>
                                             </div>
                                             {/*<div className="horse-info-container">*/}
-                                            <table className="table">
-                                                <TableHead
-                                                    className="table-head"
+                                            {/*<table className="table">*/}
+                                                <Table
+                                                    className="default-table"
+                                                    tableHeadClassName="default-table-head"
+                                                    tableHeadArray={profileHorseTableHead}
                                                 >
-                                                    <th>paardnummer</th>
-                                                    <th>type voeding</th>
-                                                    <th>type bodembedekking</th>
-                                                    <th>naam dierenarts</th>
-                                                    <th>woonplaats dierenarts</th>
-                                                    <th>telefoonnummer dierenarts</th>
-                                                    <th>Stal</th>
-                                                    <th>Paardenpaspoort</th>
-                                                </TableHead>
-                                                {!enabledHorseChange && <tbody>
-                                                <tr className="table-body">
-                                                    {horse.horseNumber && <td>{horse.horseNumber}</td>}
-                                                {horse.typeOfFeed && <td>{horse.typeOfFeed}</td>}
-                                                {horse.typeOfBedding && <td>{horse.typeOfBedding}</td>}
-                                                {horse.nameOfVet && <td>{horse.nameOfVet}</td>}
-                                                {horse.residenceOfVet && <td>{horse.residenceOfVet}</td>}
-                                                {horse.telephoneOfVet && <td>{horse.telephoneOfVet}</td>}
-                                                    {horse.stall ?
-                                                        <td>{horse.stall.name} </td>
-                                                        :
-                                                        <td>- in aanvraag -</td>}
-                                                    {!passportDownloadSuccess &&
-                                                    <td>{<Button type="button" disabled={false}
-                                                                 handleClick={() => showPassport(horse)}>
-                                                        bekijk </Button>}</td>}
-                                                    {passportDownloadSuccess && horse.id === selectedHorse.id &&
-                                                    <td>{<Button type="button" disabled={false}
-                                                                     handleClick={hidePassport}>
-                                                            Verberg</Button>}</td>}
-                                                    <td>{horse.passport && passportDownloadSuccess && horse.id === selectedHorse.id &&
-                                                        <div className="passport-image"><img src={`${horse.passport.url}`} alt="paardenpaspoort"/></div>}</td>
-                                                </tr>
-                                                </tbody>}
-                                            </table>
+                                                    {/*<th>paardnummer</th>*/}
+                                                    {/*<th>type voeding</th>*/}
+                                                    {/*<th>type bodembedekking</th>*/}
+                                                    {/*<th>naam dierenarts</th>*/}
+                                                    {/*<th>woonplaats dierenarts</th>*/}
+                                                    {/*<th>telefoonnummer dierenarts</th>*/}
+                                                    {/*<th>Stal</th>*/}
+                                                    {/*<th>Paardenpaspoort</th>*/}
+                                                    {!enabledHorseChange &&
+                                                        <tbody>
+                                                        <tr className="table-body">
+                                                            {horse.horseNumber && <td>{horse.horseNumber}</td>}
+                                                            {horse.typeOfFeed && <td>{horse.typeOfFeed}</td>}
+                                                            {horse.typeOfBedding && <td>{horse.typeOfBedding}</td>}
+                                                            {horse.nameOfVet && <td>{horse.nameOfVet}</td>}
+                                                            {horse.residenceOfVet && <td>{horse.residenceOfVet}</td>}
+                                                            {horse.telephoneOfVet && <td>{horse.telephoneOfVet}</td>}
+                                                            {horse.stall ?
+                                                                <td>{horse.stall.name} </td>
+                                                                :
+                                                                <td>- in aanvraag -</td>}
+                                                            {!passportDownloadSuccess &&
+                                                                <td>{<Button type="button" disabled={false}
+                                                                             handleClick={() => showPassport(horse)}>
+                                                                    bekijk </Button>}</td>}
+                                                            {passportDownloadSuccess && horse.id === selectedHorse.id &&
+                                                                <td>{<Button type="button" disabled={false}
+                                                                             handleClick={hidePassport}>
+                                                                    Verberg</Button>}</td>}
+                                                            <td>{horse.passport && passportDownloadSuccess && horse.id === selectedHorse.id &&
+                                                                <div className={styles["passport-image"]}><img src={`${horse.passport.url}`} alt="paardenpaspoort"/></div>}</td>
+                                                        </tr>
+                                                        </tbody>}
+                                                </Table>
+
+                                            {/*</table>*/}
                                             {isLoading && <p>...isLoading</p>}
                                             {passportError && <p className="error">{passportError}</p>}
                                         </div>
@@ -691,10 +927,10 @@ function Profile() {
                                 className="content-wrapper horses"
                                 title="Wijzig hier uw paardgegevens:"
                             >
-                                <div className="horse-wrapper">
-                                    <div className="head-line">
+                                <div className={styles["horse-wrapper"]}>
+                                    <div className={styles["head-line"]}>
                                         {isLoading && <p>...Loading</p>}
-                                        <p className="horsename">{selectedHorse.name} {selectedHorse.id}</p>
+                                        <p className={styles.horsename}>{selectedHorse.name} {selectedHorse.id}</p>
                                         <Button
                                             type="button"
                                             disabled={false}
@@ -704,13 +940,14 @@ function Profile() {
                                         </Button>
                                     </div>
                                     <div className="horse-info-container">
-                                        <table className="table">
-                                            <TableHead
-                                                className="table-head"
-                                            >
-                                                <th>paardnummer</th>
-                                                <th>Stal</th>
-                                            </TableHead>
+                                        {/*<table className="table">*/}
+                                        <Table
+                                            className="default-table"
+                                            tableHeadClassName="default-table-head"
+                                            tableHeadArray={horseFormTableHead}
+                                        >
+                                            {/*<th>paardnummer</th>*/}
+                                            {/*<th>Stal</th>*/}
                                             <tbody>
                                             <tr className="table-body">
                                                 <td>{selectedHorse.horseNumber}</td>
@@ -720,9 +957,12 @@ function Profile() {
                                                     <td>- in aanvraag -</td>}
                                             </tr>
                                             </tbody>
-                                        </table>
+                                        </Table>
+
+                                        {/*</table>*/}
                                         {!horseUpdateSuccess &&
-                                            <form className="profile-form" onSubmit={handleSubmit(handleHorseForm)} key={selectedHorse.id}>
+                                            <form className={styles["profile-form"]}
+                                                  onSubmit={handleSubmit(handleHorseForm)} key={selectedHorse.id}>
                                                 <label htmlFor="typeOfFeed-field">
                                                     Voeding:
                                                     <select
@@ -836,7 +1076,7 @@ function Profile() {
                                                 {horseUpdateError && <p className="error">{horseUpdateError}</p>}
                                             </form>}
                                         {horseUpdateSuccess && <div>
-                                            <p className="success">De gegevens van uw paard {selectedHorse.name} zijn
+                                            <p className={styles.success}>De gegevens van uw paard {selectedHorse.name} zijn
                                                 succesvol gewijzigd!</p>
                                             <Button
                                                 type="button"
@@ -859,8 +1099,8 @@ function Profile() {
                             {!enrollmentsError && enrollmentList.length === 0 ?
                                 <p>U heeft nog geen abonnementen</p> : enrollmentList.map((enrollment) => {
                                     return <div key={enrollment.id} className="subscriptiom-wrapper">
-                                        <div className="head-line">
-                                            <p className="horsename">Abonnementnummer: {enrollment.id}</p>
+                                        <div className={styles["head-line"]}>
+                                            <p className={styles.horsename}>Abonnementnummer: {enrollment.id}</p>
                                             <Button
                                                 type="button"
                                                 disabled={enrollment.cancellationRequested}
@@ -873,18 +1113,19 @@ function Profile() {
                                         {/*{cancellationSuccess && selectedEnrollmentId === enrollment.id &&*/}
                                         {/*    <p className="success-message">Uw verzoek tot annulering van abonnementnr*/}
                                         {/*        {enrollment.id} is ontvangen en wordt binnen 3 werkdagen verwerkt</p>}*/}
-                                        <table className="table">
-                                            <TableHead
-                                                className="table-head"
-                                            >
-                                                <th>abonnement type</th>
-                                                <th>type stal</th>
-                                                <th>type verzorging</th>
-                                                <th>paard</th>
-                                                <th>start-datum</th>
-                                                <th>annulering aangevraagd</th>
-                                                <th>prijs</th>
-                                            </TableHead>
+                                        {/*<table className="table">*/}
+                                        <Table
+                                            className="default-table"
+                                            tableHeadClassName="default-table-head"
+                                            tableHeadArray={profileEnrollmentTableHead}
+                                        >
+                                            {/*<th>abonnement type</th>*/}
+                                            {/*<th>type stal</th>*/}
+                                            {/*<th>type verzorging</th>*/}
+                                            {/*<th>paard</th>*/}
+                                            {/*<th>start-datum</th>*/}
+                                            {/*<th>annulering aangevraagd</th>*/}
+                                            {/*<th>prijs</th>*/}
                                             <tbody>
                                             <tr className="table-body">
                                                 {enrollment.subscription && <td>{enrollment.subscription.name}</td>}
@@ -900,18 +1141,21 @@ function Profile() {
                                                     <td>{formatPrice(enrollment.subscription.price)}</td>}
                                             </tr>
                                             </tbody>
-                                        </table>
+                                        </Table>
+
+                                        {/*</table>*/}
                                     </div>
                                 })}
                         </Display>}
                         {editingCancellation &&
                             <Display
-                                className="content-wrapper horses"
+                                // className="content-wrapper horses"
+                                className="content-wrapper"
                                 title="Annuleer het volgende abonnement:"
                             >
-                                <div className="horse-wrapper">
-                                    <div className="head-line">
-                                        <p className="horsename">Abonnementnummer: {selectedEnrollement.id}</p>
+                                <div className={styles["horse-wrapper"]}>
+                                    <div className={styles["head-line"]}>
+                                        <p className={styles["horsename"]}>Abonnementnummer: {selectedEnrollement.id}</p>
                                         {/*{enabledHorseChange && selectedHorseId === horse.id && <p>Wijzig hieronder de gegevens van {horse.name}</p>}*/}
                                         <Button
                                             type="button"
@@ -922,7 +1166,7 @@ function Profile() {
                                         </Button>
                                     </div>
                                     {!cancellationSuccess &&
-                                    <div className="cancellation-container">
+                                    <div className={styles["cancellation-container"]}>
                                         {isLoading && <p>...Loading</p>}
                                         <p>U staat op het punt om het volgende abonnement te annuleren voor uw
                                             paard {selectedEnrollement.horse.name} </p>
@@ -939,7 +1183,7 @@ function Profile() {
                                         {error && <p className="error">{error}</p>}
                                     </div>}
                                         {cancellationSuccess && <div>
-                                            <p className="success">Uw verzoek tot annulering van dit abonnement is
+                                            <p className={styles.success}>Uw verzoek tot annulering van dit abonnement is
                                                 succesvol verstuurd en wordt binnen 3 werkdagen door ons verwerkt.</p>
                                             <Button
                                                 type="button"

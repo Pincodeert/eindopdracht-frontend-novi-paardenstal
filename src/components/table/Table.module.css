@@ -1,0 +1,78 @@
+/*.admin-table-head th {*/
+/*    padding: 10px 20px;*/
+/*    !*border: 2px dotted black;*!*/
+/*    width: 200px;*/
+/*}*/
+
+.default-table {
+    display: flex;
+    flex-direction: row;
+    padding-left: 30px;
+    /*margin: 20px 0;*/
+    margin: 33px 0 20px 0;
+    /*border: 2px solid plum;*/
+}
+
+.admin-table {
+    border-collapse: collapse;
+    border: 2px solid var(--orange);
+    border-radius: 5px;
+    width: 100%;
+    /*margin-bottom: 2em;*/
+    margin-bottom: 80px;
+    /*display: flex;*/
+
+}
+
+.admin-table td {
+    border: 2px solid var(--orange);
+    padding: 0.8em;
+}
+
+.admin-table th {
+   padding: 0.8em;
+}
+
+.admin-table tr {
+    border: 2px solid var(--orange);
+    border-radius: 5px;
+}
+
+.admin-table tr:hover {
+    background-color: var(--orange);
+}
+
+
+.default-table-head {
+    display: flex;
+    flex-direction: column;
+    margin-right: 40px;
+    width: 250px;
+}
+
+/*** dit doet hier niks omdat er geen th in t Tab;eHead component staat??????*/
+.admin-table-head th {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    text-align: left;
+    /*background-color: var(--faded-army);*/
+
+}
+
+.table-head-item {
+    padding: 5px 0;
+    text-align: start;
+    /*text-align: left;*/
+    /*padding-top: 1em;*/
+    /*padding-bottom: 1em;*/
+    /*text-align: left;*/
+    /*background-color: var(--faded-army);*/
+    /*border: 2px solid plum;*/
+}
+
+.edit-table-head {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    width: 160px;
+}

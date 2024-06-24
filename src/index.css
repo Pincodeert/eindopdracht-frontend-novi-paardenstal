@@ -91,9 +91,28 @@ header h2 {
     color: var(--orange);
 }
 
-button, input, a{
+.italic {
+    font-style: italic;
+}
+
+button, a{
     font-family: inherit;
     font-size: inherit;
+}
+
+/*button, input, a{*/
+/*    font-family: inherit;*/
+/*    font-size: inherit;*/
+/*}*/
+
+input {
+    width: 100%;
+    padding: 20px 10px;
+    margin: 7px 0;
+    background-color: var(--pale);
+    font-family: Playbill;
+    font-size: 1.1em;
+    border: none;
 }
 
 a:link {
@@ -110,6 +129,10 @@ a:visited {
     color: darkred;
     /*border: 2px solid var(--orange);*/
     padding: 5px;
+}
+
+.form-error {
+    color: darkred;
 }
 
 .form-error-login {
@@ -181,7 +204,29 @@ a:visited {
     background-color: var(--pale);
 }
 
+.content-container {
+    flex-basis: 1000px;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 40px;
+}
+
 /*      ---------- 3.2 Others -------------------------------*/
+.inverted-header {
+    background-color: var(--army);
+    flex-direction: row;
+}
+
+.outer-profile-container {
+    background-color: var(--pale);
+    min-height: 100vh;
+}
+
+.inner-profile-container {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
 
 /*deze stijlregels zolang uit IntroSection.module.css gehaald ivm combi met outer-container*/
 .intro-section h2 {
@@ -242,6 +287,79 @@ a:visited {
     flex-wrap: wrap;
 }
 
+/* idem voor profil.jsx en admin.jsx*/
+
+.nav-portal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-basis: 230px;
+    list-style: none;
+    /*padding: 10px 0;*/
+    margin: 0 10px;
+    /*border: 2px solid plum;*/
+}
+
+.profile-icon {
+    background-color: var(--faded-army);
+    color: var(--dark);
+    font-weight: bold;
+    padding: 18px;
+    border: 3px solid var(--pale);
+    border-radius: 50%;
+}
+
+.side-nav {
+    border-right: 3px solid var(--army);
+    flex-basis: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 10px;
+    height: 100%;
+}
+
+.side-nav Button {
+    margin: 10px 0;
+}
+
+.intro-content-wrapper {
+    padding: 20px;
+}
+
+/*.table {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    padding-left: 30px;*/
+/*    !*margin: 20px 0;*!*/
+/*    margin: 33px 0 20px 0;*/
+/*    !*border: 2px solid plum;*!*/
+/*}*/
+
+.table-body{
+    display: flex;
+    flex-direction: column;
+}
+
+/*th, td {*/
+/*    text-align: start;*/
+/*    padding: 5px;*/
+/*}*/
+
+/* checken of dit nodig is voor de profile pagina. (niet nodig voor admin-page */
+td {
+    text-align: start;
+    padding: 5px;
+}
+
+.horse-info-container {
+    display: flex;
+    /*flex-direction: row;*/
+    flex-direction: column;
+    /*border: 2px solid plum;*/
+
+}
+
 /* deze stijlregels uit footer.module.css gehaald omdat anders niet pakt*/
 .footer-info-section {
     background-color: var(--army);
@@ -275,6 +393,11 @@ a:visited {
 .star-image {
     width: 70px;
     padding: 50px 10px 10px 10px;
+}
+
+select, option {
+    background-color: var(--pale);
+    padding: 5px;
 }
 
 @media screen and (max-width: 992px) {

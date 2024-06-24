@@ -1,0 +1,30 @@
+.content-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.content-wrapper {
+    border: 2px solid var(--orange);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px 0;
+}
+
+/*********  onduidelijk waar dit bij hoort   ******/
+/*.overwiew-container {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*}*/
+
+.overwiew-column-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin {
+    border: 2px solid transparent;
+    background-color: var(--faded-army);
+}

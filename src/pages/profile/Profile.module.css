@@ -1,70 +1,72 @@
-.inverted-header {
-    background-color: var(--army);
-    flex-direction: row;
-}
+/*.inverted-header {*/
+/*    background-color: var(--army);*/
+/*    flex-direction: row;*/
+/*}*/
 
-.outer-profile-container {
-    background-color: var(--pale);
-}
+/*.outer-profile-container {*/
+/*    background-color: var(--pale);*/
+/*}*/
 
-.inner-profile-container {
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
+/*.inner-profile-container {*/
+/*    flex-direction: row;*/
+/*    justify-content: flex-start;*/
+/*    align-items: flex-start;*/
+/*}*/
 
-.nav-portal {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    flex-basis: 230px;
-    list-style: none;
-    padding: 10px 0;
-    margin: 0 10px;
-    border: 2px solid plum;
-}
+/*.nav-portal {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: space-around;*/
+/*    flex-basis: 230px;*/
+/*    list-style: none;*/
+/*    !*padding: 10px 0;*!*/
+/*    margin: 0 10px;*/
+/*    !*border: 2px solid plum;*!*/
+/*}*/
 
-.profile-icon {
-    background-color: var(--faded-army);
-    color: var(--dark);
-    font-weight: bold;
-    padding: 12px;
-    border: 3px solid var(--pale);
-    border-radius: 50%;
-}
+/*.profile-icon {*/
+/*    background-color: var(--faded-army);*/
+/*    color: var(--dark);*/
+/*    font-weight: bold;*/
+/*    padding: 18px;*/
+/*    border: 3px solid var(--pale);*/
+/*    border-radius: 50%;*/
+/*}*/
 
-.side-nav {
-    border-right: 3px solid var(--army);
-    flex-basis: 220px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px 10px;
-    height: 100%;
-}
+/*.side-nav {*/
+/*    border-right: 3px solid var(--army);*/
+/*    flex-basis: 220px;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: flex-start;*/
+/*    padding: 20px 10px;*/
+/*    height: 100%;*/
+/*}*/
 
-.side-nav Button {
-    margin: 10px 0;
-}
+/*.side-nav Button {*/
+/*    margin: 10px 0;*/
+/*}*/
 
-.profile-content-container {
-    flex-basis: 1000px;
-    display: flex;
-    flex-direction: column;
-    margin: 20px 40px;
-}
+/* vervanger door content-container en naar index.css verplaatst omdat ook op admin en subscribe pagina gebruikt wordt*/
+/*.profile-content-container {*/
+/*    flex-basis: 1000px;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    margin: 20px 40px;*/
+/*}*/
 
-.intro-content-wrapper {
-    padding: 20px;
-}
+/*.intro-content-wrapper {*/
+/*    padding: 20px;*/
+/*}*/
 
-.content-wrapper {
-    border: 2px solid var(--orange);
-    border-radius: 8px;
-    padding: 20px;
-    margin: 10px 0;
-}
+/*.content-wrapper {*/
+/*    border: 2px solid var(--orange);*/
+/*    border-radius: 8px;*/
+/*    padding: 20px;*/
+/*    margin: 10px 0;*/
+/*}*/
 
+/*  tijde lijk open gezet voor het persoonsgegevens gedeelte zonder Dispaly */
 .content-title {
     display: flex;
     flex-direction: row;
@@ -84,23 +86,23 @@ th, td {
     padding: 3px;
 }
 
-.table {
-    display: flex;
-    flex-direction: row;
-    padding-left: 30px;
-    margin: 20px 0;
-    /*border: 2px solid plum;*/
-}
+/*.table {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    padding-left: 30px;*/
+/*    margin: 20px 0;*/
+/*    !*border: 2px solid plum;*!*/
+/*}*/
 
-.table-head, .table-body{
-    display: flex;
-    flex-direction: column;
-}
+/*.table-head, .table-body{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
 
-.table-head {
-    margin-right: 40px;
-    width: 250px;
-}
+/*.table-head {*/
+/*    margin-right: 40px;*/
+/*    width: 250px;*/
+/*}*/
 
 .horsename {
     width: 350px;
