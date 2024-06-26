@@ -34,3 +34,7 @@ article h4 {
     border: 2px solid transparent;
     background-color: var(--faded-army);
 }
+
+.price {
+    width: 200px;
+}

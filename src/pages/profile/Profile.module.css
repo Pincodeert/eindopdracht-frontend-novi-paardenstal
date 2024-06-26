@@ -130,7 +130,7 @@
     justify-content: flex-end;
     /*margin: 18px 0;*/
     margin: 30px 0;
-    border: 2px solid greenyellow;
+    /*border: 2px solid greenyellow;*/
     margin-left: 30px;
     width: 555px;
 }
@@ -163,7 +163,7 @@
 }
 
 .horse-edit-button-wrapper {
-    border: 2px solid plum;
+    /*border: 2px solid plum;*/
     width: 550px;
     display: flex;
     justify-content: flex-end;
@@ -183,7 +183,7 @@
 .table-form-container {
     display: flex;
     flex-direction: row;
-    border: 2px solid plum;
+    /*border: 2px solid plum;*/
     align-items: start;
     /*padding: 20px 0;*/
 }
@@ -242,3 +242,9 @@
 .profile-menu {
     margin-bottom: 30px;
 }
+
+.price-display {
+    text-align: center;
+    padding: 10px 20px 20px 20px;
+}
+

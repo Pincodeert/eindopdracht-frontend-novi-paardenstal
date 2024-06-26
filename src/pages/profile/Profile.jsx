@@ -43,6 +43,8 @@ function Profile() {
     const [editingCancellation, toggleEditingCancellation] = useState(false);
     const [selectedEnrollement, setSelectedEnrollement] = useState(null);
     const [passportDownloadSuccess, togglePassportDownloadSuccess] = useState(false);
+    const [totalPrice, setTotalPrice] = useState(null);
+    const [showingTotalPrice, toggleShowingTotalPrice] = useState(false);
 
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
@@ -354,6 +356,16 @@ function Profile() {
         }
      }
 
+     function handleTotalPriceClick(enrollmentList) {
+        console.log("hoi dit is de enrollmentList: ", enrollmentList)
+         toggleShowingTotalPrice(!showingTotalPrice);
+         const result = calculateCustomersPrice(enrollmentList);
+        setTotalPrice(result);
+
+
+     }
+    console.log("totale kosten: ", totalPrice, showingTotalPrice);
+
     return (
         <>
             <header>
@@ -399,14 +411,28 @@ function Profile() {
                         <Button
                             type="button"
                             disabled={false}
-                            handleClick={calculateCustomersPrice}
+                            handleClick={()=> handleTotalPriceClick(enrollmentList)}
                         >
                             Bereken uw totale abonnementskosten
                         </Button>
-                    </nav>
-                    <div className="content-container">
-                        {Object.keys(profile).length > 0 &&
-                            <div className="intro-content-wrapper">
+                        {showingTotalPrice &&
+                            <Display
+                                title="Totale kosten:"
+                                className="price"
+                            >
+                               <p className={styles["price-display"]}>{formatPrice(totalPrice)}</p>
+
+                                <Button
+                                    type="button"
+                                    handleClick={() => toggleShowingTotalPrice(!showingTotalPrice)}
+                                >
+                                    klap in
+                                </Button>
+                    </Display>}
+                </nav>
+                <div className="content-container">
+                    {Object.keys(profile).length > 0 &&
+                        <div className="intro-content-wrapper">
                                 <h3>Welkom {displayCompleteName(profile.firstName, profile.lastName)}</h3>
                                 <p>klantnummer: 20240{profile.id}</p>
                             </div>}

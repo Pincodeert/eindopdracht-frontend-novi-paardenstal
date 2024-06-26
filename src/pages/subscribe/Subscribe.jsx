@@ -463,6 +463,7 @@ function Subscribe() {
                                             <p> Uw persoonsgevens zijn succesvol toegevoegd!</p>
                                             <Button
                                                 type="button"
+                                                classname="edit-button"
                                                 disabled={subscribeInfoError}
                                                 handleClick={assignUserToCustomer}
                                             >
@@ -633,6 +634,7 @@ function Subscribe() {
                                         </label>
                                         <Button
                                             type="submit"
+                                            classname="edit-button"
                                             disabled={false}
                                         >
                                             Sla op
@@ -670,6 +672,7 @@ function Subscribe() {
                                             </label>}
                                         <Button
                                             type="submit"
+                                            classname="edit-button"
                                             disabled={false}
                                         >
                                             Voeg toe
@@ -706,6 +709,7 @@ function Subscribe() {
                                             </div>
                                             <Button
                                                 type="submit"
+                                                classname="edit-button"
                                                 disabled={false}
                                             >
                                                 Sla op
@@ -716,6 +720,7 @@ function Subscribe() {
                                                 worden </p>
                                             <Button
                                                 type="button"
+                                                classname="edit-button"
                                                 disabled={false}
                                                 handleClick={() => navigate(`/profiel/${user.customerProfile}`)}
                                             >

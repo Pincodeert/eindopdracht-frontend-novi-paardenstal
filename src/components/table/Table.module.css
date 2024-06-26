@@ -10,7 +10,7 @@
     padding-left: 30px;
     /*margin: 20px 0;*/
     margin: 33px 0 20px 0;
-    border: 2px solid plum;
+    /*border: 2px solid plum;*/
 }
 
 .admin-table {
@@ -75,4 +75,5 @@
     flex-direction: column;
     margin-right: 20px;
     width: 160px;
+    /*background-color: greenyellow;*/
 }

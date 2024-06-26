@@ -356,7 +356,7 @@ td {
     display: flex;
     /*flex-direction: row;*/
     flex-direction: column;
-    border: 2px solid plum;
+    /*border: 2px solid plum;*/
 
 }
 
