@@ -1,11 +1,11 @@
 import star from "../../assets/ster-image.jpg";
-import './Usp.css';
+import styles from './Usp.module.css';
 
-function Usp(props) {
+function Usp({text}) {
     return (
-        <article className="usp-article">
+        <article className={styles["usp-article"]}>
             <img src={star} alt="ster"/>
-            <p>{props.text}</p>
+            <p>{text}</p>
         </article>
     );
 }

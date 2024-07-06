@@ -1,24 +1,3 @@
-.subscription-article img {
-    width: 25px;
-    margin: 10px;
-    /*border: 2px dotted white;*/
-}
-
-.subscription-article h2 {
-    font-size: 1.5em;
-    padding: 10px 0;
-    /*border: 2px dotted white;*/
-}
-
-.subscription-article p {
-    padding: 10px 0;
-    /*border: 2px dotted white;*/
-}
-
-.subscription-article Button {
-    margin: 10px 0;
-}
-
 .subscription-article {
     border: 2px solid var(--orange);
     border-radius: 10px;
@@ -28,6 +7,24 @@
     justify-content: flex-start;
     align-items: center;
     padding: 10px;
+}
+
+.subscription-article img {
+    width: 40px;
+    margin: 10px;
+}
+
+.subscription-article h2 {
+    font-size: 1.5em;
+    padding: 10px 0;
+}
+
+.subscription-article p {
+    padding: 10px 0;
+}
+
+.subscription-article Button {
+    margin: 10px 0;
 }
 
 .subscription-text-wrapper {
@@ -46,4 +43,5 @@
 .price {
     font-weight: bold;
     font-size: 1.5em;
+    margin-bottom: 20px ;
 }

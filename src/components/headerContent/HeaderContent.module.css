@@ -1,0 +1,41 @@
+.header-content-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    background-color: var(--dark);
+}
+
+.header-content-image {
+    flex-basis: 700px;
+    border: 2px solid plum;
+}
+
+/*.header-content-title {*/
+/*    text-align: center;*/
+/*    flex-basis: 400px;*/
+/*    position: relative;*/
+/*    right: 193px;*/
+/*}*/
+
+/*.header-content-subtitle {*/
+/*    font-family: "Jim Nightshade", cursive;*/
+/*    font-style: normal;*/
+/*    font-weight: 400;*/
+/*    color: var(--orange);*/
+/*}*/
+
+/*@media screen and (max-width: 820px){*/
+/*    .header-content-title {*/
+/*        right: 100px;*/
+/*        font-size: 0.9em;*/
+/*    }*/
+/*}*/
+
+/*@media screen and (max-width: 620px){*/
+/*    .header-content-title {*/
+/*        right: 70px;*/
+/*        font-size: 0.8em;*/
+/*    }*/
+/*}*/

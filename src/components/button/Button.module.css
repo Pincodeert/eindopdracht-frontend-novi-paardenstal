@@ -31,3 +31,28 @@ button:disabled {
     background-color: var(--orange);
     color: var(--army);
 }
+
+.admin-menu {
+    width: 190px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.admin-select-button {
+    width: 140px;
+}
+
+.edit-button {
+    margin-top: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.edit-button:hover {
+    background-color: var(--pale);
+    color: var(--dark);
+    /*background-color: var(--dark);*/
+    /*color: var(--pale);*/
+    font-weight: bold;
+    box-shadow: 4px 4px 10px var(--army);
+}

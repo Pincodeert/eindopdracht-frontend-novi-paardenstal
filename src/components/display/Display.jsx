@@ -1,13 +1,15 @@
 import React from "react";
-import "./Display.css"
+import styles from "./Display.module.css";
 
 function Display({className ,title, children}) {
+
+
     return (
-        <article className={className}>
-            <div className="content-title">
+        <article className={`${styles["content-wrapper"]} ${styles[className]}`}>
+            <div className={styles["content-title"]}>
                 <h4>{title}</h4>
             </div>
-            <div className="overwiew-column-container">
+            <div className={styles["overwiew-column-container"]}>
                 {children}
             </div>
         </article>

@@ -1,0 +1,250 @@
+/*.inverted-header {*/
+/*    background-color: var(--army);*/
+/*    flex-direction: row;*/
+/*}*/
+
+/*.outer-profile-container {*/
+/*    background-color: var(--pale);*/
+/*}*/
+
+/*.inner-profile-container {*/
+/*    flex-direction: row;*/
+/*    justify-content: flex-start;*/
+/*    align-items: flex-start;*/
+/*}*/
+
+/*.nav-portal {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: space-around;*/
+/*    flex-basis: 230px;*/
+/*    list-style: none;*/
+/*    !*padding: 10px 0;*!*/
+/*    margin: 0 10px;*/
+/*    !*border: 2px solid plum;*!*/
+/*}*/
+
+/*.profile-icon {*/
+/*    background-color: var(--faded-army);*/
+/*    color: var(--dark);*/
+/*    font-weight: bold;*/
+/*    padding: 18px;*/
+/*    border: 3px solid var(--pale);*/
+/*    border-radius: 50%;*/
+/*}*/
+
+/*.side-nav {*/
+/*    border-right: 3px solid var(--army);*/
+/*    flex-basis: 220px;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: flex-start;*/
+/*    padding: 20px 10px;*/
+/*    height: 100%;*/
+/*}*/
+
+/*.side-nav Button {*/
+/*    margin: 10px 0;*/
+/*}*/
+
+/* vervanger door content-container en naar index.css verplaatst omdat ook op admin en subscribe pagina gebruikt wordt*/
+/*.profile-content-container {*/
+/*    flex-basis: 1000px;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    margin: 20px 40px;*/
+/*}*/
+
+/*.intro-content-wrapper {*/
+/*    padding: 20px;*/
+/*}*/
+
+/*.content-wrapper {*/
+/*    border: 2px solid var(--orange);*/
+/*    border-radius: 8px;*/
+/*    padding: 20px;*/
+/*    margin: 10px 0;*/
+/*}*/
+
+/*  tijde lijk open gezet voor het persoonsgegevens gedeelte zonder Dispaly */
+/*.content-title {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: space-between;*/
+/*    align-items: flex-start;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*article h4 {*/
+/*    background-color: var(--army);*/
+/*    color: var(--pale);*/
+/*    padding: 8px 15px;*/
+/*}*/
+
+/*th, td {*/
+/*    text-align: start;*/
+/*    padding: 3px;*/
+/*}*/
+
+/*.table {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    padding-left: 30px;*/
+/*    margin: 20px 0;*/
+/*    !*border: 2px solid plum;*!*/
+/*}*/
+
+/*.table-head, .table-body{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
+
+/*.table-head {*/
+/*    margin-right: 40px;*/
+/*    width: 250px;*/
+/*}*/
+
+.horsename {
+    width: 350px;
+    padding: 8px 15px;
+    font-weight: bold;
+}
+
+.head-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    /*border: 2px solid plum;*/
+    padding-left: 20px;
+    background-color: var(--faded-army);
+}
+
+.horse-wrapper {
+    margin: 20px 0;
+}
+
+.profile-form {
+    display: flex;
+    /*align-items: flex-end;*/
+    align-items: flex-start;
+    justify-content: flex-end;
+    /*margin: 18px 0;*/
+    margin: 30px 0;
+    /*border: 2px solid greenyellow;*/
+    margin-left: 30px;
+    width: 555px;
+}
+
+.profile-form input, select {
+    padding: 3px;
+    border: 2px solid var(--orange);
+    border-radius: 5px;
+    margin: 2px 0;
+    font-size: 18px;
+    width: 250px;
+
+}
+.profile-form select {
+    font-family: Playbill;
+    /*font-size: 18px;*/
+}
+.profile-form button {
+    width: 250px;
+    margin-top: 10px;
+}
+
+.profile-form label {
+    /*border: 2px solid plum;*/
+    font-weight: bold;
+    width: 550px;
+    display: flex;
+    justify-content: space-between;
+    /*margin-left: 30px;*/
+}
+
+.horse-edit-button-wrapper {
+    /*border: 2px solid plum;*/
+    width: 550px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+
+/*.table-body input {*/
+/*    padding: 3px;*/
+/*    border: 2px solid var(--orange);*/
+/*    border-radius: 5px;*/
+/*    margin: 0;*/
+/*    font-size: 18px;*/
+/*    width: 300px;*/
+/*}*/
+
+.table-form-container {
+    display: flex;
+    flex-direction: row;
+    /*border: 2px solid plum;*/
+    align-items: start;
+    /*padding: 20px 0;*/
+}
+
+
+
+/**** verplaatst naar index.css*/
+/*.horse-info-container {*/
+/*    display: flex;*/
+/*    !*flex-direction: row;*!*/
+/*    flex-direction: column;*/
+/*    border: 2px solid black;*/
+/*    background-color: plum;*/
+/*}*/
+
+/* *** verplatst naar index.css  ****/
+.horse-info-container select {
+    border: 2px solid var(--orange);
+    border-radius: 5px;
+    padding: 2px 5px;
+}
+
+/*.success-message {*/
+/*    color: var(--orange);*/
+/*}*/
+
+.success {
+    padding: 30px;
+    /*color: var(--orange);*/
+}
+
+.cancellation-container {
+    padding: 30px;
+    /*font-weight: bold;*/
+}
+
+.cancellation-container p{
+    margin-bottom: 10px;
+    /*font-weight: bold;*/
+}
+
+.cancellation-container button {
+    margin-top: 20px;
+}
+
+.passport-image {
+    border: 2px solid var(--faded-army);
+    border-radius: 3px;
+    padding: 3px;
+    max-width: 200px;
+    max-height: 300px;
+    background-color: var(--faded-army);
+    box-shadow: 4px 4px 10px var(--army);
+}
+
+.profile-menu {
+    margin-bottom: 30px;
+}
+
+.price-display {
+    text-align: center;
+    padding: 10px 20px 20px 20px;
+}
+

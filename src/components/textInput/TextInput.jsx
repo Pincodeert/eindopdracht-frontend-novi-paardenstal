@@ -1,5 +1,5 @@
 import "./TextInput.css"
-import register from "../../pages/register/Register.jsx";
+// import register from "../../pages/register/Register.jsx";
 
 function TextInput({labelFor, children, inputId, inputName, register, validationRules, errors,textValue, changeHandler, placeholder, required}) {
     return (

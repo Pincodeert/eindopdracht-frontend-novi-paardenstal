@@ -1,8 +1,8 @@
-import "./SubscribeCard.css";
+import styles from "./SubscribeCard.module.css";
 
 function SubscribeCard({subscribeCardTitle, children, subscribeStep, error}) {
     return (
-        <article className="subscribe-card">
+        <article className={styles["subscribe-card"]}>
             <h4 className="italic">{subscribeCardTitle}</h4>
             {children}
             <p className="form-error">{error}</p>

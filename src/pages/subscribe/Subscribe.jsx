@@ -1,6 +1,6 @@
 import NavBar from "../../components/navBar/NavBar.jsx";
 import HeaderContent from "../../components/headerContent/HeaderContent.jsx";
-import "./Subscribe.css"
+import styles from "./Subscribe.module.css";
 import generateSubscriptionDetails from "../../helpers/generateSubscriptionDetails.js";
 import TextInput from "../../components/textInput/TextInput.jsx";
 import Button from "../../components/button/Button.jsx";
@@ -13,6 +13,7 @@ import {useForm} from "react-hook-form";
 import {AuthContext} from "../../context/AuthContext.jsx";
 import {SubscriptionContext} from "../../context/SubscriptionContext.jsx";
 import generateFetchErrorString, {generateSaveErrorString} from "../../helpers/generate ErrorString.js";
+import NavLinkList from "../../components/navLinkList/NavLinkList.jsx";
 
 function Subscribe() {
     const [subscription, setSubscription] = useState({});
@@ -217,9 +218,9 @@ function Subscribe() {
         <>
             <header className="outer-container header-section">
                 <div className="inner-container">
-                    <NavBar
-                        classname="header-navigation"
-                    />
+                    <NavBar>
+                        <NavLinkList/>
+                    </NavBar>
                     <HeaderContent/>
                 </div>
             </header>
@@ -227,21 +228,24 @@ function Subscribe() {
                 <section className="outer-container intro-section">
                     <div className="inner-container">
                         {isLoading && <p>...Loading</p>}
-                        {subscribeInfoError ? <p className="error">{subscribeInfoError}</p> : <div>
+                        {subscribeInfoError ?
+                            <p className="error">{subscribeInfoError}</p>
+                            : <div>
                             {!subscribeInfoError && Object.keys(subscription).length > 0 &&
-                                <div className="subscribe-info-container">
-                                    <p className="intro-line">Fijn dat u het {subscription.name} wilt aflsuiten </p>
-                                    <p className="italic">{generateSubscriptionDetails(subscription)}</p></div>}
-                        </div>}
+                                <div className={styles["subscribe-info-container"]}>
+                                    <p className={styles["intro-line"]}>Fijn dat u het {subscription.name} wilt aflsuiten </p>
+                                    <p className="italic">{generateSubscriptionDetails(subscription)}</p>
+                                </div>}
+                            </div>}
                     </div>
                 </section>
                 <section className="outer-container intro-section">
                     <div className="inner-container">
-                        <div className="profile-content-container">
+                        <div className="content-container">
                             {step === "step1" &&
                                 <SubscribeCard
                                     subscribeCardTitle="Stap 1 - Vul uw persoonsgegevens in"
-                                    subscribeStep="step1"
+                                    // subscribeStep="step1"
                                     error={error}
                                 >
                                     {!newlyCustomerId ? <form onSubmit={handleSubmit(handleSubmitCustomer)}>
@@ -459,6 +463,7 @@ function Subscribe() {
                                             <p> Uw persoonsgevens zijn succesvol toegevoegd!</p>
                                             <Button
                                                 type="button"
+                                                classname="edit-button"
                                                 disabled={subscribeInfoError}
                                                 handleClick={assignUserToCustomer}
                                             >
@@ -471,7 +476,7 @@ function Subscribe() {
                             {step === "step2" &&
                                 <SubscribeCard
                                     subscribeCardTitle="Stap 2 - Vul de gegevens van uw paard in"
-                                    subscribeStep="step2"
+                                    // subscribeStep="step2"
                                     error={error}
                                 >
                                     <form onSubmit={handleSubmit(handleSubmitHorse)}>
@@ -629,6 +634,7 @@ function Subscribe() {
                                         </label>
                                         <Button
                                             type="submit"
+                                            classname="edit-button"
                                             disabled={false}
                                         >
                                             Sla op
@@ -639,7 +645,7 @@ function Subscribe() {
                             {step === "step3" &&
                                 <SubscribeCard
                                     subscribeCardTitle="Stap 3 - Voeg een kopie van het paardenpaspoort van uw paard toe"
-                                    subscribeStep="step3"
+                                    // subscribeStep="step3"
                                     error={error}
                                 >
                                     <form onSubmit={handleSubmit(handleSubmitPassport)}>
@@ -662,10 +668,11 @@ function Subscribe() {
                                             <label htmlFor="preview-file">
                                                 <img src={previewUrl}
                                                      alt="Voorbeeld van de afbeelding die zojuist gekozen is"
-                                                     className="image-preview"/>
+                                                     className={styles["image-preview"]}/>
                                             </label>}
                                         <Button
                                             type="submit"
+                                            classname="edit-button"
                                             disabled={false}
                                         >
                                             Voeg toe
@@ -676,14 +683,14 @@ function Subscribe() {
                             {step === "step4" &&
                                 <SubscribeCard
                                     subscribeCardTitle="Stap 4 - Ga akkoord en bevestig aanvraag"
-                                    subscribeStep="step4"
+                                    // subscribeStep="step4"
                                     error={error}
                                 >
                                     {!horseAssignedSuccess ?
                                         <form onSubmit={handleSubmit(handleSubmitTerms)}>
-                                            <div className="label-input-combi">
+                                            <div className={styles["label-input-combi"]}>
                                                 <input
-                                                    className="checkbox"
+                                                    className={styles["checkbox"]}
                                                     type="checkbox"
                                                     id="terms-and-conditions-field"
                                                     name="termsAndConditions"
@@ -702,6 +709,7 @@ function Subscribe() {
                                             </div>
                                             <Button
                                                 type="submit"
+                                                classname="edit-button"
                                                 disabled={false}
                                             >
                                                 Sla op
@@ -712,6 +720,7 @@ function Subscribe() {
                                                 worden </p>
                                             <Button
                                                 type="button"
+                                                classname="edit-button"
                                                 disabled={false}
                                                 handleClick={() => navigate(`/profiel/${user.customerProfile}`)}
                                             >

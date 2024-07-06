@@ -1,12 +1,14 @@
 import NavBar from "../../components/navBar/NavBar.jsx";
 import Button from "../../components/button/Button.jsx";
 import nico from "../../assets/Nico-wijs.jpg";
-import './Register.css'
+import styles from './Register.module.css';
 import TextInput from "../../components/textInput/TextInput.jsx";
 import {useForm} from "react-hook-form";
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import NavLinkList from "../../components/navLinkList/NavLinkList.jsx";
+import HeaderTitle from "../../components/headerTitle/HeaderTitle.jsx";
 
 function Register() {
     const [error, setError] = useState("");
@@ -38,26 +40,23 @@ function Register() {
     return (
         <>
             <header>
-                <section className="outer-container nav-section">
+                <section className="outer-container login-nav-section">
                     <div className="inner-container">
-                        <NavBar
-                            classname="header-navigation"
-                        />
+                        <NavBar>
+                            <NavLinkList/>
+                        </NavBar>
                     </div>
                 </section>
                 <section className="outer-container">
-                    <div className="inner-container title-section">
-                        <div className="header-content-title">
-                            <h1>Blaze of Glory</h1>
-                            <h2>Pensionstallen</h2>
-                        </div>
+                    <div className="inner-container login-header-section">
+                        <HeaderTitle classname="header-login-title"/>
                     </div>
                 </section>
             </header>
             <main className="outer-container ">
-                <section className="inner-container content-section">
-                    <div className="form-container">
-                        <h2>Registreer hier: </h2>
+                <section className="inner-container login-content-section">
+                    <div className={styles["register-form-container"]}>
+                        <h2 className={styles["register-text"]}>Registreer hier:</h2>
                         <form onSubmit={handleSubmit(handleFormSubmit)}>
                             <TextInput
                                 labelFor="username-text-field"
@@ -118,10 +117,11 @@ function Register() {
                                 />
                                 {errors.email && <p className="form-error-login">{errors.email.message}</p>}
                             </label>
-                            {isLoading && <p className="loading-login">Loading...</p>}
+                            {isLoading &&
+                                <p className="loading-login">Loading...</p>}
                             {error &&
                                 <p className="form-error-login">{error}</p>}
-                            <div className="form-button-wrapper">
+                            <div className={styles["form-button-wrapper"]}>
                                 <Button
                                     type="submit"
                                     disabled={false}
@@ -132,7 +132,7 @@ function Register() {
                             </div>
                         </form>
                     </div>
-                    <div className="register-info-container">
+                    <div className={styles["register-info-container"]}>
                         <img src={nico} alt="nico"/>
                     </div>
                 </section>

@@ -1,6 +1,6 @@
-.outer-profile-container {
-    min-height: 100vh;
-}
+/*.outer-profile-container {*/
+/*    min-height: 100vh;*/
+/*}*/
 
 h2 {
     margin-bottom: 15px;
@@ -10,7 +10,7 @@ h3 {
     margin-top: 20px;
 }
 
-/*verplaatst naar Display.css*/
+/*verplaatst naar Display.module.css*/
 /*.overwiew-container {*/
 /*     display: flex;*/
 /*     flex-direction: row;*/
@@ -32,30 +32,30 @@ h3 {
 /*    width: 200px;*/
 /*}*/
 
-.admin-table {
-    border-collapse: collapse;
-    border: 2px solid var(--orange);
-    border-radius: 5px;
-    width: 100%;
-    /*margin-bottom: 2em;*/
-    margin-bottom: 80px;
-    /*display: flex;*/
+/*.admin-table {*/
+/*    border-collapse: collapse;*/
+/*    border: 2px solid var(--orange);*/
+/*    border-radius: 5px;*/
+/*    width: 100%;*/
+/*    !*margin-bottom: 2em;*!*/
+/*    margin-bottom: 80px;*/
+/*    !*display: flex;*!*/
 
-}
+/*}*/
 
-.admin-table td, .users th {
-    border: 2px solid var(--orange);
-    padding: 0.8em;
-}
+/*.admin-table td, .users th {*/
+/*    border: 2px solid var(--orange);*/
+/*    padding: 0.8em;*/
+/*}*/
 
-.admin-table tr {
-    border: 2px solid var(--orange);
-    border-radius: 5px;
-}
+/*.admin-table tr {*/
+/*    border: 2px solid var(--orange);*/
+/*    border-radius: 5px;*/
+/*}*/
 
-.admin-table tr:hover {
-    background-color: var(--orange);
-}
+/*.admin-table tr:hover {*/
+/*    background-color: var(--orange);*/
+/*}*/
 
 /*.admin-table th {*/
 /*    padding-top: 1em;*/
@@ -65,11 +65,18 @@ h3 {
 
 /*}*/
 
-/*verplaatst naar Display.css*/
+/*verplaatst naar Display.module.css*/
 /*.admin {*/
 /*    border: 2px solid transparent;*/
 /*    background-color: var(--faded-army);*/
 /*}*/
+
+.horse-edit-container {
+    display: flex;
+    flex-direction: row;
+    /*flex-direction: column;*/
+    /*border: 2px solid plum;*/
+}
 
 .horse-list {
     list-style: none;
@@ -98,14 +105,15 @@ h3 {
     padding: 20px 10px;
 }
 
-.table-test {
-    margin-right: 20px;
-    width: 160px;
-}
+/*.table-test {*/
+/*    margin-right: 20px;*/
+/*    width: 160px;*/
+/*}*/
 
 .edit-part {
     padding: 20px;
     margin-left: 20px;
+    /*border: 2px dotted white;*/
 }
 
 .edit-part button {
@@ -115,12 +123,17 @@ h3 {
 
 .success-message {
     color: var(--pale);
+    margin-top: 20px;
 }
 
-.admin-menu {
-    width: 190px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+/*deze hoort bij de button.module.css*/
+/*.admin-menu {*/
+/*    width: 190px;*/
+/*    padding-top: 10px;*/
+/*    padding-bottom: 10px;*/
+/*}*/
+.admin-menu-title {
+    margin-bottom: 25px;
 }
 
 .notification {
@@ -153,3 +166,6 @@ h3 {
     /*background-color: var(--faded-army);*/
 }
 
+/*.success-message {*/
+/*    color: var(--orange);*/
+/*}*/

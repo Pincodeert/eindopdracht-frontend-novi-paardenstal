@@ -34,7 +34,6 @@
     padding: 10px;
 }
 
-
 .feature-text-item {
     display: flex;
     flex-direction: row;
@@ -45,7 +44,7 @@
 }
 
 .feature-text h3 + .feature-text-item {
-    margin-top: 20px;
+    margin-top: 16px;
 }
 
 .feature-image {
@@ -56,5 +55,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    border: 8px solid var(--pale);
+    border: 7px solid var(--pale);
+}
+.dark-border {
+    border: 7px solid var(--faded-army);
+}
+
+@media screen and (max-width: 620px) {
+    .feature-image {
+        border: 8px solid var(--faded-army);
+    }
 }

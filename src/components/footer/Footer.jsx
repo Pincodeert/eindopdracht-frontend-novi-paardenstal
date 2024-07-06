@@ -1,21 +1,25 @@
-import './Footer.css'
+import styles from './Footer.module.css';
 import star from "../../assets/ster-image.jpg";
 import FooterArticle from "../footerArticle/FooterArticle.jsx";
 
 function Footer() {
+    // let classname = "inner-container";
+
     return (
         <footer>
             <div className="outer-container footer-info-outer">
+            {/*<div className={`outer-container ${styles["footer-info-outer"]}`}>*/}
                 <section className="inner-container footer-info-section">
+                    {/*<section className={`inner-container ${styles["footer-info-section"]}`}>*/}
                     <div className="title-wrapper">
                         <img className="star-image" src={star} alt="ster-icoon"/>
                         <img className="star-image" src={star} alt="ster-icoon"/>
                         <img className="star-image" src={star} alt="ster-iccon"/>
                     </div>
-                    <div className="footer-info-wrapper">
+                    <div className={styles["footer-info-wrapper"]}>
                         <FooterArticle
                             title="Openingstijden"
-                            classname="footer-info"
+                            // classname="footer-info"
                         >
                             <p>ma: 9.00u - 21.00u</p>
                             <p>di: 8.00 - 22.00u</p>
@@ -27,7 +31,7 @@ function Footer() {
                         </FooterArticle>
                         <FooterArticle
                             title="Algemeen"
-                            classname="footer-info"
+                            // classname="footer-info"
                         >
                             <p>algemene voorwaarden</p>
                             <p>privacy verklaring</p>
@@ -36,11 +40,12 @@ function Footer() {
                         </FooterArticle>
                         <FooterArticle
                             title="Contact"
-                            classname="footer-info borderless"
+                            // classname="footer-info borderless"
+                            classname="borderless"
                         >
                             <p>Landweg 2A</p>
                             <p>1234 AB</p>
-                            <p className="footer-info-title">Parkstad</p>
+                            <p>Parkstad</p>
                             <p>tel 012 234 56 78</p>
                             <p>info@blazeofglory.com</p>
                         </FooterArticle>
@@ -55,7 +60,7 @@ function Footer() {
             <div className="outer-container closing-outer">
                 <section className="inner-container footer-close-section">
                     <p>
-                        Copyright pensionstal Blaze of Glory | mede mogelijk gemaakt door Sportcentrum Nieuw-Vennep
+                        Copyright pensionstal Blaze of Glory | met dank aan Sportcentrum Nieuw-Vennep
                     </p>
                 </section>
             </div>

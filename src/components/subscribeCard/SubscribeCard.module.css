@@ -7,11 +7,11 @@
     width: 600px;
 }
 
-.italic {
-    font-style: italic;
-}
+/*.italic {*/
+/*    font-style: italic;*/
+/*}*/
 
-/*deze stijlregels toegevoegd, omdat component anders de stijlregels toepast die gedefinieerd zijn in de Profile.css voor:
+/*deze stijlregels toegevoegd, omdat component anders de stijlregels toepast die gedefinieerd zijn in de Profile.module.css voor:
 article h4 {
     background-color: var(--army);
     color: var(--pale);
@@ -21,4 +21,8 @@ article h4 {
     margin-bottom: 20px;
     background-color: hsl(54 8% 63%);
     color: var(--army);
+}
+
+.subscribe-card p {
+    padding: 10px 0;
 }

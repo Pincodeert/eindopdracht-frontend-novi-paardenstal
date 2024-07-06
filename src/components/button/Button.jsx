@@ -1,15 +1,16 @@
-import './Button.css'
+import styles from './Button.module.css';
 
-function Button(props) {
+
+function Button({type, classname, handleClick, disabled, children}) {
 
     return (
         <button
-            type={props.type}
-            className={props.classname}
-            onClick={props.handleClick}
-            disabled={props.disabled}
+            type={type}
+            className={styles[classname]}
+            onClick={handleClick}
+            disabled={disabled}
         >
-            {props.children}
+            {children}
         </button>
     );
 }
