@@ -20,6 +20,7 @@ import {
     profileHorseTableHead,
     profilePersonaTableHead
 } from "../../constants/tableContent.js";
+import reverseDate from "../../helpers/reverseDate.js";
 
 function Profile() {
     const [error, setError] = useState("");
@@ -485,8 +486,8 @@ function Profile() {
                                                 textValue={profile.street}
                                                 validationRules={{
                                                     required: {
-                                                        value: false,
-                                                        // message: "Straat is verplicht"
+                                                        value: true,
+                                                        message: "Straat is verplicht"
                                                     },
                                                     minLength: {
                                                         value: 3,
@@ -506,8 +507,8 @@ function Profile() {
                                                 textValue={profile.houseNumber}
                                                 validationRules={{
                                                     required: {
-                                                        value: false,
-                                                        // message: "Huisnummer is verplicht"
+                                                        value: true,
+                                                        message: "Huisnummer is verplicht"
                                                     },
                                                     minLength: {
                                                         value: 1,
@@ -527,8 +528,8 @@ function Profile() {
                                                 textValue={profile.postalCode}
                                                 validationRules={{
                                                     required: {
-                                                        value: false,
-                                                        // message: "Postcode is verplicht"
+                                                        value: true,
+                                                        message: "Postcode is verplicht"
                                                     },
                                                     minLength: {
                                                         value: 4,
@@ -547,8 +548,8 @@ function Profile() {
                                                 register={register}
                                                 validationRules={{
                                                     required: {
-                                                        value: false,
-                                                        // message: "Woonplaats is verplicht"
+                                                        value: true,
+                                                        message: "Woonplaats is verplicht"
                                                     },
                                                     minLength: {
                                                         value: 2,
@@ -569,8 +570,8 @@ function Profile() {
                                                 defaultValue={profile.telephoneNumber}
                                                 {...register("telephoneNumber", {
                                                     required: {
-                                                        value: false,
-                                                        // message: 'telefoonnummer is verplicht',
+                                                        value: true,
+                                                        message: 'telefoonnummer is verplicht',
                                                     },
                                                     minLength: {
                                                         value: 10,
@@ -589,8 +590,8 @@ function Profile() {
                                                 defaultValue={profile.emailAddress}
                                                 {...register("emailAddress", {
                                                     required: {
-                                                        value: false,
-                                                        // message: 'e-mailadres is verplicht',
+                                                        value: true,
+                                                        message: 'e-mailadres is verplicht',
                                                     },
                                                 })}
                                             />
@@ -603,8 +604,8 @@ function Profile() {
                                                 register={register}
                                                 validationRules={{
                                                     required: {
-                                                        value: false,
-                                                        // message: "bank/IBAN-nummer is verplicht"
+                                                        value: true,
+                                                        message: "bank/IBAN-nummer is verplicht"
                                                     },
                                                     minLength: {
                                                         value: 16,
@@ -739,7 +740,7 @@ function Profile() {
                                                         defaultValue={selectedHorse.typeOfFeed}
                                                         {...register("typeOfFeed", {
                                                             required: {
-                                                                value: false,
+                                                                value: true,
                                                                 // message: "maak een keuze",
                                                             }
                                                         })}
@@ -757,8 +758,8 @@ function Profile() {
                                                         defaultValue={selectedHorse.typeOfBedding}
                                                         {...register("typeOfBedding", {
                                                             required: {
-                                                                value: false,
-                                                                // message: "maak een keuze",
+                                                                value: true,
+                                                                message: "maak een keuze",
                                                             }
                                                         })}
                                                     >
@@ -776,8 +777,8 @@ function Profile() {
                                                     register={register}
                                                     validationRules={{
                                                         required: {
-                                                            value: false,
-                                                            // message: "Naam van dierenarts is verplicht"
+                                                            value: true,
+                                                            message: "Naam van dierenarts is verplicht"
                                                         },
                                                         minLength: {
                                                             value: 2,
@@ -798,8 +799,8 @@ function Profile() {
                                                     register={register}
                                                     validationRules={{
                                                         required: {
-                                                            value: false,
-                                                            // message: "Woonplaats van dierenarts is verplicht"
+                                                            value: true,
+                                                            message: "Woonplaats van dierenarts is verplicht"
                                                         },
                                                         minLength: {
                                                             value: 2,
@@ -820,8 +821,8 @@ function Profile() {
                                                         defaultValue={selectedHorse.telephoneOfVet}
                                                         {...register("telephoneOfVet", {
                                                             required: {
-                                                                value: false,
-                                                                // message: 'telefoonnummer is verplicht',
+                                                                value: true,
+                                                                message: 'telefoonnummer is verplicht',
                                                             },
                                                             minLength: {
                                                                 value: 10,
@@ -870,7 +871,7 @@ function Profile() {
                             {isLoading && <p>...Loading</p>}
                             {enrollmentsError && <p className="error">{enrollmentsError}</p>}
                             {!enrollmentsError && enrollmentList.length === 0 ?
-                                <p>U heeft nog geen abonnementen</p> : enrollmentList.map((enrollment) => {
+                                <p>U heeft nog geen geactiveerde abonnementen</p> : enrollmentList.map((enrollment) => {
                                     return <div key={enrollment.id} className="subscriptiom-wrapper">
                                         <div className={styles["head-line"]}>
                                             <p className={styles.horsename}>Abonnementnummer: {enrollment.id}</p>
@@ -897,7 +898,7 @@ function Profile() {
                                                 {enrollment.subscription &&
                                                     <td>{enrollment.subscription.typeOfCare}</td>}
                                                 {enrollment.horse && <td>{enrollment.horse.name}</td>}
-                                                {enrollment.startDate && <td>{enrollment.startDate}</td>}
+                                                {enrollment.startDate && <td>{reverseDate(enrollment.startDate)}</td>}
                                                 {enrollment.cancellationRequested ? <td>ja</td> : <td>nee</td>}
                                                 {enrollment.subscription &&
                                                     <td>{formatPrice(enrollment.subscription.price)}</td>}

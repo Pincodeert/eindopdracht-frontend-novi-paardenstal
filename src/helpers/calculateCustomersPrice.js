@@ -6,7 +6,9 @@ function calculateCustomersPrice(enrollmentList) {
           totalPrice = totalPrice + enrollmentList[i].subscriptionPrice;
 
      }
-     return totalPrice;
+     // const roundedPrice = Math.round((totalPrice + Number.EPSILON) * 100) / 100
+     const roundedPrice = totalPrice.toFixed(2);
+     return roundedPrice;
 }
 
 export default calculateCustomersPrice;
