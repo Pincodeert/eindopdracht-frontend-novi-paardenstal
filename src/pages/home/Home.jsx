@@ -18,6 +18,7 @@ import {useNavigate} from "react-router-dom";
 import NavLinkList from "../../components/navLinkList/NavLinkList.jsx";
 import IntroSection from "../../components/introSection/IntroSection.jsx";
 
+
 function Home() {
     const navigate = useNavigate();
 

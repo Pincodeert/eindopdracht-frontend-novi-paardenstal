@@ -253,6 +253,7 @@ a:visited {
 /* idem voor login en registeer pagina*/
 .login-nav-section {
     background-color: var(--pale);
+
 }
 
 /* idem voor login en registeer pagina*/
@@ -391,9 +392,9 @@ select, option {
 }
 
 @media screen and (max-width: 992px) {
-    h1 {
-        color: powderblue;
-    }
+    /*h1 {*/
+    /*    color: powderblue;*/
+    /*}*/
 
     p, button {
         font-size: 0.9em;
@@ -405,9 +406,9 @@ select, option {
 }
 
 @media screen and (max-width: 820px) {
-    h1 {
-        color: yellow;
-    }
+    /*h1 {*/
+    /*    color: yellow;*/
+    /*}*/
 
     .footer-close-section {
         font-size: 15px;
@@ -415,9 +416,9 @@ select, option {
 }
 
 @media screen and (max-width: 620px) {
-    h1 {
-        color: white;
-    }
+    /*h1 {*/
+    /*    color: white;*/
+    /*}*/
 
     p, button {
         font-size: 0.9em;

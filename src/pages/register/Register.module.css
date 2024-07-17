@@ -45,3 +45,16 @@ form {
     width: 89%;
     padding: 20px 10px 8px 10px;
 }
+
+@media screen and (max-width: 870px) {
+
+    .register-info-container {
+        margin-top: 0;
+        height: auto;
+    }
+
+    .register-info-container img{
+       padding: 0;
+        width: 70%;
+    }
+}
