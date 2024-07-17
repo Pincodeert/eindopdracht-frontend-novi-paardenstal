@@ -105,7 +105,6 @@ function Subscribe() {
             const response = await axios.put(`http://localhost:8080/customerprofiles/${newlyCustomerId}/user`, {
                 username: user.username,
             });
-            console.log("koppelen is gelukt: ", response) // de data in de response=null omdat backendfunctie hierin niet voorziet
             completeUserInfo(newlyCustomerId);
             setStep("step2");
         } catch (error) {
