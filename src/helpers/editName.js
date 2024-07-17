@@ -5,4 +5,5 @@ function initialsName(firstName, lastName) {
 export function displayCompleteName(firstName, lastName) {
     return `${firstName} ${lastName}`
 }
+
 export default initialsName;

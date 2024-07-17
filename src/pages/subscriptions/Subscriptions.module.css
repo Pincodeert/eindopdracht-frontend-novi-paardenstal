@@ -7,7 +7,6 @@
     padding: 60px 0;
     flex-wrap: wrap;
     row-gap: 30px;
-    /*border: 2px dotted black*/
 }
 
 .indoor-title {
@@ -18,4 +17,3 @@
 .outdoor-title {
     padding: 40px;
 }
-

@@ -78,9 +78,6 @@ function Subscribe() {
     }, []);
 
     function generatePreview(e) {
-        // const uploadedFile = e.target.files[0];
-        // console.log(uploadedFile);
-        // setFile(uploadedFile);
         setPreviewUrl(URL.createObjectURL(e.target.files[0]));
     }
 
@@ -88,7 +85,6 @@ function Subscribe() {
         setError("");
         toggleIsLoading(true);
         try {
-            // console.log("dit gaan we zo posten naar de backend: ", customerFormState);
             const response = await axios.post("http://localhost:8080/customerprofiles", {
                 ...customerFormState
             });
@@ -109,10 +105,7 @@ function Subscribe() {
             const response = await axios.put(`http://localhost:8080/customerprofiles/${newlyCustomerId}/user`, {
                 username: user.username,
             });
-            // toggleAssignUserSuccess(true); // hebben we dit eigenlijk wel nodig?
             console.log("koppelen is gelukt: ", response) // de data in de response=null omdat backendfunctie hierin niet voorziet
-
-            //// hier moet de newlyCustomerId als customerProfileId worden opgeslagen in de context.
             completeUserInfo(newlyCustomerId);
             setStep("step2");
         } catch (error) {
@@ -151,7 +144,6 @@ function Subscribe() {
     async function handleSubmitPassport(fileFormState) {
         setError("");
         toggleIsLoading(true);
-        console.log("dit is de paspoortFormState: ", fileFormState);
         const formData = new FormData();
         formData.append("file", fileFormState.file[0]);
         const config = {
@@ -162,8 +154,6 @@ function Subscribe() {
         }
         try {
             const response = await axios.post(`http://localhost:8080/horses/${newlyHorseId}/passport`, formData, config);
-            console.log("het bestand is geupload ");
-            console.log(response);
             setFileUploadSuccess(true);
             setStep("step4");
         } catch (error) {
@@ -188,7 +178,6 @@ function Subscribe() {
                     Authorization: `Bearer ${token}`,
                 }
             });
-            console.log(response);
             toggleHorseAssignedSuccess(true);
         } catch (error) {
             console.error(error);
@@ -524,7 +513,8 @@ function Subscribe() {
                                             <option value="oats">haver</option>
                                             <option value="grass">vers gras</option>
                                         </select>
-                                        {errors.typeOfFeed && <p className="form-error-login">{errors.typeOfFeed.message}</p>}
+                                        {errors.typeOfFeed &&
+                                            <p className="form-error-login">{errors.typeOfFeed.message}</p>}
                                         <label htmlFor="typeOfBedding-field">
                                             Bodembedekking:
                                         </label>

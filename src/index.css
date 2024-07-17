@@ -21,27 +21,17 @@
 
 /*     ------------------ 1. Global Styles ----------------------------*/
 
-/*:root {*/
-/*  font-family: ;*/
-/*  line-height: 1.5;*/
-/*  font-weight: 400;*/
-
-/*  color-scheme: light dark;*/
-/*  color: rgba(255, 255, 255, 0.87);*/
-/*  background-color: #242424;*/
-
-/*  font-synthesis: none;*/
-/*  text-rendering: optimizeLegibility;*/
-/*  -webkit-font-smoothing: antialiased;*/
-/*  -moz-osx-font-smoothing: grayscale;*/
-/*}*/
-
 :root {
     --pale: #e8e0c5;
     --army: #5b594c;
     --faded-army: #918f7e;
     --orange: #f88a08;
     --dark: #1c1c1e;
+
+    /*font-synthesis: none;*/
+    /*text-rendering: optimizeLegibility;*/
+    /*-webkit-font-smoothing: antialiased;*/
+    /*-moz-osx-font-smoothing: grayscale;*/
 
 }
 
@@ -100,11 +90,6 @@ button, a{
     font-size: inherit;
 }
 
-/*button, input, a{*/
-/*    font-family: inherit;*/
-/*    font-size: inherit;*/
-/*}*/
-
 input {
     width: 100%;
     padding: 20px 10px;
@@ -127,7 +112,6 @@ a:visited {
 .error {
     margin: 40px 0;
     color: darkred;
-    /*border: 2px solid var(--orange);*/
     padding: 5px;
 }
 
@@ -138,7 +122,6 @@ a:visited {
 .form-error-login {
     color: var(--orange);
     font-weight: bold;
-    /*background-color: var(--army);*/
 }
 
 .loading-login {

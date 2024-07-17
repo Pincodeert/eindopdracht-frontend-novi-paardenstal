@@ -70,8 +70,6 @@ function Profile() {
     });
 
     const {isAuth, signOut} = useContext(AuthContext);
-    console.log(isAuth);
-    console.log(customerProfileId);
 
     //// klantprofiel ophalen uit de backend by Id ////
     useEffect(() => {
@@ -89,7 +87,6 @@ function Profile() {
                     signal: abortController.signal,
                 });
                 const customer = response.data;
-                console.log(customer);
                 setProfile(customer);
             } catch (error) {
                 console.error(error);
@@ -158,7 +155,6 @@ function Profile() {
                     signal: abortController.signal,
                 });
                 const enrollments = response.data;
-                console.log("dit zijn de abonnementen", enrollments);
                 setEnrollmentList(enrollments);
             } catch (error) {
                 console.error(error);
@@ -180,7 +176,6 @@ function Profile() {
         setError("");
         toggleIsLoading(true);
         toggleCustomerUpdateSuccess(false);
-        console.log("dit is de customerFormState: ", customerFormState);
         try {
             const response = await axios.patch(`http://localhost:8080/customerprofiles/${customerProfileId}`, {
                 ...customerFormState,
@@ -190,7 +185,6 @@ function Profile() {
                     Authorization: `Bearer ${token}`,
                 }
             });
-            console.log(response);
             toggleCustomerUpdateSuccess(true);
             toggleEnableCustomerChange(false);
         } catch (error) {
@@ -216,7 +210,6 @@ function Profile() {
         setError("");
         toggleHorseUpdateSuccess(false);
         toggleIsLoading(true);
-        console.log("dit is de horseFormState", horseFormState);
         try {
             const response = await axios.patch(`http://localhost:8080/horses/${selectedHorse.id}`, {
                 ...horseFormState,

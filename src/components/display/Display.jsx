@@ -1,8 +1,7 @@
 import React from "react";
 import styles from "./Display.module.css";
 
-function Display({className ,title, children}) {
-
+function Display({className, title, children}) {
 
     return (
         <article className={`${styles["content-wrapper"]} ${styles[className]}`}>

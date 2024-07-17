@@ -1,4 +1,4 @@
-import styles from'./Subscriptions.module.css';
+import styles from './Subscriptions.module.css';
 import NavBar from "../../components/navBar/NavBar.jsx";
 import HeaderContent from "../../components/headerContent/HeaderContent.jsx";
 import Footer from "../../components/footer/Footer.jsx";
@@ -18,7 +18,6 @@ function Subscriptions() {
     const [availableStalls, setAvailableStalls] = useState([]);
     const [error, setError] = useState("");
     const [isLoading, toggleIsLoading] = useState(false);
-    // const [subscription, setSubscription] = useState({});
 
     const navigate = useNavigate();
     const {isAuth} = useContext(AuthContext);
@@ -93,13 +92,7 @@ function Subscriptions() {
     }
 
     function handleSubscriptionClick(subscriptionId) {
-        // e.preventDefault();
         selectSubscription(subscriptionId);
-        // e.preventDefault();
-        // const subscription = subscriptions[subscriptionId - 1];
-        // setSubscription(subscription);
-        // console.log(subscription);
-        // navigate(`/inschrijven/${subscriptionId}`);
         if (isAuth) {
             navigate(`/inschrijven/${subscriptionId}`)
         } else {
@@ -115,7 +108,6 @@ function Subscriptions() {
                         <NavLinkList/>
                     </NavBar>
                     <HeaderContent/>
-                    {/*<a href="./Stalls.jsx">Naar stallen</a>*/}
                 </div>
             </header>
             <main>

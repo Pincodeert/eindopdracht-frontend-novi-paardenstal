@@ -4,7 +4,6 @@ function HeaderTitle({classname}) {
     return (
         <div className={styles[classname]}>
             <h1>Blaze of Glory</h1>
-            {/*<h2 className={styles["header-subtitle"]}>Pensionstallen</h2>*/}
             <h2>Pensionstallen</h2>
         </div>
     );

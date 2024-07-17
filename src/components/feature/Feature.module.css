@@ -21,7 +21,6 @@
     background-color: var(--army);
     color: var(--pale);
     flex-basis: 431px;
-    /*height: 380px;*/
     padding: 30px;
 }
 
@@ -48,7 +47,6 @@
 }
 
 .feature-image {
-    /*background-color:hsl(54 8% 53%);*/
     background-color: var(--faded-army);
     flex-basis: 431px;
     display: flex;
@@ -57,6 +55,7 @@
     justify-content: flex-start;
     border: 7px solid var(--pale);
 }
+
 .dark-border {
     border: 7px solid var(--faded-army);
 }

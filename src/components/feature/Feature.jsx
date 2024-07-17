@@ -5,9 +5,6 @@ import {Link} from "react-router-dom";
 function Feature({classname, imageClassname, title, item1, item2, item3, item4, image, imageInfo, linkPath, linkText}) {
 
     const featureClassname = "feature-article";
-    // if(classname) {
-    //     classnameString = `${classnameString} ${classname}`;
-    // }
     const borderClassname = "feature-image";
 
     return (
