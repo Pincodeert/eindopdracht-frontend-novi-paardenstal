@@ -7,3 +7,11 @@
 /*    font-size: 1.1em;*/
 /*    border: none;*/
 /*}*/
+
+.persona-form {
+    font-weight: bold;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

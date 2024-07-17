@@ -137,6 +137,7 @@ a:visited {
 
 .form-error-login {
     color: var(--orange);
+    font-weight: bold;
     /*background-color: var(--army);*/
 }
 

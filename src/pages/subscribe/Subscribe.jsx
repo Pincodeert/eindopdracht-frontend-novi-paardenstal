@@ -7,7 +7,7 @@ import Button from "../../components/button/Button.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import SubscribeCard from "../../components/subscribeCard/SubscribeCard.jsx";
 import React, {useContext, useEffect, useState} from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {useForm} from "react-hook-form";
 import {AuthContext} from "../../context/AuthContext.jsx";
@@ -385,7 +385,7 @@ function Subscribe() {
                                                     })}
                                                 />
                                                 {errors.emailAddress &&
-                                                    <p className="form-error">{errors.emailAddress.message}</p>}
+                                                    <p className="form-error-login">{errors.emailAddress.message}</p>}
                                             </label>
                                             <label htmlFor="telephone-field">
                                                 Telefoonnummer:
@@ -410,7 +410,7 @@ function Subscribe() {
                                                     })}
                                                 />
                                                 {errors.telephoneNumber &&
-                                                    <p className="form-error">{errors.telephoneNumber.message}</p>}
+                                                    <p className="form-error-login">{errors.telephoneNumber.message}</p>}
                                             </label>
                                             <TextInput
                                                 labelFor="bankAccount-text-field"
@@ -524,7 +524,7 @@ function Subscribe() {
                                             <option value="oats">haver</option>
                                             <option value="grass">vers gras</option>
                                         </select>
-                                        {errors.typeOfFeed && <p className="form-error">{errors.typeOfFeed.message}</p>}
+                                        {errors.typeOfFeed && <p className="form-error-login">{errors.typeOfFeed.message}</p>}
                                         <label htmlFor="typeOfBedding-field">
                                             Bodembedekking:
                                         </label>
@@ -542,7 +542,7 @@ function Subscribe() {
                                             <option value="flax">vlas</option>
                                         </select>
                                         {errors.typeOfBedding &&
-                                            <p className="form-error">{errors.typeOfBedding.message}</p>}
+                                            <p className="form-error-login">{errors.typeOfBedding.message}</p>}
                                         <TextInput
                                             labelFor="vet-text-field"
                                             inputId="vet-text-field"
@@ -612,7 +612,7 @@ function Subscribe() {
                                                 })}
                                             />
                                             {errors.telephoneOfVet &&
-                                                <p className="form-error">{errors.telephoneOfVet.message}</p>}
+                                                <p className="form-error-login">{errors.telephoneOfVet.message}</p>}
                                         </label>
                                         <Button
                                             type="submit"
