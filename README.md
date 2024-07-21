@@ -25,7 +25,8 @@ development-ervaring het project kunnen opstarten. De handleiding is geschreven 
 Deze paardenstalapplicatie is ontwikkeld als eindopdracht voor de Frontend Leerlijn van Novi Hogeschool. Het betreft 
 een webapplicatie met informatie over een pensionstal voor paarden en een klant- en beheerdersomgeving. Hier kunnen 
 klanten online een abonnement op een stal aanvragen of annuleren en hun gegevens inkijken en wijzigen. De staleigenaar 
-kan abonnementsaanvragen- en annuleringsverzoeken inwilligen.
+kan abonnementsaanvragen- en annuleringsverzoeken inwilligen. De frontend code is [hier](https://github.com/Pincodeert/eindopdracht-frontend-novi-paardenstal)
+te vinden op GitHub.
 
 Voor deze applicatie is in Java, voor een eerder gevolgde Backend Leerlijn, een eigen backend ontwikkeld (zie deze 
 [link](https://github.com/Pincodeert/eindopdracht-backend-novi-paardenstal). Om de frontend te kunnen gebruiken is het 
