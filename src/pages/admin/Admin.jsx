@@ -390,7 +390,6 @@ function Admin() {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(response.data);
             setEnrollments(response.data);
         } catch (error) {
             console.error(error);

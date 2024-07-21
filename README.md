@@ -286,16 +286,14 @@ Eén account beschikbaar:
 
 ### Voor de klanten
 Het __wachtwoord__ is telkens __gelijk aan__ de __gebruikersnaam__. Voor de volgende gebruikersnamen is een account beschikbaar:
-* jonbonjovi
-* tinaturner
-* axlrose1
-* neilyoung
 * mickjagger
+* jonbonjovi
+* axlrose1
 * barryhay
 * eddievedder
-* rockybalboa
 
-NB. De account van Mick Jagger heeft 4 paarden, waarbij tevens een annulatieverzoek.
+NB. De account van Mick Jagger heeft 4 paarden, waarbij tevens een openstaande abonnementsaanvraag en een openstaand 
+annulatieverzoek.
 
 ## 5. Beschikbare scripts
 

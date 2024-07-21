@@ -52,21 +52,6 @@ function Profile() {
     const {customerProfileId} = useParams();
     const {register, formState: {errors}, handleSubmit, reset} = useForm({
         mode: "onBlur",
-        // defaultValues: {
-        //     // street: `${profile.street}`,
-        //     // houseNumber: `${profile.houseNumber}`,
-        //     // postalCode: `${profile.postalCode}`,
-        //     // residence: `${profile.residence}`,
-        //     // telephoneNumber: `${profile.telephoneNumber}`,
-        //     // emailAddress: `${profile.emailAddress}`,
-        //     // bankAccountNumber: `${profile.bankAccountNumber}`,
-        // }
-        // defaultValues: async () => await axios.get(`http://localhost:8080/customerprofiles/${customerProfileId}`, {
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         Authorization: `Bearer ${token}`,
-        //     }
-        // })
     });
 
     const {isAuth, signOut} = useContext(AuthContext);
