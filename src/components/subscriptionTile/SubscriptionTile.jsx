@@ -4,7 +4,7 @@ import styles from './SubscriptionTile.module.css';
 import formatPrice from "../../helpers/formatPrice.js";
 
 
-function SubscriptionTile({isSoldOut, key, title, stallType, careType, price, handleSubscriptionClick}) {
+function SubscriptionTile({isSoldOut, title, stallType, careType, price, handleSubscriptionClick}) {
 
     let inventoryClass = "default";
     if (isSoldOut) {
@@ -12,7 +12,7 @@ function SubscriptionTile({isSoldOut, key, title, stallType, careType, price, ha
     }
 
     return (
-        <article className={styles["subscription-article"]} key={key}>
+        <article className={styles["subscription-article"]} >
             <h2>{title}</h2>
             <img src={star} alt="ster"/>
             <div className={styles["subscription-text-wrapper"]}>

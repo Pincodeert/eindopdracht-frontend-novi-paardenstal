@@ -18,12 +18,12 @@ import {useNavigate} from "react-router-dom";
 import NavLinkList from "../../components/navLinkList/NavLinkList.jsx";
 import IntroSection from "../../components/introSection/IntroSection.jsx";
 
+
 function Home() {
     const navigate = useNavigate();
 
     return (
         <>
-            {/*<header className="outer-container header-section">*/}
             <header className="outer-container">
                 <div className="inner-container">
                     <NavBar>
@@ -82,8 +82,6 @@ function Home() {
                         </div>
                     </div>
                 </section>
-                {/*features-section*/}
-                {/*<section className="outer-container feature-section">   /// de feature-section wordt nergens gebruikt*/}
                 <section className="outer-container feature-section">
                     <div className="inner-container">
                         <div className="title-wrapper">
@@ -102,7 +100,6 @@ function Home() {
                                 imageInfo="Image by Anna Kaminova-Unsplashed"
                                 linkText="naar onze stallen"
                                 linkPath="/stallen"
-                                // classname="feature-article"
                             />
                             <Feature
                                 title="Onze abonnementen en tarieven"
@@ -125,12 +122,10 @@ function Home() {
                                 image={stable}
                                 imageInfo="Image by Anna Kaminova-Unsplashed"
                                 linkText="naar onze extra's"
-                                // classname="feature-article"
                             />
                         </div>
                     </div>
                 </section>
-                {/*testimonial-section*/}
                 <section className="outer-container testimonial-section">
                     <div className="inner-container">
                         <div className="title-wrapper">

@@ -7,7 +7,6 @@
     padding: 60px 0;
     flex-wrap: wrap;
     row-gap: 30px;
-    /*border: 2px dotted black*/
 }
 
 .indoor-title {
@@ -19,3 +18,34 @@
     padding: 40px;
 }
 
+@media screen and (max-width: 1360px){
+
+   .subscription-article-wrapper {
+       max-width: 930px;
+   }
+}
+
+
+@media screen and (max-width: 992px) {
+
+    .subscription-article-wrapper {
+        max-width: 700px;
+    }
+}
+
+
+@media screen and (max-width: 820px) {
+
+    .subscription-article-wrapper {
+        max-width: 550px;
+        row-gap: 20px;
+    }
+}
+
+@media screen and (max-width: 620px) {
+
+    .subscription-article-wrapper {
+        max-width: 450px;
+        row-gap: 30px;
+    }
+}

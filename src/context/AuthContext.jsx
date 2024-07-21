@@ -1,11 +1,12 @@
-import {createContext, useContext, useEffect, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
 import isTokenValid from "../helpers/isTokenValid.js";
-import {SubscriptionContext} from "./SubscriptionContext.jsx";
+
 
 export const AuthContext = createContext({});
+
 function AuthContextProvider({children}) {
     const [auth, setAuth] = useState({
         isAuth: false,
@@ -17,7 +18,7 @@ function AuthContextProvider({children}) {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (token && isTokenValid(token)){
+        if (token && isTokenValid(token)) {
             void signIn(token);
         } else {
             setAuth({
@@ -31,7 +32,6 @@ function AuthContextProvider({children}) {
     async function signIn(token, subscriptionId) {
         localStorage.setItem('token', token);
         const decodedToken = jwtDecode(token);
-        console.log("de decodedToken is: ", decodedToken);
         try {
             const response = await axios.get(`http://localhost:8080/users/${decodedToken.sub}`, {
                 headers: {
@@ -39,7 +39,6 @@ function AuthContextProvider({children}) {
                     Authorization: `Bearer ${token}`,
                 }
             });
-            console.log("dit is de ingelogde user: ", response);
 
             setAuth({
                 isAuth: true,
@@ -52,11 +51,11 @@ function AuthContextProvider({children}) {
                 status: "done",
             });
 
-            if(response.data.authorities[0].authority === "ROLE_ADMIN" || response.data.authorities[1] === "ROLE_ADMIN") {
+            if (response.data.authorities[0].authority === "ROLE_ADMIN" || response.data.authorities[1] === "ROLE_ADMIN") {
                 navigate(`/admin`)
-            } else if(subscriptionId) {
+            } else if (subscriptionId) {
                 navigate(`/inschrijven/${subscriptionId}`);
-            } else if(!response.data.customerProfile) {
+            } else if (!response.data.customerProfile) {
                 navigate(`/abonnementen`);
             } else {
                 navigate(`/profiel/${response.data.customerProfile}`)
@@ -64,13 +63,11 @@ function AuthContextProvider({children}) {
         } catch (error) {
             console.error(error);
             signOut();
-            console.log("de gebruiker ophalen is mislukt, de gebruiker is weer uitgelogd")
         }
     }
 
     function signOut() {
         localStorage.clear();
-        console.log("de gebruiker is uitgelogd");
         setAuth({
             isAuth: false,
             user: null,

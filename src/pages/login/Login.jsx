@@ -27,7 +27,6 @@ function Login() {
             const response = await axios.post("http://localhost:8080/authenticate", {
                 ...data
             });
-            console.log(response, response.data.jwt);
             signIn(response.data.jwt, subscriptionId);
         } catch (error) {
             console.error(error);

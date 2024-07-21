@@ -1,17 +1,14 @@
-import "./TextInput.css"
-// import register from "../../pages/register/Register.jsx";
+import styles from "./TextInput.module.css"
 
-function TextInput({labelFor, children, inputId, inputName, register, validationRules, errors,textValue, changeHandler, placeholder, required}) {
+
+function TextInput({labelFor, children, inputId, inputName, register, validationRules, errors, textValue, placeholder, required, labelClassName}) {
     return (
-        <label htmlFor={labelFor}>
+        <label htmlFor={labelFor} className={styles[labelClassName]}>
             {children}
             <input
                 id={inputId}
-                // value={textValue}
                 placeholder={placeholder}
                 {...register(inputName, validationRules)}
-
-                // onChange={changeHandler}
                 defaultValue={textValue}
                 required={required}
             />

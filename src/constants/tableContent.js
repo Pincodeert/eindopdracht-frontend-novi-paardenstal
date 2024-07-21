@@ -8,7 +8,7 @@ export const horseFormTableHead = ["paardnummer", "Stal"];
 
 export const profileEnrollmentTableHead = ["abonnement type", "type stal", "type verzorging", "paard", "start-datum", "annulering aangevraagd", "prijs"];
 
-export const newHorseTableHead = ["Paard", "Gewenste abonnement", "Klant", "Klant Label", "Bekijk Klant"];
+export const newHorseTableHead = ["Paard", "Gewenste abonnement", "Klant", "Tel klant"];
 
 export const newHorseFormTableHead = ["paard", "abonnementtype", "staltype", "voeding", "bodem", "klant"];
 

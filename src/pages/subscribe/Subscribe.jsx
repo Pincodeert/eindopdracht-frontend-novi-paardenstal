@@ -7,7 +7,7 @@ import Button from "../../components/button/Button.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import SubscribeCard from "../../components/subscribeCard/SubscribeCard.jsx";
 import React, {useContext, useEffect, useState} from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {useForm} from "react-hook-form";
 import {AuthContext} from "../../context/AuthContext.jsx";
@@ -19,11 +19,9 @@ function Subscribe() {
     const [subscription, setSubscription] = useState({});
     const [error, setError] = useState("");
     const [subscribeInfoError, setSubscribeInfoError] = useState("");
-    // const [file, setFile] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
     const [fileUploadSuccess, setFileUploadSuccess] = useState(false);
     const [newlyCustomerId, setNewlyCustomerId] = useState(null);
-    // const [assignUserSuccess, toggleAssignUserSuccess] = useState(false);
     const [newlyHorseId, setNewlyHorseId] = useState(null);
     const [step, setStep] = useState("");
     const [isLoading, toggleIsLoading] = useState(false);
@@ -56,6 +54,7 @@ function Subscribe() {
                 toggleIsLoading(false);
             }
         }
+
         void fetchSubscription(subscriptionId);
         return function cleanUp() {
             abortController.abort();
@@ -79,18 +78,13 @@ function Subscribe() {
     }, []);
 
     function generatePreview(e) {
-        // const uploadedFile = e.target.files[0];
-        // console.log(uploadedFile);
-        // setFile(uploadedFile);
         setPreviewUrl(URL.createObjectURL(e.target.files[0]));
     }
 
-///////// Handle Submit ////////////
     async function handleSubmitCustomer(customerFormState) {
         setError("");
         toggleIsLoading(true);
         try {
-            // console.log("dit gaan we zo posten naar de backend: ", customerFormState);
             const response = await axios.post("http://localhost:8080/customerprofiles", {
                 ...customerFormState
             });
@@ -111,10 +105,6 @@ function Subscribe() {
             const response = await axios.put(`http://localhost:8080/customerprofiles/${newlyCustomerId}/user`, {
                 username: user.username,
             });
-            // toggleAssignUserSuccess(true); // hebben we dit eigenlijk wel nodig?
-            console.log("koppelen is gelukt: ", response) // de data in de response=null omdat backendfunctie hierin niet voorziet
-
-            //// hier moet de newlyCustomerId als customerProfileId worden opgeslagen in de context.
             completeUserInfo(newlyCustomerId);
             setStep("step2");
         } catch (error) {
@@ -150,12 +140,9 @@ function Subscribe() {
         }
     }
 
-    // console.log("de newlyHorseId is: ", newlyHorseId);
-
     async function handleSubmitPassport(fileFormState) {
         setError("");
         toggleIsLoading(true);
-        console.log("dit is de paspoortFormState: ", fileFormState);
         const formData = new FormData();
         formData.append("file", fileFormState.file[0]);
         const config = {
@@ -166,8 +153,6 @@ function Subscribe() {
         }
         try {
             const response = await axios.post(`http://localhost:8080/horses/${newlyHorseId}/passport`, formData, config);
-            console.log("het bestand is geupload ");
-            console.log(response);
             setFileUploadSuccess(true);
             setStep("step4");
         } catch (error) {
@@ -180,7 +165,6 @@ function Subscribe() {
     }
 
     //paard koppelen aan klant:
-    // async function assignHorseToCustomer() {
     async function handleSubmitTerms(termsFormState) {
         setError("");
         toggleIsLoading(true);
@@ -193,24 +177,13 @@ function Subscribe() {
                     Authorization: `Bearer ${token}`,
                 }
             });
-            console.log(response);
             toggleHorseAssignedSuccess(true);
-            // resetSubscription();
-            // setNewlyHorseId(0);
-            // navigate(`/profiel/${newlyCustomerId}`);
-            // if(response.status === 204) {
-            //     navigate(`/profiel/${user.customerProfile}`)
-            // }
         } catch (error) {
             console.error(error);
             setError(generateSaveErrorString("aanvraag"));
         } finally {
             toggleIsLoading(false);
             resetSubscription();
-            // setNewlyHorseId(0);
-            // setFileUploadSuccess(false);
-            // toggleHorseAssignedSuccess(false);
-            // setStep("");
         }
     }
 
@@ -231,11 +204,12 @@ function Subscribe() {
                         {subscribeInfoError ?
                             <p className="error">{subscribeInfoError}</p>
                             : <div>
-                            {!subscribeInfoError && Object.keys(subscription).length > 0 &&
-                                <div className={styles["subscribe-info-container"]}>
-                                    <p className={styles["intro-line"]}>Fijn dat u het {subscription.name} wilt aflsuiten </p>
-                                    <p className="italic">{generateSubscriptionDetails(subscription)}</p>
-                                </div>}
+                                {!subscribeInfoError && Object.keys(subscription).length > 0 &&
+                                    <div className={styles["subscribe-info-container"]}>
+                                        <p className={styles["intro-line"]}>Fijn dat u het {subscription.name} wilt
+                                            aflsuiten </p>
+                                        <p className="italic">{generateSubscriptionDetails(subscription)}</p>
+                                    </div>}
                             </div>}
                     </div>
                 </section>
@@ -245,7 +219,6 @@ function Subscribe() {
                             {step === "step1" &&
                                 <SubscribeCard
                                     subscribeCardTitle="Stap 1 - Vul uw persoonsgegevens in"
-                                    // subscribeStep="step1"
                                     error={error}
                                 >
                                     {!newlyCustomerId ? <form onSubmit={handleSubmit(handleSubmitCustomer)}>
@@ -400,7 +373,7 @@ function Subscribe() {
                                                     })}
                                                 />
                                                 {errors.emailAddress &&
-                                                    <p className="form-error">{errors.emailAddress.message}</p>}
+                                                    <p className="form-error-login">{errors.emailAddress.message}</p>}
                                             </label>
                                             <label htmlFor="telephone-field">
                                                 Telefoonnummer:
@@ -425,7 +398,7 @@ function Subscribe() {
                                                     })}
                                                 />
                                                 {errors.telephoneNumber &&
-                                                    <p className="form-error">{errors.telephoneNumber.message}</p>}
+                                                    <p className="form-error-login">{errors.telephoneNumber.message}</p>}
                                             </label>
                                             <TextInput
                                                 labelFor="bankAccount-text-field"
@@ -453,11 +426,10 @@ function Subscribe() {
                                             <Button
                                                 type="submit"
                                                 disabled={subscribeInfoError}
+                                                classname="edit-button"
                                             >
                                                 Sla op
                                             </Button>
-                                            {/*{error && <p>{error}</p>}*/}
-                                            {/*{isLoading && <p>...Loading</p>}*/}
                                         </form>
                                         : <div>
                                             <p> Uw persoonsgevens zijn succesvol toegevoegd!</p>
@@ -469,14 +441,12 @@ function Subscribe() {
                                             >
                                                 Volgende stap
                                             </Button>
-                                            {/*{isLoading && <p>...Loading</p>}    */}
                                         </div>}
                                     {isLoading && <p>...Loading</p>}
                                 </SubscribeCard>}
                             {step === "step2" &&
                                 <SubscribeCard
                                     subscribeCardTitle="Stap 2 - Vul de gegevens van uw paard in"
-                                    // subscribeStep="step2"
                                     error={error}
                                 >
                                     <form onSubmit={handleSubmit(handleSubmitHorse)}>
@@ -542,7 +512,8 @@ function Subscribe() {
                                             <option value="oats">haver</option>
                                             <option value="grass">vers gras</option>
                                         </select>
-                                        {errors.typeOfFeed && <p className="form-error">{errors.typeOfFeed.message}</p>}
+                                        {errors.typeOfFeed &&
+                                            <p className="form-error-login">{errors.typeOfFeed.message}</p>}
                                         <label htmlFor="typeOfBedding-field">
                                             Bodembedekking:
                                         </label>
@@ -560,7 +531,7 @@ function Subscribe() {
                                             <option value="flax">vlas</option>
                                         </select>
                                         {errors.typeOfBedding &&
-                                            <p className="form-error">{errors.typeOfBedding.message}</p>}
+                                            <p className="form-error-login">{errors.typeOfBedding.message}</p>}
                                         <TextInput
                                             labelFor="vet-text-field"
                                             inputId="vet-text-field"
@@ -630,7 +601,7 @@ function Subscribe() {
                                                 })}
                                             />
                                             {errors.telephoneOfVet &&
-                                                <p className="form-error">{errors.telephoneOfVet.message}</p>}
+                                                <p className="form-error-login">{errors.telephoneOfVet.message}</p>}
                                         </label>
                                         <Button
                                             type="submit"
@@ -645,7 +616,6 @@ function Subscribe() {
                             {step === "step3" &&
                                 <SubscribeCard
                                     subscribeCardTitle="Stap 3 - Voeg een kopie van het paardenpaspoort van uw paard toe"
-                                    // subscribeStep="step3"
                                     error={error}
                                 >
                                     <form onSubmit={handleSubmit(handleSubmitPassport)}>
@@ -683,7 +653,6 @@ function Subscribe() {
                             {step === "step4" &&
                                 <SubscribeCard
                                     subscribeCardTitle="Stap 4 - Ga akkoord en bevestig aanvraag"
-                                    // subscribeStep="step4"
                                     error={error}
                                 >
                                     {!horseAssignedSuccess ?

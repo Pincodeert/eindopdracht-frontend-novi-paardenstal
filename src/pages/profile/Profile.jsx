@@ -2,7 +2,7 @@ import styles from "./Profile.module.css";
 import Button from "../../components/button/Button.jsx";
 import initialsName, {displayCompleteName} from "../../helpers/editName.js";
 import formatPrice from "../../helpers/formatPrice.js";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import calculateCustomersPrice from "../../helpers/calculateCustomersPrice.js";
 import axios from "axios";
 import React, {useContext, useEffect, useState} from "react";
@@ -52,26 +52,9 @@ function Profile() {
     const {customerProfileId} = useParams();
     const {register, formState: {errors}, handleSubmit, reset} = useForm({
         mode: "onBlur",
-        // defaultValues: {
-        //     // street: `${profile.street}`,
-        //     // houseNumber: `${profile.houseNumber}`,
-        //     // postalCode: `${profile.postalCode}`,
-        //     // residence: `${profile.residence}`,
-        //     // telephoneNumber: `${profile.telephoneNumber}`,
-        //     // emailAddress: `${profile.emailAddress}`,
-        //     // bankAccountNumber: `${profile.bankAccountNumber}`,
-        // }
-        // defaultValues: async () => await axios.get(`http://localhost:8080/customerprofiles/${customerProfileId}`, {
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         Authorization: `Bearer ${token}`,
-        //     }
-        // })
     });
 
     const {isAuth, signOut} = useContext(AuthContext);
-    console.log(isAuth);
-    console.log(customerProfileId);
 
     //// klantprofiel ophalen uit de backend by Id ////
     useEffect(() => {
@@ -89,7 +72,6 @@ function Profile() {
                     signal: abortController.signal,
                 });
                 const customer = response.data;
-                console.log(customer);
                 setProfile(customer);
             } catch (error) {
                 console.error(error);
@@ -98,12 +80,12 @@ function Profile() {
                 toggleIsLoading(false);
             }
         }
+
         void fetchCustomerProfile(customerProfileId);
         return function cleanUp() {
             abortController.abort();
         }
     }, [customerUpdateSuccess]);
-    // console.log("dit zijn de paarden: ");
 
     //paarden van desbetreffende klant ophalen uit backend
     useEffect(() => {
@@ -122,9 +104,7 @@ function Profile() {
                         signal: abortController.signal,
                     }
                 );
-                // console.log(response)
                 const horseList = response.data;
-                // console.log("paarden per klant:", horseList);
                 const sortedHorseList = horseList.sort((horseA, horseB) => {
                     return horseA.id - horseB.id;
                 });
@@ -136,6 +116,7 @@ function Profile() {
                 toggleIsLoading(false);
             }
         }
+
         void fetchHorsesByCustomer();
         return function cleanUp() {
             abortController.abort();
@@ -159,7 +140,6 @@ function Profile() {
                     signal: abortController.signal,
                 });
                 const enrollments = response.data;
-                console.log("dit zijn de abonnementen", enrollments);
                 setEnrollmentList(enrollments);
             } catch (error) {
                 console.error(error);
@@ -168,6 +148,7 @@ function Profile() {
                 toggleIsLoading(false);
             }
         }
+
         void fetchEnrollementsByCustomer(customerProfileId);
         return function cleanUp() {
             abortController.abort();
@@ -175,52 +156,11 @@ function Profile() {
     }, [cancellationSuccess]);
 
 
-    // function selectHorse(selectedHorseId) {
-    //     const selectedHorse = horses.find((horse) => {
-    //         return horse.id === selectedHorseId;
-    //     });
-    //     console.log(horses);
-    //     console.log(selectedHorse);
-    //     setHorse({
-    //         ...horse,
-    //         selectedHorse
-    //     });
-    //     return selectedHorse;
-    // }
-
-//////// handle change //////////////////
-//     function handleCustomerChange(e) {
-//         const changedFieldName = e.target.name;
-//
-//         setCustomerFormState({
-//             ...profile,
-//             [changedFieldName]: e.target.value,
-//         })
-//         // setProfile({
-//         //     ...profile,
-//         //     [changedFieldName]: e.target.value,
-//         // })
-//     }
-
-    // function handleHorseChange(e) {
-    //     const changedFieldName = e.target.name;
-    //
-    //     setHorseFormState({
-    //         ...horse,
-    //         [changedFieldName]: e.target.value,
-    //     })
-    //     console.log(horseFormState);
-    // }
-
-//////// click handlers /////////////
-
-
 //     async function updateCustomer() {
     async function handleCustomerForm(customerFormState) {
         setError("");
         toggleIsLoading(true);
         toggleCustomerUpdateSuccess(false);
-        console.log("dit is de customerFormState: ", customerFormState);
         try {
             const response = await axios.patch(`http://localhost:8080/customerprofiles/${customerProfileId}`, {
                 ...customerFormState,
@@ -230,8 +170,6 @@ function Profile() {
                     Authorization: `Bearer ${token}`,
                 }
             });
-            // console.log("updaten van de klantgegevens is gelukt")
-            console.log(response);
             toggleCustomerUpdateSuccess(true);
             toggleEnableCustomerChange(false);
         } catch (error) {
@@ -243,11 +181,11 @@ function Profile() {
     }
 
     useEffect(() => {
-        if(selectedHorse) {
-        let defaultValues = {
-            telephoneOfVet: selectedHorse.telephoneOfVet,
-        };
-        reset({...defaultValues});
+        if (selectedHorse) {
+            let defaultValues = {
+                telephoneOfVet: selectedHorse.telephoneOfVet,
+            };
+            reset({...defaultValues});
         }
     }, [horseUpdateSuccess, enabledHorseChange]);
 
@@ -257,8 +195,6 @@ function Profile() {
         setError("");
         toggleHorseUpdateSuccess(false);
         toggleIsLoading(true);
-        // selectHorse(selectedHorseId);
-        console.log("dit is de horseFormState", horseFormState);
         try {
             const response = await axios.patch(`http://localhost:8080/horses/${selectedHorse.id}`, {
                 ...horseFormState,
@@ -269,11 +205,7 @@ function Profile() {
                     Authorization: `Bearer ${token}`,
                 }
             });
-            // console.log(`het updaten van paard id ${selectedHorse.id} is gelukt!`);
-            // console.log(response);
-            // console.log("uw paard gegevens zijn gewijzigd");
             toggleHorseUpdateSuccess(true);
-            // toggleEnabledHorseChange(false);
         } catch (error) {
             console.error(error);
             setHorseUpdateError(generateSaveErrorString("paardgegevens"));
@@ -293,18 +225,13 @@ function Profile() {
     }
 
     function showPassport(horse) {
-        // console.log("de horseId die we gaan gebruiken is", id);
         setSelectedHorse(horse);
-        // console.log("en als het goed is dan hier de horseState waarde", selectedHorse);
-
 
         async function fetchPassport() {
             setError("");
             toggleIsLoading(true);
             try {
                 const selectedPassport = await axios.get(horse.passport.url);
-                // const passportUrl = URL.createObjectURL(selectedPassport);
-                // const passportUrl = URL.revokeObjectURL(selectedPassport);
                 setSelectedPassport(selectedPassport);
                 togglePassportDownloadSuccess(true);
             } catch (error) {
@@ -314,9 +241,9 @@ function Profile() {
                 toggleIsLoading(false);
             }
         }
+
         void fetchPassport();
     }
-    // console.log("dit is het geselecteerde paard", selectedHorse);
 
     function hidePassport() {
         togglePassportDownloadSuccess(false);
@@ -340,14 +267,13 @@ function Profile() {
         setSelectedEnrollement(enrollement);
     }
 
-     async function handleCancellation(id){
+    async function handleCancellation(id) {
         setError("");
         toggleIsLoading(true);
         toggleCancellationSuccess(false);
         try {
             const response = await axios.patch(`http://localhost:8080/enrollments/${id}`);
             console.log(response);
-            // setSelectedEnrollmentId(id);
             toggleCancellationSuccess(true);
         } catch (error) {
             console.error(error);
@@ -355,17 +281,13 @@ function Profile() {
         } finally {
             toggleIsLoading(false);
         }
-     }
+    }
 
-     function handleTotalPriceClick(enrollmentList) {
-        console.log("hoi dit is de enrollmentList: ", enrollmentList)
-         toggleShowingTotalPrice(!showingTotalPrice);
-         const result = calculateCustomersPrice(enrollmentList);
+    function handleTotalPriceClick(enrollmentList) {
+        toggleShowingTotalPrice(!showingTotalPrice);
+        const result = calculateCustomersPrice(enrollmentList);
         setTotalPrice(result);
-
-
-     }
-    console.log("totale kosten: ", totalPrice, showingTotalPrice);
+    }
 
     return (
         <>
@@ -374,15 +296,15 @@ function Profile() {
                     <div className="inner-container inverted-header">
                         <NavBar>
                             <div className="nav-portal">
-                            {isAuth && <Button
-                                type="button"
-                                handleClick={signOut}
-                            >
-                                uitloggen
-                            </Button>}
-                            <div
-                                className="profile-icon">{Object.keys(profile).length > 0 ? initialsName(profile.firstName, profile.lastName) :
-                                <span>???</span>}</div>
+                                {isAuth && <Button
+                                    type="button"
+                                    handleClick={signOut}
+                                >
+                                    uitloggen
+                                </Button>}
+                                <div
+                                    className="profile-icon">{Object.keys(profile).length > 0 ? initialsName(profile.firstName, profile.lastName) :
+                                    <span>???</span>}</div>
                             </div>
                         </NavBar>
                     </div>
@@ -392,9 +314,6 @@ function Profile() {
                 <div className="inner-container inner-profile-container">
                     <nav className="side-nav">
                         <h2 className={styles["profile-menu"]}>Menu</h2>
-                        {/*<Link to="#yourpersonalia">Uw gegevens</Link>*/}
-                        {/*<Link to="#yourhorses">Uw paarden</Link>*/}
-                        {/*<Link to="#yoursubscriptions">Uw abonnementen</Link>*/}
                         <Button
                             type="button"
                             disabled={enableCustomerChange}
@@ -412,7 +331,7 @@ function Profile() {
                         <Button
                             type="button"
                             disabled={false}
-                            handleClick={()=> handleTotalPriceClick(enrollmentList)}
+                            handleClick={() => handleTotalPriceClick(enrollmentList)}
                         >
                             Bereken uw totale abonnementskosten
                         </Button>
@@ -421,7 +340,7 @@ function Profile() {
                                 title="Totale kosten:"
                                 className="price"
                             >
-                               <p className={styles["price-display"]}>{formatPrice(totalPrice)}</p>
+                                <p className={styles["price-display"]}>{formatPrice(totalPrice)}</p>
 
                                 <Button
                                     type="button"
@@ -429,210 +348,208 @@ function Profile() {
                                 >
                                     klap in
                                 </Button>
-                    </Display>}
-                </nav>
-                <div className="content-container">
-                    {Object.keys(profile).length > 0 &&
-                        <div className="intro-content-wrapper">
+                            </Display>}
+                    </nav>
+                    <div className="content-container">
+                        {Object.keys(profile).length > 0 &&
+                            <div className="intro-content-wrapper">
                                 <h3>Welkom {displayCompleteName(profile.firstName, profile.lastName)}</h3>
                                 <p>klantnummer: 20240{profile.id}</p>
                             </div>}
                         {!enableCustomerChange &&
-                        <Display
-                            className="persona"
-                            title="Uw gegevens"
-                        >
-                            {isLoading && <p>...Loading</p>}
-                            {customerError ? <p className="error">{customerError}</p> :
-                                <div className={styles["table-form-container"]}>
-                                    <Table
-                                        className="default-table"
-                                        tableHeadClassName="default-table-head"
-                                        tableHeadArray={profilePersonaTableHead}
-                                    >
-                                        <tbody>
-                                        <tr className="table-body">
-                                            {profile.street && <td>{profile.street}</td>}
-                                            {profile.houseNumber && <td>{profile.houseNumber}</td>}
-                                            {profile.postalCode && <td>{profile.postalCode}</td>}
-                                            {profile.residence && <td>{profile.residence}</td>}
-                                            {profile.telephoneNumber && <td>{profile.telephoneNumber}</td>}
-                                            {profile.emailAddress && <td>{profile.emailAddress}</td>}
-                                            {profile.bankAccountNumber && <td>{profile.bankAccountNumber}</td>}
-                                        </tr>
-                                        </tbody>
-                                    </Table>
-                                </div>}
-                        </Display>}
+                            <Display
+                                className="persona"
+                                title="Uw gegevens"
+                            >
+                                {isLoading && <p>...Loading</p>}
+                                {customerError ? <p className="error">{customerError}</p> :
+                                    <div className={styles["table-form-container"]}>
+                                        <Table
+                                            className="default-table"
+                                            tableHeadClassName="default-table-head"
+                                            tableHeadArray={profilePersonaTableHead}
+                                        >
+                                            <tbody>
+                                            <tr className="table-body">
+                                                {profile.street && <td>{profile.street}</td>}
+                                                {profile.houseNumber && <td>{profile.houseNumber}</td>}
+                                                {profile.postalCode && <td>{profile.postalCode}</td>}
+                                                {profile.residence && <td>{profile.residence}</td>}
+                                                {profile.telephoneNumber && <td>{profile.telephoneNumber}</td>}
+                                                {profile.emailAddress && <td>{profile.emailAddress}</td>}
+                                                {profile.bankAccountNumber && <td>{profile.bankAccountNumber}</td>}
+                                            </tr>
+                                            </tbody>
+                                        </Table>
+                                    </div>}
+                            </Display>}
                         {enableCustomerChange &&
                             <Display
                                 className="persona"
                                 title="Wijzig de gewenste persoonsgegevens:"
                             >
                                 <div className={styles["table-form-container"]}>
-                                        <Table
-                                            className="default-table"
-                                            tableHeadClassName="default-table-head"
-                                            tableHeadArray={profilePersonaTableHead}
+                                    <Table
+                                        className="default-table"
+                                        tableHeadClassName="default-table-head"
+                                        tableHeadArray={profilePersonaTableHead}
+                                    />
+                                    <form className={styles["profile-form"]}
+                                          onSubmit={handleSubmit(handleCustomerForm)}>
+                                        {isLoading &&
+                                            <p>...Loading</p>}
+                                        <TextInput
+                                            inputName="street"
+                                            // labelClassName="persona-form"
+                                            register={register}
+                                            textValue={profile.street}
+                                            validationRules={{
+                                                required: {
+                                                    value: true,
+                                                    message: "Straat is verplicht"
+                                                },
+                                                minLength: {
+                                                    value: 3,
+                                                    message: "Straat moet minimaal 3 letters bevatten"
+                                                },
+                                                maxLength: {
+                                                    value: 60,
+                                                    message: "Straat mag maximaal 60 letters bevatten"
+                                                }
+                                            }}
+                                            errors={errors}
                                         />
-                                        <form className={styles["profile-form"]}
-                                              onSubmit={handleSubmit(handleCustomerForm)}>
-                                            {isLoading &&
-                                                <p>...Loading</p>}
-                                            <TextInput
-                                                inputName="street"
-                                                // placeholder={profile.street}
-                                                register={register}
-                                                textValue={profile.street}
-                                                validationRules={{
-                                                    required: {
-                                                        value: true,
-                                                        message: "Straat is verplicht"
-                                                    },
-                                                    minLength: {
-                                                        value: 3,
-                                                        message: "Straat moet minimaal 3 letters bevatten"
-                                                    },
-                                                    maxLength: {
-                                                        value: 60,
-                                                        message: "Straat mag maximaal 60 letters bevatten"
-                                                    }
-                                                }}
-                                                errors={errors}
-                                            />
-                                            <TextInput
-                                                inputName="houseNumber"
-                                                // placeholder={profile.houseNumber}
-                                                register={register}
-                                                textValue={profile.houseNumber}
-                                                validationRules={{
-                                                    required: {
-                                                        value: true,
-                                                        message: "Huisnummer is verplicht"
-                                                    },
-                                                    minLength: {
-                                                        value: 1,
-                                                        message: "Huisnummer moet uit minimaal 1 teken bestaan"
-                                                    },
-                                                    maxLength: {
-                                                        value: 20,
-                                                        message: "Huisnummer mag maximaal uit 20 tekens bestaan"
-                                                    }
-                                                }}
-                                                errors={errors}
-                                            />
-                                            <TextInput
-                                                inputName="postalCode"
-                                                // placeholder={profile.postalCode}
-                                                register={register}
-                                                textValue={profile.postalCode}
-                                                validationRules={{
-                                                    required: {
-                                                        value: true,
-                                                        message: "Postcode is verplicht"
-                                                    },
-                                                    minLength: {
-                                                        value: 4,
-                                                        message: "Postcode moet minimaal 4 tekens bevatten"
-                                                    },
-                                                    maxLength: {
-                                                        value: 6,
-                                                        message: "Postcode mag maximaal 6 tekens bevatten"
-                                                    }
-                                                }}
-                                                errors={errors}
-                                            />
-                                            <TextInput
-                                                inputName="residence"
-                                                textValue={profile.residence}
-                                                register={register}
-                                                validationRules={{
-                                                    required: {
-                                                        value: true,
-                                                        message: "Woonplaats is verplicht"
-                                                    },
-                                                    minLength: {
-                                                        value: 2,
-                                                        message: "Woonplaats moet minimaal 2 letters bevatten"
-                                                    },
-                                                    maxLength: {
-                                                        value: 60,
-                                                        message: "Woonplaats mag maximaal 60 letters bevatten"
-                                                    }
-                                                }}
-                                                errors={errors}
-                                            />
-                                            <input
-                                                type="tel"
-                                                id="telephoneOfVet-field"
-                                                // name="telephoneOfVet"
-                                                pattern="[0-9]{10}"
-                                                defaultValue={profile.telephoneNumber}
-                                                {...register("telephoneNumber", {
-                                                    required: {
-                                                        value: true,
-                                                        message: 'telefoonnummer is verplicht',
-                                                    },
-                                                    minLength: {
-                                                        value: 10,
-                                                        message: "het telefoonnummer moet uit 10 cijfers bestaan"
-                                                    },
-                                                    maxLength: {
-                                                        value: 10,
-                                                        message: "het telefoonnummer moet uit 10 cijfers bestaan"
-                                                    }
-                                                })}
-                                            />
-                                            {errors.telephoneNumber &&
-                                                <p className="form-error-login">{errors.telephoneNumber.message}</p>}
-                                            <input
-                                                type="email"
-                                                defaultValue={profile.emailAddress}
-                                                {...register("emailAddress", {
-                                                    required: {
-                                                        value: true,
-                                                        message: 'e-mailadres is verplicht',
-                                                    },
-                                                })}
-                                            />
-                                            {errors.emailAddress &&
-                                                <p className="form-error">{errors.emailAddress.message}</p>}
+                                        <TextInput
+                                            inputName="houseNumber"
+                                            register={register}
+                                            textValue={profile.houseNumber}
+                                            validationRules={{
+                                                required: {
+                                                    value: true,
+                                                    message: "Huisnummer is verplicht"
+                                                },
+                                                minLength: {
+                                                    value: 1,
+                                                    message: "Huisnummer moet uit minimaal 1 teken bestaan"
+                                                },
+                                                maxLength: {
+                                                    value: 20,
+                                                    message: "Huisnummer mag maximaal uit 20 tekens bestaan"
+                                                }
+                                            }}
+                                            errors={errors}
+                                        />
+                                        <TextInput
+                                            inputName="postalCode"
+                                            register={register}
+                                            textValue={profile.postalCode}
+                                            validationRules={{
+                                                required: {
+                                                    value: true,
+                                                    message: "Postcode is verplicht"
+                                                },
+                                                minLength: {
+                                                    value: 4,
+                                                    message: "Postcode moet minimaal 4 tekens bevatten"
+                                                },
+                                                maxLength: {
+                                                    value: 6,
+                                                    message: "Postcode mag maximaal 6 tekens bevatten"
+                                                }
+                                            }}
+                                            errors={errors}
+                                        />
+                                        <TextInput
+                                            inputName="residence"
+                                            textValue={profile.residence}
+                                            register={register}
+                                            validationRules={{
+                                                required: {
+                                                    value: true,
+                                                    message: "Woonplaats is verplicht"
+                                                },
+                                                minLength: {
+                                                    value: 2,
+                                                    message: "Woonplaats moet minimaal 2 letters bevatten"
+                                                },
+                                                maxLength: {
+                                                    value: 60,
+                                                    message: "Woonplaats mag maximaal 60 letters bevatten"
+                                                }
+                                            }}
+                                            errors={errors}
+                                        />
+                                        <input
+                                            type="tel"
+                                            id="telephoneOfVet-field"
+                                            pattern="[0-9]{10}"
+                                            defaultValue={profile.telephoneNumber}
+                                            {...register("telephoneNumber", {
+                                                required: {
+                                                    value: true,
+                                                    message: 'telefoonnummer is verplicht',
+                                                },
+                                                minLength: {
+                                                    value: 10,
+                                                    message: "het telefoonnummer moet uit 10 cijfers bestaan"
+                                                },
+                                                maxLength: {
+                                                    value: 10,
+                                                    message: "het telefoonnummer moet uit 10 cijfers bestaan"
+                                                }
+                                            })}
+                                        />
+                                        {errors.telephoneNumber &&
+                                            <p className="form-error-login">{errors.telephoneNumber.message}</p>}
+                                        <input
+                                            type="email"
+                                            defaultValue={profile.emailAddress}
+                                            {...register("emailAddress", {
+                                                required: {
+                                                    value: true,
+                                                    message: 'e-mailadres is verplicht',
+                                                },
+                                            })}
+                                        />
+                                        {errors.emailAddress &&
+                                            <p className="form-error-login">{errors.emailAddress.message}</p>}
 
-                                            <TextInput
-                                                inputName="bankAccountNumber"
-                                                textValue={profile.bankAccountNumber}
-                                                register={register}
-                                                validationRules={{
-                                                    required: {
-                                                        value: true,
-                                                        message: "bank/IBAN-nummer is verplicht"
-                                                    },
-                                                    minLength: {
-                                                        value: 16,
-                                                        message: "De Iban moet uit 16 tekens bestaan"
-                                                    },
-                                                    maxLength: {
-                                                        value: 16,
-                                                        message: "De Iban moet uit 16 tekens bestaan"
-                                                    }
-                                                }}
-                                                errors={errors}
-                                            />
-                                            <Button
-                                                type="submit"
-                                                disabled={false}
-                                            >
-                                                Verstuur
-                                            </Button>
-                                            {customerUpdateError && <p className="error">{customerUpdateError}</p>}
-                                        </form>
+                                        <TextInput
+                                            inputName="bankAccountNumber"
+                                            textValue={profile.bankAccountNumber}
+                                            register={register}
+                                            validationRules={{
+                                                required: {
+                                                    value: true,
+                                                    message: "bank/IBAN-nummer is verplicht"
+                                                },
+                                                minLength: {
+                                                    value: 16,
+                                                    message: "De Iban moet uit 16 tekens bestaan"
+                                                },
+                                                maxLength: {
+                                                    value: 16,
+                                                    message: "De Iban moet uit 16 tekens bestaan"
+                                                }
+                                            }}
+                                            errors={errors}
+                                        />
                                         <Button
-                                            type="button"
+                                            type="submit"
+                                            classname="profile-form-button"
                                             disabled={false}
-                                            handleClick={() => toggleEnableCustomerChange(false)}
                                         >
-                                            Annuleer
+                                            Verstuur
                                         </Button>
+                                        {customerUpdateError && <p className="error">{customerUpdateError}</p>}
+                                    </form>
+                                    <Button
+                                        type="button"
+                                        disabled={false}
+                                        handleClick={() => toggleEnableCustomerChange(false)}
+                                    >
+                                        Annuleer
+                                    </Button>
                                 </div>
                             </Display>}
                         {!enabledHorseChange &&
@@ -687,7 +604,9 @@ function Profile() {
                                                                              handleClick={hidePassport}>
                                                                     Verberg</Button>}</td>}
                                                             <td>{horse.passport && passportDownloadSuccess && horse.id === selectedHorse.id &&
-                                                                <div className={styles["passport-image"]}><img src={`${horse.passport.url}`} alt="paardenpaspoort"/></div>}</td>
+                                                                <div className={styles["passport-image"]}><img
+                                                                    src={`${horse.passport.url}`}
+                                                                    alt="paardenpaspoort"/></div>}</td>
                                                         </tr>
                                                         </tbody>}
                                                 </Table>
@@ -741,7 +660,7 @@ function Profile() {
                                                         {...register("typeOfFeed", {
                                                             required: {
                                                                 value: true,
-                                                                // message: "maak een keuze",
+                                                                message: "maak een keuze",
                                                             }
                                                         })}
                                                     >
@@ -837,77 +756,81 @@ function Profile() {
                                                 {errors.telephoneOfVet &&
                                                     <p className="form-error-login">{errors.telephoneOfVet.message}</p>}
                                                 <div className={styles["horse-edit-button-wrapper"]}>
-                                                <Button
-                                                    type="submit"
-                                                    // disabled={horse.preferredSubscription!="activated"}
-                                                    disabled={false}
-                                                >
-                                                    Wijzig
-                                                </Button>
+                                                    <Button
+                                                        type="submit"
+                                                        classname="profile-form-button"
+                                                        // disabled={horse.preferredSubscription!="activated"}
+                                                        disabled={false}
+                                                    >
+                                                        Wijzig
+                                                    </Button>
                                                 </div>
                                                 {horseUpdateError && <p className="error">{horseUpdateError}</p>}
                                             </form>}
                                         {horseUpdateSuccess && <div>
-                                            <p className={styles.success}>De gegevens van uw paard {selectedHorse.name} zijn
+                                            <p className={styles.success}>De gegevens van uw
+                                                paard {selectedHorse.name} zijn
                                                 succesvol gewijzigd!</p>
                                             <div className={styles["horse-edit-button-wrapper"]}>
-                                            <Button
-                                                type="button"
-                                                disabled={false}
-                                                handleClick={setToDefault}
-                                            >
-                                                Terug naar overzicht
-                                            </Button>
+                                                <Button
+                                                    type="button"
+                                                    disabled={false}
+                                                    handleClick={setToDefault}
+                                                >
+                                                    Terug naar overzicht
+                                                </Button>
                                             </div>
                                         </div>}
                                     </div>
                                 </div>
                             </Display>}
                         {!editingCancellation &&
-                        <Display
-                            className="horses"
-                            title="Uw abonnementen"
-                        >
-                            {isLoading && <p>...Loading</p>}
-                            {enrollmentsError && <p className="error">{enrollmentsError}</p>}
-                            {!enrollmentsError && enrollmentList.length === 0 ?
-                                <p>U heeft nog geen geactiveerde abonnementen</p> : enrollmentList.map((enrollment) => {
-                                    return <div key={enrollment.id} className="subscriptiom-wrapper">
-                                        <div className={styles["head-line"]}>
-                                            <p className={styles.horsename}>Abonnementnummer: {enrollment.id}</p>
-                                            <Button
-                                                type="button"
-                                                disabled={enrollment.cancellationRequested}
-                                                handleClick={() => handleCancellationClick(enrollment)}
+                            <Display
+                                className="horses"
+                                title="Uw abonnementen"
+                            >
+                                {isLoading && <p>...Loading</p>}
+                                {enrollmentsError && <p className="error">{enrollmentsError}</p>}
+                                {!enrollmentsError && enrollmentList.length === 0 ?
+                                    <p>U heeft nog geen geactiveerde
+                                        abonnementen</p> : enrollmentList.map((enrollment) => {
+                                        return <div key={enrollment.id} className="subscriptiom-wrapper">
+                                            <div className={styles["head-line"]}>
+                                                <p className={styles.horsename}>Abonnementnummer: {enrollment.id}</p>
+                                                <Button
+                                                    type="button"
+                                                    disabled={enrollment.cancellationRequested}
+                                                    handleClick={() => handleCancellationClick(enrollment)}
+                                                >
+                                                    {enrollment.cancellationRequested ? <p>annulering aangevraagd</p> :
+                                                        <p>annuleer</p>}
+                                                </Button>
+                                            </div>
+                                            <Table
+                                                className="default-table"
+                                                tableHeadClassName="default-table-head"
+                                                tableHeadArray={profileEnrollmentTableHead}
                                             >
-                                                {enrollment.cancellationRequested ? <p>annulering aangevraagd</p> :
-                                                    <p>annuleer</p>}
-                                            </Button>
+                                                <tbody>
+                                                <tr className="table-body">
+                                                    {enrollment.subscription && <td>{enrollment.subscription.name}</td>}
+                                                    {/*{stall.name && <td>{stall.name} </td>}*/}
+                                                    {enrollment.subscription &&
+                                                        <td>{enrollment.subscription.typeOfStall}</td>}
+                                                    {enrollment.subscription &&
+                                                        <td>{enrollment.subscription.typeOfCare}</td>}
+                                                    {enrollment.horse && <td>{enrollment.horse.name}</td>}
+                                                    {enrollment.startDate &&
+                                                        <td>{reverseDate(enrollment.startDate)}</td>}
+                                                    {enrollment.cancellationRequested ? <td>ja</td> : <td>nee</td>}
+                                                    {enrollment.subscription &&
+                                                        <td>{formatPrice(enrollment.subscription.price)}</td>}
+                                                </tr>
+                                                </tbody>
+                                            </Table>
                                         </div>
-                                        <Table
-                                            className="default-table"
-                                            tableHeadClassName="default-table-head"
-                                            tableHeadArray={profileEnrollmentTableHead}
-                                        >
-                                            <tbody>
-                                            <tr className="table-body">
-                                                {enrollment.subscription && <td>{enrollment.subscription.name}</td>}
-                                                {/*{stall.name && <td>{stall.name} </td>}*/}
-                                                {enrollment.subscription &&
-                                                    <td>{enrollment.subscription.typeOfStall}</td>}
-                                                {enrollment.subscription &&
-                                                    <td>{enrollment.subscription.typeOfCare}</td>}
-                                                {enrollment.horse && <td>{enrollment.horse.name}</td>}
-                                                {enrollment.startDate && <td>{reverseDate(enrollment.startDate)}</td>}
-                                                {enrollment.cancellationRequested ? <td>ja</td> : <td>nee</td>}
-                                                {enrollment.subscription &&
-                                                    <td>{formatPrice(enrollment.subscription.price)}</td>}
-                                            </tr>
-                                            </tbody>
-                                        </Table>
-                                    </div>
-                                })}
-                        </Display>}
+                                    })}
+                            </Display>}
                         {editingCancellation &&
                             <Display
                                 className="horses"
@@ -926,13 +849,13 @@ function Profile() {
                                         </Button>
                                     </div>
                                     {!cancellationSuccess &&
-                                    <div className={styles["cancellation-container"]}>
-                                        {isLoading && <p>...Loading</p>}
-                                        <p>U staat op het punt om het volgende abonnement te annuleren voor uw
-                                            paard {selectedEnrollement.horse.name} </p>
-                                        <p>{selectedEnrollement.subscription.name} sinds {selectedEnrollement.startDate}</p>
-                                        {selectedEnrollement.subscription &&
-                                            <p className="italic">{generateSubscriptionDetails(selectedEnrollement.subscription)}</p>}
+                                        <div className={styles["cancellation-container"]}>
+                                            {isLoading && <p>...Loading</p>}
+                                            <p>U staat op het punt om het volgende abonnement te annuleren voor uw
+                                                paard {selectedEnrollement.horse.name} </p>
+                                            <p>{selectedEnrollement.subscription.name} sinds {selectedEnrollement.startDate}</p>
+                                            {selectedEnrollement.subscription &&
+                                                <p className="italic">{generateSubscriptionDetails(selectedEnrollement.subscription)}</p>}
                                             <Button
                                                 type="button"
                                                 disabled={false}
@@ -940,20 +863,20 @@ function Profile() {
                                             >
                                                 Bevestig annulering
                                             </Button>
-                                        {error && <p className="error">{error}</p>}
-                                    </div>}
-                                        {cancellationSuccess && <div>
-                                            <p className={styles.success}>Uw verzoek tot annulering van dit abonnement is
-                                                succesvol verstuurd en wordt binnen 3 werkdagen door ons verwerkt.</p>
-                                            <Button
-                                                type="button"
-                                                disabled={false}
-                                                handleClick={setToCancellationDefault}
-                                            >
-                                                Terug naar overzicht
-                                            </Button>
+                                            {error && <p className="error">{error}</p>}
                                         </div>}
-                                    </div>
+                                    {cancellationSuccess && <div>
+                                        <p className={styles.success}>Uw verzoek tot annulering van dit abonnement is
+                                            succesvol verstuurd en wordt binnen 3 werkdagen door ons verwerkt.</p>
+                                        <Button
+                                            type="button"
+                                            disabled={false}
+                                            handleClick={setToCancellationDefault}
+                                        >
+                                            Terug naar overzicht
+                                        </Button>
+                                    </div>}
+                                </div>
                             </Display>}
                     </div>
                 </div>

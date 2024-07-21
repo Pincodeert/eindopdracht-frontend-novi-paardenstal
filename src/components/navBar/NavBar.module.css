@@ -24,11 +24,13 @@
     }
 }
 
-@media screen and (max-width: 820px) {
+@media screen and (max-width: 870px) {
     .header-navigation {
         flex-direction: column;
         justify-content: space-between;
-        align-items: flex-start;
+        /*align-items: flex-start;*/
+        align-items: center;
+        margin-bottom: 20px;
     }
 
     .logo {
@@ -39,7 +41,7 @@
 
 @media screen and (max-width: 620px) {
     .header-navigation {
-        align-items: flex-start;
+        /*align-items: center;*/
     }
 
     .logo {

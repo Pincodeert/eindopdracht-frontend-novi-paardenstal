@@ -24,7 +24,6 @@ function Register() {
             const response = await axios.post("http://localhost:8080/users", {
                 ...formState
             });
-            console.log(response.status);
             if (response.status === 201) {
                 navigate("/login");
             }

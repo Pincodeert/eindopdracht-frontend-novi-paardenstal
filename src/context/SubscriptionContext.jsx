@@ -14,18 +14,17 @@ function SubscriptionContextProvider({children}) {
         });
     }
 
-    function resetSubscription(){
+    function resetSubscription() {
         setSubscription({
             subscriptionId: 0,
         });
     }
-    console.log("dit is de SubscriptionContext talking, subscription idnr: ", subscription.subscriptionId);
+
     const contextData = {
         subscriptionId: subscription.subscriptionId,
         selectSubscription,
         resetSubscription,
     }
-    console.log("en dit is de contextData subsr id: ", contextData);
 
     return (
         <SubscriptionContext.Provider value={contextData}>

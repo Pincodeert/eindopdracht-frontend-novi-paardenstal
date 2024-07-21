@@ -3,14 +3,11 @@ import star from "../../assets/ster-image.jpg";
 import FooterArticle from "../footerArticle/FooterArticle.jsx";
 
 function Footer() {
-    // let classname = "inner-container";
 
     return (
         <footer>
             <div className="outer-container footer-info-outer">
-            {/*<div className={`outer-container ${styles["footer-info-outer"]}`}>*/}
                 <section className="inner-container footer-info-section">
-                    {/*<section className={`inner-container ${styles["footer-info-section"]}`}>*/}
                     <div className="title-wrapper">
                         <img className="star-image" src={star} alt="ster-icoon"/>
                         <img className="star-image" src={star} alt="ster-icoon"/>
@@ -19,7 +16,6 @@ function Footer() {
                     <div className={styles["footer-info-wrapper"]}>
                         <FooterArticle
                             title="Openingstijden"
-                            // classname="footer-info"
                         >
                             <p>ma: 9.00u - 21.00u</p>
                             <p>di: 8.00 - 22.00u</p>
@@ -31,7 +27,6 @@ function Footer() {
                         </FooterArticle>
                         <FooterArticle
                             title="Algemeen"
-                            // classname="footer-info"
                         >
                             <p>algemene voorwaarden</p>
                             <p>privacy verklaring</p>
@@ -40,7 +35,6 @@ function Footer() {
                         </FooterArticle>
                         <FooterArticle
                             title="Contact"
-                            // classname="footer-info borderless"
                             classname="borderless"
                         >
                             <p>Landweg 2A</p>
